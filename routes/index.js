@@ -136,7 +136,7 @@ router.get('/api/get', function(req, res){
 
     var jsonData = {
       status: 'OK',
-      animals: data
+      figures: data
     } 
 
     res.json(jsonData);
