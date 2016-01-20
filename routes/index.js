@@ -52,9 +52,9 @@ router.post('/api/create', function(req, res){
     var figureObj = {
       figureName: figureName,
       keySig: keySig
-      },
-      url: url
-    };
+      };
+      // url: url
+    //});
 
     // create a new animal model instance, passing in the object
     var figure = new Figure(figureObj);
