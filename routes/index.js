@@ -61,7 +61,7 @@ router.post('/api/create', function(req, res){
 
     // now, save that animal instance to the database
     // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
-    figure.save(function(err,data){
+    Figure.save(function(err,data){
       // if err saving, respond back with error
       if (err){
         var error = {status:'ERROR', message: 'Error saving animal'};
