@@ -8,9 +8,8 @@ var figureSchema = new Schema({
 	// name: {type: String, required: true}, // this version requires this field to exist
 	// name: {type: String, unique: true}, // this version requires this field to be unique in the db
 	keySig: String,
-	tags: [String],
-	url: String,
 	dateAdded : { type: Date, default: Date.now },
+	{ collection: 'Figures'}
 })
 
 var userSchema = new Schema({

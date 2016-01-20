@@ -43,32 +43,25 @@ router.post('/api/create', function(req, res){
     console.log(req.body);
 
     // pull out the information from the req.body
-    var name = req.body.name;
-    var age = req.body.age;
-    var tags = req.body.tags.split(","); // split string into array
-    var weight = req.body.weight;
-    var color = req.body.color;
-    var url = req.body.url;
+    var name = req.body.figureName;
+    var keySig = req.body.keySig;
+   
 
     // hold all this data in an object
     // this object should be structured the same way as your db model
     var figureObj = {
-      name: name,
-      age: age,
-      tags: tags,
-      description: {
-        weight: weight,
-        color: color
+      figureName: figureName,
+      keySig: keySig
       },
       url: url
     };
 
     // create a new animal model instance, passing in the object
-    var animal = new Animal(animalObj);
+    var figure = new Figure(figureObj);
 
     // now, save that animal instance to the database
     // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
-    animal.save(function(err,data){
+    figure.save(function(err,data){
       // if err saving, respond back with error
       if (err){
         var error = {status:'ERROR', message: 'Error saving animal'};
