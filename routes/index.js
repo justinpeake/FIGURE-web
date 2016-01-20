@@ -27,6 +27,10 @@ router.get('/sample-page', function(req,res){
   res.render('sample.html')
 })
 
+router.get('/form', function(req,res){
+  res.render('formTest.html')
+})
+
 // /**
 //  * POST '/api/create'
 //  * Receives a POST request of the new user and location, saves to db, responds back
