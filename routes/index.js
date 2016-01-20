@@ -122,7 +122,7 @@ router.get('/api/get/:id', function(req, res){
 router.get('/api/get', function(req, res){
 
   // mongoose method to find all, see http://mongoosejs.com/docs/api.html#model_Model.find
-  Animal.find(function(err, data){
+  figure.find(function(err, data){
     // if err or no animals found, respond with error 
     if(err || data == null){
       var error = {status:'ERROR', message: 'Could not find animals'};
