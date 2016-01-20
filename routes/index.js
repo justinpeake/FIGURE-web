@@ -61,7 +61,7 @@ router.post('/api/create', function(req, res){
 
     // now, save that animal instance to the database
     // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
-    Figure.save(function(err,data){
+    figure.save(function(err,data){
       // if err saving, respond back with error
       if (err){
         var error = {status:'ERROR', message: 'Error saving animal'};
@@ -125,7 +125,7 @@ router.get('/api/get/:id', function(req, res){
 router.get('/api/get', function(req, res){
 
   // mongoose method to find all, see http://mongoosejs.com/docs/api.html#model_Model.find
-  figures.count(function(err, data){
+  Figure.count(function(err, data){
     // if err or no animals found, respond with error 
     if(err || data == null){
       var error = {status:'ERROR', message: 'Could not find animals'};
