@@ -43,7 +43,7 @@ router.post('/api/create', function(req, res){
     console.log(req.body);
 
     // pull out the information from the req.body
-    var name = req.body.figureName;
+    var figureName = req.body.figureName;
     var keySig = req.body.keySig;
    
 
