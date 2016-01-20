@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 // our db model
-var Animal = require("../models/model.js");
+var Figure = require("../models/model.js");
 
 /**
  * GET '/'
@@ -48,7 +48,7 @@ router.post('/api/create', function(req, res){
 
     // hold all this data in an object
     // this object should be structured the same way as your db model
-    var animalObj = {
+    var figureObj = {
       name: name,
       age: age,
       tags: tags,
