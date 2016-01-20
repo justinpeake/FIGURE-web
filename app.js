@@ -7,11 +7,11 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
 
-// var app = express();
-      var app = require('express').createServer();
-      var io = require('socket.io')(app);
+ var app = express();
+      // var app = require('express').createServer();
+      // var io = require('socket.io')(app);
 
-      app.listen(8080);
+      // app.listen(8080);
 
 // if in development mode, load .env variables
 if (app.get("env") === "development") {
