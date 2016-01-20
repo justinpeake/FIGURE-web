@@ -9,7 +9,7 @@ var figureSchema = new Schema({
 	// name: {type: String, unique: true}, // this version requires this field to be unique in the db
 	keySig: String,
 	dateAdded : { type: Date, default: Date.now },
-	{ collection: 'Figures'}
+	//{ collection: 'Figures'}
 })
 
 var userSchema = new Schema({
