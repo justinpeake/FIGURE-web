@@ -1,0 +1,251 @@
+<html>
+	<head>
+
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+		<script>  var socket = io(); </script> 
+
+					
+				<script type="text/javascript">
+
+							socket.on('connect', function() {
+								console.log("Conducter in the house.");
+							});
+						
+				</script>	
+
+				<style>
+
+						@font-face {
+					    font-family: nexa;
+					    src: url('nexalight.otf');
+						}
+						div {
+					    font-family: nexa;
+						} 
+						h1 {
+						font-family: nexa;
+						}
+						p {
+						font-family: nexa;
+						}
+
+						#perfDialogue {
+							line-height:20px;
+						    background-color:#FFFFFF;
+						    height:70px;
+						    width:200px;
+						    float:left;
+						    padding-left:5px;
+						    padding-right:75px;
+
+						}
+
+				</style>
+
+	</head>
+<body>
+
+	<div id="perfDialogue" align="center"> 
+
+	 			<!-- <p> Welcome. You are a performer. <br> -->
+				 Performer ID: 
+			
+					
+			<img  src="/img/p1.png"    id="p1"   style="width:25px; height:25">
+			<img  src="/img/p2.png"    id="p2"   style="width:25px; height:25">
+			<img  src="/img/p3.png"    id="p3"   style="width:25px; height:25">
+
+			<br>
+			<br>
+			<br>
+
+					 <!-- responds to the "incoming" function -->
+			<img src="incoming.png"  id="incoming"  style="width:167px; height:50">
+
+	</div> 
+
+	 	<br>
+
+
+	 	
+	 
+	<div id="figures" align="left">
+	 		
+	 <!-- This is where each new figure is injected into the performer page.
+	 	  "currentFigure" is the name of the element that needs to be updated from conductor page. -->
+
+
+			 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
+			 	
+			 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
+			 	
+
+	</div>
+ 
+	<script type="text/javascript">
+
+
+					var myId = 0; //initialize
+					var toWhom = 0;
+					var toAll = 0;
+
+					var socket = io.connect('http://104.131.171.245:8080/');
+
+					$(incoming).fadeTo(1,0);
+
+
+					// initial socket ish
+					socket.on('connect', function() {
+						console.log("Performer in the house.");
+					});
+
+
+				//initial performer id ish
+
+	 	$(p1).click(function(){
+
+	 		$(p1).fadeTo(500, 0.5);
+	 		$(p2).fadeTo(500, 1);			 		
+	 		$(p3).fadeTo(500, 1);
+	 		
+
+			myId = 1;
+			
+			console.log("I am Performer " + myId);
+
+			document.getElementById('p1').src = "/img/p1on.png";
+			document.getElementById('p2').src = "/img/p2.png";
+			document.getElementById('p3').src = "/img/p3.png";
+	 	}
+	 );
+
+	 	$(p2).click(function(){
+
+	 		$(p1).fadeTo(500, 1);
+	 		$(p2).fadeTo(500, 0.5);			 		
+	 		$(p3).fadeTo(500, 1);
+
+			myId = 2;
+			
+			console.log("I am Performer " + myId);		
+
+			document.getElementById('p1').src = "/img/p1.png";
+	 		document.getElementById('p2').src = "/img/p2on.png";
+			document.getElementById('p3').src = "/img/p3.png";
+	 	}
+	 );
+
+	 	$(p3).click(function(){
+
+	 		$(p1).fadeTo(500, 1);
+	 		$(p2).fadeTo(500, 1);			 		
+	 		$(p3).fadeTo(500, 0.5);
+
+	 		myId = 3;
+
+	 		console.log("I am Performer " + myId);
+
+	 		document.getElementById('p1').src = "/img/p1.png";
+	 		document.getElementById('p2').src = "/img/p2.png";
+			document.getElementById('p3').src = "/img/p3on.png";
+	 	
+	 	}
+	 );
+
+
+	 				// functions (just one right now)
+	 				var flashIncoming = function(){
+
+						$(incoming).fadeTo(500, 1);
+						$(incoming).fadeTo(500, 0);
+
+					};
+
+
+
+
+						// routes messages across channels
+
+						socket.on('sendingTo', function (data) {
+							
+							toWhom = data;
+							console.log("toWhom = " + toWhom);
+							
+						});
+
+						socket.on('sendingAll', function (data) {
+							
+							toAll = data;
+							console.log("toAll= " + toAll);	
+							
+						});
+
+						//sets up flashing of incoming image referenced above
+				
+
+
+						socket.on('videoFigure', function (data) {
+
+
+								//checks to see if conductor is talking to "you"
+							if (myId == toWhom || toAll == 1) { 
+
+								//flashes "incoming" image 
+							var flasher = setInterval(function() {flashIncoming()} , 500);
+
+								// shuts off incoming flasher after interval
+							setTimeout(function() {clearInterval(flasher)}, 2000);
+							setTimeout(function() {display()}, 3000);
+
+								// display shitz
+								var display = function(){
+							console.log(data + "performerside" + toWhom);
+
+							document.getElementById('imageFig').src = "";
+							document.getElementById('imageFig').height = "0";
+
+							document.getElementById('videoFig').src = data;
+							document.getElementById('videoFig').height = "600";
+								}
+
+							}
+							
+						});
+
+					
+
+						socket.on('imageFigure', function (data) {
+
+							if (myId == toWhom || toAll == 1) {
+
+								//flashes "incoming" image 
+							var flasher = setInterval(function() {flashIncoming()} , 500);
+
+								// shuts off incoming flasher after interval
+							setTimeout(function() {clearInterval(flasher)}, 2000);
+							setTimeout(function() {display()}, 3000);
+
+								// display shitz
+							var display = function(){
+							console.log(data + "performerside" + toWhom);
+
+							// NEED TO GET RID OF THIS HACKY WAY AND MAKE ONLY ONE DISPLAY AT A TIME
+						    document.getElementById('videoFig').src = "";
+						    document.getElementById('videoFig').height = "0";
+
+							document.getElementById('imageFig').src = data;
+							document.getElementById('imageFig').height = "600";
+
+								}
+								
+							}
+
+						}); 
+
+	</script>
+ 
+ </body>
+
+</html>

@@ -8,6 +8,11 @@ var mongoose = require('mongoose');
 var env = require('node-env-file');
 
  var app = express();
+
+      //added for socket
+      app.io = require('socket.io')();
+
+
       // var app = require('express').createServer();
       // var io = require('socket.io')(app);
 
@@ -69,6 +74,53 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+
+
+var performerCount = - 1;
+
+
+
+// start listen with socket.io
+app.io.on('connection', function(socket){  
+
+  console.log('a user connected');
+
+  performerCount = performerCount + 1;
+
+
+    socket.broadcast.emit('performerCount', performerCount);
+
+    // When this user emits, client side: socket.emit('otherevent',some data);
+ 
+
+            socket.on('sendingTo', function(data) {
+              console.log("Received: 'sendingTo' " + data);
+              socket.broadcast.emit('sendingTo', data);
+            });         
+
+            socket.on('sendingAll', function(data) {
+              console.log("Received: 'sendingAll' " + data);
+              socket.broadcast.emit('sendingAll', data);
+            });
+
+              socket.on('videoFigure', function(data) {
+              console.log("Received: 'videoFigure' " + data);
+              socket.broadcast.emit('videoFigure', data);
+            });
+
+            socket.on('imageFigure', function(data) {
+              console.log("Received: 'imageFigure' " + data);
+              socket.broadcast.emit('imageFigure', data);
+            });
+  
+            socket.on('disconnect', function() {
+
+              performerCount = performerCount - 1;
+              socket.broadcast.emit('performerCount', performerCount);
+              console.log("Client has disconnected " + socket.id);
+            });
 });
 
 
