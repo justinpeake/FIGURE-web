@@ -7,16 +7,23 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
 
-var app = express();
+
+var socket_io = require('socket.io');   // second iteracton socket try
+var app = express();  // first iteration socket try
 
       //added for socket
-      app.io = require('socket.io')();
+
+                  //app.io = require('socket.io')();  // first iteration of adding socket
+ 
+var io = socket_io();   // second iteration
+
+app.io = io;  //second iteration
 
 
       // var app = require('express').createServer();
       // var io = require('socket.io')(app);
 
-      // app.listen(8080);
+      //app.listen(8080);
 
 // if in development mode, load .env variables
 if (app.get("env") === "development") {
@@ -83,8 +90,9 @@ var performerCount = - 1;
 
 
 // start listen with socket.io
-app.io.on('connection', function(socket){  
+// app.io.on('connection', function(socket){  // first iteration
 
+io.on('connection', function(socket){ //second iteration
   console.log('a user connected');
 
   performerCount = performerCount + 1;
@@ -116,7 +124,6 @@ app.io.on('connection', function(socket){
             });
   
             socket.on('disconnect', function() {
-
               performerCount = performerCount - 1;
               socket.broadcast.emit('performerCount', performerCount);
               console.log("Client has disconnected " + socket.id);
