@@ -13,17 +13,10 @@ var app = express();  // first iteration socket try
 
       //added for socket
 
-                  //app.io = require('socket.io')();  // first iteration of adding socket
- 
 var io = socket_io();   // second iteration
 
 app.io = io;  //second iteration
 
-
-      // var app = require('express').createServer();
-      // var io = require('socket.io')(app);
-
-      //app.listen(8080);
 
 // if in development mode, load .env variables
 if (app.get("env") === "development") {
@@ -84,10 +77,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-
-var performerCount = - 1;
-
-
+      var performerCount = - 1;  // instantiate performer count
 
 // start listen with socket.io
 // app.io.on('connection', function(socket){  // first iteration
