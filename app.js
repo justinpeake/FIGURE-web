@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
 
- var app = express();
+var app = express();
 
       //added for socket
       app.io = require('socket.io')();

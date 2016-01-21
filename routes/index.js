@@ -31,13 +31,13 @@ router.get('/form', function(req,res){
   res.render('formTest.html')
 })
 
-router.get('/conductor', function(req,res){
-  res.render('conductor.html')
-})
+// router.get('/conductor', function(req,res){
+//   res.render('conductor.html')
+// })
 
-router.get('/performer', function(req,res){
-  res.render('performer.html')
-})
+// router.get('/performer', function(req,res){
+//   res.render('performer.html')
+// })
 
 // /**
 //  * POST '/api/create'
