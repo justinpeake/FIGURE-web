@@ -10,7 +10,7 @@ var env = require('node-env-file');
 var app = express();
 
       //added for socket
-     // app.io = require('socket.io')();
+      app.io = require('socket.io')();
 
 
       // var app = require('express').createServer();
