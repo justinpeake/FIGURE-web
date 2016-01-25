@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 // our db model
 var Figure = require("../models/figure.js");
 
-var User = require("../models/user.js");
+// var User = require("../models/user.js");
 
 /**
  * GET '/'
