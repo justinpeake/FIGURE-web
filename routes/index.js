@@ -3,7 +3,9 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 // our db model
-var Figure = require("../models/model.js");
+var Figure = require("../models/figure.js");
+
+var User = require("../models/user.js");
 
 /**
  * GET '/'
