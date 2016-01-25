@@ -17,6 +17,10 @@ var io = socket_io();   // second iteration
 
 app.io = io;  //second iteration
 
+app.get('/login', function(req, res) {
+  res.sendfile('views/login.html');
+});
+
 
 // if in development mode, load .env variables
 if (app.get("env") === "development") {
