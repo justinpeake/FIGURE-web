@@ -6,13 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
-
-
 var socket_io = require('socket.io');   // second iteracton socket try
 var app = express();  // first iteration socket try
-
-      //added for socket
-
 var io = socket_io();   // second iteration
 
 app.io = io;  //second iteration

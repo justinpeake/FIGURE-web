@@ -13,6 +13,8 @@ var Figure = require("../models/figure.js");
  * @param  {Object} req
  * @return {Object} json
  */
+
+
 router.get('/', function(req, res) {
   
   var jsonData = {
