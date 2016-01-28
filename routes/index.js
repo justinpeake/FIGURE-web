@@ -50,6 +50,16 @@ router.get('/performer', function(req,res){
 //  * @return {Object} JSON
 //  */
 
+//passport shit
+
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: true })
+);
+
+// end passport shit
+
 router.post('/api/create', function(req, res){
 
     console.log(req.body);
