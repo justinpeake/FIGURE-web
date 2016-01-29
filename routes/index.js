@@ -1,9 +1,12 @@
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
 var mongoose = require('mongoose');
 
 // our db model
 var Figure = require("../models/figure.js");
+var Account = require('../models/account.js');
+
 
 // var User = require("../models/user.js");
 
@@ -14,19 +17,32 @@ var Figure = require("../models/figure.js");
  * @return {Object} json
  */
 
+//passport route
 
-router.get('/', function(req, res) {
-  
-  var jsonData = {
-  	'name': 'node-express-api-boilerplate',
-  	'api-status':'OK'
-  }
 
-  // respond with json data
-  res.json(jsonData)
+router.get('/', function (req, res) {
+    res.render('index.html', { user : req.user });
 });
 
+
+//previous route
+// router.get('/', function(req, res) {
+  
+//   var jsonData = {
+//   	'name': 'node-express-api-boilerplate',
+//   	'api-status':'OK'
+//   }
+
+//   // respond with json data
+//   res.json(jsonData)
+// });
+
 // simple route to show an HTML page
+
+router.get('/register', function(req, res) {
+    res.render('register.html', { });
+});
+
 router.get('/sample-page', function(req,res){
   res.render('sample.html')
 })
@@ -49,6 +65,35 @@ router.get('/performer', function(req,res){
 //  * @param  {Object} req. An object containing the different attributes of the Person
 //  * @return {Object} JSON
 //  */
+
+router.post('/register', function(req, res) {
+    Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+        if (err) {
+            return res.render('register.html', { account : account });
+        }
+
+        passport.authenticate('local')(req, res, function () {
+            res.redirect('/');
+        });
+    });
+});
+
+router.get('/login', function(req, res) {
+    res.render('login.html', { user : req.user });
+});
+
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/');
+});
+
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
+router.get('/ping', function(req, res){
+    res.status(200).send("pong!");
+});
 
 
 router.post('/api/create', function(req, res){

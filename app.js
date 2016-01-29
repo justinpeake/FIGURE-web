@@ -10,6 +10,14 @@ var socket_io = require('socket.io');   // second iteracton socket try
 var app = express();  // first iteration socket try
 var io = socket_io();   // second iteration
 
+var LocalStrategy = require('passport-local').Strategy;
+
+var passport = require('passport');
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
+
+ 
 app.io = io;  //second iteration
 
 
@@ -34,11 +42,32 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // our routes will be contained in routes/index.js
-var routes = require('./routes/index');
+// var routes = require('./routes/index');
 app.use('/', routes);
+
+
+var Account = require('./models/account.js');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+// mongoose
+//mongoose.connect('mongodb://localhost/passport_local_mongoose_express4');
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -86,7 +115,6 @@ io.on('connection', function(socket){ //second iteration
     socket.broadcast.emit('performerCount', performerCount);
 
     // When this user emits, client side: socket.emit('otherevent',some data);
- 
 
             socket.on('sendingTo', function(data) {
               console.log("Received: 'sendingTo' " + data);
