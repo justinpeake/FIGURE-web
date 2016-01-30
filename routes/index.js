@@ -68,10 +68,22 @@ router.get('/performer', function(req,res){
 
 
 
+// router.post('/register', function(req, res) {
+//     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+//         if (err) {
+//             return res.render('register.html', { account : account });
+//         }
+
+//         passport.authenticate('local')(req, res, function () {
+//             res.redirect('/');
+//         });
+//     });
+// });
+
 router.post('/register', function(req, res) {
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
         if (err) {
-            return res.render('register.html', { account : account });
+          return res.render("register.html", {info: "Sorry. That username already exists. Try again."});
         }
 
         passport.authenticate('local')(req, res, function () {
@@ -79,6 +91,7 @@ router.post('/register', function(req, res) {
         });
     });
 });
+
 
 
 
