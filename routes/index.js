@@ -8,7 +8,7 @@ var Figure = require("../models/figure.js");
 var Account = require('../models/account.js');
 
 
-// var User = require("../models/user.js");
+// var User = require("../models/users.js");
 
 /**
  * GET '/'
@@ -88,7 +88,7 @@ router.post('/register', function(req, res) {
 
         passport.authenticate('local')(req, res, function () {
            // res.redirect('/');
-            res.redirect("conductor.html");
+            res.render("conductor.html");
         });
     });
 });
