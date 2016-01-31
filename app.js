@@ -14,8 +14,8 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var passport = require('passport');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./routes/index.js');
+var users = require('./routes/users.js');
 
  
 app.io = io;  //second iteration

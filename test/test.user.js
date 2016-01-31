@@ -1,14 +1,16 @@
 var should = require('should');
 var mongoose = require('mongoose');
 var Account = require('../models/account.js');
-var env = require('node-env-file');
 var db;
+//var env = require('node-env-file');
 
 describe('Account', function() {
 
     before(function(done) {
-            
-            db = mongoose.connect(process.env.MONGOLAB_URI);
+
+     // db = mongoose.connect('mongodb://localhost/test');
+
+    db = mongoose.connect(process.env.MONGOLAB_URI);
 
             done();
     });
@@ -30,6 +32,9 @@ describe('Account', function() {
             done();
         });
     });
+
+
+
 
     it('find a user by username', function(done) {
         Account.findOne({ username: '12345' }, function(err, account) {
