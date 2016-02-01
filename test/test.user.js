@@ -2,7 +2,7 @@ var should = require('should');
 var mongoose = require('mongoose');
 var Account = require('../models/account.js');
 var db;
-//var env = require('node-env-file');
+var env = require('node-env-file');
 
 describe('Account', function() {
 
@@ -39,7 +39,7 @@ describe('Account', function() {
     it('find a user by username', function(done) {
         Account.findOne({ username: '12345' }, function(err, account) {
             account.username.should.eql('12345');
-            console.log("   username: ", account.username);
+            console.log(" username: ", account.username);
             done();
         });
     });
