@@ -45,19 +45,23 @@ router.get('/register', function(req, res) {
 
 router.get('/sample-page', function(req,res){
   res.render('sample.html')
-})
+});
 
 router.get('/form', function(req,res){
   res.render('formTest.html')
-})
+});
 
 router.get('/conductor', function(req,res){
   res.render('conductor.html')
-})
+});
 
 router.get('/performer', function(req,res){
   res.render('performer.html')
-})
+});
+
+router.get('/login', function(req, res) {
+    res.render('login.html', { user : req.user });
+});
 
 // /**
 //  * POST '/api/create'
@@ -67,46 +71,25 @@ router.get('/performer', function(req,res){
 //  */
 
 
-
-// router.post('/register', function(req, res) {
-//     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
-//         if (err) {
-//             return res.render('register.html', { account : account });
-//         }
-
-//         passport.authenticate('local')(req, res, function () {
-//             res.redirect('/');
-//         });
-//     });
-// });
-
+// user creates account
 router.post('/register', function(req, res) {
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
         if (err) {
           return res.render("register.html", {info: "Sorry. That username already exists. Try again."});
+          console.log("sorry taken");
         }
 
         passport.authenticate('local')(req, res, function () {
            // res.redirect('/');
-            res.render("conductor.html");
+            res.render("conductor.html");  // this is where the dashboard should jump in
         });
     });
 });
 
 
-
-
-
-router.get('/login', function(req, res) {
-    res.render('login.html', { user : req.user });
-});
-
 router.post('/login', passport.authenticate('local'), function(req, res) {
   // res.redirect('/');
-   res.render("performer.html");
-
-
-    
+   res.render("performer.html");   
 });
 
 router.get('/logout', function(req, res) {
