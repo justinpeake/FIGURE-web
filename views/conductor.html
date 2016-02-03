@@ -51,7 +51,7 @@
 
  			
 
-			<div id="messages" align="left"> You are the conductor. Hello check check
+			<div id="messages" align="left"> You are the conductor. 
 
 				<p id ="checking">  </p>
 				<p>
@@ -77,7 +77,7 @@
 
 		<div id="figuresBox" align="center">
 
-		 	<img  src="/assets/drone2.png"  		 id="hp1"   style="width:167px; height:48">
+		<!-- 	<img  src="/assets/drone2.png"  		 id="hp1"   style="width:167px; height:48">
 		 	<img  src="/assets/droneG1.png"    		 id="hp2"   style="width:167px; height:48">
 		 	<p>
 		 	<img  src="/assets/fadeout.png"   		 id="hp3"   style="width:167px; height:48">
@@ -89,7 +89,16 @@
 		 	<img  src="/assets/percussive1.png"      id="hp7"   style="width:167px; height:48">
 		 	<img  src="/assets/separation1.png"      id="hp8"   style="width:167px; height:48">
 		 	<p>
-		 	<img  src="/assets/tacet.png"      		 id="hp9"   style="width:167px; height:48">
+		 	<img  src="/assets/tacet.png"      		 id="hp9"   style="width:167px; height:48"> -->
+
+		 	<img  src="/assets/ooh.png"   		 id="hp1"   style="width:167px; height:48">
+		 	<img  src="/assets/aah.png"   		 id="hp2"   style="width:167px; height:48">
+		 	<p>
+		 	<img  src="/assets/clapwave.png"      id="hp3"   style="width:167px; height:48">
+		 	<img  src="/assets/taps.png"      		 id="hp4"   style="width:167px; height:48">
+		 	<p>
+		 	<img  src="/assets/sitstand.png"      id="hp5"   style="width:167px; height:48">
+		 	<img  src="/assets/silly.png"      id="hp6"   style="width:167px; height:48">
 
 		</div>	
 
@@ -202,7 +211,7 @@
 
 			 	$(hp1).click(function(){
 			 		console.log("station");
-			 		socket.emit('imageFigure', "/assets/drone2.png");
+			 		socket.emit('imageFigure', "/assets/ooh.png");
 
 			 			//changes the status "who is playing what" on conductor page
 			 		// document.getElementById('s'+toWhom).src = "/assets/station.png";
@@ -212,7 +221,7 @@
 
 				$(hp2).click(function(){
 			 		console.log("metal");
-			 		socket.emit('imageFigure', "/assets/droneG1.png");
+			 		socket.emit('imageFigure', "/assets/aah.png");
 
 			 		// document.getElementById('s'+toWhom).src = "/assets/metal.png";
 			 	}
@@ -220,7 +229,7 @@
 
 				$(hp3).click(function(){
 			 		console.log("charmy");
-			 		socket.emit('imageFigure', "/assets/fadeout.png");
+			 		socket.emit('imageFigure', "/assets/clapwave.png");
 
 			 		// document.getElementById('s'+toWhom).src = "/assets/charmy.png";
 			 	}
@@ -228,7 +237,7 @@
 
 				$(hp4).click(function(){
 			 		console.log("candy");
-			 		socket.emit('imageFigure', "/assets/Fsharpto.png");
+			 		socket.emit('imageFigure', "/assets/taps.png");
 
 			 		// document.getElementById('s'+toWhom).src = "/assets/candy.png";
 			 	}
@@ -236,7 +245,7 @@
 
 				$(hp5).click(function(){
 			 		console.log("tacet");
-			 		socket.emit('imageFigure', "/assets/highSqueaks.png");
+			 		socket.emit('imageFigure', "/assets/sitstand.png");
 
 			 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
 			 	}
@@ -244,7 +253,7 @@
 
 				$(hp6).click(function(){
 			 		console.log("tacet");
-			 		socket.emit('imageFigure', "/assets/open.png");
+			 		socket.emit('imageFigure', "/assets/silly.png");
 
 			 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
 			 	}
