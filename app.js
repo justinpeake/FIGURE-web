@@ -9,6 +9,7 @@ var env = require('node-env-file');
 var socket_io = require('socket.io');   // second iteracton socket try
 var app = express();  // first iteration socket try
 var io = socket_io();   // second iteration
+var fs = require('fs');
 
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -101,7 +102,9 @@ app.use(function(err, req, res, next) {
 });
 
 
-      var performerCount = - 1;  // instantiate performer count
+var performerCount = - 1;  // instantiate performer count
+var figureArray = fs.readdirSync("/img");
+console.log(figureArray);
 
 // start listen with socket.io
 // app.io.on('connection', function(socket){  // first iteration
@@ -111,7 +114,7 @@ io.on('connection', function(socket){ //second iteration
 
   performerCount = performerCount + 1;
 
-            
+
             socket.broadcast.emit('performerCount', performerCount);
 
     // When this user emits, client side: socket.emit('otherevent',some data);
