@@ -111,8 +111,8 @@ io.on('connection', function(socket){ //second iteration
 
   performerCount = performerCount + 1;
 
-
-    socket.broadcast.emit('performerCount', performerCount);
+            
+            socket.broadcast.emit('performerCount', performerCount);
 
     // When this user emits, client side: socket.emit('otherevent',some data);
 

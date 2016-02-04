@@ -8,6 +8,7 @@
 				<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
 
 				<script src="/socket.io/socket.io.js"></script>  
+				
 				<script>  var socket = io(); </script> 
 
 					
@@ -17,6 +18,15 @@
 								console.log("Conducter in the house.");
 							});
 						
+
+
+
+				var figureArray = fs.readdir("/img");
+				console.log(figureArray);
+
+
+
+
 				</script>	
 
 										<!-- head scripts END -->
@@ -39,22 +49,17 @@
 
 				</style>
 
-
 		</head>
 
 
- 
-
  <body>
-
-
-
  			
 
 			<div id="messages" align="left"> You are the conductor. 
 
-				<p id ="checking">  </p>
-				<p>
+			<p id ="checking">  </p>
+				
+			<p>
 
 							<!-- performer button images -->
 		
@@ -68,16 +73,12 @@
 
 			</div>
 
-				<!-- <br>
-				<br>
-				<br>
-				<br> -->
 
 									<!-- figure  images -->
 
 		<div id="figuresBox" align="center">
 
-		<!-- 	<img  src="/assets/drone2.png"  		 id="hp1"   style="width:167px; height:48">
+	<!-- 	<img  src="/assets/drone2.png"  		 id="hp1"   style="width:167px; height:48">
 		 	<img  src="/assets/droneG1.png"    		 id="hp2"   style="width:167px; height:48">
 		 	<p>
 		 	<img  src="/assets/fadeout.png"   		 id="hp3"   style="width:167px; height:48">
@@ -91,14 +92,14 @@
 		 	<p>
 		 	<img  src="/assets/tacet.png"      		 id="hp9"   style="width:167px; height:48"> -->
 
-		 	<img  src="/assets/ooh.png"   		 id="hp1"   style="width:167px; height:48">
-		 	<img  src="/assets/aah.png"   		 id="hp2"   style="width:167px; height:48">
+		 	<img  src="/assets/ooh.png"   		  id="hp1"   style="width:167px; height:48">
+		 	<img  src="/assets/aah.png"   		  id="hp2"   style="width:167px; height:48">
 		 	<p>
 		 	<img  src="/assets/clapwave.png"      id="hp3"   style="width:167px; height:48">
-		 	<img  src="/assets/taps.png"      		 id="hp4"   style="width:167px; height:48">
+		 	<img  src="/assets/taps.png"      	  id="hp4"   style="width:167px; height:48">
 		 	<p>
 		 	<img  src="/assets/sitstand.png"      id="hp5"   style="width:167px; height:48">
-		 	<img  src="/assets/silly.png"      id="hp6"   style="width:167px; height:48">
+		 	<img  src="/assets/silly.png"         id="hp6"   style="width:167px; height:48">
 
 		</div>	
 
@@ -107,17 +108,21 @@
 
 				// performer button functionality
 
-					var toWhom = 0;  // initialize these globally
-					var toAll = 0;
-					// var performerCount;
+			var toWhom = 0;  // initialize these globally, used in server and emit to performers
+			var toAll = 0;
+					
 					
 
-					document.getElementById("checking").innerHTML = "performers: 0";
+			document.getElementById("checking").innerHTML = "performers: 0";
 
-					// >> new add
+				
 					// eventually this will create a reactive list of numbers which select which performers
 
-			socket.on('performerCount', function (data) {   //updates when a new performer joins or leaves
+					//updates when a new performer joins or leaves
+
+					// when server emits "performerCount"... do this function
+
+			socket.on('performerCount', function (data) {   
 
 					var perfs =[];
 					var x = data;
@@ -130,7 +135,6 @@
 
 					document.getElementById("checking").innerHTML = "performers: " + perfs.join("  ");  // changing the #performers on conductor page
 
-					// console.log("performerCount = " + data); 
 							
 				});
 
@@ -213,7 +217,7 @@
 			 		console.log("station");
 			 		socket.emit('imageFigure', "/assets/ooh.png");
 
-			 			//changes the status "who is playing what" on conductor page
+			 		//changes the status "who is playing what" on conductor page
 			 		// document.getElementById('s'+toWhom).src = "/assets/station.png";
 
 			 	}
