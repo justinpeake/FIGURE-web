@@ -103,8 +103,8 @@ app.use(function(err, req, res, next) {
 
 
 var performerCount = - 1;  // instantiate performer count
-var figureArray = fs.readdirSync("/img");
-console.log(figureArray);
+// var figureArray = fs.readdirSync("/img");
+// console.log(figureArray);
 
 // start listen with socket.io
 // app.io.on('connection', function(socket){  // first iteration
