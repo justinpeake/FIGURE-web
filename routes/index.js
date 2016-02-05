@@ -153,12 +153,6 @@ router.post('/api/create', function(req, res){
     })  
 });
 
-// /**
-//  * GET '/api/get/:id'
-//  * Receives a GET request specifying the animal to get
-//  * @param  {String} req.param('id'). The animalId
-//  * @return {Object} JSON
-//  */
 
 router.get('/api/get/:id', function(req, res){
 
@@ -184,15 +178,6 @@ router.get('/api/get/:id', function(req, res){
   })
 })
 
-// /**
-//  * GET '/api/get'
-//  * Receives a GET request to get all animal details
-//  * @return {Object} JSON
-//  */
-
-
-
-
 router.get('/api/get', function(req, res){
 
   // mongoose method to find all, see http://mongoosejs.com/docs/api.html#model_Model.find
@@ -215,14 +200,6 @@ router.get('/api/get', function(req, res){
   })
 
 })
-
-// /**
-//  * POST '/api/update/:id'
-//  * Receives a POST request with data of the animal to update, updates db, responds back
-//  * @param  {String} req.param('id'). The animalId to update
-//  * @param  {Object} req. An object containing the different attributes of the Animal
-//  * @return {Object} JSON
-//  */
 
 router.post('/api/update/:id', function(req, res){
 
@@ -297,12 +274,6 @@ router.post('/api/update/:id', function(req, res){
 
 })
 
-/**
- * GET '/api/delete/:id'
- * Receives a GET request specifying the animal to delete
- * @param  {String} req.param('id'). The animalId
- * @return {Object} JSON
- */
 
 router.get('/api/delete/:id', function(req, res){
 

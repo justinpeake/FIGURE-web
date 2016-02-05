@@ -102,6 +102,9 @@ app.use(function(err, req, res, next) {
 });
 
 
+var performerCount = 0;
+
+
 // start listen with socket.io
 // app.io.on('connection', function(socket){  // first iteration
 
