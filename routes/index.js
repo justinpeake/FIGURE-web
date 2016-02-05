@@ -10,12 +10,6 @@ var Account = require('../models/account.js');
 
 // var User = require("../models/users.js");
 
-/**
- * GET '/'
- * Default home route. Just relays a success message back.
- * @param  {Object} req
- * @return {Object} json
- */
 
 //passport route
 
@@ -63,17 +57,30 @@ router.get('/login', function(req, res) {
     res.render('login.html', { user : req.user });
 });
 
-// /**
-//  * POST '/api/create'
-//  * Receives a POST request of the new user and location, saves to db, responds back
-//  * @param  {Object} req. An object containing the different attributes of the Person
-//  * @return {Object} JSON
-//  */
-
 
 // user creates account
+
+//SAFE
+// router.post('/register', function(req, res) {
+
+//     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+//         if (err) {
+//           return res.render("register.html", {info: "Sorry. That username already exists. Try again."});
+//           console.log("sorry taken");
+//         }
+
+//         passport.authenticate('local')(req, res, function () {
+//            // res.redirect('/');
+//             res.render("conductor.html");  // this is where the dashboard should jump in
+//         });
+//     });
+// });
+
+//TEST NEW Save COnfig
 router.post('/register', function(req, res) {
-    Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+
+    var account = new Account({ username : req.body.username }), req.body.password, function(err, account) {
+       
         if (err) {
           return res.render("register.html", {info: "Sorry. That username already exists. Try again."});
           console.log("sorry taken");
