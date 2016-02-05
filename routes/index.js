@@ -57,6 +57,10 @@ router.get('/login', function(req, res) {
     res.render('login.html', { user : req.user });
 });
 
+router.get('/drop', function(req, res) {
+    res.render('drop.html', { user : req.user });
+});
+
 
 // user creates account
 
