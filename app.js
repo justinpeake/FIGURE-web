@@ -12,7 +12,6 @@ var io = socket_io();   // second iteration
 
 
 var LocalStrategy = require('passport-local').Strategy;
-
 var passport = require('passport');
 
 var routes = require('./routes/index.js');
@@ -144,8 +143,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-
-//do not erase this 
+//DO NOT ERASE THIS
 var performerCount = 0;
 
 
@@ -160,7 +158,7 @@ io.on('connection', function(socket){ //second iteration
 
             socket.broadcast.emit('performerCount', performerCount);
 
-    // When this user emits, client side: socket.emit('otherevent',some data);
+            // When this user emits, client side: socket.emit('otherevent',some data);
 
             socket.on('sendingTo', function(data) {
               console.log("Received: 'sendingTo' " + data);
