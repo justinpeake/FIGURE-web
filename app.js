@@ -10,13 +10,14 @@ var socket_io = require('socket.io');   // second iteracton socket try
 var app = express();  // first iteration socket try
 var io = socket_io();   // second iteration
 
-
 var LocalStrategy = require('passport-local').Strategy;
 var passport = require('passport');
 
 var routes = require('./routes/index.js');
 var users = require('./routes/users.js');
 
+var aws = require('aws-sdk');
+var path = require('path');
  
 var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
 var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
@@ -83,6 +84,10 @@ app.use(function(req, res, next) {
 
 //AWS S3 SHIZ
 
+app.get('/compose', function(req, res) {
+    res.render('compose.html', { user : req.user });
+});
+
 app.get('/sign_s3', function(req, res){
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
     var s3 = new aws.S3();
@@ -107,6 +112,7 @@ app.get('/sign_s3', function(req, res){
         }
     });
 });
+
 
 app.post('/submit_form', function(req, res){
     username = req.body.username;
