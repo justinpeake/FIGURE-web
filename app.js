@@ -18,10 +18,11 @@ var users = require('./routes/users.js');
 
 var aws = require('aws-sdk');
 var path = require('path');
+var http = require('http');
  
 var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
 var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-var S3_BUCKET = process.env.S3_BUCKET
+var S3_BUCKET = process.env.S3_BUCKET;
 
 app.io = io;  //second iteration
 
@@ -121,6 +122,7 @@ app.post('/submit_form', function(req, res){
     update_account(username, full_name, avatar_url); // TODO: create this function
     // TODO: Return something useful or redirect
 });
+
 
 // END AWS S3 SHIZ
 
