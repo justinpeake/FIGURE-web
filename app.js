@@ -19,21 +19,21 @@ var users = require('./routes/users.js');
 var aws = require('aws-sdk');
 var path = require('path');
 var http = require('http');
- 
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-var S3_BUCKET = process.env.S3_BUCKET;
 
 app.io = io;  //second iteration
 
-
 // if in development mode, load .env variables
+
 if (app.get("env") === "development") {
     env(__dirname + '/.env');
 }
 
 // connect to database
 app.db = mongoose.connect(process.env.MONGOLAB_URI);
+
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
 
 // view engine setup - this app uses Hogan-Express
 // https://github.com/vol4ok/hogan-express
@@ -62,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // our routes will be contained in routes/index.js
 // var routes = require('./routes/index');
+
 app.use('/', routes);
 
 
@@ -75,12 +76,12 @@ passport.deserializeUser(Account.deserializeUser());
 
 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// // catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
 
 //AWS S3 SHIZ
@@ -90,6 +91,7 @@ app.get('/compose', function(req, res) {
 });
 
 app.get('/sign_s3', function(req, res){
+    console.log('hiiiiiiii')
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
     var s3 = new aws.S3();
     var s3_params = {
@@ -100,7 +102,7 @@ app.get('/sign_s3', function(req, res){
         ACL: 'public-read'
     };
     s3.getSignedUrl('putObject', s3_params, function(err, data){
-        console.log(data);
+        //console.log(data);
         if(err){
             console.log(err);
         }
@@ -120,6 +122,8 @@ app.post('/submit_form', function(req, res){
     username = req.body.username;
     full_name = req.body.full_name;
     avatar_url = req.body.avatar_url;
+
+    // DEFIN THIS
     update_account(username, full_name, avatar_url); // TODO: create this function
     // TODO: Return something useful or redirect
 });
