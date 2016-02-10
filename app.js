@@ -100,6 +100,7 @@ app.get('/sign_s3', function(req, res){
         ACL: 'public-read'
     };
     s3.getSignedUrl('putObject', s3_params, function(err, data){
+        console.log(data);
         if(err){
             console.log(err);
         }
