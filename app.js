@@ -23,6 +23,7 @@ var http = require('http');
 app.io = io;  //second iteration
 
 // if in development mode, load .env variables
+//Declare .env variables AFTER THIS
 
 if (app.get("env") === "development") {
     env(__dirname + '/.env');
@@ -49,11 +50,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
+// cookie stuff 
 app.use(require('express-session')({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -66,16 +70,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 
+var UserID;
+
 var Account = require('./models/account.js');
+
 passport.use(new LocalStrategy(Account.authenticate()));
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
 
-// mongoose
-//mongoose.connect('mongodb://localhost/passport_local_mongoose_express4');
+    passport.serializeUser(function(user, done) {
+
+       done(null, user.id);
+
+       UserID = user.id;
+
+       console.log('this is user:' + user.id);
+    });
+
+    passport.deserializeUser(function(obj, done) {
+
+       done(null, obj);
+
+    });
 
 
-
+//other shiz
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   var err = new Error('Not Found');
@@ -95,11 +112,13 @@ app.get('/sign_s3', function(req, res){
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
     var s3 = new aws.S3();
     var s3_params = {
+
         Bucket: S3_BUCKET,
         Key: req.query.file_name,
         Expires: 60,
         ContentType: req.query.file_type,
         ACL: 'public-read'
+        
     };
     s3.getSignedUrl('putObject', s3_params, function(err, data){
         //console.log(data);
@@ -123,9 +142,11 @@ app.post('/submit_form', function(req, res){
     full_name = req.body.full_name;
     avatar_url = req.body.avatar_url;
 
-    // DEFIN THIS
-    update_account(username, full_name, avatar_url); // TODO: create this function
+    // DEFINE THIS??
+    // update_account(username, full_name, avatar_url); 
+    // TODO: create this function
     // TODO: Return something useful or redirect
+
 });
 
 
@@ -157,7 +178,7 @@ app.use(function(err, req, res, next) {
 
 
 //DO NOT ERASE THIS
-var performerCount = 0;
+var performerCount = -1;
 
 
 // start listen with socket.io
@@ -166,7 +187,7 @@ var performerCount = 0;
 io.on('connection', function(socket){ //second iteration
   console.log('a user connected');
 
-  performerCount = performerCount + 1;
+            performerCount = performerCount + 1;
 
 
             socket.broadcast.emit('performerCount', performerCount);
@@ -196,7 +217,8 @@ io.on('connection', function(socket){ //second iteration
             socket.on('disconnect', function() {
               performerCount = performerCount - 1;
               socket.broadcast.emit('performerCount', performerCount);
-              console.log("Client has disconnected " + socket.id);
+             // console.log("Client has disconnected " + socket.id);
+              console.log('Client has disconnected:' + UserID);
             });
 });
 

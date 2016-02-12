@@ -19,17 +19,6 @@ router.get('/', function (req, res) {
 });
 
 
-//previous route
-// router.get('/', function(req, res) {
-  
-//   var jsonData = {
-//   	'name': 'node-express-api-boilerplate',
-//   	'api-status':'OK'
-//   }
-
-//   // respond with json data
-//   res.json(jsonData)
-// });
 
 // simple route to show an HTML page
 
@@ -62,31 +51,16 @@ router.get('/compose', function(req, res) {
 });
 
 
+
 // user creates account
 
-//SAFE
-// router.post('/register', function(req, res) {
-
-//     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
-//         if (err) {
-//           return res.render("register.html", {info: "Sorry. That username already exists. Try again."});
-//           console.log("sorry taken");
-//         }
-
-//         passport.authenticate('local')(req, res, function () {
-//            // res.redirect('/');
-//             res.render("conductor.html");  // this is where the dashboard should jump in
-//         });
-//     });
-// });
-
-//TEST NEW Save COnfig
+//PASSPORT SHIZ
 router.post('/register', function(req, res) {
 
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
        
         if (err) {
-          return res.render("register.html", {info: "Sorry. That username already exists. Try again."});
+          return res.render("register.html", {message: "Sorry. That username already exists. Try again."});
           console.log("sorry taken");
         }
 
@@ -113,14 +87,15 @@ router.get('/ping', function(req, res){
 });
 
 
-router.post('/api/create', function(req, res){
+//router.post('/api/create', function(req, res){  //old shit pre upload
+
+ router.post('/submit_form', function(req, res){
 
     console.log(req.body);
 
     // pull out the information from the req.body
-    var figureName = req.body.figureName;
-    var keySig = req.body.keySig;
-   
+    var figureName = req.body.figurename;
+    var keySig = req.body.keysig;
 
     // hold all this data in an object
     // this object should be structured the same way as your db model
@@ -131,19 +106,22 @@ router.post('/api/create', function(req, res){
       // url: url
     //});
 
-    // create a new animal model instance, passing in the object
+    // create a new figre model instance, passing in the object
     var figure = new Figure(figureObj);
 
-    // now, save that animal instance to the database
-    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
+    // now, save that instance to the database
+    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save   
+
     figure.save(function(err,data){
+
       // if err saving, respond back with error
+      
       if (err){
         var error = {status:'ERROR', message: 'Error saving animal'};
         return res.json(error);
       }
 
-      console.log('saved a new animal!');
+      console.log('SAVED A NEW FIGURE!');
       console.log(data);
 
       // now return the json data of the new animal
