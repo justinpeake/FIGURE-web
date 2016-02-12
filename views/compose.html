@@ -24,6 +24,8 @@
 
 <p id="status">Please select a file</p>
 
+ <p id="owner">person</p>
+
 <img id="preview" src="/images/default.png" />
 
 <form method="POST" action="/submit_form/">
@@ -41,10 +43,16 @@
 
 
     <input type="submit" value="Update profile" />
+
+
+
+
+
 </form>
 
 <script type="text/javascript">
 
+console.log(UserID);
 
 (function() {
     document.getElementById("file_input").onchange = function(){
