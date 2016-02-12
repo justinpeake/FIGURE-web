@@ -73,8 +73,8 @@ router.post('/register', function(req, res) {
 
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-  // res.redirect('/');
-   res.render("performer.html");   
+   res.redirect("performer");
+  // res.render("performer.html");   
 });
 
 router.get('/logout', function(req, res) {
