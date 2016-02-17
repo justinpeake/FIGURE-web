@@ -21,7 +21,6 @@ router.get('/', function (req, res) {
 });
 
 
-
 // simple route to show an HTML page
 
 router.get('/register', function(req, res) {
@@ -76,9 +75,10 @@ router.post('/register', function(req, res) {
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
 
-  userName = req.user.username;
+   //declared globally
+   userName = req.user.username;
 
-   console.log(chalk.blue(req.user.username));
+   console.log(chalk.white(req.user.username) + " logged in");
 
    res.redirect("performer");
   // res.render("performer.html");   

@@ -27,10 +27,10 @@
 										<!-- head scripts END -->
 
 				<style>
-						/*@font-face {
+						@font-face {
 					    font-family: nexa;
 					    src: url('nexalight.otf');
-					}*/
+					}
 
 					div {
 					    font-family: nexa;
@@ -44,7 +44,7 @@
 						padding-left: 20px;
 					}
 
-					.perfsBox {
+					#perfsBox {
 
 						width: 50;
 						height: 50;
@@ -72,14 +72,14 @@
 
 			<!--  Making autopropagateing performer number boxes  -->
 
-			<div class="perfsBox" id="p1">  </div> 
+			<div id="perfsBox">           </div> 
 			
 
-			<!-- img  src="img/p1.png"     id="p1"   style="width:25px; height:25">
+			<img  src="img/p1.png"     id="p1"   style="width:25px; height:25">
 			<img  src="img/p2.png"     id="p2"   style="width:25px; height:25">
 			<img  src="img/p3.png"     id="p3"   style="width:25px; height:25">
 			</p>
-			<img  src="img/all.png"    id="p4"   style="width:35px; height:25"> -->
+			<img  src="img/all.png"    id="p4"   style="width:35px; height:25">
 			
 
 			</div>
@@ -107,16 +107,11 @@
 
 			var toWhom = 0;  // initialize these globally, used in server and emit to performers
 			var toAll = 0;
+			var divs = [];
 
 
-			//for autopropagating perf buttons
+					//for autopropagating perf buttons
 
-
-			
-
-			
-
-				
 					// eventually this will create a reactive list of numbers which select which performers
 
 					//updates when a new performer joins or leaves
@@ -125,33 +120,31 @@
 
 			socket.on('performerCount', function (data) {   
 
-					var perfs =[];
-					var x = data;
 
-					for (i = 0; i < x; i++) {
 
-    					perfs[i] = i + 1;
+						var perfs =[];
+						var x = data;
 
-    				var perfBox= document.createElement("div");
-					var perfNum= document.createTextNode(" ");
+						for (i = 0; i < x; i++) {
+
+	    				divs.unshift(document.createElement("div"));
+	    				$(divs[0]).html(i);
+	    				$(divs[0]).css('display', 'inline')
+						
+
+						var buttons = document.getElementById("perfsBox");
+						buttons.appendChild(divs[0]);
+
+						
+
 					
-
-					perfBox.appendChild(perfNum);
-
-					document.getElementById("p1").innerHTML = x;
-
-
-					var buttons = document.getElementById("p1");
-					button.appendChild(perfBox);
 
  					 }
 
- 					
-							
-
 
 					//old
-					document.getElementById("checking").innerHTML = "performers: " + perfs.join("  ");  
+
+					// document.getElementById("checking").innerHTML = "performers: " + perfs.join("  ");  
 
 					// changing the #performers on conductor page
 
@@ -173,64 +166,64 @@
 
 			 		// UI shiz
 
-			 		document.getElementById('p1').style.background = "#FFFFFF";
-			 		// document.getElementById('p2').src = "/img/p2.png";
-			 		// document.getElementById('p3').src = "/img/p3.png";
-			 		// document.getElementById('p4').src = "/img/all.png";
+			 		document.getElementById('p1').src = "/img/p1on.png";
+			 		document.getElementById('p2').src = "/img/p2.png";
+			 		document.getElementById('p3').src = "/img/p3.png";
+			 		document.getElementById('p4').src = "/img/all.png";
 			 	}
 			 );
 
-			 // 		$(p2).click(function(){
+			 		$(p2).click(function(){
 
-			 // 			toAll = 0;
-			 // 			toWhom = 2;
+			 			toAll = 0;
+			 			toWhom = 2;
 
-			 // 			console.log("two");
-			 // 			socket.emit('sendingTo', toWhom, toAll);
-			 // 		    socket.emit('sendingAll', toAll);
+			 			console.log("two");
+			 			socket.emit('sendingTo', toWhom, toAll);
+			 		    socket.emit('sendingAll', toAll);
 
-			 // 		document.getElementById('p1').src = "/img/p1.png";
-			 // 		document.getElementById('p2').src = "/img/p2on.png";
-				// 	document.getElementById('p3').src = "/img/p3.png";
-				// 	document.getElementById('p4').src = "/img/all.png";
-			 // 	}
-			 // );
+			 		document.getElementById('p1').src = "/img/p1.png";
+			 		document.getElementById('p2').src = "/img/p2on.png";
+					document.getElementById('p3').src = "/img/p3.png";
+					document.getElementById('p4').src = "/img/all.png";
+			 	}
+			 );
 
-			 // 		$(p3).click(function(){
+			 		$(p3).click(function(){
 
-			 // 			toAll = 0;
-			 // 			toWhom = 3;
-
-			 			
-				// 		console.log("three");
-			 // 			socket.emit('sendingTo', toWhom, toAll);
-			 // 		    socket.emit('sendingAll', toAll);
-
-			 // 		document.getElementById('p1').src = "/img/p1.png";
-			 // 		document.getElementById('p2').src = "/img/p2.png";
-				// 	document.getElementById('p3').src = "/img/p3on.png";
-				// 	document.getElementById('p4').src = "/img/all.png";
-			 		
-			 // 	}
-			 // );
-
-				// 	$(p4).click(function(){
-
-				// 		toWhom = 0;
-			 // 			toAll = 1;
+			 			toAll = 0;
+			 			toWhom = 3;
 
 			 			
-				// 		console.log("three");
-			 // 			socket.emit('sendingTo', toWhom, toAll);
-			 // 			socket.emit('sendingAll', toAll);
+						console.log("three");
+			 			socket.emit('sendingTo', toWhom, toAll);
+			 		    socket.emit('sendingAll', toAll);
 
-			 // 		document.getElementById('p1').src = "/img/p1.png";
-			 // 		document.getElementById('p2').src = "/img/p2.png";
-				// 	document.getElementById('p3').src = "/img/p3.png";
-				// 	document.getElementById('p4').src = "/img/allOn.png";
+			 		document.getElementById('p1').src = "/img/p1.png";
+			 		document.getElementById('p2').src = "/img/p2.png";
+					document.getElementById('p3').src = "/img/p3on.png";
+					document.getElementById('p4').src = "/img/all.png";
 			 		
-			 // 	}
-			 // );
+			 	}
+			 );
+
+					$(p4).click(function(){
+
+						toWhom = 0;
+			 			toAll = 1;
+
+			 			
+						console.log("three");
+			 			socket.emit('sendingTo', toWhom, toAll);
+			 			socket.emit('sendingAll', toAll);
+
+			 		document.getElementById('p1').src = "/img/p1.png";
+			 		document.getElementById('p2').src = "/img/p2.png";
+					document.getElementById('p3').src = "/img/p3.png";
+					document.getElementById('p4').src = "/img/allOn.png";
+			 		
+			 	}
+			 );
 
 			// figure button functionality
 
