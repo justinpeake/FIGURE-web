@@ -7,8 +7,10 @@ var mongoose = require('mongoose');
 var Figure = require("../models/figure.js");
 var Account = require('../models/account.js');
 
+var chalk = require('chalk');
 
-// var User = require("../models/users.js");
+
+var userName = 0;
 
 
 //passport route
@@ -73,6 +75,11 @@ router.post('/register', function(req, res) {
 
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
+
+  userName = req.user.username;
+
+   console.log(chalk.blue(req.user.username));
+
    res.redirect("performer");
   // res.render("performer.html");   
 });

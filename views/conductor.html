@@ -20,15 +20,6 @@
 							socket.on('connect', function() {
 								console.log("Conducter in the house.");
 							});
-						
-
-
-
-				var figureArray = fs.readdirSync("/img");
-				console.log(figureArray);
-
-
-
 
 
 				</script>	
@@ -36,10 +27,10 @@
 										<!-- head scripts END -->
 
 				<style>
-						@font-face {
+						/*@font-face {
 					    font-family: nexa;
 					    src: url('nexalight.otf');
-					}
+					}*/
 
 					div {
 					    font-family: nexa;
@@ -49,7 +40,24 @@
 					body {
 
 						background-color: #777;
+						padding-top: 20px;
+						padding-left: 20px;
 					}
+
+					.perfsBox {
+
+						width: 50;
+						height: 50;
+						background-color: 222222;
+						font-size: 50;
+						padding-top: 6px;
+						color:FFFFFF;
+						text-align: center;
+						margin: 2px;
+						display:inline-block;
+
+					}
+
 
 				</style>
 
@@ -59,20 +67,19 @@
  <body>
  			
 
-			<div id="messages" align="left"> You are the conductor. 
+			<div id="messages" align="left"> You are the conductor. </div> 
 
-			<p id ="checking">  </p>
-				
-			<p>
 
-							<!-- performer button images -->
-		
-			<p>
-			<img  src="img/p1.png"     id="p1"   style="width:25px; height:25">
+			<!--  Making autopropagateing performer number boxes  -->
+
+			<div class="perfsBox" id="p1">  </div> 
+			
+
+			<!-- img  src="img/p1.png"     id="p1"   style="width:25px; height:25">
 			<img  src="img/p2.png"     id="p2"   style="width:25px; height:25">
 			<img  src="img/p3.png"     id="p3"   style="width:25px; height:25">
-			<p>
-			<img  src="img/all.png"    id="p4"   style="width:35px; height:25">
+			</p>
+			<img  src="img/all.png"    id="p4"   style="width:35px; height:25"> -->
 			
 
 			</div>
@@ -81,20 +88,6 @@
 									<!-- figure  images -->
 
 		<div id="figuresBox" align="center">
-
-	<!-- 	<img  src="/assets/drone2.png"  		 id="hp1"   style="width:167px; height:48">
-		 	<img  src="/assets/droneG1.png"    		 id="hp2"   style="width:167px; height:48">
-		 	<p>
-		 	<img  src="/assets/fadeout.png"   		 id="hp3"   style="width:167px; height:48">
-		 	<img  src="/assets/Fsharpto.png"   		 id="hp4"   style="width:167px; height:48">
-		 	<p>
-		 	<img  src="/assets/highSqueaks.png"      id="hp5"   style="width:167px; height:48">
-		 	<img  src="/assets/open.png"      		 id="hp6"   style="width:167px; height:48">
-		 	<p>
-		 	<img  src="/assets/percussive1.png"      id="hp7"   style="width:167px; height:48">
-		 	<img  src="/assets/separation1.png"      id="hp8"   style="width:167px; height:48">
-		 	<p>
-		 	<img  src="/assets/tacet.png"      		 id="hp9"   style="width:167px; height:48"> -->
 
 		 	<img  src="/assets/ooh.png"   		  id="hp1"   style="width:167px; height:48">
 		 	<img  src="/assets/aah.png"   		  id="hp2"   style="width:167px; height:48">
@@ -108,16 +101,20 @@
 		</div>	
 
 
-			 	<script type="text/javascript">
+			 <script type="text/javascript">
 
 				// performer button functionality
 
 			var toWhom = 0;  // initialize these globally, used in server and emit to performers
 			var toAll = 0;
-					
-					
 
-			document.getElementById("checking").innerHTML = "performers: 0";
+
+			//for autopropagating perf buttons
+
+
+			
+
+			
 
 				
 					// eventually this will create a reactive list of numbers which select which performers
@@ -135,9 +132,28 @@
 
     					perfs[i] = i + 1;
 
+    				var perfBox= document.createElement("div");
+					var perfNum= document.createTextNode(" ");
+					
+
+					perfBox.appendChild(perfNum);
+
+					document.getElementById("p1").innerHTML = x;
+
+
+					var buttons = document.getElementById("p1");
+					button.appendChild(perfBox);
+
  					 }
 
-					document.getElementById("checking").innerHTML = "performers: " + perfs.join("  ");  // changing the #performers on conductor page
+ 					
+							
+
+
+					//old
+					document.getElementById("checking").innerHTML = "performers: " + perfs.join("  ");  
+
+					// changing the #performers on conductor page
 
 							
 				});
@@ -155,65 +171,66 @@
 			 			socket.emit('sendingAll', toAll);
 
 
-			 				// UI shiz
-			 		document.getElementById('p1').src = "/img/p1on.png";
-			 		document.getElementById('p2').src = "/img/p2.png";
-			 		document.getElementById('p3').src = "/img/p3.png";
-			 		document.getElementById('p4').src = "/img/all.png";
+			 		// UI shiz
+
+			 		document.getElementById('p1').style.background = "#FFFFFF";
+			 		// document.getElementById('p2').src = "/img/p2.png";
+			 		// document.getElementById('p3').src = "/img/p3.png";
+			 		// document.getElementById('p4').src = "/img/all.png";
 			 	}
 			 );
 
-			 		$(p2).click(function(){
+			 // 		$(p2).click(function(){
 
-			 			toAll = 0;
-			 			toWhom = 2;
+			 // 			toAll = 0;
+			 // 			toWhom = 2;
 
-			 			console.log("two");
-			 			socket.emit('sendingTo', toWhom, toAll);
-			 		    socket.emit('sendingAll', toAll);
+			 // 			console.log("two");
+			 // 			socket.emit('sendingTo', toWhom, toAll);
+			 // 		    socket.emit('sendingAll', toAll);
 
-			 		document.getElementById('p1').src = "/img/p1.png";
-			 		document.getElementById('p2').src = "/img/p2on.png";
-					document.getElementById('p3').src = "/img/p3.png";
-					document.getElementById('p4').src = "/img/all.png";
-			 	}
-			 );
+			 // 		document.getElementById('p1').src = "/img/p1.png";
+			 // 		document.getElementById('p2').src = "/img/p2on.png";
+				// 	document.getElementById('p3').src = "/img/p3.png";
+				// 	document.getElementById('p4').src = "/img/all.png";
+			 // 	}
+			 // );
 
-			 		$(p3).click(function(){
+			 // 		$(p3).click(function(){
 
-			 			toAll = 0;
-			 			toWhom = 3;
+			 // 			toAll = 0;
+			 // 			toWhom = 3;
 
 			 			
-						console.log("three");
-			 			socket.emit('sendingTo', toWhom, toAll);
-			 		    socket.emit('sendingAll', toAll);
+				// 		console.log("three");
+			 // 			socket.emit('sendingTo', toWhom, toAll);
+			 // 		    socket.emit('sendingAll', toAll);
 
-			 		document.getElementById('p1').src = "/img/p1.png";
-			 		document.getElementById('p2').src = "/img/p2.png";
-					document.getElementById('p3').src = "/img/p3on.png";
-					document.getElementById('p4').src = "/img/all.png";
+			 // 		document.getElementById('p1').src = "/img/p1.png";
+			 // 		document.getElementById('p2').src = "/img/p2.png";
+				// 	document.getElementById('p3').src = "/img/p3on.png";
+				// 	document.getElementById('p4').src = "/img/all.png";
 			 		
-			 	}
-			 );
+			 // 	}
+			 // );
 
-					$(p4).click(function(){
+				// 	$(p4).click(function(){
 
-						toWhom = 0;
-			 			toAll = 1;
+				// 		toWhom = 0;
+			 // 			toAll = 1;
 
 			 			
-						console.log("three");
-			 			socket.emit('sendingTo', toWhom, toAll);
-			 			socket.emit('sendingAll', toAll);
+				// 		console.log("three");
+			 // 			socket.emit('sendingTo', toWhom, toAll);
+			 // 			socket.emit('sendingAll', toAll);
 
-			 		document.getElementById('p1').src = "/img/p1.png";
-			 		document.getElementById('p2').src = "/img/p2.png";
-					document.getElementById('p3').src = "/img/p3.png";
-					document.getElementById('p4').src = "/img/allOn.png";
+			 // 		document.getElementById('p1').src = "/img/p1.png";
+			 // 		document.getElementById('p2').src = "/img/p2.png";
+				// 	document.getElementById('p3').src = "/img/p3.png";
+				// 	document.getElementById('p4').src = "/img/allOn.png";
 			 		
-			 	}
-			 );
+			 // 	}
+			 // );
 
 			// figure button functionality
 
@@ -267,29 +284,29 @@
 			 	}
 			  );
 
-				$(hp7).click(function(){
-			 		console.log("tacet");
-			 		socket.emit('imageFigure', "/assets/percussive1.png");
+				// $(hp7).click(function(){
+			 // 		console.log("tacet");
+			 // 		socket.emit('imageFigure', "/assets/percussive1.png");
 
-			 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
-			 	}
-			  );
+			 // 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
+			 // 	}
+			 //  );
 
-				$(hp8).click(function(){
-			 		console.log("tacet");
-			 		socket.emit('imageFigure', "/assets/separation1.png");
+				// $(hp8).click(function(){
+			 // 		console.log("tacet");
+			 // 		socket.emit('imageFigure', "/assets/separation1.png");
 
-			 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
-			 	}
-			  );
+			 // 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
+			 // 	}
+			 //  );
 
-				$(hp9).click(function(){
-			 		console.log("tacet");
-			 		socket.emit('imageFigure', "/assets/tacet.png");
+				// $(hp9).click(function(){
+			 // 		console.log("tacet");
+			 // 		socket.emit('imageFigure', "/assets/tacet.png");
 
-			 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
-			 	}
-			  );
+			 // 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
+			 // 	}
+			 //  );
 
 
 			</script>

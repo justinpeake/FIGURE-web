@@ -3,9 +3,25 @@
 	
 <meta charset="utf-8">
 
-<script type="text/javascript" src="app.js"></script> 
+<script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
+
+<script type="text/javascript" src="index.js"></script> 
+<script src="/socket.io/socket.io.js"></script>  
+
+<script>  var socket = io(); </script> 
 
 <title>Composer Dashboard</title>
+
+                <script type="text/javascript">
+
+                socket.on('connect', function() {
+                    console.log("Conducter in the house.");
+                    
+                });
+
+
+                </script>   
 
 <!-- <script src="/dropzone/dropzone.js"></script>
 
@@ -26,10 +42,10 @@
 
 <p id="status">Please select a file</p>
 
- <p id="owner">person</p>
+ <p id="owner"> </p>
 
-<img id="preview" src="/images/default.png" />
-
+<!-- <img id="preview" src="/images/default.png" />
+ -->
 <form method="POST" action="/submit_form/">
     <input type="hidden" id="avatar_url" name="avatar_url" value="/public/default.png" />
     <input type="text" name="figurename" placeholder="figurename" /><br />
@@ -54,7 +70,7 @@
 
 <script type="text/javascript">
 
-console.log(UserID);
+
 
 (function() {
     document.getElementById("file_input").onchange = function(){

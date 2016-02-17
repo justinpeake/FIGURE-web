@@ -20,6 +20,8 @@ var aws = require('aws-sdk');
 var path = require('path');
 var http = require('http');
 
+var chalk = require('chalk');
+
 app.io = io;  //second iteration
 
 // if in development mode, load .env variables
@@ -82,7 +84,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
        UserID = user.id;
 
-       console.log('this is user:' + user.id);
     });
 
     passport.deserializeUser(function(obj, done) {
@@ -180,15 +181,16 @@ app.use(function(err, req, res, next) {
 //DO NOT ERASE THIS
 var performerCount = -1;
 
+var loggedIn = 0;
 
 // start listen with socket.io
 // app.io.on('connection', function(socket){  // first iteration
 
 io.on('connection', function(socket){ //second iteration
-  console.log('a user connected');
+
+  console.log(chalk.red(UserID) + ' connected');
 
             performerCount = performerCount + 1;
-
 
             socket.broadcast.emit('performerCount', performerCount);
 
@@ -218,7 +220,10 @@ io.on('connection', function(socket){ //second iteration
               performerCount = performerCount - 1;
               socket.broadcast.emit('performerCount', performerCount);
              // console.log("Client has disconnected " + socket.id);
-              console.log('Client has disconnected:' + UserID);
+
+
+              console.log( chalk.red(UserID) + ' disconnected');
+
             });
 });
 

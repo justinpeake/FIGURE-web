@@ -4,8 +4,90 @@
 \margl1440\margr1440\vieww10800\viewh8400\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
 
-\f0\fs42 \cf0 TODO :  \
-\
-The browse images is actually uploading before "update"}
 
-All this logging is weird.
+Ultimate user flow is:
+
+	> LOGIN
+	> Choose Composition
+	> Perform
+
+	or
+
+	> LOGIN
+	> Create Composition
+	> Upload
+
+
+	\\\\\\\\\\ TODO \\\\\\\\\\
+
+> fix 'browse images' is uploading before "update" is clicked... why?
+
+All this logging is weird?
+
+> user uploads
+	- deal with buckets
+	- how to rename files appropriately to be queried.
+
+> user accounts / dashboard fucntionality
+	- create new composition
+	- save composition
+	- edit vs performance mode.... necessary?
+
+> on login ... instantiate all relevant variables / database queries:
+		- who is user
+		- what are their compositions
+
+> add logout functionality
+
+> make sure pages can only be accessed from an account
+
+> get user id to pull username from mongolab < did this with req.user.username
+
+		> still have undefined variable problem
+
+> bind session ID to performer number
+
+> how to pass 'baton' to performer
+
+> conductor display overlay shadow 'who is playing what'
+
+> appropriate on page responsiveness
+
+> different 'incoming' cue
+
+> DEAL WITH LATENCY? 
+	- add tempo flasher?
+
+> imageFigure sizes for display?
+
+> default figures: "play", "don't play"
+
+> styling!
+
+> inorporate "add collaborator" or "add performer" to menu
+
+
+
+	\\\\\\\\\\ DONE \\\\\\\\\\
+
+2/16/16:
+	
+	> clickable div's for performer's
+
+	> added console.log "reg.user.username" inside auth block in index.html
+
+
+
+	//////
+
+PREdate:
+
+added:  Chalk.js (for console.log coloring)
+
+fixed: user is deserialized upon navigating to a different page causing UserID to be undefined upon new 		page load
+
+
+
+
+
+
