@@ -46,15 +46,15 @@
 
 					#perfsBox {
 
-						width: 50;
-						height: 50;
-						background-color: 222222;
-						font-size: 50;
+						width: 400px;
+						height: 30px;
+						/*background-color: #222222;*/
+						font-size: 45px;
 						padding-top: 6px;
 						color:FFFFFF;
-						text-align: center;
+						/*text-align: center;*/
 						margin: 2px;
-						display:inline-block;
+						display:inline;
 
 					}
 
@@ -112,33 +112,33 @@
 
 					//for autopropagating perf buttons
 
-					// eventually this will create a reactive list of numbers which select which performers
 
-					//updates when a new performer joins or leaves
+			socket.on('performerCount', function (data) {
 
-					// when server emits "performerCount"... do this function
+						var buttons = document.getElementById("perfsBox");
 
-			socket.on('performerCount', function (data) {   
+						$(buttons).html('');   
 
-
-
-						var perfs =[];
 						var x = data;
+						
+						for (i = 1; i < x; i++) {
 
-						for (i = 0; i < x; i++) {
+						console.log("DATA= " + x);
 
 	    				divs.unshift(document.createElement("div"));
 	    				$(divs[0]).html(i);
 	    				$(divs[0]).css('display', 'inline')
+	    				$(divs[0]).css('margin', '10px')
+	    				$(divs[0]).css('padding-left', '5px')
+	    				$(divs[0]).css('background-color', '222222')
+	    				
+	    				$(divs[0]).css('height', '50px')
+	    				$(divs[0]).css('width', '50px')
+
 						
-
-						var buttons = document.getElementById("perfsBox");
-						buttons.appendChild(divs[0]);
-
 						
-
+						$(buttons).append(divs[0]);
 					
-
  					 }
 
 

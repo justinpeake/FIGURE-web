@@ -90,15 +90,16 @@
 
 
 
-	// console.log(UserID);
+					// console.log(UserID);
 
 					var myId = 0; //initialize
 					var toWhom = 0;
 					var toAll = 0;
 
-					
-				var socket = io.connect('compfigures.herokuapp.com/');
-					//var socket = io.connect('localhost:3000/');
+
+					// why do these all of a sudden matter?
+
+					var socket = io.connect();
 
 					$(incoming).fadeTo(1,0);
 
