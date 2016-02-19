@@ -6,7 +6,9 @@
 <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
 <script type="text/javascript" src="/socket.io/socket.io.js"> </script>
 
-<script type="text/javascript" src="index.js"></script> 
+<script type="text/javascript" src="index.js">
+
+</script> 
 <script src="/socket.io/socket.io.js"></script>  
 <script src="/dropzone/dropzone.js"></script>
 <link rel="stylesheet" href=" /dropzone/dropzone.css">
@@ -22,60 +24,54 @@ socket.on('connect', function() {
     
 });
 
-
 </script>  
-
-
 </head>
-
-
-
 
 <body>
 
 
 
-                    Welcome to Composer Dashboard
+    Welcome to Composer Dashboard
 
-    <form action="/file_upload" class="dropzone"  id="greatzone"></form>
+    <form action="/file_upload" class="dropzone"  id="greatzone"> </form>
+
     <input type="file" id="file_input"/>
 
 
 <!-- End dopzone stuff
  -->
 
-    <input action="/submit_form" class="dropzone"  id="greatzone">
+<!--     <input action="/submit_form" class="dropzone"  id="greatzone">
+ -->
 
- 
-        
 
-    <p id="status">Please select a file</p>
+<form method="POST" action="/submit_form/">
 
-<!-- <img id="preview" src="/images/default.png" />
- --> 
-    <form method="POST" action="/submit_form/">
     <input type="hidden" id="avatar_url" name="avatar_url" value="/public/default.png" />
+
     <input type="text" name="figurename" placeholder="figurename" /><br />
     <input type="text" name="keysig" placeholder="keysig" /><br /><br />
 
-
-    <!--    ADD 'owner' field that maybe autopopulates based on currentUserIs
-
-      -->
-
-
     <input type="submit" value="Update profile" />
+
+    <button id="hello"> hello </button>
 
 </form>
 
-<script type="text/javascript">
+<script type="text/javascript" >
 
-//this "onchange" is where it's happening
+//this "onclick" is where the AWS signed happening
 
 (function() {
-    document.getElementById("file_input").onchange = function(){
+
+ // document.getElementById("file_input").onchange = function(){
+
+  $("hello").onclick = function(){
         var files = document.getElementById("file_input").files;
         var file = files[0];
+
+       // console.log(files, file);
+
         if(file == null){
 
             alert("No file selected.");

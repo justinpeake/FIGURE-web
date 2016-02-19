@@ -2,20 +2,14 @@ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 var mongoose = require('mongoose');
-
 // our db model
 var Figure = require("../models/figure.js");
 var Account = require('../models/account.js');
-
 var chalk = require('chalk');
-
 
 var userName = 0;
 
-
 //passport route
-
-
 router.get('/', function (req, res) {
     res.render('index.html', { user : req.user });
 });
@@ -56,7 +50,6 @@ router.get('/compose', function(req, res) {
 });
 
 
-
 // user creates account
 
 //PASSPORT SHIZ
@@ -84,23 +77,25 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 
    console.log(chalk.white(req.user.username) + " logged in");
 
-   res.redirect("performer");
+   res.render("performer.html");
   // res.render("performer.html");   
-});
+  });
 
-router.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-});
+  router.get('/logout', function(req, res) {
+      req.logout();
+      res.redirect('/');
+  });
 
-router.get('/ping', function(req, res){
-    res.status(200).send("pong!");
-});
+  router.get('/ping', function(req, res){
+      res.status(200).send("pong!");
+  });
 
 
 //router.post('/api/create', function(req, res){  //old shit pre upload
 
  router.post('/submit_form', function(req, res){
+
+    userName=req.user.username;
 
     console.log(req.body);
 
@@ -136,8 +131,8 @@ router.get('/ping', function(req, res){
         return res.json(error);
       }
 
-      console.log('SAVED A NEW FIGURE!');
-      console.log(data);
+     // console.log('SAVED A NEW FIGURE!');
+      console.log(chalk.white("TO MONGO:") + chalk.yellow(data));
 
       // now return the json data of the new animal
       var jsonData = {
