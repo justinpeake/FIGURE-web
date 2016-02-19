@@ -20,7 +20,7 @@ var aws = require('aws-sdk');
 var path = require('path');
 var http = require('http');
 
-var chalk = require('chalk');
+var chalk = require('chalk'); 
 
 app.io = io;  //second iteration
 
@@ -107,6 +107,8 @@ passport.use(new LocalStrategy(Account.authenticate()));
 app.get('/compose', function(req, res) {
     res.render('compose.html', { user : req.user });
 });
+
+
 
 app.get('/sign_s3', function(req, res){
     console.log('hiiiiiiii')

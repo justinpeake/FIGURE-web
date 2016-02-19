@@ -47,12 +47,12 @@
 					#perfsBox {
 
 						width: 400px;
-						height: 30px;
+						height: 100px;
 						/*background-color: #222222;*/
 						font-size: 45px;
 						padding-top: 6px;
 						color:FFFFFF;
-						/*text-align: center;*/
+						text-align: center;
 						margin: 2px;
 						display:inline;
 
@@ -121,21 +121,22 @@
 
 						var x = data;
 						
-						for (i = 1; i < x; i++) {
+						for (i = 0; i < x; i++) {
 
-						console.log("DATA= " + x);
+						console.log("DATA = " + x);
 
 	    				divs.unshift(document.createElement("div"));
-	    				$(divs[0]).html(i);
-	    				$(divs[0]).css('display', 'inline')
-	    				$(divs[0]).css('margin', '10px')
-	    				$(divs[0]).css('padding-left', '5px')
-	    				$(divs[0]).css('background-color', '222222')
-	    				
-	    				$(divs[0]).css('height', '50px')
-	    				$(divs[0]).css('width', '50px')
 
-						
+	    				$(divs[0]).html(i);
+	    				
+	    				$(divs[0]).css('height', '50')
+	    				$(divs[0]).css('width', '50')
+	    				$(divs[0]).css('display', 'inline')
+	    				$(divs[0]).css('margin', '5px')
+	    				// $(divs[0]).css('padding-left', '5px')
+	    				$(divs[0]).css('background-color', '222222')
+
+						$(divs[0]).attr('id','p' + i);
 						
 						$(buttons).append(divs[0]);
 					

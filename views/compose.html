@@ -8,45 +8,52 @@
 
 <script type="text/javascript" src="index.js"></script> 
 <script src="/socket.io/socket.io.js"></script>  
+<script src="/dropzone/dropzone.js"></script>
+<link rel="stylesheet" href=" /dropzone/dropzone.css">
 
 <script>  var socket = io(); </script> 
 
 <title>Composer Dashboard</title>
 
-                <script type="text/javascript">
+<script type="text/javascript">
 
-                socket.on('connect', function() {
-                    console.log("Conducter in the house.");
-                    
-                });
+socket.on('connect', function() {
+    console.log("Conducter in the house.");
+    
+});
 
 
-                </script>   
+</script>  
 
-<!-- <script src="/dropzone/dropzone.js"></script>
 
-<link rel="stylesheet" href=" /dropzone/dropzone.css">
- -->
 </head>
+
+
 
 
 <body>
 
-<!-- Welcome to Composer Dashboard
 
-<form action="/file-upload" class="dropzone"  id="my-awesome-dropzone"></form>
+
+                    Welcome to Composer Dashboard
+
+    <form action="/file_upload" class="dropzone"  id="greatzone"></form>
+    <input type="file" id="file_input"/>
+
+
+<!-- End dopzone stuff
  -->
 
-<input type="file" id="file_input"/>
+    <input action="/submit_form" class="dropzone"  id="greatzone">
 
+ 
+        
 
-<p id="status">Please select a file</p>
-
- <p id="owner"> </p>
+    <p id="status">Please select a file</p>
 
 <!-- <img id="preview" src="/images/default.png" />
- -->
-<form method="POST" action="/submit_form/">
+ --> 
+    <form method="POST" action="/submit_form/">
     <input type="hidden" id="avatar_url" name="avatar_url" value="/public/default.png" />
     <input type="text" name="figurename" placeholder="figurename" /><br />
     <input type="text" name="keysig" placeholder="keysig" /><br /><br />
@@ -54,23 +61,16 @@
 
     <!--    ADD 'owner' field that maybe autopopulates based on currentUserIs
 
-
-
-
       -->
 
 
     <input type="submit" value="Update profile" />
 
-
-
-
-
 </form>
 
 <script type="text/javascript">
 
-
+//this "onchange" is where it's happening
 
 (function() {
     document.getElementById("file_input").onchange = function(){
@@ -107,7 +107,7 @@ function get_signed_request(file){
 
             }
 
-            else{
+            else {
 
 
                 console.log("Could not get signed URL.");

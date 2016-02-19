@@ -27,6 +27,10 @@ router.get('/register', function(req, res) {
     res.render('register.html', { });
 });
 
+router.get('/newcomp', function(req, res) {
+    res.render('newcomp.html', { });
+});
+
 router.get('/sample-page', function(req,res){
   res.render('sample.html')
 });
@@ -103,12 +107,16 @@ router.get('/ping', function(req, res){
     // pull out the information from the req.body
     var figureName = req.body.figurename;
     var keySig = req.body.keysig;
+    var owner = req.user;
+    //var keySig = req.body.keysig;
 
     // hold all this data in an object
     // this object should be structured the same way as your db model
     var figureObj = {
       figureName: figureName,
-      keySig: keySig
+      keySig: keySig,
+      owner: owner
+     // location:
       };
       // url: url
     //});
