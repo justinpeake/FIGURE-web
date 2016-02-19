@@ -1,62 +1,54 @@
 <html>
-<head>
-	
-<meta charset="utf-8">
+    <head>
+    	
+        <meta charset="utf-8">
 
-<script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
-<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"> </script>
+        <script src="/socket.io/socket.io.js"></script>  
+        <script src="/dropzone/dropzone.js"></script>
+        <link rel="stylesheet" href=" /dropzone/dropzone.css">
 
-<script type="text/javascript" src="index.js">
+        <script>  var socket = io(); </script> 
 
-</script> 
-<script src="/socket.io/socket.io.js"></script>  
-<script src="/dropzone/dropzone.js"></script>
-<link rel="stylesheet" href=" /dropzone/dropzone.css">
+        <title>Composer Dashboard</title>
 
-<script>  var socket = io(); </script> 
+                <script type="text/javascript">
 
-<title>Composer Dashboard</title>
+                        socket.on('connect', function() {
+                            console.log("Composer in the house.");
+                            
+                        });
 
-<script type="text/javascript">
+                </script>  
 
-socket.on('connect', function() {
-    console.log("Conducter in the house.");
-    
-});
-
-</script>  
-</head>
+    </head>
 
 <body>
 
 
 
-    Welcome to Composer Dashboard
+
+    Welcome to Composer Dashboard {{ user }}
 
     <form action="/file_upload" class="dropzone"  id="greatzone"> </form>
 
     <input type="file" id="file_input"/>
 
 
-<!-- End dopzone stuff
- -->
+    <form method="POST" action="/submit_form/">
 
-<!--     <input action="/submit_form" class="dropzone"  id="greatzone">
- -->
+        <input type="text" name="figurename" placeholder="figurename" /><br />
+        <input type="text" name="keysig" placeholder="keysig" /><br /><br />
+
+        <input type="submit" value="Update profile" />
+
+        <button id="hello"> hello </button>
+
+    </form>
 
 
-<form method="POST" action="/submit_form/">
 
-    <input type="hidden" id="avatar_url" name="avatar_url" value="/public/default.png" />
-
-    <input type="text" name="figurename" placeholder="figurename" /><br />
-    <input type="text" name="keysig" placeholder="keysig" /><br /><br />
-
-    <input type="submit" value="Update profile" />
-
-    <button id="hello"> hello </button>
-
-</form>
 
 <script type="text/javascript" >
 
@@ -64,9 +56,9 @@ socket.on('connect', function() {
 
 (function() {
 
- // document.getElementById("file_input").onchange = function(){
+    document.getElementById("file_input").onchange = function(){
 
-  $("hello").onclick = function(){
+//  $("hello").onclick = function(){
         var files = document.getElementById("file_input").files;
         var file = files[0];
 
@@ -100,14 +92,11 @@ function get_signed_request(file){
                 // >>>>>>  console.log(response)
 
                 upload_file(file, response.signed_request, response.url);
-
             }
 
             else {
 
-
                 console.log("Could not get signed URL.");
-
                 
             }
         }

@@ -46,7 +46,7 @@ router.get('/login', function(req, res) {
 });
 
 router.get('/compose', function(req, res) {
-    res.render('compose.html', { user : req.user });
+    res.render('compose.html', { user : req.user});
 });
 
 
@@ -59,7 +59,7 @@ router.post('/register', function(req, res) {
        
         if (err) {
           return res.render("register.html", {message: "Sorry. That username already exists. Try again."});
-          console.log("sorry taken");
+          
         }
 
         passport.authenticate('local')(req, res, function () {
@@ -77,11 +77,12 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 
    console.log(chalk.white(req.user.username) + " logged in");
 
-   res.render("performer.html");
-  // res.render("performer.html");   
+   res.render("performer.html", {user: req.user.username});
+
   });
 
   router.get('/logout', function(req, res) {
+
       req.logout();
       res.redirect('/');
   });
@@ -91,13 +92,7 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
   });
 
 
-//router.post('/api/create', function(req, res){  //old shit pre upload
-
  router.post('/submit_form', function(req, res){
-
-    userName=req.user.username;
-
-    console.log(req.body);
 
     // pull out the information from the req.body
     var figureName = req.body.figurename;
@@ -111,11 +106,8 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
       figureName: figureName,
       keySig: keySig,
       owner: owner
-     // location:
       };
-      // url: url
-    //});
-
+     
     // create a new figre model instance, passing in the object
     var figure = new Figure(figureObj);
 
@@ -127,7 +119,7 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
       // if err saving, respond back with error
       
       if (err){
-        var error = {status:'ERROR', message: 'Error saving animal'};
+        var error = {status:'ERROR', message: 'Error saving figure'};
         return res.json(error);
       }
 
