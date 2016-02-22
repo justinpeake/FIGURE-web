@@ -111,8 +111,11 @@ app.get('/compose', function(req, res) {
 
 
 app.get('/sign_s3', function(req, res){
-    console.log('hiiiiiiii')
+
+    console.log('hiiiiiiii');
+  
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+
     var s3 = new aws.S3();
     var s3_params = {
 
@@ -123,18 +126,28 @@ app.get('/sign_s3', function(req, res){
         ACL: 'public-read'
         
     };
+
     s3.getSignedUrl('putObject', s3_params, function(err, data){
-        //console.log(data);
+
         if(err){
             console.log(err);
         }
         else{
+          
             var return_data = {
+
                 signed_request: data,
+
                 url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.query.file_name
+
             };
+
+            console.log('end server stack ' + return_data.url);
+
             res.write(JSON.stringify(return_data));
+
             res.end();
+
         }
     });
 });

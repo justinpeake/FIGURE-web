@@ -1,33 +1,28 @@
         
    <html>
 		<head>
-
 			<title>FIGURE</title>
 			
-
 		 		<!-- add external scripts like jquery and socket.io -->
 
 		        <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
 				<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
-
 				<script src="/socket.io/socket.io.js"></script>  
-
 				<script type="text/javascript" src="app.js"></script> 
-
 				
-				<script>  var socket = io(); </script> 
-
-					
+				<script>  var socket = io(); </script> 	
+				
 				<script type="text/javascript">
 
 							socket.on('connect', function() {
 								console.log("Conducter in the house.");
 							});
 
-
 				</script>	
 
+
 										<!-- head scripts END -->
+
 
 				<style>
 						@font-face {
@@ -61,19 +56,15 @@
 
 					}
 
-
 				</style>
-
 		</head>
-
-
  <body>
  			
 
-			<div id="messages" align="left"> You are the conductor. </div> 
 
+			<div id="messages" align="left"> You are the conductor. {{user}} </div> 
 
-			<!--  Making autopropagateing performer number boxes  -->
+			<!--  Making autopropagating performer number boxes  -->
 
 			<div id="perfsBox">           </div> 
 			
@@ -84,27 +75,30 @@
 			</p>
 			<img  src="img/all.png"    id="p4"   style="width:35px; height:25">
 			
-
 			</div>
-
 
 									<!-- figure  images -->
 
 		<div id="figuresBox" align="center">
 
-		 	<img  src="/assets/ooh.png"   		  id="hp1"   style="width:167px; height:48">
-		 	<img  src="/assets/aah.png"   		  id="hp2"   style="width:167px; height:48">
+		 	<img  src="/assets/play.png"   		  id="hp1"   style="width:167px; height:167">
+		 	<img  src="/assets/stop.png"   		  id="hp2"   style="width:167px; height:167">
+
 		 	<p>
-		 	<img  src="/assets/clapwave.png"      id="hp3"   style="width:167px; height:48">
-		 	<img  src="/assets/taps.png"      	  id="hp4"   style="width:167px; height:48">
+	
+		 	<img  src="/assets/figureOne.png"      id="hp3"   style="width:167px; height:167">
+		 	<img  src="/assets/figureTwo.png"      	  id="hp4"   style="width:167px; height:167">
+		 	
+		 	<img  src="/assets/figureThree.png"      id="hp5"   style="width:167px; height:167">
+		 	
 		 	<p>
-		 	<img  src="/assets/sitstand.png"      id="hp5"   style="width:167px; height:48">
-		 	<img  src="/assets/silly.png"         id="hp6"   style="width:167px; height:48">
+		 	
+		 	<img  src="/assets/silly.png"         id="hp6"   style="width:167px; height:167">
 
 		</div>	
 
 
-			 <script type="text/javascript">
+			<script type="text/javascript">
 
 				// performer button functionality
 
@@ -115,48 +109,46 @@
 
 					//for autopropagating perf buttons
 
-
 			socket.on('performerCount', function (data) {
 
-						var buttons = document.getElementById("perfsBox");
+						// var buttons = document.getElementById("perfsBox");
 
-						$(buttons).html('');   
+						// $(buttons).html('');   
 
-						var x = data;
+						// var x = data;
 						
-						for (i = 0; i < x; i++) {
+						// for (i = 0; i < x; i++) {
 
-						console.log("DATA = " + x);
+						// console.log("DATA = " + x);
 
-	    				divs.unshift(document.createElement("div"));
+	    	// 			divs.unshift(document.createElement("div"));
 
-	    				$(divs[0]).html(i);
+	    	// 			$(divs[0]).html(i);
 	    				
-	    				$(divs[0]).css('height', '50')
-	    				$(divs[0]).css('width', '50')
-	    				$(divs[0]).css('display', 'inline')
-	    				$(divs[0]).css('margin', '5px')
-	    				// $(divs[0]).css('padding-left', '5px')
-	    				$(divs[0]).css('background-color', '222222')
+	    	// 			$(divs[0]).css('height', '50')
+	    	// 			$(divs[0]).css('width', '50')
+	    	// 			$(divs[0]).css('display', 'inline')
+	    	// 			$(divs[0]).css('margin', '5px')
+	    	// 			// $(divs[0]).css('padding-left', '5px')
+	    	// 			$(divs[0]).css('background-color', '222222')
 
-						$(divs[0]).attr('id','p' + i);
-						
-						$(buttons).append(divs[0]);
+						// $(divs[0]).attr('id','p' + i);
+
+						// $(buttons).append(divs[0]);
 					
- 					 }
+ 					//  }
 
-
-					//old
-
+ 					 // old way of updating performer buttons
 					// document.getElementById("checking").innerHTML = "performers: " + perfs.join("  ");  
-
-					// changing the #performers on conductor page
-
 							
 				});
 
+					$(divs[0]).click(function(){
 
+						console.log("haynow");
 
+					}
+				);
 			 		$(p1).click(function(){
 
 			 			
@@ -233,78 +225,41 @@
 
 			 	$(hp1).click(function(){
 			 		console.log("station");
-			 		socket.emit('imageFigure', "/assets/ooh.png");
-
-			 		//changes the status "who is playing what" on conductor page
-			 		// document.getElementById('s'+toWhom).src = "/assets/station.png";
-
+			 		socket.emit('imageFigure', "/assets/play.png");
 			 	}
 			 );
 
 				$(hp2).click(function(){
 			 		console.log("metal");
-			 		socket.emit('imageFigure', "/assets/aah.png");
-
-			 		// document.getElementById('s'+toWhom).src = "/assets/metal.png";
+			 		socket.emit('imageFigure', "/assets/stop.png");
 			 	}
 			  );
 
 				$(hp3).click(function(){
 			 		console.log("charmy");
-			 		socket.emit('imageFigure', "/assets/clapwave.png");
-
-			 		// document.getElementById('s'+toWhom).src = "/assets/charmy.png";
+			 		socket.emit('imageFigure', "/assets/figureOne.png");
 			 	}
 			  );
 
 				$(hp4).click(function(){
 			 		console.log("candy");
-			 		socket.emit('imageFigure', "/assets/taps.png");
-
-			 		// document.getElementById('s'+toWhom).src = "/assets/candy.png";
+			 		socket.emit('imageFigure', "/assets/figureTwo.png");
 			 	}
 			  );
 
 				$(hp5).click(function(){
 			 		console.log("tacet");
-			 		socket.emit('imageFigure', "/assets/sitstand.png");
-
-			 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
+			 		socket.emit('imageFigure', "/assets/figureThree.png");
 			 	}
 			  );
 
 				$(hp6).click(function(){
 			 		console.log("tacet");
 			 		socket.emit('imageFigure', "/assets/silly.png");
-
-			 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
 			 	}
 			  );
 
-				// $(hp7).click(function(){
-			 // 		console.log("tacet");
-			 // 		socket.emit('imageFigure', "/assets/percussive1.png");
-
-			 // 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
-			 // 	}
-			 //  );
-
-				// $(hp8).click(function(){
-			 // 		console.log("tacet");
-			 // 		socket.emit('imageFigure', "/assets/separation1.png");
-
-			 // 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
-			 // 	}
-			 //  );
-
-				// $(hp9).click(function(){
-			 // 		console.log("tacet");
-			 // 		socket.emit('imageFigure', "/assets/tacet.png");
-
-			 // 		// document.getElementById('s'+toWhom).src = "/assets/tacet.png";
-			 // 	}
-			 //  );
-
+		
 
 			</script>
  

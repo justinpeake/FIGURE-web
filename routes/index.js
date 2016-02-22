@@ -34,11 +34,11 @@ router.get('/form', function(req,res){
 });
 
 router.get('/conductor', function(req,res){
-  res.render('conductor.html')
+  res.render('conductor.html', {user: req.user});
 });
 
 router.get('/performer', function(req,res){
-  res.render('performer.html')
+  res.render('performer.html', {user: req.user})
 });
 
 router.get('/login', function(req, res) {
@@ -46,22 +46,19 @@ router.get('/login', function(req, res) {
 });
 
 router.get('/compose', function(req, res) {
-    res.render('compose.html', { user : req.user});
+    res.render('compose.html', { user : req.user });
 });
 
 
-// user creates account
+
 
 //PASSPORT SHIZ
 router.post('/register', function(req, res) {
 
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
-       
-        if (err) {
-          return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});
-          
+        if (err) {          
+          return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});        
         }
-
         passport.authenticate('local')(req, res, function () {
            // res.redirect('/');
             res.render("conductor.html");  // this is where the dashboard should jump in
@@ -74,15 +71,12 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 
    //declared globally
    userName = req.user.username;
-
    console.log(chalk.white(req.user.username) + " logged in");
-
-   res.render("performer.html", {user: req.user.username});
+   res.render("performer.html");
 
   });
 
   router.get('/logout', function(req, res) {
-
       req.logout();
       res.redirect('/');
   });
