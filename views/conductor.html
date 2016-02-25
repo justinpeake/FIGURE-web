@@ -19,11 +19,7 @@
 							});
 
 				</script>	
-
-
 										<!-- head scripts END -->
-
-
 				<style>
 						@font-face {
 					    font-family: nexa;
@@ -226,6 +222,11 @@
 			// figure button functionality
 
 			 	$(hp1).click(function(){
+
+			 		$(hp1).fadeTo("slow", 0.5, function() {
+
+			 		});
+
 			 		console.log("station");
 			 		socket.emit('imageFigure', "/assets/play.png");
 			 	}

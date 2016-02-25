@@ -23,7 +23,7 @@ var http = require('http');
 var chalk = require('chalk'); 
 
 app.io = io;  //second iteration
-
+ 
 // if in development mode, load .env variables
 //Declare .env variables AFTER THIS
 
@@ -102,15 +102,17 @@ app.get('/sign_s3', function(req, res){
 
     var s3 = new aws.S3();
 
+
+    // name the new AWS folder
+    var folder = "shifty/"
+
     var s3_params = {
         Bucket: S3_BUCKET,
-        //Key: 'justin/',
-       Key: req.query.file_name,
+        Key: folder + req.query.file_name,
         Expires: 60,
         ContentType: req.query.file_type,
         ACL: 'public-read' 
     };
-
 
 
     s3.listObjects({Bucket: S3_BUCKET}, function(err, data){
