@@ -100,10 +100,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
 //AWS S3 SHIZ
 
-// app.get('/compose', function(req, res) {
-//     res.render('compose.html', { user : req.user });
-// });
-
 app.get('/sign_s3', function(req, res){
 
     console.log('hiiiiiiii');
@@ -112,38 +108,49 @@ app.get('/sign_s3', function(req, res){
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
 
     var s3 = new aws.S3();
-
     var s3_params = {
-
         Bucket: S3_BUCKET,
         Key: req.query.file_name,
         Expires: 60,
         ContentType: req.query.file_type,
-        ACL: 'public-read'
-        
+        ACL: 'public-read' 
     };
+
+
+
+
+
+    s3.listBuckets().on('success', function(response) {
+
+      console.log(response.data);
+
+     }).send();
+
+
+    s3.listObjects({Bucket: S3_BUCKET}, function(err, data){
+    console.log(data.Contents);
+
+    });
+
+
+
 
     s3.getSignedUrl('putObject', s3_params, function(err, data){
 
         if(err){
 
-            console.log(err);
-            
-        }
+            console.log(err);            
+       }
         else {
           
             var return_data = {
-
                 signed_request: data,
-
-                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.query.file_name
-
+                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ req.query.file_name
             };
 
             console.log(return_data.url);
 
             res.write(JSON.stringify(return_data));
-
             res.end();
 
         }
@@ -205,7 +212,6 @@ io.on('connection', function(socket){ //second iteration
             socket.broadcast.emit('performerCount', performerCount);
 
             // When this user emits, client side: socket.emit('otherevent',some data);
-
             socket.on('sendingTo', function(data) {
               console.log("Received: 'sendingTo' " + data);
               socket.broadcast.emit('sendingTo', data);

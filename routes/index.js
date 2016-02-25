@@ -50,8 +50,6 @@ router.get('/compose', function(req, res) {
 });
 
 
-
-
 //PASSPORT SHIZ
 router.post('/register', function(req, res) {
 
