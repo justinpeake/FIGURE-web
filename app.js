@@ -89,13 +89,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
        done(null, obj);
     });
 
-//other shiz
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
 
 
 //AWS S3 SHIZ
@@ -108,9 +101,11 @@ app.get('/sign_s3', function(req, res){
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
 
     var s3 = new aws.S3();
+
     var s3_params = {
         Bucket: S3_BUCKET,
-        Key: req.query.file_name,
+        //Key: 'justin/',
+       Key: req.query.file_name,
         Expires: 60,
         ContentType: req.query.file_type,
         ACL: 'public-read' 
@@ -118,21 +113,10 @@ app.get('/sign_s3', function(req, res){
 
 
 
-
-
-    s3.listBuckets().on('success', function(response) {
-
-      console.log(response.data);
-
-     }).send();
-
-
     s3.listObjects({Bucket: S3_BUCKET}, function(err, data){
     console.log(data.Contents);
 
     });
-
-
 
 
     s3.getSignedUrl('putObject', s3_params, function(err, data){
@@ -158,20 +142,11 @@ app.get('/sign_s3', function(req, res){
 });
 
 
-// app.post('/submit_form', function(req, res){
-//     username = req.body.username;
-//     full_name = req.body.full_name;
-//     avatar_url = req.body.avatar_url;
-
-//     // DEFINE THIS??
-//     // update_account(username, full_name, avatar_url); 
-//     // TODO: create this function
-//     // TODO: Return something useful or redirect
-
-// });
-
-
 // END AWS S3 SHIZ
+
+
+
+
 
 // error handlers
 
