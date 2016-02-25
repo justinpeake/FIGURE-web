@@ -76,22 +76,18 @@ var UserID;
 
 var Account = require('./models/account.js');
 
+
+
 passport.use(new LocalStrategy(Account.authenticate()));
 
     passport.serializeUser(function(user, done) {
-
        done(null, user.id);
-
        UserID = user.id;
-
     });
 
     passport.deserializeUser(function(obj, done) {
-
        done(null, obj);
-
     });
-
 
 //other shiz
 // // catch 404 and forward to error handler
@@ -104,19 +100,19 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
 //AWS S3 SHIZ
 
-app.get('/compose', function(req, res) {
-    res.render('compose.html', { user : req.user });
-});
-
-
+// app.get('/compose', function(req, res) {
+//     res.render('compose.html', { user : req.user });
+// });
 
 app.get('/sign_s3', function(req, res){
 
     console.log('hiiiiiiii');
   
+    //this is against AWS recommendation
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
 
     var s3 = new aws.S3();
+
     var s3_params = {
 
         Bucket: S3_BUCKET,
@@ -130,9 +126,11 @@ app.get('/sign_s3', function(req, res){
     s3.getSignedUrl('putObject', s3_params, function(err, data){
 
         if(err){
+
             console.log(err);
+            
         }
-        else{
+        else {
           
             var return_data = {
 
@@ -142,7 +140,7 @@ app.get('/sign_s3', function(req, res){
 
             };
 
-            console.log('end server stack ' + return_data.url);
+            console.log(return_data.url);
 
             res.write(JSON.stringify(return_data));
 

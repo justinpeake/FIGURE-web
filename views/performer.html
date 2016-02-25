@@ -7,6 +7,9 @@
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
 		<script type="text/javascript" src="app.js"></script> 
+		<script type="text/javascript" src="/js/sketches.js"></script> 
+
+		<script src= " https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 
 		<script>  var socket = io(); </script> 
 
@@ -80,7 +83,6 @@
 	 <!-- This is where each new figure is injected into the performer page.
 	 	  "currentFigure" is the name of the element that needs to be updated from conductor page. -->
 
-
 			 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
 			 	
 			 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
@@ -90,7 +92,7 @@
  
 	<script type="text/javascript">
 
-
+					//var myp5 = new p5(s);
 
 					// console.log(UserID);
 

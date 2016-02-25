@@ -22,7 +22,8 @@
                             
                         });
 
-                </script>  
+                </script> 
+
     </head>
 
 
@@ -31,10 +32,10 @@
 
     Welcome to Composer Dashboard {{user}}
 
+<!--     <form action="/file-upload" class="dropzone"  id="howdyZone"></form>
+ -->
     <p>
-
         <input type="file" id="file_input"/>
-
         <p>
 
                 <form method="POST" action="/submit_form/">
@@ -48,9 +49,6 @@
                 </form>
 
 
-{{url}}
-
-
 <script type="text/javascript" >
 
 
@@ -61,6 +59,8 @@
         var files = document.getElementById("file_input").files;
 
         var file = files[0];
+
+       // console.log(file);
         
         if(file == null){
 
@@ -81,8 +81,11 @@ function get_signed_request(file){
     xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
 
     xhr.onreadystatechange = function(){
+
         if(xhr.readyState === 4){
+
             console.log(xhr);
+
             if(xhr.status === 200){
 
                 var response = JSON.parse(xhr.responseText);
@@ -111,7 +114,7 @@ function upload_file(file, signed_request, url){
     xhr.onload = function() {
    
         if (xhr.status === 200) {
-        //    document.getElementById("preview").src = url;
+           4//   document.getElementById("preview").src = url;
           //  document.getElementById("avatar_url").value = url;
         }
     };
