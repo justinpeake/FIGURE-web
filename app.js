@@ -72,7 +72,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 
-var UserID;
+var userID;
+
+var userName;
+
 
 var Account = require('./models/account.js');
 
@@ -82,7 +85,9 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
     passport.serializeUser(function(user, done) {
        done(null, user.id);
-       UserID = user.id;
+
+       userID = user.id;
+
     });
 
     passport.deserializeUser(function(obj, done) {
@@ -96,6 +101,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
 app.get('/sign_s3', function(req, res){
 
     console.log('hiiiiiiii');
+    console.log(req.user);
   
     //this is against AWS recommendation
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
@@ -143,12 +149,7 @@ app.get('/sign_s3', function(req, res){
     });
 });
 
-
 // END AWS S3 SHIZ
-
-
-
-
 
 // error handlers
 
@@ -182,7 +183,7 @@ var performerCount = -1;
 
 io.on('connection', function(socket){ //second iteration
 
-  console.log(chalk.red(UserID) + ' connected');
+  console.log(chalk.red(userID) + ' connected');
 
             performerCount = performerCount + 1;
 
@@ -214,8 +215,7 @@ io.on('connection', function(socket){ //second iteration
               socket.broadcast.emit('performerCount', performerCount);
              // console.log("Client has disconnected " + socket.id);
 
-
-              console.log( chalk.red(UserID) + ' disconnected');
+              console.log( chalk.red(userID) + ' disconnected');
 
             });
 });

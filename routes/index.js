@@ -1,4 +1,4 @@
-var express = require('express');
+ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -7,12 +7,31 @@ var Figure = require("../models/figure.js");
 var Account = require('../models/account.js');
 var chalk = require('chalk');
 
-var userName = 0;
+var userName = '';
 
 //passport route
 router.get('/', function (req, res) {
-    res.render('index.html', { user : req.user });
+    res.render('index.html', {});
 });
+
+
+        router.post('/login', passport.authenticate('local'), function(req, res) {
+
+           //declared globally
+           userName = req.user.username;
+           console.log(chalk.white(req.user.username) + " logged in");
+           res.render("compose.html", {user: userName});
+
+          });
+
+          router.get('/logout', function(req, res) {
+              req.logout();
+              res.redirect('/');
+          });
+
+          router.get('/ping', function(req, res){
+              res.status(200).send("pong!");
+          });
 
 
 // simple route to show an HTML page
@@ -21,9 +40,6 @@ router.get('/register', function(req, res) {
     res.render('register.html', { });
 });
 
-router.get('/newcomp', function(req, res) {
-    res.render('newcomp.html', { });
-});
 
 router.get('/sample-page', function(req,res){
   res.render('sample.html')
@@ -33,20 +49,40 @@ router.get('/form', function(req,res){
   res.render('formTest.html')
 });
 
+
 router.get('/conductor', function(req,res){
-  res.render('conductor.html', {user: req.user});
+
+        if(req.user) {
+        res.render('conductor.html', {user: userName});        
+        }else{        
+        res.render('index.html')       
+        }
 });
+
+
 
 router.get('/performer', function(req,res){
-  res.render('performer.html', {user: req.user})
+
+      if(req.user) {   
+        res.render('performer.html', {user: userName});        
+        }else{        
+        res.render('index.html')        
+        }
 });
+
 
 router.get('/login', function(req, res) {
-    res.render('login.html', { user : req.user });
+    res.render('login.html', { });
 });
 
+
 router.get('/compose', function(req, res) {
-    res.render('compose.html', { user : req.user });
+    
+      if(req.user) {          
+        res.render('compose.html', {user: userName});        
+        }else{        
+        res.render('index.html')        
+        }
 });
 
 
@@ -64,24 +100,6 @@ router.post('/register', function(req, res) {
     });
 });
 
-
-router.post('/login', passport.authenticate('local'), function(req, res) {
-
-   //declared globally
-   userName = req.user.username;
-   console.log(chalk.white(req.user.username) + " logged in");
-   res.render("performer.html");
-
-  });
-
-  router.get('/logout', function(req, res) {
-      req.logout();
-      res.redirect('/');
-  });
-
-  router.get('/ping', function(req, res){
-      res.status(200).send("pong!");
-  });
 
 
  router.post('/submit_form', function(req, res){
@@ -123,155 +141,156 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
         status: 'OK',
         animal: data
       }
-
       return res.json(jsonData);
-
     })  
 });
 
 
-router.get('/api/get/:id', function(req, res){
 
-  var requestedId = req.param('id');
 
-  // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model.findById
-  Animal.findById(requestedId, function(err,data){
 
-    // if err or no user found, respond with error 
-    if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find that animal'};
-       return res.json(error);
-    }
+// router.get('/api/get/:id', function(req, res){
 
-    // otherwise respond with JSON data of the animal
-    var jsonData = {
-      status: 'OK',
-      animal: data
-    }
+//   var requestedId = req.param('id');
 
-    return res.json(jsonData);
+//   // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model.findById
+//   Animal.findById(requestedId, function(err,data){
+
+//     // if err or no user found, respond with error 
+//     if(err || data == null){
+//       var error = {status:'ERROR', message: 'Could not find that animal'};
+//        return res.json(error);
+//     }
+
+//     // otherwise respond with JSON data of the animal
+//     var jsonData = {
+//       status: 'OK',
+//       animal: data
+//     }
+
+//     return res.json(jsonData);
   
-  })
-})
+//   })
+// })
 
-router.get('/api/get', function(req, res){
+// router.get('/api/get', function(req, res){
 
-  // mongoose method to find all, see http://mongoosejs.com/docs/api.html#model_Model.find
-  Figure.count(function(err, data){
-    // if err or no animals found, respond with error 
-    if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find animals'};
-      return res.json(error);
-    }
+//   // mongoose method to find all, see http://mongoosejs.com/docs/api.html#model_Model.find
+//   Figure.count(function(err, data){
+//     // if err or no animals found, respond with error 
+//     if(err || data == null){
+//       var error = {status:'ERROR', message: 'Could not find animals'};
+//       return res.json(error);
+//     }
 
-    // otherwise, respond with the data 
+//     // otherwise, respond with the data 
 
-    var jsonData = {
-      status: 'OK',
-      figures: data
-    } 
+//     var jsonData = {
+//       status: 'OK',
+//       figures: data
+//     } 
 
-    res.json(jsonData);
+//     res.json(jsonData);
 
-  })
+//   })
 
-})
+// })
 
-router.post('/api/update/:id', function(req, res){
+// router.post('/api/update/:id', function(req, res){
 
-   var requestedId = req.param('id');
+//    var requestedId = req.param('id');
 
-   var dataToUpdate = {}; // a blank object of data to update
+//    var dataToUpdate = {}; // a blank object of data to update
 
-    // pull out the information from the req.body and add it to the object to update
-    var name, age, weight, color, url; 
+//     // pull out the information from the req.body and add it to the object to update
+//     var name, age, weight, color, url; 
 
-    // we only want to update any field if it actually is contained within the req.body
-    // otherwise, leave it alone.
-    if(req.body.name) {
-      name = req.body.name;
-      // add to object that holds updated data
-      dataToUpdate['name'] = name;
-    }
-    if(req.body.age) {
-      age = req.body.age;
-      // add to object that holds updated data
-      dataToUpdate['age'] = age;
-    }
-    if(req.body.weight) {
-      weight = req.body.weight;
-      // add to object that holds updated data
-      dataToUpdate['description'] = {};
-      dataToUpdate['description']['weight'] = weight;
-    }
-    if(req.body.color) {
-      color = req.body.color;
-      // add to object that holds updated data
-      if(!dataToUpdate['description']) dataToUpdate['description'] = {};
-      dataToUpdate['description']['color'] = color;
-    }
-    if(req.body.url) {
-      url = req.body.url;
-      // add to object that holds updated data
-      dataToUpdate['url'] = url;
-    }
+//     // we only want to update any field if it actually is contained within the req.body
+//     // otherwise, leave it alone.
+//     if(req.body.name) {
+//       name = req.body.name;
+//       // add to object that holds updated data
+//       dataToUpdate['name'] = name;
+//     }
+//     if(req.body.age) {
+//       age = req.body.age;
+//       // add to object that holds updated data
+//       dataToUpdate['age'] = age;
+//     }
+//     if(req.body.weight) {
+//       weight = req.body.weight;
+//       // add to object that holds updated data
+//       dataToUpdate['description'] = {};
+//       dataToUpdate['description']['weight'] = weight;
+//     }
+//     if(req.body.color) {
+//       color = req.body.color;
+//       // add to object that holds updated data
+//       if(!dataToUpdate['description']) dataToUpdate['description'] = {};
+//       dataToUpdate['description']['color'] = color;
+//     }
+//     if(req.body.url) {
+//       url = req.body.url;
+//       // add to object that holds updated data
+//       dataToUpdate['url'] = url;
+//     }
 
-    var tags = []; // blank array to hold tags
-    if(req.body.tags){
-      tags = req.body.tags.split(","); // split string into array
-      // add to object that holds updated data
-      dataToUpdate['tags'] = tags;
-    }
-
-
-    console.log('the data to update is ' + JSON.stringify(dataToUpdate));
-
-    // now, update that animal
-    // mongoose method findByIdAndUpdate, see http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate  
-    Animal.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
-      // if err saving, respond back with error
-      if (err){
-        var error = {status:'ERROR', message: 'Error updating animal'};
-        return res.json(error);
-      }
-
-      console.log('updated the animal!');
-      console.log(data);
-
-      // now return the json data of the new person
-      var jsonData = {
-        status: 'OK',
-        animal: data
-      }
-
-      return res.json(jsonData);
-
-    })
-
-})
+//     var tags = []; // blank array to hold tags
+//     if(req.body.tags){
+//       tags = req.body.tags.split(","); // split string into array
+//       // add to object that holds updated data
+//       dataToUpdate['tags'] = tags;
+//     }
 
 
-router.get('/api/delete/:id', function(req, res){
+//     console.log('the data to update is ' + JSON.stringify(dataToUpdate));
 
-  var requestedId = req.param('id');
+//     // now, update that animal
+//     // mongoose method findByIdAndUpdate, see http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate  
+//     Animal.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
+//       // if err saving, respond back with error
+//       if (err){
+//         var error = {status:'ERROR', message: 'Error updating animal'};
+//         return res.json(error);
+//       }
 
-  // Mongoose method to remove, http://mongoosejs.com/docs/api.html#model_Model.findByIdAndRemove
-  Animal.findByIdAndRemove(requestedId,function(err, data){
-    if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find that animal to delete'};
-      return res.json(error);
-    }
+//       console.log('updated the animal!');
+//       console.log(data);
 
-    // otherwise, respond back with success
-    var jsonData = {
-      status: 'OK',
-      message: 'Successfully deleted id ' + requestedId
-    }
+//       // now return the json data of the new person
+//       var jsonData = {
+//         status: 'OK',
+//         animal: data
+//       }
 
-    res.json(jsonData);
+//       return res.json(jsonData);
 
-  })
+//     })
 
-})
+// })
+
+
+// router.get('/api/delete/:id', function(req, res){
+
+//   var requestedId = req.param('id');
+
+//   // Mongoose method to remove, http://mongoosejs.com/docs/api.html#model_Model.findByIdAndRemove
+//   Animal.findByIdAndRemove(requestedId,function(err, data){
+//     if(err || data == null){
+//       var error = {status:'ERROR', message: 'Could not find that animal to delete'};
+//       return res.json(error);
+//     }
+
+//     // otherwise, respond back with success
+//     var jsonData = {
+//       status: 'OK',
+//       message: 'Successfully deleted id ' + requestedId
+//     }
+
+//     res.json(jsonData);
+
+//   })
+
+// })
 
 module.exports = router;
