@@ -2,12 +2,16 @@ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 var mongoose = require('mongoose');
-// our db model
+
+// our db models
 var Figure = require("../models/figure.js");
 var Account = require('../models/account.js');
+
 var chalk = require('chalk');
 
- userName = '';
+ userName = '';  //declared globally to go to app.js
+
+ page = '';
 
 //passport route
 router.get('/', function (req, res) {
@@ -15,25 +19,25 @@ router.get('/', function (req, res) {
 });
 
 
-        router.post('/login', passport.authenticate('local'), function(req, res) {
+    router.post('/login', passport.authenticate('local'), function(req, res) {
 
-           //declared globally
+       //declared globally
 
-           userName = req.user.username;
+       userName = req.user.username;
 
-           console.log(chalk.white(req.user.username) + " logged in");
-           res.render("compose.html", {user: userName});
+       console.log(chalk.white(req.user.username) + " logged in");
+       res.render("compose.html", {user: userName});
 
-          });
+      });
 
-          router.get('/logout', function(req, res) {
-              req.logout();
-              res.redirect('/');
-          });
+      router.get('/logout', function(req, res) {
+          req.logout();
+          res.redirect('/');
+      });
 
-          router.get('/ping', function(req, res){
-              res.status(200).send("pong!");
-          });
+      router.get('/ping', function(req, res){
+          res.status(200).send("pong!");
+      });
 
 
 // simple route to show an HTML page
@@ -43,6 +47,7 @@ router.get('/register', function(req, res) {
   });
 
 router.get('/login', function(req, res) {
+  page = 'login'; 
     res.render('login.html', { });
   });
 
@@ -51,7 +56,8 @@ router.get('/login', function(req, res) {
 router.get('/conductor', function(req,res){
 
         if(req.user) {
-        res.render('conductor.html', {user: userName});        
+        res.render('conductor.html', {user: userName});     
+        page = 'conductor';   
         }else{        
         res.render('index.html')       
         }
@@ -62,7 +68,8 @@ router.get('/conductor', function(req,res){
 router.get('/performer', function(req,res){
 
       if(req.user) {   
-        res.render('performer.html', {user: userName});        
+        res.render('performer.html', {user: userName});  
+        page = 'performer';        
         }else{        
         res.render('index.html')        
         }
@@ -72,7 +79,8 @@ router.get('/performer', function(req,res){
 router.get('/compose', function(req, res) {
     
       if(req.user) {          
-        res.render('compose.html', {user: userName});        
+        res.render('compose.html', {user: userName}); 
+        page = 'compose';        
         }else{        
         res.render('index.html')        
         }
