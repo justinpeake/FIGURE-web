@@ -22,7 +22,7 @@ var users = require('./routes/users.js');
 
 var aws = require('aws-sdk');
 var path = require('path');
-var http = require('http');
+var http = require('http'); 
 
 var chalk = require('chalk'); 
 
@@ -45,6 +45,7 @@ app.db = mongoose.connect(process.env.MONGOLAB_URI);
 var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
 var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
 var S3_BUCKET = process.env.S3_BUCKET;
+
 
 // view engine setup - this app uses Hogan-Express
 // https://github.com/vol4ok/hogan-express
@@ -95,6 +96,8 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
 app.get('/sign_s3', function(req, res){
 
+  
+
     console.log('hiiiiiiii');
     //this is against AWS recommendation
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
@@ -111,12 +114,10 @@ app.get('/sign_s3', function(req, res){
         ACL: 'public-read' 
     };
 
-    // s3.listObjects({Bucket: S3_BUCKET}, function(err, data){
-    // console.log(data.Contents);
-
-    // });
-
-
+    // if someone is signed in, then make folder with their name, 
+    // otherwise, place in public folder
+    
+    
     s3.getSignedUrl('putObject', s3_params, function(err, data){
         if(err){
             console.log(err);            
@@ -126,12 +127,34 @@ app.get('/sign_s3', function(req, res){
                 signed_request: data,
                 url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ req.query.file_name
             };
+
             console.log(return_data.url);
             res.write(JSON.stringify(return_data));
             res.end();
         }
     });
+
+
+
+ s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
+ 
+  // this is listing all images in users folder and prepping to go to html 
+  // put JSONin a variable and unpack in conductor.HTML
+  var folderLength = data.Contents.length;
+  
+    for (i = 0; i < folderLength; i++){
+      
+      fileList ='https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+      
+      console.log('https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key);
+    };
+
+  });
+
 });
+
+
+
 
 // END AWS S3 SHIZ
 

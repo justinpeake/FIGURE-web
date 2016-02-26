@@ -1,7 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
-var mongoose = require('mongoose');
+var mongoose = require('mongoose');  
 
 // our db models
 var Figure = require("../models/figure.js");
@@ -9,9 +9,11 @@ var Account = require('../models/account.js');
 
 var chalk = require('chalk');
 
- userName = '';  //declared globally to go to app.js
+userName = '';  //declared globally to go to app.js
 
- page = '';
+page = '';
+
+fileList = '';
 
 //passport route
 router.get('/', function (req, res) {
@@ -26,7 +28,7 @@ router.get('/', function (req, res) {
        userName = req.user.username;
 
        console.log(chalk.white(req.user.username) + " logged in");
-       res.render("compose.html", {user: userName});
+       res.render("compose.html", {user: userName, files: fileList});
 
       });
 
@@ -79,7 +81,7 @@ router.get('/performer', function(req,res){
 router.get('/compose', function(req, res) {
     
       if(req.user) {          
-        res.render('compose.html', {user: userName}); 
+        res.render('compose.html', {user: userName, files: fileList}); 
         page = 'compose';        
         }else{        
         res.render('index.html')        
