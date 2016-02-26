@@ -1,4 +1,4 @@
- var express = require('express');
+var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -7,7 +7,7 @@ var Figure = require("../models/figure.js");
 var Account = require('../models/account.js');
 var chalk = require('chalk');
 
-var userName = '';
+ userName = '';
 
 //passport route
 router.get('/', function (req, res) {
@@ -18,7 +18,9 @@ router.get('/', function (req, res) {
         router.post('/login', passport.authenticate('local'), function(req, res) {
 
            //declared globally
+
            userName = req.user.username;
+
            console.log(chalk.white(req.user.username) + " logged in");
            res.render("compose.html", {user: userName});
 
@@ -38,16 +40,12 @@ router.get('/', function (req, res) {
 
 router.get('/register', function(req, res) {
     res.render('register.html', { });
-});
+  });
 
+router.get('/login', function(req, res) {
+    res.render('login.html', { });
+  });
 
-router.get('/sample-page', function(req,res){
-  res.render('sample.html')
-});
-
-router.get('/form', function(req,res){
-  res.render('formTest.html')
-});
 
 
 router.get('/conductor', function(req,res){
@@ -57,7 +55,7 @@ router.get('/conductor', function(req,res){
         }else{        
         res.render('index.html')       
         }
-});
+  });
 
 
 
@@ -68,12 +66,7 @@ router.get('/performer', function(req,res){
         }else{        
         res.render('index.html')        
         }
-});
-
-
-router.get('/login', function(req, res) {
-    res.render('login.html', { });
-});
+  });
 
 
 router.get('/compose', function(req, res) {
@@ -83,7 +76,7 @@ router.get('/compose', function(req, res) {
         }else{        
         res.render('index.html')        
         }
-});
+  });
 
 
 //PASSPORT SHIZ

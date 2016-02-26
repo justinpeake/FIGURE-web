@@ -2,13 +2,17 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+var cookieParser = require('cookie-parser'); 
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
 var socket_io = require('socket.io');   // second iteracton socket try
 var app = express();  // first iteration socket try
 var io = socket_io();   // second iteration
+
+var router = express.Router();
+var passport = require('passport');
+
 
 var LocalStrategy = require('passport-local').Strategy;
 var passport = require('passport');
@@ -21,6 +25,8 @@ var path = require('path');
 var http = require('http');
 
 var chalk = require('chalk'); 
+
+var userID;
 
 app.io = io;  //second iteration
  
@@ -43,6 +49,7 @@ var S3_BUCKET = process.env.S3_BUCKET;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.set('layout','layout');
+
 app.engine('html', require('hogan-express'));;
 
 // uncomment after placing your favicon in /public
@@ -72,14 +79,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 
-var userID;
-
-var userName;
 
 
 var Account = require('./models/account.js');
-
-
 
 passport.use(new LocalStrategy(Account.authenticate()));
 
@@ -101,16 +103,14 @@ passport.use(new LocalStrategy(Account.authenticate()));
 app.get('/sign_s3', function(req, res){
 
     console.log('hiiiiiiii');
-    console.log(req.user);
+    console.log(userID);
+    
   
     //this is against AWS recommendation
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
-
     var s3 = new aws.S3();
-
-
     // name the new AWS folder
-    var folder = "shifty/"
+    var folder = userName + "/";
 
     var s3_params = {
         Bucket: S3_BUCKET,
@@ -120,36 +120,30 @@ app.get('/sign_s3', function(req, res){
         ACL: 'public-read' 
     };
 
+    // s3.listObjects({Bucket: S3_BUCKET}, function(err, data){
+    // console.log(data.Contents);
 
-    s3.listObjects({Bucket: S3_BUCKET}, function(err, data){
-    console.log(data.Contents);
-
-    });
+    // });
 
 
     s3.getSignedUrl('putObject', s3_params, function(err, data){
-
         if(err){
-
             console.log(err);            
        }
         else {
-          
             var return_data = {
                 signed_request: data,
                 url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ req.query.file_name
             };
-
             console.log(return_data.url);
-
             res.write(JSON.stringify(return_data));
             res.end();
-
         }
     });
 });
 
 // END AWS S3 SHIZ
+
 
 // error handlers
 
@@ -183,7 +177,7 @@ var performerCount = -1;
 
 io.on('connection', function(socket){ //second iteration
 
-  console.log(chalk.red(userID) + ' connected');
+  console.log(chalk.red(userName) + ' connected');
 
             performerCount = performerCount + 1;
 
@@ -215,7 +209,7 @@ io.on('connection', function(socket){ //second iteration
               socket.broadcast.emit('performerCount', performerCount);
              // console.log("Client has disconnected " + socket.id);
 
-              console.log( chalk.red(userID) + ' disconnected');
+              console.log( chalk.red(userName) + ' disconnected');
 
             });
 });
