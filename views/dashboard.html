@@ -1,0 +1,84 @@
+<html>
+<head>
+
+	<title>FIGURE :: DASHBOARD</title>
+        
+        <meta charset="utf-8">
+
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"> </script>
+        <script src="/socket.io/socket.io.js"></script>  
+        <script src="/dropzone/dropzone.js"></script>
+        <link rel="stylesheet" href=" /dropzone/dropzone.css">
+
+        <script>  var socket = io(); </script> 
+
+        <script type="text/javascript">
+
+                        socket.on('connect', function() {
+                        console.log("Dashboard");                
+                        });
+
+        </script> 
+
+        <style>
+
+        	#navContainer{
+
+				margin: 0 auto;
+   				width: 200px;         	}
+
+        	.navButton{
+                        width:180;
+                        height:50;
+                        background-color: 000000;
+                        color: FFFFFF;
+                        font-size: 20px;
+                        text-align: center;
+                        line-height:50px;
+                        display: block;
+                        margin: 2px;
+                        cursor: hand;
+                    }
+
+        </style>
+
+</head>
+
+<body>
+
+	<div id="navContainer">
+
+		Hi {{user}}! 
+		<p>
+
+		<nav>
+			<div class="navButton" id="compose">  COMPOSE </div>
+		    <div class="navButton" id="perform">  PERFORM </div>
+		    <div class="navButton" id="conduct">  CONDUCT </div>
+		</nav>
+
+
+	</div>	
+
+	<script type="text/javascript">
+
+                      
+    $(compose).click(function(){
+		$(location).attr('href', '/compose') ;   
+	});
+
+	$(perform).click(function(){
+		$(location).attr('href', '/performer') ;   
+	});
+
+	$(conduct).click(function(){
+		$(location).attr('href', '/conductor') ;   
+	});
+
+
+
+        </script> 
+
+</body>
+</html>

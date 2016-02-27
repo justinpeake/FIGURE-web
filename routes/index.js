@@ -32,7 +32,7 @@ router.get('/', function (req, res) {
        userName = req.user.username;
 
        console.log(chalk.white(req.user.username) + " logged in");
-       res.render("compose.html", {user: userName, files: fileArray, length: folderLength});
+       res.render("dashboard.html", {user: userName, files: fileArray, length: folderLength});
 
       });
 
@@ -57,6 +57,16 @@ router.get('/login', function(req, res) {
     res.render('login.html', { });
   });
 
+
+router.get('/dashboard', function(req,res){
+
+        if(req.user) {
+        res.render('dashboard.html', {user: userName});     
+        page = 'dashboard';   
+        }else{        
+        res.render('index.html')       
+        }
+  });
 
 
 router.get('/conductor', function(req,res){

@@ -30,7 +30,7 @@
 
                 .mainNav {
                         width:140;
-                        height:40;
+                        height:400;
                         background-color: 000000;
                         color: FFFFFF;
                         font-size: 20px;
@@ -43,10 +43,18 @@
 
                 .figures{
                     width: 540px;
-                    float: center;
+                    float: left;
                     padding-top: 5px;
                     padding-bottom: 5px;
+                
+
                 }    
+
+                .sidebar{
+                    width: 300px;
+                    height: 200px;
+                    float:left;
+                }
 
             </style>
 
@@ -55,22 +63,10 @@
 
 <body>
 
-
+<div class='sidebar'>
     Welcome to Composer Dashboard {{user}}
 
-    <p> 
-
-<!--             THIS is where the file names come in!
- -->            <div class="figures">
-                {{#files}}
-
-                <img src={{.}} width="100px" height="100px">
-
-               <!--  <div class= "figures" >{{.}} </div> -->
-                {{/files}}
-                 </div>
-
-    <p>
+        <p>
         <input type="file" id="file_input"/>
         <p>
 
@@ -83,12 +79,25 @@
             <input type="submit" value="Update profile" />
         
         </form>
+        </div
+
+<!--             THIS is where the file names come in!
+ -->            <div class="figures">
+                {{#files}}
+
+                <img src={{.}} width="100px" height="100px">
+
+               <!--  <div class= "figures" >{{.}} </div> -->
+                {{/files}}
+                 </div>
 
 
 
-    <div class="mainNav" id="compose">  COMPOSER  </div>
+
+
+  <!--   <div class="mainNav" id="compose">  COMPOSER  </div>
     <div class="mainNav" id="perform">  PERFORMER </div>
-    <div class="mainNav" id="conduct">  CONDUCTER </div>
+    <div class="mainNav" id="conduct">  CONDUCTER </div> -->
 
 
 

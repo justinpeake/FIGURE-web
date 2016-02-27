@@ -94,8 +94,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
 //AWS S3 SHIZ
 
-
-
 app.get('/sign_s3', function(req, res){
 
     console.log('hiiiiiiii');
@@ -199,6 +197,44 @@ io.on('connection', function(socket){ //second iteration
 
             // When this user emits, client side: socket.emit('otherevent',some data);
 
+
+            socket.on('gimme', function(){
+
+              aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+              var s3 = new aws.S3();
+
+              // name the new AWS folder
+              var folder = userName + "/";
+
+              var s3_params = {
+                  Bucket: S3_BUCKET,
+                 // Key: folder + req.query.file_name,
+                  Expires: 60,
+                 // ContentType: req.query.file_type,
+                  ACL: 'public-read' 
+              };
+
+              s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
+ 
+              // this is listing all images in users folder and prepping to go to html 
+              // put JSONin a variable and unpack in conductor.HTML
+              var folderLength = data.Contents.length;
+  
+              for (i = 0; i < folderLength; i++){
+  
+              fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+
+    //  fileList = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;     
+     // console.log('https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key);
+
+    };
+console.log(folderLength);  //use this in html button rendering
+console.log(fileArray);
+
+  });
+
+
+});
 
 
             socket.on('sendingTo', function(data) {
