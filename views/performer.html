@@ -75,11 +75,6 @@ Hello {{user}}!  <br>
 				<!-- redo these with % -->
 
 				Join as Performer:	 			<!-- <p> Welcome. You are a performer. <br> -->
-				 					
-			<!-- <img  src="/img/p1.png"    id="p1"   style="width:25px; height:25">
-			<img  src="/img/p2.png"    id="p2"   style="width:25px; height:25">
-			<img  src="/img/p3.png"    id="p3"   style="width:25px; height:25">
- -->
 			<a>  
 				<div class="performerDiv" id="p1"> 1 </div> 
 				<div class="performerDiv" id="p2"> 2 </div> 
@@ -110,26 +105,28 @@ Hello {{user}}!  <br>
  
  <script type="text/javascript">
 
-					//var myp5 = new p5(s);
+					//var myp5 = new p5(s);  // this is for the p5 obviously
 
-					var myId = 0; //initialize
+					//initialize globals
+					var myId = 0; 
 					var toWhom = 0;
 					var toAll = 0;
 
 
-					var socket = io.connect();
+				//	var socket = io.connect();
 
 					$(incoming).fadeTo(1,0);
 
+					// initial socket 
+					// socket.on('connect', function() {
+					// 	console.log("Performer in the house.");
+					// });
 
-					// initial socket ish
-					socket.on('connect', function() {
-						console.log("Performer in the house.");
-					});
-
-				//initial performer id stuff
+		//performer buttons
 
 	 	$(p1).click(function(){
+
+	 		myId = 1;
 
 	 		$(p1).fadeTo(500, 0.5);
 	 		$(p2).fadeTo(500, 1);			 		
@@ -139,14 +136,13 @@ Hello {{user}}!  <br>
 	 		$(p2).css('color', 'white');
 	 		$(p3).css('color', 'white');
 	 		
-
-			myId = 1;
-			
 			console.log("I am Performer " + myId);
 	 	}
 	 );
 
 	 	$(p2).click(function(){
+
+	 		myId = 2;
 
 	 		$(p1).fadeTo(500, 1);
 	 		$(p2).fadeTo(500, 0.5);			 		
@@ -156,13 +152,13 @@ Hello {{user}}!  <br>
 	 		$(p2).css('color', 'red');
 	 		$(p3).css('color', 'white');
 
-			myId = 2;
-			
 			console.log("I am Performer " + myId);		
 	 	}
 	 );
 
 	 	$(p3).click(function(){
+
+	 		myId = 3;
 
 	 		$(p1).fadeTo(500, 1);
 	 		$(p2).fadeTo(500, 1);			 		
@@ -171,8 +167,6 @@ Hello {{user}}!  <br>
 	 		$(p1).css('color', 'white');
 	 		$(p2).css('color', 'white');
 	 		$(p3).css('color', 'red');
-
-	 		myId = 3;
 
 	 		console.log("I am Performer " + myId);
 	 	}
@@ -186,9 +180,6 @@ Hello {{user}}!  <br>
 						$(incoming).fadeTo(500, 0);
 
 					};
-
-
-
 
 						// routes messages across channels
 
@@ -262,14 +253,10 @@ Hello {{user}}!  <br>
 							document.getElementById('imageFig').src = data;
 							document.getElementById('imageFig').height = "600";
 
-								}
-								
+								}	
 							}
-
 						}); 
 
 	</script>
- 
  </body>
-
 </html>
