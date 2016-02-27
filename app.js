@@ -94,10 +94,12 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
 //AWS S3 SHIZ
 
+
+
 app.get('/sign_s3', function(req, res){
 
     console.log('hiiiiiiii');
-    //this is against AWS recommendation
+   // this is against AWS recommendation
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
     var s3 = new aws.S3();
 
@@ -127,11 +129,11 @@ app.get('/sign_s3', function(req, res){
             };
 
             console.log(return_data.url);
+
             res.write(JSON.stringify(return_data));
             res.end();
         }
     });
-
 
 
  s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
@@ -141,14 +143,17 @@ app.get('/sign_s3', function(req, res){
   var folderLength = data.Contents.length;
   
     for (i = 0; i < folderLength; i++){
-      
-      fileList = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
-      
-      console.log('https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key);
+  
+      fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+
+    //  fileList = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;     
+     // console.log('https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key);
+
     };
+console.log(folderLength);  //use this in html button rendering
+console.log(fileArray);
 
   });
-
 });
 
 // END AWS S3 SHIZ
@@ -193,6 +198,9 @@ io.on('connection', function(socket){ //second iteration
             socket.broadcast.emit('performerCount', performerCount);
 
             // When this user emits, client side: socket.emit('otherevent',some data);
+
+
+
             socket.on('sendingTo', function(data) {
               console.log("Received: 'sendingTo' " + data);
               socket.broadcast.emit('sendingTo', data);

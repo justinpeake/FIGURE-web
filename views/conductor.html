@@ -59,11 +59,35 @@
 						display: inline-block;
 						margin: 2px;
 					}
+					.figures{
+                    width: 540px;
+                    float: center;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                }  
 
 				</style>
 		</head>
  <body>
  			
+
+<!--             THIS is where the file names come in! -->           
+
+ 			 <div class="figures">
+
+                {{#files}}
+
+                <img src={{.}} width="100px" height="100px">
+
+       
+                {{/files}}
+
+             </div>
+
+
+
+
+
 
 			<div id="messages" align="left"> You are the CONDUCTOR, {{user}}! </div> 
 

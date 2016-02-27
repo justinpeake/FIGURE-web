@@ -15,6 +15,10 @@ page = '';
 
 fileList = '';
 
+fileArray = [];
+
+folderLength = '';
+
 //passport route
 router.get('/', function (req, res) {
     res.render('index.html', {});
@@ -28,7 +32,7 @@ router.get('/', function (req, res) {
        userName = req.user.username;
 
        console.log(chalk.white(req.user.username) + " logged in");
-       res.render("compose.html", {user: userName, files: fileList});
+       res.render("compose.html", {user: userName, files: fileArray, length: folderLength});
 
       });
 
@@ -81,7 +85,7 @@ router.get('/performer', function(req,res){
 router.get('/compose', function(req, res) {
     
       if(req.user) {          
-        res.render('compose.html', {user: userName, files: fileList}); 
+        res.render('compose.html', {user: userName, files: fileArray, length: folderLength}); 
         page = 'compose';        
         }else{        
         res.render('index.html')        

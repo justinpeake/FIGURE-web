@@ -18,9 +18,10 @@
                 <script type="text/javascript">
 
                         socket.on('connect', function() {
-                        console.log("Composer in the house.");
-                        
-                            
+
+                        socket.emit('gimme');
+
+                        console.log("Composer in the house.");                
                         });
 
                 </script> 
@@ -37,7 +38,15 @@
                         line-height:40px;
                         display: block;
                         margin: 2px;
+                        cursor: hand;
                     }
+
+                .figures{
+                    width: 540px;
+                    float: center;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                }    
 
             </style>
 
@@ -51,7 +60,15 @@
 
     <p> 
 
-    {{files}}
+<!--             THIS is where the file names come in!
+ -->            <div class="figures">
+                {{#files}}
+
+                <img src={{.}} width="100px" height="100px">
+
+               <!--  <div class= "figures" >{{.}} </div> -->
+                {{/files}}
+                 </div>
 
     <p>
         <input type="file" id="file_input"/>
@@ -69,7 +86,7 @@
 
 
 
-    <div class="mainNav" id="compose">  COMPOSER  </a> </div>
+    <div class="mainNav" id="compose">  COMPOSER  </div>
     <div class="mainNav" id="perform">  PERFORMER </div>
     <div class="mainNav" id="conduct">  CONDUCTER </div>
 
@@ -136,6 +153,8 @@ function upload_file(file, signed_request, url){
         alert("Could not upload file.");
     };
     xhr.send(file);
+
+
 }
 
 
