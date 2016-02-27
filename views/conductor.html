@@ -32,14 +32,12 @@
 					} 
 
 					body {
-
 						background-color: #777;
 						padding-top: 20px;
 						padding-left: 20px;
 					}
 
 					#perfsBox {
-
 						width: 400px;
 						height: 200px;
 						/*background-color: #222222;*/
@@ -49,7 +47,6 @@
 						text-align: center;
 						margin: 2px;
 						display:inline;
-
 					}
 
 					.performerDiv {
@@ -61,8 +58,6 @@
 						text-align: center;
 						display: inline-block;
 						margin: 2px;
-
-
 					}
 
 				</style>
@@ -89,8 +84,6 @@
 				<div class="performerDiv" id="p2"> 2 </div> 
 				<div class="performerDiv" id="p3"> 3 </div> 
 				<div class="performerDiv" id="pAll" style="font-size: 20px"> ALL </div> 
-
-
 			</a>
 
 									<!-- figure  images -->
@@ -162,6 +155,11 @@
 			 			$(p2).fadeTo("fast", 1); 
 			 			$(p3).fadeTo("fast", 1);
 			 			$(pAll).fadeTo("fast", 1);
+
+			 			$(p1).css('color', 'red');
+	 					$(p2).css('color', 'white');
+	 					$(p3).css('color', 'white');
+	 					$(pAll).css('color', 'white');
  
 
 			 			
@@ -171,14 +169,6 @@
 			 			console.log("one");
 			 			socket.emit('sendingTo', toWhom, toAll);
 			 			socket.emit('sendingAll', toAll);
-
-
-			 		// UI shiz
-
-			 		document.getElementById('p1').src = "/img/p1on.png";
-			 		document.getElementById('p2').src = "/img/p2.png";
-			 		document.getElementById('p3').src = "/img/p3.png";
-			 		document.getElementById('p4').src = "/img/all.png";
 			 	}
 			 );
 
@@ -189,6 +179,11 @@
 			 			$(p3).fadeTo("fast", 1);
 			 			$(pAll).fadeTo("fast", 1);
 
+			 			$(p1).css('color', 'white');
+	 					$(p2).css('color', 'red');
+	 					$(p3).css('color', 'white');
+	 					$(pAll).css('color', 'white');
+
 
 			 			toAll = 0;
 			 			toWhom = 2;
@@ -196,11 +191,6 @@
 			 			console.log("two");
 			 			socket.emit('sendingTo', toWhom, toAll);
 			 		    socket.emit('sendingAll', toAll);
-
-			 		document.getElementById('p1').src = "/img/p1.png";
-			 		document.getElementById('p2').src = "/img/p2on.png";
-					document.getElementById('p3').src = "/img/p3.png";
-					document.getElementById('p4').src = "/img/all.png";
 			 	}
 			 );
 
@@ -211,6 +201,11 @@
 			 			$(p3).fadeTo("fast", 0.5);
 			 			$(pAll).fadeTo("fast", 1);
 
+			 			$(p1).css('color', 'white');
+	 					$(p2).css('color', 'white');
+	 					$(p3).css('color', 'red');
+	 					$(pAll).css('color', 'white');
+
 
 			 			toAll = 0;
 			 			toWhom = 3;
@@ -219,11 +214,6 @@
 						console.log("three");
 			 			socket.emit('sendingTo', toWhom, toAll);
 			 		    socket.emit('sendingAll', toAll);
-
-			 		document.getElementById('p1').src = "/img/p1.png";
-			 		document.getElementById('p2').src = "/img/p2.png";
-					document.getElementById('p3').src = "/img/p3on.png";
-					document.getElementById('p4').src = "/img/all.png";
 			 		
 			 	}
 			 );
@@ -235,6 +225,11 @@
 			 			$(p3).fadeTo("fast", 1);
 			 			$(pAll).fadeTo("fast", 0.5);
 
+			 			$(p1).css('color', 'white');
+	 					$(p2).css('color', 'white');
+	 					$(p3).css('color', 'white');
+	 					$(pAll).css('color', 'red');
+
 						toWhom = 0;
 			 			toAll = 1;
 
@@ -242,12 +237,6 @@
 						console.log("three");
 			 			socket.emit('sendingTo', toWhom, toAll);
 			 			socket.emit('sendingAll', toAll);
-
-			 		document.getElementById('p1').src = "/img/p1.png";
-			 		document.getElementById('p2').src = "/img/p2.png";
-					document.getElementById('p3').src = "/img/p3.png";
-					document.getElementById('p4').src = "/img/allOn.png";
-			 		
 			 	}
 			 );
 
