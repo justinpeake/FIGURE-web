@@ -96,8 +96,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
 app.get('/sign_s3', function(req, res){
 
-  
-
     console.log('hiiiiiiii');
     //this is against AWS recommendation
     aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
@@ -144,7 +142,7 @@ app.get('/sign_s3', function(req, res){
   
     for (i = 0; i < folderLength; i++){
       
-      fileList ='https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+      fileList = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
       
       console.log('https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key);
     };
@@ -152,9 +150,6 @@ app.get('/sign_s3', function(req, res){
   });
 
 });
-
-
-
 
 // END AWS S3 SHIZ
 
