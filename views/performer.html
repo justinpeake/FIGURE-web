@@ -39,33 +39,52 @@
 						}
 
 						#perfDialogue {
-							line-height:20px;
+							line-height:50px;
 						    background-color:#FFFFFF;
 						    height:70px;
-						    width:200px;
+						    width:750px;
 						    float:left;
-						    padding-left:5px;
-						    padding-right:75px;
-
+						    padding-left:0px;
+						    padding-right:5px;
 						}
 
-				</style>
+						.performerDiv {
+						width:50;
+						height:50;
+						background-color: 000000;
+						color: FFFFFF;
+						font-size: 40px;
+						text-align: center;
+						display: inline-block;
+						margin: 2px;
 
+
+					}
+
+
+
+
+				</style>
 	</head>
 <body>
-Hello {{user}}!  <p>
 
-	<div id="perfDialogue" align="center"> 
+Hello {{user}}!  <br>
 
-				
+	<div id="perfDialogue" align="left"> 
 
-	 			<!-- <p> Welcome. You are a performer. <br> -->
-				 Performer ID: 
-			
-					
-			<img  src="/img/p1.png"    id="p1"   style="width:25px; height:25">
+				<!-- redo these with % -->
+
+				Join as Performer:	 			<!-- <p> Welcome. You are a performer. <br> -->
+				 					
+			<!-- <img  src="/img/p1.png"    id="p1"   style="width:25px; height:25">
 			<img  src="/img/p2.png"    id="p2"   style="width:25px; height:25">
 			<img  src="/img/p3.png"    id="p3"   style="width:25px; height:25">
+ -->
+			<a>  
+				<div class="performerDiv" id="p1"> 1 </div> 
+				<div class="performerDiv" id="p2"> 2 </div> 
+				<div class="performerDiv" id="p3"> 3 </div> 
+			</a>
 
 			<br>
 			<br>
@@ -77,7 +96,7 @@ Hello {{user}}!  <p>
 
 	 <br>
 	 
-				<div id="figures" align="left">
+				<div id="figures" align="center">
 	 		
 	 <!-- This is where each new figure is injected into the performer page.
 	 	  "currentFigure" is the name of the element that needs to be updated from conductor page. -->
@@ -93,14 +112,10 @@ Hello {{user}}!  <p>
 
 					//var myp5 = new p5(s);
 
-					// console.log(UserID);
-
 					var myId = 0; //initialize
 					var toWhom = 0;
 					var toAll = 0;
 
-
-					// why do these all of a sudden matter?
 
 					var socket = io.connect();
 
@@ -112,23 +127,22 @@ Hello {{user}}!  <p>
 						console.log("Performer in the house.");
 					});
 
-
-				//initial performer id ish
+				//initial performer id stuff
 
 	 	$(p1).click(function(){
 
 	 		$(p1).fadeTo(500, 0.5);
 	 		$(p2).fadeTo(500, 1);			 		
 	 		$(p3).fadeTo(500, 1);
+
+	 		$(p1).css('color', 'red');
+	 		$(p2).css('color', 'white');
+	 		$(p3).css('color', 'white');
 	 		
 
 			myId = 1;
 			
 			console.log("I am Performer " + myId);
-
-			document.getElementById('p1').src = "/img/p1on.png";
-			document.getElementById('p2').src = "/img/p2.png";
-			document.getElementById('p3').src = "/img/p3.png";
 	 	}
 	 );
 
@@ -138,13 +152,13 @@ Hello {{user}}!  <p>
 	 		$(p2).fadeTo(500, 0.5);			 		
 	 		$(p3).fadeTo(500, 1);
 
+	 		$(p1).css('color', 'white');
+	 		$(p2).css('color', 'red');
+	 		$(p3).css('color', 'white');
+
 			myId = 2;
 			
 			console.log("I am Performer " + myId);		
-
-			document.getElementById('p1').src = "/img/p1.png";
-	 		document.getElementById('p2').src = "/img/p2on.png";
-			document.getElementById('p3').src = "/img/p3.png";
 	 	}
 	 );
 
@@ -154,14 +168,13 @@ Hello {{user}}!  <p>
 	 		$(p2).fadeTo(500, 1);			 		
 	 		$(p3).fadeTo(500, 0.5);
 
+	 		$(p1).css('color', 'white');
+	 		$(p2).css('color', 'white');
+	 		$(p3).css('color', 'red');
+
 	 		myId = 3;
 
 	 		console.log("I am Performer " + myId);
-
-	 		document.getElementById('p1').src = "/img/p1.png";
-	 		document.getElementById('p2').src = "/img/p2.png";
-			document.getElementById('p3').src = "/img/p3on.png";
-	 	
 	 	}
 	 );
 
@@ -210,8 +223,8 @@ Hello {{user}}!  <p>
 							setTimeout(function() {clearInterval(flasher)}, 2000);
 							setTimeout(function() {display()}, 3000);
 
-								// display shitz
-								var display = function(){
+							// display shitz
+							var display = function(){
 							console.log(data + "performerside" + toWhom);
 
 							document.getElementById('imageFig').src = "";
