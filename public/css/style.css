@@ -1,3 +1,54 @@
-/**************/
-/* Custom CSS */
-/**************/
+					@font-face {
+					    font-family: nexa;
+					    src: url('nexalight.otf');
+					}
+
+					div {
+					    font-family: nexa;
+					    font-size: 20px;
+					} 
+
+					body {
+						background-color: #777;
+						padding-top: 20px;
+						padding-left: 20px;
+					}
+
+					#perfsBox {
+						width: 400px;
+						height: 200px;
+						/*background-color: #222222;*/
+						font-size: 45px;
+						padding-top: 6px;
+						color:FFFFFF;
+						text-align: center;
+						margin: 2px;
+						display:inline;
+					}
+
+					.performerDiv {
+						width:50;
+						height:50;
+						background-color: 000000;
+						color: FFFFFF;
+						font-size: 40px;
+						text-align: center;
+						display: inline-block;
+						margin: 2px;
+						
+						}
+						
+						.figures{
+						margin: 0 auto;
+	                    width: 600px;
+	                    float: left;
+	                    padding-top: 5px;
+	                    padding-bottom: 5px;
+	               		
+	               		}  
+		                
+		                .sidebar{
+		                    width: 300px;
+		                    height: 200px;
+		                    float:left;
+		              	 }

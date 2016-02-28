@@ -72,7 +72,7 @@ router.get('/dashboard', function(req,res){
 router.get('/conductor', function(req,res){
 
         if(req.user) {
-        res.render('conductor.html', {user: userName});     
+        res.render('conductor.html', {user: userName, files: fileArray, length: folderLength});     
         page = 'conductor';   
         }else{        
         res.render('index.html')       

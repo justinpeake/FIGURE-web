@@ -15,16 +15,17 @@
 				<script type="text/javascript">
 
 							socket.on('connect', function() {
+								socket.emit('gimme');
 								console.log("Conducter in the house.");
 							});
 
 				</script>	
 										<!-- head scripts END -->
 				<style>
-						@font-face {
+						/*@font-face {
 					    font-family: nexa;
 					    src: url('nexalight.otf');
-					}
+					}*/
 
 					div {
 					    font-family: nexa;
@@ -40,7 +41,7 @@
 					#perfsBox {
 						width: 400px;
 						height: 200px;
-						/*background-color: #222222;*/
+						
 						font-size: 45px;
 						padding-top: 6px;
 						color:FFFFFF;
@@ -58,56 +59,80 @@
 						text-align: center;
 						display: inline-block;
 						margin: 2px;
-					}
-					.figures{
-                    width: 540px;
-                    float: center;
+						
+						}
+						
+						.figures{
+                    	width: 740px;
+                    	float: left;
+                    	padding-top: 5px;
+                	    padding-bottom: 5px;
+                
+              		  } 
+		                
+		                .sidebar{
+		                    width: 300px;
+		                    height: 200px;
+		                    float:left;
+		              	 }
+
+		              	 .navButton{
+                        width:180;
+                        height:50;
+                        background-color: 000000;
+                        color: FFFFFF;
+                        font-size: 20px;
+                        text-align: center;
+                        line-height:50px;
+                        display: block;
+                        margin: 2px;
+                        cursor: hand;
+                    }
+
+                    .figuresBox{
+                    width: 740px;
+                    float: left;
                     padding-top: 5px;
                     padding-bottom: 5px;
-                }  
+                
+                } 
 
 				</style>
 		</head>
  <body>
  			
 
-<!--             THIS is where the file names come in! -->           
+				
+	<div class="sidebar"> You are the CONDUCTOR, {{user}}!  
 
- 			 <div class="figures">
-
-                {{#files}}
-
-                <img src={{.}} width="100px" height="100px">
-
-       
-                {{/files}}
-
-             </div>
-
-
-
-
-
-
-			<div id="messages" align="left"> You are the CONDUCTOR, {{user}}! </div> 
-
-			<p>
-				{{files}}
-
-			<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
-			
-			</div>
-
-			<a>  
+				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
+			 	<p>
 				<div class="performerDiv" id="p1"> 1 </div> 
 				<div class="performerDiv" id="p2"> 2 </div> 
 				<div class="performerDiv" id="p3"> 3 </div> 
 				<div class="performerDiv" id="pAll" style="font-size:40px;width:90px"> ALL </div> 
-			</a>
+
+			<nav>
+			<div class="navButton" id="compose">  COMPOSE </div>
+		    <div class="navButton" id="perform">  PERFORM </div>
+		    <div class="navButton" id="conduct">  CONDUCT </div>
+			</nav>
+
+	</div>
+
+
+
+				<div class="figures">
+                  {{#files}}
+                <img src={{.}} width="175px" height="175px">
+                  {{/files}}
+                 </div>
+
 
 									<!-- figure  images -->
+		<P>
 
-		<div id="figuresBox" align="center">
+		<!-- <div id="figuresBox">
 		 	<img  src="/assets/play.png"   		  id="hp1"   style="width:167px; height:167">
 		 	<img  src="/assets/stop.png"   		  id="hp2"   style="width:167px; height:167">
 		 	<p>
@@ -116,10 +141,11 @@
 		 	<img  src="/assets/figureThree.png"      id="hp5"   style="width:167px; height:167">
 		 	<p>
 		 	<img  src="/assets/silly.png"         id="hp6"   style="width:167px; height:167">
-		</div>	
+		</div>	 -->
 
 
 			<script type="text/javascript">
+
 
 			var toWhom = 0;  // initialize these globally, used in server and emit to performers
 			var toAll = 0;
@@ -127,6 +153,18 @@
 
 
 					//for autopropagating perf buttons
+
+					$(compose).click(function(){
+			        	$(location).attr('href', '/compose') ;   
+				    });
+
+				    $(perform).click(function(){
+				        $(location).attr('href', '/performer') ;   
+				    });
+
+				    $(conduct).click(function(){
+				        $(location).attr('href', '/conductor') ;   
+				    });
 
 			socket.on('performerCount', function (data) {
 
@@ -162,10 +200,11 @@
 							
 				});
 
+
+				//proto Perf buttons
+
 					$(divs[0]).click(function(){
-
 						console.log("haynow");
-
 					}
 				);
 			 		$(p1).click(function(){
@@ -180,8 +219,6 @@
 	 					$(p3).css('color', 'white');
 	 					$(pAll).css('color', 'white');
  
-
-			 			
 			 			toAll = 0;
 			 			toWhom = 1;
 

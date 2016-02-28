@@ -18,15 +18,18 @@
                 <script type="text/javascript">
 
                         socket.on('connect', function() {
-
                         socket.emit('gimme');
-
                         console.log("Composer in the house.");                
                         });
 
                 </script> 
 
                 <style>
+
+                body{
+
+                    background-color: #777;
+                }
 
                 .mainNav {
                         width:140;
@@ -42,19 +45,32 @@
                     }
 
                 .figures{
-                    width: 540px;
+                    width: 740px;
                     float: left;
                     padding-top: 5px;
                     padding-bottom: 5px;
                 
-
                 }    
-
                 .sidebar{
                     width: 300px;
                     height: 200px;
                     float:left;
                 }
+
+                .navButton{
+                        width:180;
+                        height:50;
+                        background-color: 000000;
+                        color: FFFFFF;
+                        font-size: 20px;
+                        text-align: center;
+                        line-height:50px;
+                        display: block;
+                        margin: 2px;
+                        cursor: hand;
+                    }
+
+
 
             </style>
 
@@ -65,44 +81,51 @@
 
 <div class='sidebar'>
     Welcome to Composer Dashboard {{user}}
-
+    <p> 
         <p>
         <input type="file" id="file_input"/>
         <p>
 
         <form method="POST" action="/submit_form/">
-
             <input type="text" name="figurename" placeholder="figurename" /><br />
-
             <input type="text" name="keysig" placeholder="keysig" /><br /><br />
-
             <input type="submit" value="Update profile" />
-        
         </form>
-        </div
+            <nav>
+            <div class="navButton" id="compose">  COMPOSE </div>
+            <div class="navButton" id="perform">  PERFORM </div>
+            <div class="navButton" id="conduct">  CONDUCT </div>
+            </nav>
+</div>
+         
+<!--                 This is where the folder list comes in
+ -->                
+                 <div class="figures">
 
-<!--             THIS is where the file names come in!
- -->            <div class="figures">
-                {{#files}}
+                  {{#files}}
 
-                <img src={{.}} width="100px" height="100px">
+                  <img src= {{.}} width="175px" height="175px"> 
 
-               <!--  <div class= "figures" >{{.}} </div> -->
-                {{/files}}
+                  {{/files}}
+
                  </div>
 
 
-
-
-
-  <!--   <div class="mainNav" id="compose">  COMPOSER  </div>
-    <div class="mainNav" id="perform">  PERFORMER </div>
-    <div class="mainNav" id="conduct">  CONDUCTER </div> -->
-
-
-
-
 <script type="text/javascript" >
+
+    
+    $(compose).click(function(){
+        $(location).attr('href', '/compose') ;   
+    });
+
+    $(perform).click(function(){
+        $(location).attr('href', '/performer') ;   
+    });
+
+    $(conduct).click(function(){
+        $(location).attr('href', '/conductor') ;   
+    });
+
 
 
 (function() {
