@@ -83,12 +83,17 @@ router.get('/conductor', function(req,res){
 
 router.get('/performer', function(req,res){
 
-      if(req.user) {   
-        res.render('performer.html', {user: userName});  
-        page = 'performer';        
-        }else{        
-        res.render('index.html')        
-        }
+      //uncommenting this willmake performer page avail only to auth'd users
+      // if(req.user) {   
+      //   res.render('performer.html', {user: userName});  
+      //   page = 'performer';        
+      //   }else{        
+      //   res.render('index.html')        
+      //   }
+
+        res.render('performer.html');
+        page = 'performer';
+
   });
 
 
@@ -161,8 +166,6 @@ router.post('/register', function(req, res) {
       return res.json(jsonData);
     })  
 });
-
-
 
 
 

@@ -122,11 +122,13 @@
 
 
 
-				<div class="figures">
+			<div class="figures">
+
                   {{#files}}
-                <img src={{.}} width="175px" height="175px">
+                  <img src={{.}} width="175px" height="175px">
                   {{/files}}
-                 </div>
+
+            </div>
 
 
 									<!-- figure  images -->
@@ -146,7 +148,30 @@
 
 			<script type="text/javascript">
 
+			// this block is taking the number of images and adding ID's for button fucntions
+			var ids =	document.getElementsByTagName("img");
+			var idsLength = ids.length;
 
+			var srcs = [];  //sending this to the socket emit
+
+
+			for (i = 0; i < ids.length; i++) {
+				ids[i].id = 'f'+ i;
+			//	console.log(ids[i].src);
+				
+			};
+
+			for (i = 0; i < ids.length; i++) {
+				srcs[i] = ids[i].src;
+			}
+
+			console.log(ids.length);
+			console.log(srcs);	
+				
+
+
+
+			// working
 			var toWhom = 0;  // initialize these globally, used in server and emit to performers
 			var toAll = 0;
 			var divs = [];
@@ -165,6 +190,8 @@
 				    $(conduct).click(function(){
 				        $(location).attr('href', '/conductor') ;   
 				    });
+
+
 
 			socket.on('performerCount', function (data) {
 
@@ -200,13 +227,18 @@
 							
 				});
 
-
 				//proto Perf buttons
 
 					$(divs[0]).click(function(){
 						console.log("haynow");
 					}
 				);
+
+
+
+
+					 
+
 			 		$(p1).click(function(){
 
 			 			$(p1).fadeTo("fast", 0.5); 
@@ -225,6 +257,7 @@
 			 			console.log("one");
 			 			socket.emit('sendingTo', toWhom, toAll);
 			 			socket.emit('sendingAll', toAll);
+
 			 	}
 			 );
 
@@ -298,46 +331,74 @@
 
 			// figure button functionality
 
-			 	$(hp1).click(function(){
+			// for (i=0; i<ids.length; i++) {
 
-			 		$(hp1).fadeTo("slow", 0.5, function() {
+				
+			// 	var fid = 'f' + id.length;
+			// 	var figBtns = [];
+			// };
 
-			 		});
+			//SETH ALL THE WAY
 
-			 		console.log("station");
-			 		socket.emit('imageFigure', "/assets/play.png");
-			 	}
-			 );
+			 
 
-				$(hp2).click(function(){
-			 		console.log("metal");
-			 		socket.emit('imageFigure', "/assets/stop.png");
-			 	}
-			  );
 
-				$(hp3).click(function(){
-			 		console.log("charmy");
-			 		socket.emit('imageFigure', "/assets/figureOne.png");
-			 	}
-			  );
 
-				$(hp4).click(function(){
-			 		console.log("candy");
-			 		socket.emit('imageFigure', "/assets/figureTwo.png");
-			 	}
-			  );
 
-				$(hp5).click(function(){
-			 		console.log("tacet");
-			 		socket.emit('imageFigure', "/assets/figureThree.png");
-			 	}
-			  );
+			for(var i = 0; i < ids.length; i ++){
+				$("#f" + i).click(fadeTheFade(i));
+			}
 
-				$(hp6).click(function(){
-			 		console.log("tacet");
-			 		socket.emit('imageFigure', "/assets/silly.png");
-			 	}
-			  );
+			function fadeTheFade(index){
+				return function(){
+					$("#f" + index).fadeTo("slow", 0.5);
+
+				
+
+					socket.emit('imageFigure', srcs[index])
+				}
+			}
+			 // 	$(f0).click(function(){
+
+			 // 		$(f0).fadeTo("slow", 0.5, function() {
+
+			 // 		});
+
+			 // 		console.log("station");
+
+			 // 		socket.emit('imageFigure', "/assets/play.png");
+			 // 	}
+			 // );
+
+				// $(hp2).click(function(){
+			 // 		console.log("metal");
+			 // 		socket.emit('imageFigure', "/assets/stop.png");
+			 // 	}
+			 //  );
+
+				// $(hp3).click(function(){
+			 // 		console.log("charmy");
+			 // 		socket.emit('imageFigure', "/assets/figureOne.png");
+			 // 	}
+			 //  );
+
+				// $(hp4).click(function(){
+			 // 		console.log("candy");
+			 // 		socket.emit('imageFigure', "/assets/figureTwo.png");
+			 // 	}
+			 //  );
+
+				// $(hp5).click(function(){
+			 // 		console.log("tacet");
+			 // 		socket.emit('imageFigure', "/assets/figureThree.png");
+			 // 	}
+			 //  );
+
+				// $(hp6).click(function(){
+			 // 		console.log("tacet");
+			 // 		socket.emit('imageFigure', "/assets/silly.png");
+			 // 	}
+			 //  );
 
 		
 
