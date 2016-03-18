@@ -61,21 +61,34 @@
 						display: inline-block;
 						margin: 2px;
 					}
+						#bpm{
+							float: left;
+						}
+
+					
+
+
+
+
 				</style>
 	</head>
 <body>
 
-Hello {{user}}!  <br>
+Hello {{user}}...  <br>
 
 	<div id="perfDialogue" align="left"> 
 
 				<!-- redo these with % -->
 
-				Join as Performer:	 			<!-- <p> Welcome. You are a performer. <br> -->
+				Join as Performer:	 			
 			<a>  
 				<div class="performerDiv" id="p1"> 1 </div> 
 				<div class="performerDiv" id="p2"> 2 </div> 
 				<div class="performerDiv" id="p3"> 3 </div> 
+				<p>
+				<div id="bpm"> </div>
+				
+
 			</a>
 
 			<br>
@@ -88,21 +101,36 @@ Hello {{user}}!  <br>
 
 	 <br>
 	 
-				<div id="figures" align="center">
+			<div id="figures" align="center">
 	 		
 	 <!-- This is where each new figure is injected into the performer page.
 	 	  "currentFigure" is the name of the element that needs to be updated from conductor page. -->
+
+
+	 	  		<div id="timeLine"> </div>
+
+	 	  		<div id="sketchFigure"> </div>
 
 			 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
 			 	
 			 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
 			 	
 
-				</div>
+			</div>
  
  <script type="text/javascript">
 
-					//var myp5 = new p5(s);  // this is for the p5 obviously
+ 					//variable to change p5
+ 					var sketch = q;
+
+
+ 					//actually calls th p5  (p5 sketches in /public/js)
+					var myp5 = new p5(time, 'timeLine');
+					var myp5 = new p5(tempo, 'bpm'); 
+
+					var myp5 = new p5(sketch, 'sketchFigure');  
+
+					
 
 					//initialize globals
 					var myId = 0; 
@@ -114,10 +142,6 @@ Hello {{user}}!  <br>
 
 					$(incoming).fadeTo(1,0);
 
-					// initial socket 
-					// socket.on('connect', function() {
-					// 	console.log("Performer in the house.");
-					// });
 
 		//performer buttons
 
@@ -180,15 +204,13 @@ Hello {{user}}!  <br>
 
 						// routes messages across channels
 
-						socket.on('sendingTo', function (data) {
-							
+						socket.on('sendingTo', function (data) {							
 							toWhom = data;
 							console.log("toWhom = " + toWhom);
 							
 						});
 
-						socket.on('sendingAll', function (data) {
-							
+						socket.on('sendingAll', function (data) {							
 							toAll = data;
 							console.log("toAll= " + toAll);	
 							
@@ -221,9 +243,7 @@ Hello {{user}}!  <br>
 							document.getElementById('videoFig').src = data;
 							document.getElementById('videoFig').height = "600";
 								}
-
-							}
-							
+							}							
 						});
 
 					
@@ -253,6 +273,20 @@ Hello {{user}}!  <br>
 								}	
 							}
 						}); 
+
+
+						socket.on('sketchFigure', function (data) {
+
+							sketch = data;
+
+								});	
+						
+						
+
+
+
+
+
 
 	</script>
  </body>

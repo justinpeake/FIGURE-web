@@ -36,21 +36,29 @@ router.get('/', function (req, res) {
 
       });
 
-      router.get('/logout', function(req, res) {
-          req.logout();
-          res.redirect('/');
-      });
 
-      router.get('/ping', function(req, res){
-          res.status(200).send("pong!");
-      });
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
+router.get('/ping', function(req, res){
+    res.status(200).send("pong!");
+});
 
 
 // simple route to show an HTML page
 
 router.get('/register', function(req, res) {
-    res.render('register.html', { });
+    res.render('register.html', {});
   });
+
+
+
+
+
+
+
 
 router.get('/login', function(req, res) {
   page = 'login'; 
@@ -117,7 +125,7 @@ router.post('/register', function(req, res) {
         }
         passport.authenticate('local')(req, res, function () {
            // res.redirect('/');
-            res.render("conductor.html");  // this is where the dashboard should jump in
+            res.render("login.html");  // this is where the dashboard should jump in
         });
     });
 });

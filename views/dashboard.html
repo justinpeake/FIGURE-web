@@ -15,9 +15,9 @@
 
         <script type="text/javascript">
 
-                        socket.on('connect', function() {
-                        console.log("Dashboard");                
-                        });
+        socket.on('connect', function() {
+        console.log("Dashboard");                
+        });
 
         </script> 
 
@@ -55,7 +55,7 @@
 
 	<div id="navContainer">
 
-		Hi {{user}}! 
+		Hi {{user}}...
 		<p>
 
 		<nav>
@@ -68,7 +68,6 @@
 	</div>	
 
 	<script type="text/javascript">
-
                       
     $(compose).click(function(){
 		$(location).attr('href', '/compose') ;   
@@ -82,9 +81,7 @@
 		$(location).attr('href', '/conductor') ;   
 	});
 
-
-
-        </script> 
+    </script> 
 
 </body>
 </html>

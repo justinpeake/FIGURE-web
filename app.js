@@ -184,11 +184,17 @@ io.on('connection', function(socket){ //second iteration
 
   console.log(chalk.red(userName) + ' connected to ' + page);
 
-            if(page == 'performer'){
-            performerCount = performerCount + 1;
-            };
+              socket.on('perfAdd', function(data) {
+              performerCount = performerCount + 1;
+             // socket.broadcast.emit('performerCount', performerCount);
+              });
 
-            socket.broadcast.emit('performerCount', performerCount);
+
+            // if(page == 'performer'){
+            // performerCount = performerCount + 1;
+            // };
+
+            
 
             // When this user emits, client side: socket.emit('otherevent',some data);
 
@@ -209,7 +215,7 @@ io.on('connection', function(socket){ //second iteration
 
               s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
 
-                var folderLength = data.Contents.length;
+                  var folderLength = data.Contents.length;
   
                   for (i = 0; i < folderLength; i++){
                      fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
@@ -239,12 +245,22 @@ io.on('connection', function(socket){ //second iteration
               console.log("Received: 'imageFigure' " + data);
               socket.broadcast.emit('imageFigure', data);
             });
-  
+
+            socket.on('sketchFigure', function(data) {
+              console.log("Received: 'sketch' " + data);
+              socket.broadcast.emit('sketchFigure', data);
+            });
+
+
+
             socket.on('disconnect', function() {
               if (page =='performer'){
               performerCount = performerCount - 1;
-              socket.broadcast.emit('performerCount', performerCount);
+
+              // socket.broadcast.emit('performerCount', performerCount);
+               
             }
+
               console.log( chalk.red(userName) + ' disconnected from ' + page);
               console.log('performerCount = ' + performerCount);
 

@@ -103,7 +103,7 @@
  			
 
 				
-	<div class="sidebar"> You are the CONDUCTOR, {{user}}!  
+	<div class="sidebar"> You are the CONDUCTOR, {{user}}.
 
 				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
 			 	<p>
@@ -136,196 +136,166 @@
 	
 	<script type="text/javascript">
 
-			// this block is taking the number of images and adding ID's for button fucntions
-			var ids =	document.getElementsByTagName("img");
-			var idsLength = ids.length;
+		// this block is taking the number of images and adding ID's for button fucntions
 
-			var srcs = [];  //sending this to the socket emit
+		var ids =	document.getElementsByTagName("img");  // from image tag above
+		var idsLength = ids.length;
+		var srcs = [];  //sending this to the socket emit
 
 
-			//create unique id's for images
-			for (i = 0; i < ids.length; i++) {
-				ids[i].id = 'f'+ i;	
-			};
+		//create unique id's for images
+		for (i = 0; i < ids.length; i++) {
+			ids[i].id = 'f'+ i;	
+		};
 
-			// gut the urls of images
-			for (i = 0; i < ids.length; i++) {
-				srcs[i] = ids[i].src;
-			};
+		// gut the urls of images
+		for (i = 0; i < ids.length; i++) {
+			srcs[i] = ids[i].src;
+		};
 
-			//seth heped with this  -- add button functionalities
-			for(var i = 0; i < ids.length; i ++){
-				$("#f" + i).click(fadeTheFade(i));
+		//seth helped with this  -- add button functionalities
+		for(var i = 0; i < ids.length; i ++){
+			$("#f" + i).click(fadeTheFade(i));
+		}
+
+		//add the urls to the button
+		function fadeTheFade(index){
+			return function(){
+				$("#f" + index).fadeTo("slow", 0.5);
+				socket.emit('imageFigure', srcs[index])
 			}
+		}	
 
-			//add the urls to the button
-			function fadeTheFade(index){
-				return function(){
-					$("#f" + index).fadeTo("slow", 0.5);
-					socket.emit('imageFigure', srcs[index])
-				}
-			}	
-			// working
-			var toWhom = 0;  // initialize these globally, used in server and emit to performers
-			var toAll = 0;
-			var divs = [];
-
-
-					//for autopropagating perf buttons
-
-					$(compose).click(function(){
-			        	$(location).attr('href', '/compose') ;   
-				    });
-
-				    $(perform).click(function(){
-				        $(location).attr('href', '/performer') ;   
-				    });
-
-				    $(conduct).click(function(){
-				        $(location).attr('href', '/conductor') ;   
-				    });
-
-
-
-			socket.on('performerCount', function (data) {
-
-				});
-						// var buttons = document.getElementById("perfsBox");
-
-						// $(buttons).html('');   
-
-						// var x = data;
-						
-						// for (i = 0; i < x; i++) {
-
-						// console.log("DATA = " + x);
-
-	    	// 			divs.unshift(document.createElement("div"));
-
-	    	// 			$(divs[0]).html(i);
-	    				
-	    	// 			$(divs[0]).css('height', '50')
-	    	// 			$(divs[0]).css('width', '50')
-	    	// 			$(divs[0]).css('display', 'inline')
-	    	// 			$(divs[0]).css('margin', '5px')
-	    	// 			// $(divs[0]).css('padding-left', '5px')
-	    	// 			$(divs[0]).css('background-color', '222222')
-
-						// $(divs[0]).attr('id','p' + i);
-
-						// $(buttons).append(divs[0]);
 					
- 					//  }
-
- 					 // old way of updating performer buttons
-					// document.getElementById("checking").innerHTML = "performers: " + perfs.join("  ");  
-							
-			 		$(p1).click(function(){
-
-			 			$(p1).fadeTo("fast", 0.5); 
-			 			$(p2).fadeTo("fast", 1); 
-			 			$(p3).fadeTo("fast", 1);
-			 			$(pAll).fadeTo("fast", 1);
-
-			 			$(p1).css('color', 'red');
-	 					$(p2).css('color', 'white');
-	 					$(p3).css('color', 'white');
-	 					$(pAll).css('color', 'white');
- 
-			 			toAll = 0;
-			 			toWhom = 1;
-
-			 			console.log("one");
-			 			socket.emit('sendingTo', toWhom, toAll);
-			 			socket.emit('sendingAll', toAll);
-
-			 	}
-			 );
-
-			 		$(p2).click(function(){
-
-			 			$(p1).fadeTo("fast", 1); 
-			 			$(p2).fadeTo("fast", 0.5); 
-			 			$(p3).fadeTo("fast", 1);
-			 			$(pAll).fadeTo("fast", 1);
-
-			 			$(p1).css('color', 'white');
-	 					$(p2).css('color', 'red');
-	 					$(p3).css('color', 'white');
-	 					$(pAll).css('color', 'white');
+				// working
+				var toWhom = 0;  // initialize these globally, used in server and emit to performers
+				var toAll = 0;
+				var divs = [];
 
 
-			 			toAll = 0;
-			 			toWhom = 2;
+				//for autopropagating perf buttons
 
-			 			console.log("two");
-			 			socket.emit('sendingTo', toWhom, toAll);
-			 		    socket.emit('sendingAll', toAll);
-			 	}
-			 );
+				$(compose).click(function(){
+		        	$(location).attr('href', '/compose') ;   
+			    });
 
-			 		$(p3).click(function(){
+			    $(perform).click(function(){
+			        $(location).attr('href', '/performer') ;   
+			    });
 
-			 			$(p1).fadeTo("fast", 1);
-			 			$(p2).fadeTo("fast", 1);
-			 			$(p3).fadeTo("fast", 0.5);
-			 			$(pAll).fadeTo("fast", 1);
-
-			 			$(p1).css('color', 'white');
-	 					$(p2).css('color', 'white');
-	 					$(p3).css('color', 'red');
-	 					$(pAll).css('color', 'white');
+			    $(conduct).click(function(){
+			        $(location).attr('href', '/conductor') ;   
+			    });
 
 
-			 			toAll = 0;
-			 			toWhom = 3;
 
-			 			
-						console.log("three");
-			 			socket.emit('sendingTo', toWhom, toAll);
-			 		    socket.emit('sendingAll', toAll);
-			 		
-			 	}
-			 );
+				// socket.on('performerCount', function (data) {
 
-					$(pAll).click(function(){
+				// 	});
+					 
+						
+		 		$(p1).click(function(){
 
-						$(p1).fadeTo("fast", 1);
-			 			$(p2).fadeTo("fast", 1);
-			 			$(p3).fadeTo("fast", 1);
-			 			$(pAll).fadeTo("fast", 0.5);
+		 			$(p1).fadeTo("fast", 0.5); 
+		 			$(p2).fadeTo("fast", 1); 
+		 			$(p3).fadeTo("fast", 1);
+		 			$(pAll).fadeTo("fast", 1);
 
-			 			$(p1).css('color', 'white');
-	 					$(p2).css('color', 'white');
-	 					$(p3).css('color', 'white');
-	 					$(pAll).css('color', 'red');
+		 			$(p1).css('color', 'red');
+ 					$(p2).css('color', 'white');
+ 					$(p3).css('color', 'white');
+ 					$(pAll).css('color', 'white');
 
-						toWhom = 0;
-			 			toAll = 1;
+		 			toAll = 0;
+		 			toWhom = 1;
 
-			 			
-						console.log("three");
-			 			socket.emit('sendingTo', toWhom, toAll);
-			 			socket.emit('sendingAll', toAll);
-			 	}
-			 );
+		 			console.log("one");
+		 			socket.emit('sendingTo', toWhom, toAll);
+		 			socket.emit('sendingAll', toAll);
 
-			// figure button functionality
+				 	}
+				 );
 
-			// for (i=0; i<ids.length; i++) {
+		 		$(p2).click(function(){
 
-				
-			// 	var fid = 'f' + id.length;
-			// 	var figBtns = [];
-			// };
+		 			$(p1).fadeTo("fast", 1); 
+		 			$(p2).fadeTo("fast", 0.5); 
+		 			$(p3).fadeTo("fast", 1);
+		 			$(pAll).fadeTo("fast", 1);
+
+		 			$(p1).css('color', 'white');
+ 					$(p2).css('color', 'red');
+ 					$(p3).css('color', 'white');
+ 					$(pAll).css('color', 'white');
+
+
+		 			toAll = 0;
+		 			toWhom = 2;
+
+		 			console.log("two");
+		 			socket.emit('sendingTo', toWhom, toAll);
+		 		    socket.emit('sendingAll', toAll);
+				 	}
+				 );
+
+		 		$(p3).click(function(){
+
+		 			$(p1).fadeTo("fast", 1);
+		 			$(p2).fadeTo("fast", 1);
+		 			$(p3).fadeTo("fast", 0.5);
+		 			$(pAll).fadeTo("fast", 1);
+
+		 			$(p1).css('color', 'white');
+ 					$(p2).css('color', 'white');
+ 					$(p3).css('color', 'red');
+ 					$(pAll).css('color', 'white');
+
+
+		 			toAll = 0;
+		 			toWhom = 3;
+
+		 			
+					console.log("three");
+		 			socket.emit('sendingTo', toWhom, toAll);
+		 		    socket.emit('sendingAll', toAll);
+		 		
+				 	}
+				 );
+
+				$(pAll).click(function(){
+
+					$(p1).fadeTo("fast", 1);
+		 			$(p2).fadeTo("fast", 1);
+		 			$(p3).fadeTo("fast", 1);
+		 			$(pAll).fadeTo("fast", 0.5);
+
+		 			$(p1).css('color', 'white');
+ 					$(p2).css('color', 'white');
+ 					$(p3).css('color', 'white');
+ 					$(pAll).css('color', 'red');
+
+					toWhom = 0;
+		 			toAll = 1;
+
+		 			
+					console.log("three");
+		 			socket.emit('sendingTo', toWhom, toAll);
+		 			socket.emit('sendingAll', toAll);
+				 	}
+				 );
+
+		// figure button functionality
+
+		// for (i=0; i<ids.length; i++) {
 
 			
+		// 	var fid = 'f' + id.length;
+		// 	var figBtns = [];
+		// };
 
-			// Seth helped with this.
+		
 
-			
-			
-
+		// Seth helped with this.
 		
 
 			</script>
