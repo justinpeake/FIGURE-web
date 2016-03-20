@@ -26,18 +26,7 @@ folderLength = '';
 
     //PASSPORT SHIZ  ... NOTE: this router.post WAS above the submit-form
 
-    router.post('/register', function(req, res) {
-
-        Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
-            if (err) {          
-              return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});        
-            }
-            passport.authenticate('local')(req, res, function () {
-               // res.redirect('/');
-                res.render("login.html");  // direct to login
-            });
-        });
-    });
+    
 
     router.post('/login', passport.authenticate('local'), function(req, res) {
 
@@ -124,7 +113,18 @@ router.get('/compose', function(req, res) {
     });
 
 
+router.post('/register', function(req, res) {
 
+        Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+            if (err) {          
+              return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});        
+            }
+            passport.authenticate('local')(req, res, function () {
+               // res.redirect('/');
+                res.render("login.html");  // direct to login
+            });
+        });
+    });
 
  router.post('/submit_form', function(req, res){
 
