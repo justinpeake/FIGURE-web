@@ -199,6 +199,8 @@ var performerCount = 0;
 
             socket.on('gimme', function(){
 
+
+
               //polling aws based on user and listing assets
 
               aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
@@ -206,7 +208,10 @@ var performerCount = 0;
               // name the new AWS folder
               var folder = userName + "/";
               var s3_params = {
-                  Bucket: S3_BUCKET,               
+                  Bucket: S3_BUCKET,  
+
+                  Key: folder, //+ req.query.file_name,   
+
                   Expires: 60,
                   ACL: 'public-read' 
               };
@@ -214,6 +219,8 @@ var performerCount = 0;
               s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
 
                   var folderLength = data.Contents.length;
+
+                  fileArray = [];
   
                   for (i = 0; i < folderLength; i++){
                      fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
@@ -249,16 +256,11 @@ var performerCount = 0;
               socket.broadcast.emit('sketchFigure', data);
             });
 
-
-
             socket.on('disconnect', function() {
               if (page =='performer'){
               performerCount = performerCount - 1;
-
-              // socket.broadcast.emit('performerCount', performerCount);
-               
-            }
-
+              // socket.broadcast.emit('performerCount', performerCount);   
+            }              
               console.log( chalk.red(userName) + ' disconnected from ' + page);
               console.log('performerCount = ' + performerCount);
 
