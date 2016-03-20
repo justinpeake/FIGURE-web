@@ -10,7 +10,7 @@ var socket_io = require('socket.io');   // second iteracton socket try
 var app = express();  // first iteration socket try
 var io = socket_io();   // second iteration
 
-var router = express.Router();
+var router = express.Router(); 
 var passport = require('passport');
 
 
@@ -23,17 +23,14 @@ var users = require('./routes/users.js');
 var aws = require('aws-sdk');
 var path = require('path');
 var http = require('http'); 
-
 var chalk = require('chalk'); 
-
 var userID;
-
-
 
 app.io = io;  //second iteration
  
 // if in development mode, load .env variables
-//Declare .env variables AFTER THIS
+
+// !!!! Declare .env variables AFTER THIS
 
 if (app.get("env") === "development") {
     env(__dirname + '/.env');
@@ -92,87 +89,88 @@ passport.use(new LocalStrategy(Account.authenticate()));
        done(null, obj);
     });
 
-//AWS S3 SHIZ
 
-app.get('/sign_s3', function(req, res){
+// >>>>>>>>>>>>>>>>>>>>>>> AWS S3 SHIZ
 
-    console.log('hiiiiiiii');
-   // this is against AWS recommendation
-    aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
-    var s3 = new aws.S3();
+        app.get('/sign_s3', function(req, res){
 
-    // name the new AWS folder
-    var folder = userName + "/";
+            console.log('hiiiiiiii');
+           // this is against AWS recommendation
+            aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+            var s3 = new aws.S3();
 
-    var s3_params = {
-        Bucket: S3_BUCKET,
-        Key: folder + req.query.file_name,
-        Expires: 60,
-        ContentType: req.query.file_type,
-        ACL: 'public-read' 
-    };
+            // name the new AWS folder
+            var folder = userName + "/";
 
-    // if someone is signed in, then make folder with their name, 
-    // otherwise, place in public folder
-    
-    
-    s3.getSignedUrl('putObject', s3_params, function(err, data){
-        if(err){
-            console.log(err);            
-       }
-        else {
-            var return_data = {
-                signed_request: data,
-                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ req.query.file_name
+            var s3_params = {
+                Bucket: S3_BUCKET,
+                Key: folder + req.query.file_name,
+                Expires: 60,
+                ContentType: req.query.file_type,
+                ACL: 'public-read' 
             };
 
-            console.log(return_data.url);
+            // if someone is signed in, then make folder with their name, 
+            // otherwise, place in public folder
+            
+            
+            s3.getSignedUrl('putObject', s3_params, function(err, data){
+                if(err){
+                    console.log(err);            
+               }
+                else {
+                    var return_data = {
+                        signed_request: data,
+                        url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ req.query.file_name
+                    };
 
-            res.write(JSON.stringify(return_data));
-            res.end();
-        }
-    });
+                    console.log(return_data.url);
 
-      //polling aws based on user and listing assets
-     s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
-      var folderLength = data.Contents.length;
-      
-        for (i = 0; i < folderLength; i++){
-          fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
-        };
+                    res.write(JSON.stringify(return_data));
+                    res.end();
+                }
+            });
 
-    console.log(fileArray);
+              //polling aws based on user and listing assets
+             s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
+              var folderLength = data.Contents.length;
+              
+                for (i = 0; i < folderLength; i++){
+                  fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+                };
 
+            console.log(fileArray);
+
+              });
+
+            });
+
+// >>>>>>>>>>>>>>>>>>>>>>> END AWS S3 SHIZ
+
+
+    // error handlers
+
+    // development error handler
+    // will print stacktrace
+    if (app.get('env') === 'development') {
+      app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.json({
+          message: err.message,
+          error: err
+        });
       });
+    }
 
+    // production error handler
+    // no stacktraces leaked to user
+    app.use(function(err, req, res, next) {
+      res.status(err.status || 500);
+      res.json({
+        message: err.message,
+        error: {}
+      });
     });
-
-// END AWS S3 SHIZ
-
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.json({
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.json({
-    message: err.message,
-    error: {}
-  });
-});
 
 
 //DO NOT ERASE THIS
@@ -180,9 +178,9 @@ var performerCount = 0;
 
 // start listen with socket.io
 
-io.on('connection', function(socket){ //second iteration
+    io.on('connection', function(socket){ //second iteration
 
-  console.log(chalk.red(userName) + ' connected to ' + page);
+      console.log(chalk.red(userName) + ' connected to ' + page);
 
               socket.on('perfAdd', function(data) {
               performerCount = performerCount + 1;
@@ -265,7 +263,7 @@ io.on('connection', function(socket){ //second iteration
               console.log('performerCount = ' + performerCount);
 
             });
-});
+        });
 
 
 module.exports = app;

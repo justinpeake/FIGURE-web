@@ -10,25 +10,38 @@ var Account = require('../models/account.js');
 var chalk = require('chalk');
 
 userName = '';  //declared globally to go to app.js
-
 page = '';
-
 fileList = '';
-
 fileArray = [];
-
 folderLength = '';
 
-//passport route
-router.get('/', function (req, res) {
-    res.render('index.html', {});
-});
+//////////////////////////////////////////
 
+    // index
+
+    router.get('/', function (req, res) {
+        res.render('index.html', {});
+    });
+
+
+    //PASSPORT SHIZ  ... NOTE: this router.post WAS above the submit-form
+
+    router.post('/register', function(req, res) {
+
+        Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+            if (err) {          
+              return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});        
+            }
+            passport.authenticate('local')(req, res, function () {
+               // res.redirect('/');
+                res.render("login.html");  // direct to login
+            });
+        });
+    });
 
     router.post('/login', passport.authenticate('local'), function(req, res) {
 
        //declared globally
-
        userName = req.user.username;
 
        console.log(chalk.white(req.user.username) + " logged in");
@@ -37,35 +50,29 @@ router.get('/', function (req, res) {
       });
 
 
-router.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-});
+    router.get('/logout', function(req, res) {
+        req.logout();
+        res.redirect('/');
+      });
 
-router.get('/ping', function(req, res){
-    res.status(200).send("pong!");
-});
-
-
-// simple route to show an HTML page
-
-router.get('/register', function(req, res) {
-    res.render('register.html', {});
-  });
+    router.get('/register', function(req, res) {
+        res.render('register.html', {});
+      });
 
 
+    router.get('/login', function(req, res) {
+      page = 'login'; 
+        res.render('login.html', { });
+      });
 
-
-
+    // router.get('/ping', function(req, res){
+    //     res.status(200).send("pong!");
+    // });
 
 
 
-router.get('/login', function(req, res) {
-  page = 'login'; 
-    res.render('login.html', { });
-  });
 
-
+// the five main pages beyond userAuth
 router.get('/dashboard', function(req,res){
 
         if(req.user) {
@@ -74,7 +81,7 @@ router.get('/dashboard', function(req,res){
         }else{        
         res.render('index.html')       
         }
-  });
+   });
 
 
 router.get('/conductor', function(req,res){
@@ -85,13 +92,14 @@ router.get('/conductor', function(req,res){
         }else{        
         res.render('index.html')       
         }
-  });
+   });
 
 
 
 router.get('/performer', function(req,res){
 
       //uncommenting this willmake performer page avail only to auth'd users
+
       // if(req.user) {   
       //   res.render('performer.html', {user: userName});  
       //   page = 'performer';        
@@ -102,7 +110,7 @@ router.get('/performer', function(req,res){
         res.render('performer.html');
         page = 'performer';
 
-  });
+    });
 
 
 router.get('/compose', function(req, res) {
@@ -113,64 +121,44 @@ router.get('/compose', function(req, res) {
         }else{        
         res.render('index.html')        
         }
-  });
-
-
-//PASSPORT SHIZ
-router.post('/register', function(req, res) {
-
-    Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
-        if (err) {          
-          return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});        
-        }
-        passport.authenticate('local')(req, res, function () {
-           // res.redirect('/');
-            res.render("login.html");  // this is where the dashboard should jump in
-        });
     });
-});
+
 
 
 
  router.post('/submit_form', function(req, res){
 
-    // pull out the information from the req.body
-    var figureName = req.body.figurename;
+    var figureName = req.body.figurename;    // pull out the information from the req.body
     var keySig = req.body.keysig;
     var owner = req.user;
     //var keySig = req.body.keysig;
 
-    // hold all this data in an object
-    // this object should be structured the same way as your db model
-    var figureObj = {
-      figureName: figureName,
+    var figureObj = {                        // hold all this data in an object
+      figureName: figureName,                // this object should be structured the same way as your db model
       keySig: keySig,
       owner: owner
       };
      
-    // create a new figre model instance, passing in the object
-    var figure = new Figure(figureObj);
+    var figure = new Figure(figureObj);     // create a new figre model instance, passing in the object
 
-    // now, save that instance to the database
-    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save   
+    figure.save(function(err,data){         // now, save that instance to the database    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save   
 
-    figure.save(function(err,data){
+     
+         
+          if (err){                         // if err saving, respond back with error
 
-      // if err saving, respond back with error
-      
-      if (err){
-        var error = {status:'ERROR', message: 'Error saving figure'};
-        return res.json(error);
-      }
+            var error = {status:'ERROR', message: 'Error saving figure'};
+            return res.json(error);
+          }
 
-     // console.log('SAVED A NEW FIGURE!');
-      console.log(chalk.white("TO MONGO:") + chalk.yellow(data));
+         // console.log('SAVED A NEW FIGURE!');
+          console.log(chalk.white("TO MONGO:") + chalk.yellow(data));
 
-      // now return the json data of the new animal
-      var jsonData = {
-        status: 'OK',
-        animal: data
-      }
+          // now return the json data of the new animal
+          var jsonData = {
+            status: 'OK',
+            animal: data
+          }
       return res.json(jsonData);
     })  
 });

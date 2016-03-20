@@ -15,9 +15,10 @@
 				<script type="text/javascript">
 
 							socket.on('connect', function() {
-								socket.emit('gimme');
+								socket.emit('gimme')
 								console.log("Conducter in the house.");
 							});
+
 
 				</script>	
 										<!-- head scripts END -->
@@ -99,6 +100,7 @@
 
 				</style>
 		</head>
+
  <body>
  			
 
@@ -135,6 +137,9 @@
 		<P>
 	
 	<script type="text/javascript">
+
+
+		socket.emit('gimme');
 
 		// this block is taking the number of images and adding ID's for button fucntions
 
