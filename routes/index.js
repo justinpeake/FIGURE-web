@@ -11,6 +11,7 @@ var chalk = require('chalk');
 
 userName = '';  //declared globally to go to app.js
 page = '';
+
 fileList = '';
 fileArray = [];
 folderLength = '';
