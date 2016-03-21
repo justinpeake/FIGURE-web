@@ -220,7 +220,7 @@ var performerCount = 0;
 
                   var folderLength = data.Contents.length;
 
-                  fileArray = [];
+                  //fileArray = [];
   
                   for (i = 0; i < folderLength; i++){
                      fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
