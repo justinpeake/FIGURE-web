@@ -1,5 +1,5 @@
 var express = require('express');
-var path = require('path');
+var path = require('path'); 
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser'); 
@@ -104,7 +104,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
             var s3_params = {
                 Bucket: S3_BUCKET,
-                Key: folder + req.query.file_name,
+                Key: folder + req.query.file_name, 
                 Expires: 60,
                 ContentType: req.query.file_type,
                 ACL: 'public-read' 
@@ -121,10 +121,10 @@ passport.use(new LocalStrategy(Account.authenticate()));
                 else {
                     var return_data = {
                         signed_request: data,
-                        url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ req.query.file_name
+                        url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ folder + req.query.file_name
                     };
 
-                    console.log(return_data.url);
+                    console.log("string" + JSON.stringify(return_data));
 
                     res.write(JSON.stringify(return_data));
                     res.end();
@@ -132,6 +132,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
             });
 
               //polling aws based on user and listing assets
+             
              s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
               var folderLength = data.Contents.length;
               
@@ -220,7 +221,7 @@ var performerCount = 0;
 
                   var folderLength = data.Contents.length;
 
-                  //fileArray = [];
+                  fileArray = [];
   
                   for (i = 0; i < folderLength; i++){
                      fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;

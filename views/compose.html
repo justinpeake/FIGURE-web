@@ -18,9 +18,10 @@
                 <script type="text/javascript">
 
                         socket.on('connect', function() {
-                        socket.emit('gimme');
+                        socket.emit('gimme'); 
                         console.log("Composer in the house.");                
                         });
+
                 </script> 
 
 
@@ -123,6 +124,8 @@
 
 (function() {
 
+    console.log('client 1');
+
     document.getElementById("file_input").onchange = function(){
         var files = document.getElementById("file_input").files;
         var file = files[0];
@@ -134,7 +137,7 @@
 
         else {
 
-// console.log('helloooo');
+// console.log('this is file' + file);
 
             get_signed_request(file);
         }
@@ -143,16 +146,32 @@
 
 function get_signed_request(file){
 
+    console.log('client 2');
+
+
+
+        console.log(file.type);
+
+
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+
 
     xhr.onreadystatechange = function(){
 
         if(xhr.readyState === 4){
+
             console.log(xhr);
+            
             if(xhr.status === 200){
                 var response = JSON.parse(xhr.responseText);
+
+                console.log("response " + response);
+
                 upload_file(file, response.signed_request, response.url);
+
+                
+
             }
             else {
                 console.log("Could not get signed URL.");                
@@ -164,20 +183,25 @@ function get_signed_request(file){
 }
 
 function upload_file(file, signed_request, url){
+
+   // console.log('client 3');
     
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", signed_request);
     xhr.setRequestHeader('x-amz-acl', 'public-read');
     xhr.onload = function() {
         if (xhr.status === 200) {
-           4//   document.getElementById("preview").src = url;
+          // 4//   document.getElementById("preview").src = url;
           //  document.getElementById("avatar_url").value = url;
         }
     };
     xhr.onerror = function() {
         alert("Could not upload file.");
     };
+
+    console.log("presend" + file);
     xhr.send(file);
+    //console.log('client 5');
 
 
 }
