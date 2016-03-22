@@ -30,7 +30,7 @@
 
                 body{
 
-                    background-color: #777;
+                    background-color: #FFF;
                 }
 
                 .mainNav {
@@ -43,7 +43,7 @@
                         line-height:40px;
                         display: block;
                         margin: 2px;
-                        cursor: hand;
+                        
                     }
 
                 .figures{
@@ -69,7 +69,7 @@
                         line-height:50px;
                         display: block;
                         margin: 2px;
-                        cursor: hand;
+                        
                     }
                     
             </style>
@@ -140,7 +140,6 @@
 
         else {
 
-// console.log('this is file' + file);
 
             get_signed_request(file);
         }
@@ -170,7 +169,7 @@ function get_signed_request(file){
 
                 var response = JSON.parse(xhr.responseText);
 
-                console.log("response " + response);
+               // console.log("response " + response);
 
                 upload_file(file, response.signed_request, response.url);
 
@@ -203,9 +202,10 @@ function upload_file(file, signed_request, url){
         alert("Could not upload file.");
     };
 
-    console.log("presend" + file);
+    //console.log("presend" + file);
+
     xhr.send(file);
-    socket.emit('gimme');
+    
     //console.log('client 5');
 
 

@@ -113,7 +113,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
             // if someone is signed in, then make folder with their name, 
             // otherwise, place in public folder
             
-            
             s3.getSignedUrl('putObject', s3_params, function(err, data){
                 if(err){
                     console.log(err);            
@@ -124,7 +123,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
                         url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ folder + req.query.file_name
                     };
 
-                    console.log("string" + JSON.stringify(return_data));
+                  //  console.log("string" + JSON.stringify(return_data));
 
                     res.write(JSON.stringify(return_data));
                     res.end();
@@ -140,7 +139,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
                   fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
                 };
 
-            console.log(fileArray);
+         //   console.log(fileArray);
 
               });
 

@@ -15,9 +15,9 @@
 				<script type="text/javascript">
 
 							socket.on('connect', function() {
-								socket.emit('gimme');
-								console.log("Conducter in the house.");
-							});
+							socket.emit('gimme');
+							console.log("Conducter in the house.");
+						});
 
 
 				</script>	
@@ -112,6 +112,8 @@
 				<div class="performerDiv" id="p1"> 1 </div> 
 				<div class="performerDiv" id="p2"> 2 </div> 
 				<div class="performerDiv" id="p3"> 3 </div> 
+				<div class="performerDiv" id="p4"> 4 </div> 
+				<div class="performerDiv" id="p5"> 5 </div> 
 				<div class="performerDiv" id="pAll" style="font-size:40px;width:90px"> ALL </div> 
 
 			<nav>
@@ -152,17 +154,14 @@
 		for (i = 0; i < ids.length; i++) {
 			ids[i].id = 'f'+ i;	
 		};
-
 		// gut the urls of images
 		for (i = 0; i < ids.length; i++) {
 			srcs[i] = ids[i].src;
 		};
-
 		//seth helped with this  -- add button functionalities
 		for(var i = 0; i < ids.length; i ++){
 			$("#f" + i).click(fadeTheFade(i));
 		}
-
 		//add the urls to the button
 		function fadeTheFade(index){
 			return function(){
@@ -204,11 +203,15 @@
 		 			$(p1).fadeTo("fast", 0.5); 
 		 			$(p2).fadeTo("fast", 1); 
 		 			$(p3).fadeTo("fast", 1);
+		 			$(p4).fadeTo("fast", 1);
+		 			$(p5).fadeTo("fast", 1);
 		 			$(pAll).fadeTo("fast", 1);
 
 		 			$(p1).css('color', 'red');
  					$(p2).css('color', 'white');
  					$(p3).css('color', 'white');
+ 					$(p4).css('color', 'white');
+ 					$(p5).css('color', 'white');
  					$(pAll).css('color', 'white');
 
 		 			toAll = 0;
@@ -226,11 +229,15 @@
 		 			$(p1).fadeTo("fast", 1); 
 		 			$(p2).fadeTo("fast", 0.5); 
 		 			$(p3).fadeTo("fast", 1);
+		 			$(p4).fadeTo("fast", 1);
+		 			$(p5).fadeTo("fast", 1);
 		 			$(pAll).fadeTo("fast", 1);
 
 		 			$(p1).css('color', 'white');
  					$(p2).css('color', 'red');
  					$(p3).css('color', 'white');
+ 					$(p4).css('color', 'white');
+ 					$(p5).css('color', 'white');
  					$(pAll).css('color', 'white');
 
 
@@ -248,11 +255,15 @@
 		 			$(p1).fadeTo("fast", 1);
 		 			$(p2).fadeTo("fast", 1);
 		 			$(p3).fadeTo("fast", 0.5);
+		 			$(p4).fadeTo("fast", 1);
+		 			$(p5).fadeTo("fast", 1);
 		 			$(pAll).fadeTo("fast", 1);
 
 		 			$(p1).css('color', 'white');
  					$(p2).css('color', 'white');
  					$(p3).css('color', 'red');
+ 					$(p4).css('color', 'white');
+ 					$(p5).css('color', 'white');
  					$(pAll).css('color', 'white');
 
 
@@ -267,16 +278,76 @@
 				 	}
 				 );
 
+		 		$(p4).click(function(){
+
+		 			$(p1).fadeTo("fast", 1);
+		 			$(p2).fadeTo("fast", 1);
+		 			$(p3).fadeTo("fast", 1);
+		 			$(p4).fadeTo("fast", 0.5);
+		 			$(p5).fadeTo("fast", 1);
+		 			$(pAll).fadeTo("fast", 1);
+
+		 			$(p1).css('color', 'white');
+ 					$(p2).css('color', 'white');
+ 					$(p3).css('color', 'white');
+ 					$(p4).css('color', 'red');
+ 					$(p5).css('color', 'white');
+ 					$(pAll).css('color', 'white');
+
+
+		 			toAll = 0;
+		 			toWhom = 4;
+
+		 			
+					console.log("three");
+		 			socket.emit('sendingTo', toWhom, toAll);
+		 		    socket.emit('sendingAll', toAll);
+		 		
+				 	}
+				 );
+
+		 		$(p5).click(function(){
+
+		 			$(p1).fadeTo("fast", 1);
+		 			$(p2).fadeTo("fast", 1);
+		 			$(p3).fadeTo("fast", 1);
+		 			$(p4).fadeTo("fast", 1);
+		 			$(p5).fadeTo("fast", 0.5);
+		 			$(pAll).fadeTo("fast", 1);
+
+		 			$(p1).css('color', 'white');
+ 					$(p2).css('color', 'white');
+ 					$(p3).css('color', 'white');
+ 					$(p4).css('color', 'white');
+ 					$(p5).css('color', 'red');
+ 					$(pAll).css('color', 'white');
+
+
+		 			toAll = 0;
+		 			toWhom = 5;
+
+		 			
+					console.log("three");
+		 			socket.emit('sendingTo', toWhom, toAll);
+		 		    socket.emit('sendingAll', toAll);
+		 		
+				 	}
+				 );
+
 				$(pAll).click(function(){
 
 					$(p1).fadeTo("fast", 1);
 		 			$(p2).fadeTo("fast", 1);
 		 			$(p3).fadeTo("fast", 1);
+		 			$(p4).fadeTo("fast", 1);
+		 			$(p5).fadeTo("fast", 1);
 		 			$(pAll).fadeTo("fast", 0.5);
 
 		 			$(p1).css('color', 'white');
  					$(p2).css('color', 'white');
  					$(p3).css('color', 'white');
+ 					$(p4).css('color', 'white');
+ 					$(p5).css('color', 'white');
  					$(pAll).css('color', 'red');
 
 					toWhom = 0;
