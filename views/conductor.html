@@ -128,15 +128,16 @@
 
 			<div class="figures">
 
+				<p> Images <p>
                   {{#images}}
                   <img src={{.}} class="imageF" width="175px" height="175px">
                   {{/images}}
 
-                <!--   {{#images}}
-                  <video src={{.}} class="videoF" width="175px" height="175px">
-                  {{/images}} -->
 
-                 
+                 <p> Videos <p>
+                  {{#videos}}
+                  <video src={{.}} class="videoF" width="175px" height="175px"> </video>
+                  {{/videos}}
 
             </div>
 
@@ -164,7 +165,7 @@
 			imageSrcs[i] = imageIds[i].src;
 
 
-			console.log(imageIds[i].src.split(".")[4]);  // added this for file extension
+			//console.log(imageIds[i].src.split(".")[4]);  // added this for file extension
 
 		};
 
@@ -180,29 +181,32 @@
 			}
 		}	
 
-		// var videoIds = document.getElementsByClassName("videoF");  // from image tag above
-		// var videoIdsLength = videoIds.length;
-		// var videoSrcs = [];  //sending this to the socket emit
 
-		// //create unique id's for videos
-		// for (i = 0; i < videoIds.length; i++) {
-		// 	videoIds[i].id = 'vF'+ i;	
-		// };
-		// // gut the urls of videos
-		// for (i = 0; i < videoIds.length; i++) {
-		// 	videoSrcs[i] = videoIds[i].src;
-		// };
-		// //seth helped with this  -- add button functionalities
-		// for(var i = 0; i < videoIds.length; i ++){
-		// 	$("#vF" + i).click(fadeTheFadeV(i));
-		// }
-		// //add the urls to the button
-		// function fadeTheFadeV(index){
-		// 	return function(){
-		// 		$("#vF" + index).fadeTo("slow", 0.5);
-		// 		socket.emit('videoFigure', videoSrcs[index])
-		// 	}
-		// }	
+		//video buttons
+
+		var videoIds = document.getElementsByClassName("videoF");  // from image tag above
+		var videoIdsLength = videoIds.length;
+		var videoSrcs = [];  //sending this to the socket emit
+
+		//create unique id's for videos
+		for (i = 0; i < videoIds.length; i++) {
+			videoIds[i].id = 'vF'+ i;	
+		};
+		// gut the urls of videos
+		for (i = 0; i < videoIds.length; i++) {
+			videoSrcs[i] = videoIds[i].src;
+		};
+		//seth helped with this  -- add button functionalities
+		for(var i = 0; i < videoIds.length; i ++){
+			$("#vF" + i).click(fadeTheFadeV(i));
+		}
+		//add the urls to the button
+		function fadeTheFadeV(index){
+			return function(){
+				$("#vF" + index).fadeTo("slow", 0.5);
+				socket.emit('videoFigure', videoSrcs[index])
+			}
+		}	
 
 
 		

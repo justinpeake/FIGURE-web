@@ -248,11 +248,11 @@ var performerCount = 0;
     
                   
                     }; // end of for loop
-                    console.log('IMAGES');
+                    console.log('IMAGES: ' + imageArray.length);
                     console.log(imageArray);
 
 
-                    console.log('VIDEOS');
+                    console.log('VIDEOS: ' + videoArray.length);
                     console.log(videoArray);
 
 
