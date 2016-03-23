@@ -16,6 +16,9 @@ fileList = '';
 fileArray = [];
 folderLength = '';
 
+imageArray = [];
+videoArray = [];
+
 //////////////////////////////////////////
 
     // index

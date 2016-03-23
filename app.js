@@ -20,7 +20,7 @@ var passport = require('passport');
 var routes = require('./routes/index.js');
 var users = require('./routes/users.js');
 
-var aws = require('aws-sdk');
+var aws = require('aws-sdk'); 
 var path = require('path');
 var http = require('http'); 
 var chalk = require('chalk'); 
@@ -95,7 +95,8 @@ passport.use(new LocalStrategy(Account.authenticate()));
         app.get('/sign_s3', function(req, res){
 
             console.log('hiiiiiiii');
-           // this is against AWS recommendation
+            // this is against AWS recommendation
+
             aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
             var s3 = new aws.S3();
 
@@ -139,7 +140,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
                   fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
                 };
 
-         //   console.log(fileArray);
+               //   console.log(fileArray);
 
               });
 
@@ -184,22 +185,18 @@ var performerCount = 0;
 
               socket.on('perfAdd', function(data) {
               performerCount = performerCount + 1;
-             // socket.broadcast.emit('performerCount', performerCount);
+              // socket.broadcast.emit('performerCount', performerCount);
               });
 
+              // if(page == 'performer'){
+              // performerCount = performerCount + 1;
+              // };
 
-            // if(page == 'performer'){
-            // performerCount = performerCount + 1;
-            // };
-
-            
-
+          
             // When this user emits, client side: socket.emit('otherevent',some data);
 
 
             socket.on('gimme', function(){
-
-
 
               //polling aws based on user and listing assets
 
@@ -224,6 +221,7 @@ var performerCount = 0;
   
                   for (i = 0; i < folderLength; i++){
                      fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+                      //console.log(fileArray[i].split("."));
                    };
                       console.log(folderLength);  //use this in html button rendering
                       console.log(fileArray);
