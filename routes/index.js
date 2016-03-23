@@ -38,7 +38,7 @@ videoArray = [];
        userName = req.user.username;
 
        console.log(chalk.white(req.user.username) + " logged in");
-       res.render("dashboard.html", {user: userName, files: fileArray, length: folderLength});
+       res.render("dashboard.html", {user: userName, images: imageArray, videos: videoArray, length: folderLength});
 
       });
 
@@ -80,7 +80,7 @@ router.get('/dashboard', function(req,res){
 router.get('/conductor', function(req,res){
 
         if(req.user) {
-        res.render('conductor.html', {user: userName, files: fileArray, length: folderLength});     
+        res.render('conductor.html', {user: userName, images: imageArray, videos: videoArray, length: folderLength});     
         page = 'conductor';   
         }else{        
         res.render('index.html')       
@@ -109,7 +109,7 @@ router.get('/performer', function(req,res){
 router.get('/compose', function(req, res) {
     
       if(req.user) {          
-        res.render('compose.html', {user: userName, files: fileArray, length: folderLength}); 
+        res.render('compose.html', {user: userName, images: imageArray, videos: videoArray, length: folderLength}); 
         page = 'compose';        
         }else{        
         res.render('index.html')        

@@ -218,15 +218,51 @@ var performerCount = 0;
                   var folderLength = data.Contents.length;
 
                   fileArray = [];
-  
+                  imageArray = [];
+                  videoArray = [];
+                  
+                  // filling fileArray[] with all the URL's from amazon
                   for (i = 0; i < folderLength; i++){
                      fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
-                      //console.log(fileArray[i].split("."));
-                   };
-                      console.log(folderLength);  //use this in html button rendering
-                      console.log(fileArray);
-                  });
-              });
+                     };
+
+                    /*  1) this is splitting the urls > 
+                        2) looking at the last array element (which is 'most likely' the file extension)
+                        3) checking to see whether the file extension matches any
+                    */
+
+                    for (i = 0; i < folderLength; i++){
+
+                      if (fileArray[i].split(".")[4] == 'jpg'){
+
+                        imageArray.push(fileArray[i]);  
+
+                      } else if (fileArray[i].split(".")[4] == 'png'){
+
+                        imageArray.push(fileArray[i]);    
+
+                      }  else if (fileArray[i].split(".")[4] == 'mov'){
+
+                        videoArray.push(fileArray[i]);                         
+                      }                     
+    
+                  
+                    }; // end of for loop
+                    console.log('IMAGES');
+                    console.log(imageArray);
+
+
+                    console.log('VIDEOS');
+                    console.log(videoArray);
+
+
+                      //console.log(folderLength);  //use this in html button rendering
+                      //console.log(fileArray);
+
+
+                  });  // end of list objects
+              
+              });  // end of 'gimme' function
 
 
             socket.on('sendingTo', function(data) {
