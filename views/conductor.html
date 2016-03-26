@@ -1,4 +1,4 @@
-        
+         
    <html>
 		<head>
 			<title>FIGURE :: CONDUCT</title>
@@ -8,6 +8,7 @@
 		        <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
 				<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
 				<script src="/socket.io/socket.io.js"></script>  
+
 			<!--	<script type="text/javascript" src="app.js"></script> -->
 				
 				<script>  var socket = io(); </script> 	
@@ -122,13 +123,14 @@
 							visibility: hidden;
 						}
 
+
 		</style>
 	</head>
 
  <body>
  			
 
- 	<div id="everythingConductor">
+<div id="everythingConductor">
 
  	<div id="switcher"> SWITCH </div> <p>
 
@@ -171,7 +173,8 @@
                   {{/videos}}
 
             </div>
-            </div>
+
+	
 	
 	<script type="text/javascript">
 
@@ -238,24 +241,19 @@
 		}	
 
 
-		
-					
 				// working
 				var toWhom = 0;  // initialize these globally, used in server and emit to performers
 				var toAll = 0;
 				var divs = [];
 
 
-
-
 				//SWITCHER
 				$(switcher).click(function(){
 
-					console.log('switch' + toWhom);
-
+					console.log('switch ' + toWhom);
 					socket.emit('switch', toWhom);
 
-				})
+				});
 
 
 				//for autopropagating perf buttons
@@ -271,12 +269,6 @@
 			    $(conduct).click(function(){
 			        $(location).attr('href', '/conductor') ;   
 			    });
-
-
-
-				// socket.on('performerCount', function (data) {
-
-				// 	});
 					 
 						
 		 		$(p1).click(function(){
@@ -445,6 +437,8 @@
 		
 
 			</script>
+
+		</div>
  
  	</body>
 

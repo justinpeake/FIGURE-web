@@ -22,7 +22,7 @@ var users = require('./routes/users.js');
 
 var aws = require('aws-sdk'); 
 var path = require('path');
-var http = require('http'); 
+var http = require('http');  
 var chalk = require('chalk'); 
 var userID;
 
