@@ -10,7 +10,9 @@
 		<script type="text/javascript" src="/js/sketches.js"></script> 
 		<script type="text/javascript" src="/js/classes.js"></script> 
 
-		<script src= " https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
+		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
+		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
+
 
 		<script>  var socket = io(); </script> 
 
@@ -21,9 +23,6 @@
 								socket.emit('perfAdd');  // no server listener for this yet
 								console.log("Performer in the house.");
 							});
-
-
-						
 				</script>	
 
 				<style>
@@ -42,6 +41,10 @@
 						font-family: nexa;
 						}
 
+
+
+
+
 						#perfDialogue {
 							line-height:50px;
 						    background-color:#FFFFFF;
@@ -53,39 +56,53 @@
 						}
 
 						.performerDiv {
-						width:50;
-						height:50;
-						background-color: 000000;
-						color: FFFFFF;
-						font-size: 40px;
-						text-align: center;
-						display: inline-block;
-						margin: 2px;
-					}
-						#bpm{
+							width:50;
+							height:50;
+							background-color: 000000;
+							color: FFFFFF;
+							font-size: 40px;
+							text-align: center;
+							display: inline-block;
+							margin: 2px;
+						}
+						
+						#bpm { 
 							float: left;
 						}
 
+						#everythingPerformer {
+							visibility: visible;
+						}
+
+						#everythingConductor{
+							visibility: hidden;
+						}
 					
-
-
-
-
-				</style>
+		</style>
 	</head>
+
+
 <body>
 
-Hello {{user}}...  <br>
 
-	<div id="perfDialogue" align="left"> 
+<div id="everythingPerformer">
+
+			Hello {{user}}...  <br>
+
+		<div id="perfDialogue" align="left"> 
 
 				<!-- redo these with % -->
 
 				Join as Performer:	 			
 			<a>  
-				<div class="performerDiv" id="p1"> 1 </div> 
-				<div class="performerDiv" id="p2"> 2 </div> 
-				<div class="performerDiv" id="p3"> 3 </div> 
+				<div class="performerDiv" id="perf1"> 1 </div> 
+				<div class="performerDiv" id="perf2"> 2 </div> 
+				<div class="performerDiv" id="perf3"> 3 </div> 
+				<div class="performerDiv" id="perf4"> 4 </div> 
+				<div class="performerDiv" id="perf5"> 5 </div> 
+
+
+				
 				<p>
 				<div id="bpm"> </div>
 				
@@ -118,15 +135,23 @@ Hello {{user}}...  <br>
 			 	
 
 			</div>
+
+</div>
+
+
  
  <script type="text/javascript">
+
+
+
+/////// BEGIN PERFORMER SCRIPT
 
  				// 	//variable to change p5
  				// 	var sketch = q;
 
 
  				// 	//actually calls th p5  (p5 sketches in /public/js)
-					// var myp5 = new p5(time, 'timeLine');
+					 var myp5 = new p5(waveForm, 'timeLine');
 					// var myp5 = new p5(tempo, 'bpm'); 
 
 					// var myp5 = new p5(sketch, 'sketchFigure');  
@@ -139,61 +164,111 @@ Hello {{user}}...  <br>
 					var toAll = 0;
 
 
-				//	var socket = io.connect();
-
-					$(incoming).fadeTo(1,0);
+		$(incoming).fadeTo(1,0);
 
 
 		//performer buttons
 
-	 	$(p1).click(function(){
+	 	$(perf1).click(function(){
 
 	 		myId = 1;
 
-	 		$(p1).fadeTo(500, 0.5);
-	 		$(p2).fadeTo(500, 1);			 		
-	 		$(p3).fadeTo(500, 1);
+	 		$(perf1).fadeTo(500, 0.5);
+	 		$(perf2).fadeTo(500, 1);			 		
+	 		$(perf3).fadeTo(500, 1);
+	 		$(perf4).fadeTo(500, 1);
+	 		$(perf5).fadeTo(500, 1);
 
-	 		$(p1).css('color', 'red');
-	 		$(p2).css('color', 'white');
-	 		$(p3).css('color', 'white');
+	 		$(perf1).css('color', 'red');
+	 		$(perf2).css('color', 'white');
+	 		$(perf3).css('color', 'white');
+	 		$(perf4).css('color', 'white');
+	 		$(perf5).css('color', 'white');
 	 		
 			console.log("I am Performer " + myId);
 	 	}
 	 );
 
-	 	$(p2).click(function(){
+	 	$(perf2).click(function(){
 
 	 		myId = 2;
 
-	 		$(p1).fadeTo(500, 1);
-	 		$(p2).fadeTo(500, 0.5);			 		
-	 		$(p3).fadeTo(500, 1);
+	 		$(perf1).fadeTo(500, 1);
+	 		$(perf2).fadeTo(500, 0.5);			 		
+	 		$(perf3).fadeTo(500, 1);
+	 		$(perf4).fadeTo(500, 1);
+	 		$(perf5).fadeTo(500, 1);
 
-	 		$(p1).css('color', 'white');
-	 		$(p2).css('color', 'red');
-	 		$(p3).css('color', 'white');
+	 		$(perf1).css('color', 'white');
+	 		$(perf2).css('color', 'red');
+	 		$(perf3).css('color', 'white');
+	 		$(perf4).css('color', 'white');
+	 		$(perf5).css('color', 'white');
 
 			console.log("I am Performer " + myId);		
 	 	}
 	 );
 
-	 	$(p3).click(function(){
+	 	$(perf3).click(function(){
 
 	 		myId = 3;
 
-	 		$(p1).fadeTo(500, 1);
-	 		$(p2).fadeTo(500, 1);			 		
-	 		$(p3).fadeTo(500, 0.5);
+	 		$(perf1).fadeTo(500, 1);
+	 		$(perf2).fadeTo(500, 1);			 		
+	 		$(perf3).fadeTo(500, 0.5);
+	 		$(perf4).fadeTo(500, 1);
+	 		$(perf5).fadeTo(500, 1);
 
-	 		$(p1).css('color', 'white');
-	 		$(p2).css('color', 'white');
-	 		$(p3).css('color', 'red');
+	 		$(perf1).css('color', 'white');
+	 		$(perf2).css('color', 'white');
+	 		$(perf3).css('color', 'red');
+	 		$(perf4).css('color', 'white');
+	 		$(perf5).css('color', 'white');
 
 	 		console.log("I am Performer " + myId);
 	 	}
 	 );
 
+		$(perf4).click(function(){
+
+	 		myId = 4;
+
+	 		$(perf1).fadeTo(500, 1);
+	 		$(perf2).fadeTo(500, 1);			 		
+	 		$(perf3).fadeTo(500, 1);
+	 		$(perf4).fadeTo(500, 0.5);
+	 		$(perf5).fadeTo(500, 1);
+
+	 		$(perf1).css('color', 'white');
+	 		$(perf2).css('color', 'white');
+	 		$(perf3).css('color', 'white');
+	 		$(perf4).css('color', 'red');
+	 		$(perf5).css('color', 'white');
+
+	 		console.log("I am Performer " + myId);
+	 	}
+	 );	 	
+
+
+		$(perf5).click(function(){
+
+	 		myId = 5;
+
+	 		$(perf1).fadeTo(500, 1);
+	 		$(perf2).fadeTo(500, 1);			 		
+	 		$(perf3).fadeTo(500, 1);
+	 		$(perf4).fadeTo(500, 1);
+	 		$(perf5).fadeTo(500, 0.5);
+
+	 		$(perf1).css('color', 'white');
+	 		$(perf2).css('color', 'white');
+	 		$(perf3).css('color', 'white');
+	 		$(perf4).css('color', 'white');
+	 		$(perf5).css('color', 'red');
+
+	 		console.log("I am Performer " + myId);
+	 	}
+	 );
 
 	 				// functions (just one right now)
 	 				var flashIncoming = function(){
@@ -201,7 +276,7 @@ Hello {{user}}...  <br>
 						$(incoming).fadeTo(500, 1);
 						$(incoming).fadeTo(500, 0);
 
-					};
+						};
 
 						// routes messages across channels
 
@@ -276,17 +351,20 @@ Hello {{user}}...  <br>
 						}); 
 
 
-						socket.on('sketchFigure', function (data) {
 
-							sketch = data;
+						// socket.on('switch', function (data){
 
-								});	
+						// 	if (myId == toWhom || toAll == 1) {
+						// 	console.log("got tha switch");
+
+						// 	}
+
+
+						// });
+
+					
 						
-						
-
-
-
-
+// END PERFORMER SCRIPT	
 
 
 	</script>

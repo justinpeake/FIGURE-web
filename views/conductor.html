@@ -48,7 +48,20 @@
 						text-align: center;
 						margin: 2px;
 						display:inline;
-					}
+						}
+
+					#switcher {
+						width:50;
+						height:50;
+						border-radius: 40px;
+						background-color: 000000;
+						color: FFFFFF;
+						font-size: 35px;
+						text-align: center;
+						line-height: 50px;
+						display: inline-block;
+						margin: 2px;
+						}
 
 					.performerDiv {
 						width:50;
@@ -61,61 +74,78 @@
 						line-height: 50px;
 						display: inline-block;
 						margin: 2px;
-						
 						}
+
+
 						
-						.figures{
+					.figures{
                     	width: 740px;
                     	float: left;
                     	padding-top: 5px;
                 	    padding-bottom: 5px;
                 
-              		  } 
+              		  	} 
 		                
-		                .sidebar{
-		                    width: 300px;
-		                    height: 200px;
-		                    float:left;
-		              	 }
+	                .sidebar{
+	                    width: 300px;
+	                    height: 200px;
+	                    float:left;
+	              	 }
 
-		              	 .navButton{
+		            .navButton{
                         width:160;
                         height:40;
+                        border-radius: 40px;
                         background-color: 000000;
                         color: FFFFFF;
                         font-size: 20px;
                         text-align: center;
-                        line-height:50px;
+                        line-height:40px;
                         display: block;
                         margin: 2px;
-                        cursor: hand;
+                       
                     }
 
-                    .figuresBox{
-                    width: 740px;
-                    float: left;
-                    padding-top: 5px;
-                    padding-bottom: 5px;
-                
-                } 
+	                .figuresBox{
+	                    width: 740px;
+	                    float: left;
+	                    padding-top: 5px;
+	                    padding-bottom: 5px;
+	                
+	                	} 
 
-				</style>
-		</head>
+	                	#everythingConductor {
+							visibility: visible;
+						}
+
+						#everythingPerformer {
+							visibility: hidden;
+						}
+
+		</style>
+	</head>
 
  <body>
  			
 
-				
+ 	<div id="everythingConductor">
+
+ 	<div id="switcher"> SWITCH </div> <p>
+
 	<div class="sidebar"> You are the CONDUCTOR, {{user}}.
 
 				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
 			 	<p>
+
 				<div class="performerDiv" id="p1"> 1 </div> 
 				<div class="performerDiv" id="p2"> 2 </div> 
 				<div class="performerDiv" id="p3"> 3 </div> 
 				<div class="performerDiv" id="p4"> 4 </div> 
 				<div class="performerDiv" id="p5"> 5 </div> 
 				<div class="performerDiv" id="pAll" style="font-size:40px;width:90px"> ALL </div> 
+
+				<p>
+				<p>
 
 			<nav>
 			<div class="navButton" id="compose">  COMPOSE </div>
@@ -141,10 +171,12 @@
                   {{/videos}}
 
             </div>
+            </div>
 	
 	<script type="text/javascript">
 
 
+		// BEGIN CONDUCTOR SCRIPT
 
 		//socket.emit('gimme');
 
@@ -212,6 +244,18 @@
 				var toWhom = 0;  // initialize these globally, used in server and emit to performers
 				var toAll = 0;
 				var divs = [];
+
+
+
+
+				//SWITCHER
+				$(switcher).click(function(){
+
+					console.log('switch' + toWhom);
+
+					socket.emit('switch', toWhom);
+
+				})
 
 
 				//for autopropagating perf buttons
@@ -397,18 +441,7 @@
 				 	}
 				 );
 
-		// figure button functionality
-
-		// for (i=0; i<ids.length; i++) {
-
-			
-		// 	var fid = 'f' + id.length;
-		// 	var figBtns = [];
-		// };
-
-		
-
-		// Seth helped with this.
+			// END CONDUCTOR SCRIPT
 		
 
 			</script>

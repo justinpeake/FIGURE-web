@@ -285,10 +285,15 @@ var performerCount = 0;
               socket.broadcast.emit('imageFigure', data);
             });
 
-            socket.on('sketchFigure', function(data) {
-              console.log("Received: 'sketch' " + data);
-              socket.broadcast.emit('sketchFigure', data);
+            socket.on('switch', function(data) {
+              console.log("Received: switch " + data);
+              socket.broadcast.emit('switch', data);
             });
+
+            // socket.on('sketchFigure', function(data) {
+            //   console.log("Received: 'sketch' " + data);
+            //   socket.broadcast.emit('sketchFigure', data);
+            // });
 
             socket.on('disconnect', function() {
               if (page =='performer'){
