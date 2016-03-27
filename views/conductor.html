@@ -9,6 +9,16 @@
 				<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
 				<script src="/socket.io/socket.io.js"></script>  
 
+				<link rel="stylesheet" type="text/css" href="/css/style.css">
+
+				<script type="text/javascript" src="/js/sketches.js"></script> 
+				<script type="text/javascript" src="/js/classes.js"></script> 
+
+		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
+		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
+
+
+
 			<!--	<script type="text/javascript" src="app.js"></script> -->
 				
 				<script>  var socket = io(); </script> 	
@@ -23,108 +33,21 @@
 
 				</script>	
 										<!-- head scripts END -->
+			
+
 				<style>
-						/*@font-face {
-					    font-family: nexa;
-					    src: url('nexalight.otf');
-					}*/
 
-					div {
-					    font-family: nexa;
-					    /*font-size: 20px;*/
-					} 
-
-					body {
-						background-color: #FFF;
-						padding-top: 20px;
-						padding-left: 20px;
-					}
-
-					#perfsBox {
-						width: 400px;
-						height: 200px;	
-						font-size: 45px;
-						padding-top: 6px;
-						color:FFFFFF;
-						text-align: center;
-						margin: 2px;
-						display:inline;
-						}
-
-					#switcher {
-						width:50;
-						height:50;
-						border-radius: 40px;
-						background-color: 000000;
-						color: FFFFFF;
-						font-size: 35px;
-						text-align: center;
-						line-height: 50px;
-						display: inline-block;
-						margin: 2px;
-						}
-
-					.performerDiv {
-						width:50;
-						height:50;
-						border-radius: 40px;
-						background-color: 000000;
-						color: FFFFFF;
-						font-size: 35px;
-						text-align: center;
-						line-height: 50px;
-						display: inline-block;
-						margin: 2px;
-						}
-
-
-						
-					.figures{
-                    	width: 740px;
-                    	float: left;
-                    	padding-top: 5px;
-                	    padding-bottom: 5px;
-                
-              		  	} 
-		                
-	                .sidebar{
-	                    width: 300px;
-	                    height: 200px;
-	                    float:left;
-	              	 }
-
-		            .navButton{
-                        width:160;
-                        height:40;
-                        border-radius: 40px;
-                        background-color: 000000;
-                        color: FFFFFF;
-                        font-size: 20px;
-                        text-align: center;
-                        line-height:40px;
-                        display: block;
-                        margin: 2px;
-                       
-                    }
-
-	                .figuresBox{
-	                    width: 740px;
-	                    float: left;
-	                    padding-top: 5px;
-	                    padding-bottom: 5px;
-	                
-	                	} 
-
-	                	#everythingConductor {
-							visibility: visible;
+						#everythingConductor {
+							/*visibility: visible;*/
+							display: block;
 						}
 
 						#everythingPerformer {
-							visibility: hidden;
+							/*visibility: hidden;*/
+							display: none;
 						}
 
-
-		</style>
+				</style>
 	</head>
 
  <body>
@@ -139,12 +62,12 @@
 				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
 			 	<p>
 
-				<div class="performerDiv" id="p1"> 1 </div> 
-				<div class="performerDiv" id="p2"> 2 </div> 
-				<div class="performerDiv" id="p3"> 3 </div> 
-				<div class="performerDiv" id="p4"> 4 </div> 
-				<div class="performerDiv" id="p5"> 5 </div> 
-				<div class="performerDiv" id="pAll" style="font-size:40px;width:90px"> ALL </div> 
+				<div class="performerDiv" id="cp1"> 1 </div> 
+				<div class="performerDiv" id="cp2"> 2 </div> 
+				<div class="performerDiv" id="cp3"> 3 </div> 
+				<div class="performerDiv" id="cp4"> 4 </div> 
+				<div class="performerDiv" id="cp5"> 5 </div> 
+				<div class="performerDiv" id="cpAll" style="font-size:40px;width:90px"> ALL </div> 
 
 				<p>
 				<p>
@@ -253,6 +176,11 @@
 					console.log('switch ' + toWhom);
 					socket.emit('switch', toWhom);
 
+					document.getElementById("everythingPerformer").style.display = "block";
+					document.getElementById("everythingConductor").style.display= "none";
+
+					performerSketch();
+
 				});
 
 
@@ -271,21 +199,21 @@
 			    });
 					 
 						
-		 		$(p1).click(function(){
+		 		$(cp1).click(function(){
 
-		 			$(p1).fadeTo("fast", 0.5); 
-		 			$(p2).fadeTo("fast", 1); 
-		 			$(p3).fadeTo("fast", 1);
-		 			$(p4).fadeTo("fast", 1);
-		 			$(p5).fadeTo("fast", 1);
-		 			$(pAll).fadeTo("fast", 1);
+		 			$(cp1).fadeTo("fast", 0.5); 
+		 			$(cp2).fadeTo("fast", 1); 
+		 			$(cp3).fadeTo("fast", 1);
+		 			$(cp4).fadeTo("fast", 1);
+		 			$(cp5).fadeTo("fast", 1);
+		 			$(cpAll).fadeTo("fast", 1);
 
-		 			$(p1).css('color', 'red');
- 					$(p2).css('color', 'white');
- 					$(p3).css('color', 'white');
- 					$(p4).css('color', 'white');
- 					$(p5).css('color', 'white');
- 					$(pAll).css('color', 'white');
+		 			$(cp1).css('color', 'red');
+ 					$(cp2).css('color', 'white');
+ 					$(cp3).css('color', 'white');
+ 					$(cp4).css('color', 'white');
+ 					$(cp5).css('color', 'white');
+ 					$(cpAll).css('color', 'white');
 
 		 			toAll = 0;
 		 			toWhom = 1;
@@ -297,21 +225,21 @@
 				 	}
 				 );
 
-		 		$(p2).click(function(){
+		 		$(cp2).click(function(){
 
-		 			$(p1).fadeTo("fast", 1); 
-		 			$(p2).fadeTo("fast", 0.5); 
-		 			$(p3).fadeTo("fast", 1);
-		 			$(p4).fadeTo("fast", 1);
-		 			$(p5).fadeTo("fast", 1);
-		 			$(pAll).fadeTo("fast", 1);
+		 			$(cp1).fadeTo("fast", 1); 
+		 			$(cp2).fadeTo("fast", 0.5); 
+		 			$(cp3).fadeTo("fast", 1);
+		 			$(cp4).fadeTo("fast", 1);
+		 			$(cp5).fadeTo("fast", 1);
+		 			$(cpAll).fadeTo("fast", 1);
 
-		 			$(p1).css('color', 'white');
- 					$(p2).css('color', 'red');
- 					$(p3).css('color', 'white');
- 					$(p4).css('color', 'white');
- 					$(p5).css('color', 'white');
- 					$(pAll).css('color', 'white');
+		 			$(cp1).css('color', 'white');
+ 					$(cp2).css('color', 'red');
+ 					$(cp3).css('color', 'white');
+ 					$(cp4).css('color', 'white');
+ 					$(cp5).css('color', 'white');
+ 					$(cpAll).css('color', 'white');
 
 
 		 			toAll = 0;
@@ -323,21 +251,21 @@
 				 	}
 				 );
 
-		 		$(p3).click(function(){
+		 		$(cp3).click(function(){
 
-		 			$(p1).fadeTo("fast", 1);
-		 			$(p2).fadeTo("fast", 1);
-		 			$(p3).fadeTo("fast", 0.5);
-		 			$(p4).fadeTo("fast", 1);
-		 			$(p5).fadeTo("fast", 1);
-		 			$(pAll).fadeTo("fast", 1);
+		 			$(cp1).fadeTo("fast", 1);
+		 			$(cp2).fadeTo("fast", 1);
+		 			$(cp3).fadeTo("fast", 0.5);
+		 			$(cp4).fadeTo("fast", 1);
+		 			$(cp5).fadeTo("fast", 1);
+		 			$(cpAll).fadeTo("fast", 1);
 
-		 			$(p1).css('color', 'white');
- 					$(p2).css('color', 'white');
- 					$(p3).css('color', 'red');
- 					$(p4).css('color', 'white');
- 					$(p5).css('color', 'white');
- 					$(pAll).css('color', 'white');
+		 			$(cp1).css('color', 'white');
+ 					$(cp2).css('color', 'white');
+ 					$(cp3).css('color', 'red');
+ 					$(cp4).css('color', 'white');
+ 					$(cp5).css('color', 'white');
+ 					$(cpAll).css('color', 'white');
 
 
 		 			toAll = 0;
@@ -351,21 +279,21 @@
 				 	}
 				 );
 
-		 		$(p4).click(function(){
+		 		$(cp4).click(function(){
 
-		 			$(p1).fadeTo("fast", 1);
-		 			$(p2).fadeTo("fast", 1);
-		 			$(p3).fadeTo("fast", 1);
-		 			$(p4).fadeTo("fast", 0.5);
-		 			$(p5).fadeTo("fast", 1);
-		 			$(pAll).fadeTo("fast", 1);
+		 			$(cp1).fadeTo("fast", 1);
+		 			$(cp2).fadeTo("fast", 1);
+		 			$(cp3).fadeTo("fast", 1);
+		 			$(cp4).fadeTo("fast", 0.5);
+		 			$(cp5).fadeTo("fast", 1);
+		 			$(cpAll).fadeTo("fast", 1);
 
-		 			$(p1).css('color', 'white');
- 					$(p2).css('color', 'white');
- 					$(p3).css('color', 'white');
- 					$(p4).css('color', 'red');
- 					$(p5).css('color', 'white');
- 					$(pAll).css('color', 'white');
+		 			$(cp1).css('color', 'white');
+ 					$(cp2).css('color', 'white');
+ 					$(cp3).css('color', 'white');
+ 					$(cp4).css('color', 'red');
+ 					$(cp5).css('color', 'white');
+ 					$(cpAll).css('color', 'white');
 
 
 		 			toAll = 0;
@@ -379,21 +307,21 @@
 				 	}
 				 );
 
-		 		$(p5).click(function(){
+		 		$(cp5).click(function(){
 
-		 			$(p1).fadeTo("fast", 1);
-		 			$(p2).fadeTo("fast", 1);
-		 			$(p3).fadeTo("fast", 1);
-		 			$(p4).fadeTo("fast", 1);
-		 			$(p5).fadeTo("fast", 0.5);
-		 			$(pAll).fadeTo("fast", 1);
+		 			$(cp1).fadeTo("fast", 1);
+		 			$(cp2).fadeTo("fast", 1);
+		 			$(cp3).fadeTo("fast", 1);
+		 			$(cp4).fadeTo("fast", 1);
+		 			$(cp5).fadeTo("fast", 0.5);
+		 			$(cpAll).fadeTo("fast", 1);
 
-		 			$(p1).css('color', 'white');
- 					$(p2).css('color', 'white');
- 					$(p3).css('color', 'white');
- 					$(p4).css('color', 'white');
- 					$(p5).css('color', 'red');
- 					$(pAll).css('color', 'white');
+		 			$(cp1).css('color', 'white');
+ 					$(cp2).css('color', 'white');
+ 					$(cp3).css('color', 'white');
+ 					$(cp4).css('color', 'white');
+ 					$(cp5).css('color', 'red');
+ 					$(cpAll).css('color', 'white');
 
 
 		 			toAll = 0;
@@ -407,21 +335,21 @@
 				 	}
 				 );
 
-				$(pAll).click(function(){
+				$(cpAll).click(function(){
 
-					$(p1).fadeTo("fast", 1);
-		 			$(p2).fadeTo("fast", 1);
-		 			$(p3).fadeTo("fast", 1);
-		 			$(p4).fadeTo("fast", 1);
-		 			$(p5).fadeTo("fast", 1);
-		 			$(pAll).fadeTo("fast", 0.5);
+					$(cp1).fadeTo("fast", 1);
+		 			$(cp2).fadeTo("fast", 1);
+		 			$(cp3).fadeTo("fast", 1);
+		 			$(cp4).fadeTo("fast", 1);
+		 			$(cp5).fadeTo("fast", 1);
+		 			$(cpAll).fadeTo("fast", 0.5);
 
-		 			$(p1).css('color', 'white');
- 					$(p2).css('color', 'white');
- 					$(p3).css('color', 'white');
- 					$(p4).css('color', 'white');
- 					$(p5).css('color', 'white');
- 					$(pAll).css('color', 'red');
+		 			$(cp1).css('color', 'white');
+ 					$(cp2).css('color', 'white');
+ 					$(cp3).css('color', 'white');
+ 					$(cp4).css('color', 'white');
+ 					$(cp5).css('color', 'white');
+ 					$(cpAll).css('color', 'red');
 
 					toWhom = 0;
 		 			toAll = 1;
@@ -439,6 +367,280 @@
 			</script>
 
 		</div>
+
+		<div id="everythingPerformer">
+
+			Hello {{user}}...  <br>
+
+		<div id="perfDialogue" align="left"> 
+
+				<!-- redo these with % -->
+
+				Join as Performer:	 			
+			<a>  
+				<div class="performerDiv" id="perf1"> 1 </div> 
+				<div class="performerDiv" id="perf2"> 2 </div> 
+				<div class="performerDiv" id="perf3"> 3 </div> 
+				<div class="performerDiv" id="perf4"> 4 </div> 
+				<div class="performerDiv" id="perf5"> 5 </div> 
+
+
+				
+				<p>
+				<div id="bpm"> </div>
+				
+
+			</a>
+
+			<br>
+			<br>
+			<br>
+					 <!-- responds to the "incoming" function -->
+			<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
+
+	</div> 
+
+	 <br>
+	 
+			<div id="figures" align="center">
+	 		
+	 <!-- This is where each new figure is injected into the performer page.
+	 	  "currentFigure" is the name of the element that needs to be updated from conductor page. -->
+
+
+	 	  		<!-- <div id="timeLine"> </div> -->
+
+	 	  		<div id="sketchFigure"> </div>
+
+			 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
+			 	
+			 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
+			 	
+
+			</div>
+
+ 
+ <script type="text/javascript">
+
+
+
+/////// BEGIN PERFORMER SCRIPT
+
+ 				// 	//variable to change p5
+ 				// 	var sketch = q;
+
+
+ 				// 	//actually calls th p5  (p5 sketches in /public/js)
+					var performerSketch = function() {
+
+					  var myp5 = new p5(waveForm, 'sketchFigure');
+
+					}
+					// var myp5 = new p5(tempo, 'bpm'); 
+
+					//var myp5 = new p5(waveForm, 'timeLine');
+					  
+
+					
+
+					//initialize globals
+					var myId = 0; 
+					var toWhom = 0;
+					var toAll = 0;
+
+
+		$(incoming).fadeTo(1,0);
+
+		//performer buttons
+
+	 	$(perf1).click(function(){
+
+	 		myId = 1;
+
+	 		$(perf1).fadeTo(500, 0.5);
+	 		$(perf2).fadeTo(500, 1);			 		
+	 		$(perf3).fadeTo(500, 1);
+	 		$(perf4).fadeTo(500, 1);
+	 		$(perf5).fadeTo(500, 1);
+
+	 		$(perf1).css('color', 'red');
+	 		$(perf2).css('color', 'white');
+	 		$(perf3).css('color', 'white');
+	 		$(perf4).css('color', 'white');
+	 		$(perf5).css('color', 'white');
+	 		
+			console.log("I am Performer " + myId);
+	 	}
+	 );
+
+	 	$(perf2).click(function(){
+
+	 		myId = 2;
+
+	 		$(perf1).fadeTo(500, 1);
+	 		$(perf2).fadeTo(500, 0.5);			 		
+	 		$(perf3).fadeTo(500, 1);
+	 		$(perf4).fadeTo(500, 1);
+	 		$(perf5).fadeTo(500, 1);
+
+	 		$(perf1).css('color', 'white');
+	 		$(perf2).css('color', 'red');
+	 		$(perf3).css('color', 'white');
+	 		$(perf4).css('color', 'white');
+	 		$(perf5).css('color', 'white');
+
+			console.log("I am Performer " + myId);		
+	 	}
+	 );
+
+	 	$(perf3).click(function(){
+
+	 		myId = 3;
+
+	 		$(perf1).fadeTo(500, 1);
+	 		$(perf2).fadeTo(500, 1);			 		
+	 		$(perf3).fadeTo(500, 0.5);
+	 		$(perf4).fadeTo(500, 1);
+	 		$(perf5).fadeTo(500, 1);
+
+	 		$(perf1).css('color', 'white');
+	 		$(perf2).css('color', 'white');
+	 		$(perf3).css('color', 'red');
+	 		$(perf4).css('color', 'white');
+	 		$(perf5).css('color', 'white');
+
+	 		console.log("I am Performer " + myId);
+	 	}
+	 );
+
+		$(perf4).click(function(){
+
+	 		myId = 4;
+
+	 		$(perf1).fadeTo(500, 1);
+	 		$(perf2).fadeTo(500, 1);			 		
+	 		$(perf3).fadeTo(500, 1);
+	 		$(perf4).fadeTo(500, 0.5);
+	 		$(perf5).fadeTo(500, 1);
+
+	 		$(perf1).css('color', 'white');
+	 		$(perf2).css('color', 'white');
+	 		$(perf3).css('color', 'white');
+	 		$(perf4).css('color', 'red');
+	 		$(perf5).css('color', 'white');
+
+	 		console.log("I am Performer " + myId);
+	 	}
+	 );	 	
+
+
+		$(perf5).click(function(){
+
+	 		myId = 5;
+
+	 		$(perf1).fadeTo(500, 1);
+	 		$(perf2).fadeTo(500, 1);			 		
+	 		$(perf3).fadeTo(500, 1);
+	 		$(perf4).fadeTo(500, 1);
+	 		$(perf5).fadeTo(500, 0.5);
+
+	 		$(perf1).css('color', 'white');
+	 		$(perf2).css('color', 'white');
+	 		$(perf3).css('color', 'white');
+	 		$(perf4).css('color', 'white');
+	 		$(perf5).css('color', 'red');
+
+	 		console.log("I am Performer " + myId);
+	 	}
+	 );
+
+	 				// functions (just one right now)
+	 				var flashIncoming = function(){
+
+						$(incoming).fadeTo(500, 1);
+						$(incoming).fadeTo(500, 0);
+
+						};
+
+						// routes messages across channels
+
+						socket.on('sendingTo', function (data) {							
+							toWhom = data;
+							console.log("toWhom = " + toWhom);
+							
+						});
+
+						socket.on('sendingAll', function (data) {							
+							toAll = data;
+							console.log("toAll= " + toAll);	
+							
+						});
+
+						//sets up flashing of incoming image referenced above
+				
+
+
+						socket.on('videoFigure', function (data) {
+
+
+								//checks to see if conductor is talking to "you"
+							if (myId == toWhom || toAll == 1) { 
+
+								//flashes "incoming" image 
+							var flasher = setInterval(function() {flashIncoming()} , 500);
+
+								// shuts off incoming flasher after interval
+							setTimeout(function() {clearInterval(flasher)}, 2000);
+							setTimeout(function() {display()}, 3000);
+
+							// display shitz
+							var display = function(){
+							console.log(data + "performerside" + toWhom);
+
+							document.getElementById('imageFig').src = "";
+							document.getElementById('imageFig').height = "0";
+
+							document.getElementById('videoFig').src = data;
+							document.getElementById('videoFig').height = "600";
+								}
+							}							
+						});
+
+					
+
+						socket.on('imageFigure', function (data) {
+
+							if (myId == toWhom || toAll == 1) {
+
+								//flashes "incoming" image 
+							var flasher = setInterval(function() {flashIncoming()} , 500);
+
+								// shuts off incoming flasher after interval
+							setTimeout(function() {clearInterval(flasher)}, 1500);
+							setTimeout(function() {display()}, 3000);
+
+								// display shitz
+							var display = function(){
+							console.log(data + "performerside" + toWhom);
+
+							// NEED TO GET RID OF THIS HACKY WAY AND MAKE ONLY ONE DISPLAY AT A TIME
+						    document.getElementById('videoFig').src = "";
+						    document.getElementById('videoFig').height = "0";
+
+							document.getElementById('imageFig').src = data;
+							document.getElementById('imageFig').height = "600";
+
+								}	
+							}
+						});
+
+
+
+				
+// // // // // // // // // //  END PERFORMER SCRIPT	
+
+		</script>
+	</div>   
  
  	</body>
 

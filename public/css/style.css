@@ -1,54 +1,98 @@
-					@font-face {
-					    font-family: nexa;
-					    src: url('nexalight.otf');
-					}
-
-					div {
-					    font-family: nexa;
-					    font-size: 20px;
-					} 
-
-					body { 
-						background-color: #777;
+					body {
+						background-color: #FFF;
 						padding-top: 20px;
 						padding-left: 20px;
 					}
 
+
+					#perfDialogue {
+							line-height:50px;
+						    background-color:#FFFFFF;
+						    height:70px;
+						    width:750px;
+						    float:left;
+						    padding-left:0px;
+						    padding-right:5px;
+						}
+
 					#perfsBox {
 						width: 400px;
-						height: 200px;
-						/*background-color: #222222;*/
+						height: 200px;	
 						font-size: 45px;
 						padding-top: 6px;
 						color:FFFFFF;
 						text-align: center;
 						margin: 2px;
 						display:inline;
-					}
+						}
+
+					#switcher {
+						width:140;
+						height:50;
+						border-radius: 40px;
+						background-color: 000000;
+						color: FFFFFF;
+						font-size: 35px;
+						text-align: center;
+						line-height: 50px;
+						display: inline-block;
+						margin: 2px;
+						}
 
 					.performerDiv {
 						width:50;
 						height:50;
+						border-radius: 40px;
 						background-color: 000000;
 						color: FFFFFF;
-						font-size: 40px;
+						font-size: 35px;
 						text-align: center;
+						line-height: 50px;
 						display: inline-block;
 						margin: 2px;
-						
 						}
+
+
 						
-						.figures{
-						margin: 0 auto;
-	                    width: 600px;
+					.figures{
+                    	width: 740px;
+                    	float: left;
+                    	padding-top: 5px;
+                	    padding-bottom: 5px;
+                
+              		  	} 
+		                
+	                .sidebar{
+	                    width: 300px;
+	                    height: 200px;
+	                    float:left;
+	              	 }
+
+		            .navButton{
+                        width:160;
+                        height:40;
+                        border-radius: 40px;
+                        background-color: 000000;
+                        color: FFFFFF;
+                        font-size: 20px;
+                        text-align: center;
+                        line-height:40px;
+                        display: block;
+                        margin: 2px;
+                       
+                    }
+
+	                .figuresBox{
+	                    width: 740px;
 	                    float: left;
 	                    padding-top: 5px;
 	                    padding-bottom: 5px;
-	               		
-	               		}  
-		                
-		                .sidebar{
-		                    width: 300px;
-		                    height: 200px;
-		                    float:left;
-		              	 }
+	                
+	                	} 
+
+	                	#bpm { 
+							float: left;
+						}
+
+
+	                	
