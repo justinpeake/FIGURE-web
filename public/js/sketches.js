@@ -120,7 +120,7 @@ p.setup = function() {
   p.createCanvas(canvasX,canvasY);
   p.background(0);
 
-  track.setVolume(5);
+  track.setVolume(0);
   track.loop();
   
   peaks = track.getPeaks(wavLength);
