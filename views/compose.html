@@ -24,8 +24,6 @@
 
                 </script> 
 
-
-
          <style>
 
                 
@@ -84,6 +82,8 @@
 
     Only .jpg, .png, .mov, .wav, .mp3 files supported right now.
 
+    <div id="progressNumber"></div>
+
         <!-- <form method="POST" action="/submit_form/">
             <input type="text" name="figurename" placeholder="figurename" /><br />
             <input type="text" name="keysig" placeholder="keysig" /><br /><br />
@@ -137,6 +137,23 @@
 
 
 
+function uploadProgress(evt) {
+    if (evt.lengthComputable) {
+      var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+      document.getElementById('progressNumber').innerHTML = 'Upload Progress: ' + percentComplete.toString() + '%';
+    }
+    else {
+      document.getElementById('progressNumber').innerHTML = 'unable to compute';
+    }
+  }
+
+  function uploadComplete(evt){
+    location.reload();
+
+  }
+
+
+
 (function() {
     //console.log('client 1');
     document.getElementById("file_input").onchange = function(){
@@ -173,8 +190,15 @@ function get_signed_request(file){
 }
 function upload_file(file, signed_request, url){
    // console.log('client 3');
+
+   var firstProgressEvent = false;
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", signed_request);
+
+    xhr.upload.addEventListener("progress", uploadProgress, false);
+
+    xhr.addEventListener("load", uploadComplete, false);
+
     xhr.setRequestHeader('x-amz-acl', 'public-read');
     xhr.onload = function() {
         if (xhr.status === 200) {
