@@ -10,6 +10,7 @@
         <script src="/socket.io/socket.io.js"></script>  
         <script src="/dropzone/dropzone.js"></script>
         <link rel="stylesheet" href=" /dropzone/dropzone.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
 
         <script>  var socket = io(); </script> 
 
@@ -28,7 +29,7 @@
 
                 
 
-                .mainNav {
+               /* .mainNav {
                         width:140;
                         height:400;
                         background-color: 000000;
@@ -66,7 +67,7 @@
                         display: block;
                         margin: 2px;
                         
-                    }
+                    }*/
                     
             </style>
     </head>
@@ -82,7 +83,7 @@
 
     Only .jpg, .png, .mov, .wav, .mp3 files supported right now.
 
-    <div id="progressNumber"></div>
+<div id="progressNumber"></div>
 
         <!-- <form method="POST" action="/submit_form/">
             <input type="text" name="figurename" placeholder="figurename" /><br />
@@ -99,25 +100,30 @@
          
         <!--  This is where the folder list comes in  -->   
                      
-                 <div class="figures">
+                <div class="figures">
 
-                        <p> Images <p> 
-                    
-                {{#images}}
-                
-                  <img src= {{.}} width="175px" height="175px"> 
-                
-                {{/images}}
-                 
-                         <p> Videos <p>
+                <p> Images <p> 
+
+                {{#images}}               
+                <img src= {{.}} width="100px" height="100px">                
+                {{/images}}                 
+
+                <p> Videos <p>
 
                 {{#videos}}
-
-                  <video src={{.}} width="175px" height="175px"> </video>
-                
+                <video src={{.}} width="100px" height="100px"> </video>            
                 {{/videos}}
+                </div>
 
-                  </div>
+                <!-- <p> Waveforms <p>
+
+                {{#audio}}
+                <div class="audio" title={{.}}>  </div>
+                {{/audio}}
+
+                {{#audionames}}
+                <div class="audionames" title={{.}} style.visibility="hidden">  </div>
+                {{/audionames}} -->
 
 
 <script type="text/javascript" >

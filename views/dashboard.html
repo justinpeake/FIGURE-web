@@ -16,7 +16,8 @@
         <script type="text/javascript">
 
         socket.on('connect', function() {
-        console.log("Dashboard");                
+        console.log("Dashboard");  
+        socket.emit('gimme');              
         });
 
         </script> 
