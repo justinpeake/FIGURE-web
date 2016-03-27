@@ -113,8 +113,6 @@ var thisNum = 0;
 p.preload = function(){
 
   track = p.loadSound(trackName);
-
-  // track = p.loadSound('https://justinpeakefigures.s3.amazonaws.com/justin/fiftySix.wav');
 }
 
 p.setup = function() {

@@ -5,13 +5,9 @@
 
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
-
-		
 		<script type="text/javascript" src="/js/sketches.js"></script> 
 		<script type="text/javascript" src="/js/classes.js"></script> 
-
 		<link rel="stylesheet" type="text/css" href="/css/style.css">
-
 		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
@@ -138,6 +134,7 @@
 					// var myp5 = new p5(tempo, 'bpm'); 
 
 					var trackName = ' ';
+					var isPlayer = false;
 					
 
 					socket.on ('audioSketch', function (data){
@@ -145,10 +142,18 @@
 						if (myId == toWhom || toAll == 1) { 
 
 							trackName = data;
+							console.log('trackname ' + data);
+						} 
 
-							var myp5 = new p5(waveForm); 
-
+					
+						var myp5 = new p5(waveForm, "sketchFigure"); 
+							
+					
+						if (trackName == 'remove'){
+							myp5.remove();
+							isPlayer = false;
 						}
+
 					});
 
 
