@@ -7,6 +7,7 @@
 
 		        <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
 				<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
+
 				<script src="/socket.io/socket.io.js"></script>  
 
 				<link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -14,17 +15,12 @@
 				<script type="text/javascript" src="/js/sketches.js"></script> 
 				<script type="text/javascript" src="/js/classes.js"></script> 
 
-		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
-		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
-
-
-
-			<!--	<script type="text/javascript" src="app.js"></script> -->
+		        <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
+	        	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
 				
 				<script>  var socket = io(); </script> 	
 				
 				<script type="text/javascript">
-
 							socket.on('connect', function() {
 							socket.emit('gimme');
 							console.log("Conducter in the house.");
@@ -72,14 +68,13 @@
 				<p>
 				<p>
 
-			<nav>
-			<div class="navButton" id="compose">  COMPOSE </div>
-		    <div class="navButton" id="perform">  PERFORM </div>
-		    <div class="navButton" id="conduct">  CONDUCT </div>
-			</nav>
+				<nav>
+					<div class="navButton" id="compose">  COMPOSE </div>
+				    <div class="navButton" id="perform">  PERFORM </div>
+				    <div class="navButton" id="conduct">  CONDUCT </div>
+				</nav>
 
 	</div>
-
 
 
 			<div class="figures">
@@ -88,7 +83,6 @@
                   {{#images}}
                   <img src={{.}} class="imageF" width="175px" height="175px">
                   {{/images}}
-
 
                  <p> Videos <p>
                   {{#videos}}
@@ -104,8 +98,6 @@
 
 		// BEGIN CONDUCTOR SCRIPT
 
-		//socket.emit('gimme');
-
 		// this block is taking the number of images and adding ID's for button fucntions
 
 		var imageIds = document.getElementsByClassName("imageF");  // from image tag above
@@ -115,13 +107,9 @@
 		for (i = 0; i < imageIds.length; i++) {
 			imageIds[i].id = 'iF'+ i;	
 		};
-		// gut the urls of images
+		// get the urls of images
 		for (i = 0; i < imageIds.length; i++) {
 			imageSrcs[i] = imageIds[i].src;
-
-
-			//console.log(imageIds[i].src.split(".")[4]);  // added this for file extension
-
 		};
 
 		//seth helped with this  -- add button functionalities
@@ -179,6 +167,7 @@
 					document.getElementById("everythingPerformer").style.display = "block";
 					document.getElementById("everythingConductor").style.display= "none";
 
+					//this activates whichever p5 sketch
 					performerSketch();
 
 				});
@@ -426,19 +415,24 @@
 
 /////// BEGIN PERFORMER SCRIPT
 
- 				// 	//variable to change p5
- 				// 	var sketch = q;
+ 				
+ 				//actually calls th p5  (p5 sketches in /public/js)
 
-
- 				// 	//actually calls th p5  (p5 sketches in /public/js)
 					var performerSketch = function() {
 
 					  var myp5 = new p5(waveForm, 'sketchFigure');
 
-					}
-					// var myp5 = new p5(tempo, 'bpm'); 
+					};
 
-					//var myp5 = new p5(waveForm, 'timeLine');
+
+
+
+					// DEFAULT p5 elements should be called globally?
+					// maybe better to call them to preserve cpu 
+
+					var myp5 = new p5(tempo, 'bpm'); 
+
+					// var myp5 = new p5(waveForm, 'timeLine');
 					  
 
 					

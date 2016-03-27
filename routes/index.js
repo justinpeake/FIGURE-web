@@ -18,6 +18,7 @@ folderLength = '';
 
 imageArray = [];
 videoArray = [];
+audioArray = [];
 
 //////////////////////////////////////////
 

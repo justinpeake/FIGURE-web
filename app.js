@@ -220,6 +220,7 @@ var performerCount = 0;
                   fileArray = [];
                   imageArray = [];
                   videoArray = [];
+                  audioArray = [];
                   
                   // filling fileArray[] with all the URL's from amazon
                   for (i = 0; i < folderLength; i++){
@@ -243,17 +244,26 @@ var performerCount = 0;
 
                       }  else if (fileArray[i].split(".")[4] == 'mov'){
 
-                        videoArray.push(fileArray[i]);                         
-                      }                     
+                        videoArray.push(fileArray[i]); 
+
+                      } else if (fileArray[i].split(".")[4] == 'wav'){
+
+                        audioArray.push(fileArray[i]);
+                      }                  
     
                   
-                    }; // end of for loop
+                    }; 
+
+                    // end of for loop
                     console.log('IMAGES: ' + imageArray.length);
                     console.log(imageArray);
 
 
                     console.log('VIDEOS: ' + videoArray.length);
                     console.log(videoArray);
+
+                    console.log('AUDIO: ' + audioArray.length);
+                    console.log(audioArray);
 
 
                       //console.log(folderLength);  //use this in html button rendering

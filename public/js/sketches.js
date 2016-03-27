@@ -111,7 +111,7 @@ var thisNum = 0;
 
 p.preload = function(){
 
-  track = p.loadSound('/audio/fiftyEight.wav');
+  track = p.loadSound('https://justinpeakefigures.s3.amazonaws.com/justin/fiftySix.wav');
 }
 
 p.setup = function() {
@@ -119,7 +119,7 @@ p.setup = function() {
   p.createCanvas(canvasX,canvasY);
   p.background(0);
 
-  track.setVolume(1);
+  track.setVolume(0);
   track.loop();
   
   peaks = track.getPeaks(wavLength);
