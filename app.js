@@ -220,7 +220,9 @@ var performerCount = 0;
                   fileArray = [];
                   imageArray = [];
                   videoArray = [];
+
                   audioArray = [];
+                  audioNames = [];
                   
                   // filling fileArray[] with all the URL's from amazon
                   for (i = 0; i < folderLength; i++){
@@ -253,9 +255,15 @@ var performerCount = 0;
 
                         audioArray.push(fileArray[i]);
 
+                        audioNames.push(fileArray[i].split("/")[4]);
+
+                        //console.log(audioNames);
+
                       } else if (fileArray[i].split(".")[4] == 'mp3'){
 
                         audioArray.push(fileArray[i]);
+
+                        audioNames.push(fileArray[i].split("/")[4]);
 
                       }                 
                       
