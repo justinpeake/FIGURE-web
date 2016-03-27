@@ -86,10 +86,17 @@
 
                   <p> Waveforms <p>
                   {{#audio}}
-                  <div class="audio" title={{.}}> {{.}} </div>
+                  <div class="audio" title={{.}}>  </div>
                   {{/audio}}
 
-            </div>
+                  {{#audionames}}
+                  <div class="audionames" title={{.}} style.visibility="hidden">  </div>
+                  {{/audionames}}
+
+
+
+
+    </div>
 
 	
 	
@@ -157,16 +164,18 @@
 		var waveIds = document.getElementsByClassName("audio");  // from image tag above
 		var waveIdsLength = waveIds.length;
 		var waveSrcs = [];  //sending this to the socket emit
-
+		var waveNames = document.getElementsByClassName("audionames");
 		
-
+		//console.log(audioNames)
 		//create unique id's for videos
 		for (i = 0; i < waveIds.length; i++) {
 			waveIds[i].id = 'aF'+ i;	
 		};
 		// gut the urls of videos
 		for (i = 0; i < waveIds.length; i++) {
-			// waveSrcs[i] = waveIds[i].innerHTML;
+
+			waveIds[i].innerHTML = waveNames[i].title;
+
 			waveSrcs[i] = waveIds[i].title;
 			//console.log(waveSrcs);
 		};
