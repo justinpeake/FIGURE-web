@@ -3,21 +3,16 @@
 		<head>
 			<title>FIGURE :: CONDUCT</title>
 			
-		 		<!-- add external scripts like jquery and socket.io -->
-
 		        <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
 				<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
-
 				<script src="/socket.io/socket.io.js"></script>  
-
 				<link rel="stylesheet" type="text/css" href="/css/style.css">
-
 				<script type="text/javascript" src="/js/sketches.js"></script> 
 				<script type="text/javascript" src="/js/classes.js"></script> 
-
 		        <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 	        	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
-				
+	        	<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
+			
 				<script>  var socket = io(); </script> 	
 				
 				<script type="text/javascript">
@@ -28,34 +23,34 @@
 
 
 				</script>	
-										<!-- head scripts END -->
 			
 
-				<style>
+					<style>
 
-						#everythingConductor {
-							/*visibility: visible;*/
-							display: block;
-						}
+							#everythingConductor {
+								/*visibility: visible;*/
+								display: block;
+							}
 
-						#everythingPerformer {
-							/*visibility: hidden;*/
-							display: none;
-						}
+							#everythingPerformer {
+								/*visibility: hidden;*/
+								display: none;
+							}
 
-				</style>
-	</head>
+					</style>
+		</head>
 
- <body>
+<body>
  			
 
-<div id="everythingConductor">
+ <div id="everythingConductor">
 
  	<div id="switcher"> SWITCH </div> <p>
 
 	<div class="sidebar"> You are the CONDUCTOR, {{user}}.
 
 				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
+
 			 	<p>
 
 				<div class="performerDiv" id="cp1"> 1 </div> 
@@ -89,6 +84,11 @@
                   <video src={{.}} class="videoF" width="175px" height="175px"> </video>
                   {{/videos}}
 
+                  <p> Waveforms <p>
+                  {{#audio}}
+                  <div class="audio" title={{.}}> {{.}} </div>
+                  {{/audio}}
+
             </div>
 
 	
@@ -96,9 +96,9 @@
 	<script type="text/javascript">
 
 
-		// BEGIN CONDUCTOR SCRIPT
+		// BEGIN CONDUCTOR SCRIPT //
 
-		// this block is taking the number of images and adding ID's for button fucntions
+		// this block is taking the number of images and adding ID's for button functions
 
 		var imageIds = document.getElementsByClassName("imageF");  // from image tag above
 		var imageIdsLength = imageIds.length;
@@ -150,6 +150,40 @@
 				socket.emit('videoFigure', videoSrcs[index])
 			}
 		}	
+
+
+		// audio buttons
+
+		var waveIds = document.getElementsByClassName("audio");  // from image tag above
+		var waveIdsLength = waveIds.length;
+		var waveSrcs = [];  //sending this to the socket emit
+
+		
+
+		//create unique id's for videos
+		for (i = 0; i < waveIds.length; i++) {
+			waveIds[i].id = 'aF'+ i;	
+		};
+		// gut the urls of videos
+		for (i = 0; i < waveIds.length; i++) {
+			// waveSrcs[i] = waveIds[i].innerHTML;
+			waveSrcs[i] = waveIds[i].title;
+			//console.log(waveSrcs);
+		};
+		//seth helped with this  -- add button functionalities
+		for(var i = 0; i < waveIds.length; i ++){
+			$("#aF" + i).click(fadeTheFadeA(i));
+		}
+		//add the urls to the button
+		function fadeTheFadeA(index){
+			return function(){
+				$("#aF" + index).fadeTo("slow", 0.5);
+				socket.emit('audioSketch', waveSrcs[index])
+			}
+		}	
+
+
+
 
 
 				// working
@@ -423,8 +457,6 @@
 					  var myp5 = new p5(waveForm, 'sketchFigure');
 
 					};
-
-
 
 
 					// DEFAULT p5 elements should be called globally?

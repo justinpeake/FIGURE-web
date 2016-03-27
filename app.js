@@ -174,7 +174,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
     });
 
 
-//DO NOT ERASE THIS
+// DO NOT ERASE THIS
 var performerCount = 0;
 
 // start listen with socket.io
@@ -227,9 +227,12 @@ var performerCount = 0;
                      fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
                      };
 
-                    /*  1) this is splitting the urls > 
+                    /*  
+                        1) this is splitting the urls > 
                         2) looking at the last array element (which is 'most likely' the file extension)
-                        3) checking to see whether the file extension matches any
+                            ^ this could ultimately be buggy if the naming conventions change
+                        3) checking to see whether the file extension matches any of the strings
+
                     */
 
                     for (i = 0; i < folderLength; i++){
@@ -249,25 +252,24 @@ var performerCount = 0;
                       } else if (fileArray[i].split(".")[4] == 'wav'){
 
                         audioArray.push(fileArray[i]);
-                      }                  
-    
-                  
-                    }; 
 
-                    // end of for loop
+                      } else if (fileArray[i].split(".")[4] == 'mp3'){
+
+                        audioArray.push(fileArray[i]);
+
+                      }                 
+                      
+                    };  // end of for loop
+
+                    
                     console.log('IMAGES: ' + imageArray.length);
                     console.log(imageArray);
-
 
                     console.log('VIDEOS: ' + videoArray.length);
                     console.log(videoArray);
 
                     console.log('AUDIO: ' + audioArray.length);
                     console.log(audioArray);
-
-
-                      //console.log(folderLength);  //use this in html button rendering
-                      //console.log(fileArray);
 
 
                   });  // end of list objects
@@ -298,6 +300,11 @@ var performerCount = 0;
             socket.on('switch', function(data) {
               console.log("Received: switch " + data);
               socket.broadcast.emit('switch', data);
+            });
+
+            socket.on('audioSketch', function(data) {
+              console.log("Received: audioSketch " + data);
+              socket.broadcast.emit('audioSketch', data);
             });
 
             // socket.on('sketchFigure', function(data) {

@@ -79,7 +79,21 @@
                         line-height:40px;
                         display: block;
                         margin: 2px;
-                       
+                    }
+
+                    .audio{
+
+                    	width:700;
+                        height:40;
+                        border-radius: 40px;
+                        background-color: 000000;
+                        color: FFFFFF;
+                        font-size: 20px;
+                        text-align: center;
+                        line-height:40px;
+                        display: block;
+                        margin: 2px;
+
                     }
 
 	                .figuresBox{

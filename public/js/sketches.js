@@ -109,9 +109,12 @@ var wavHeight = 200;
 var wavLength = canvasX;
 var thisNum = 0;
 
+
 p.preload = function(){
 
-  track = p.loadSound('https://justinpeakefigures.s3.amazonaws.com/justin/fiftySix.wav');
+  track = p.loadSound(trackName);
+
+  // track = p.loadSound('https://justinpeakefigures.s3.amazonaws.com/justin/fiftySix.wav');
 }
 
 p.setup = function() {
@@ -119,12 +122,12 @@ p.setup = function() {
   p.createCanvas(canvasX,canvasY);
   p.background(0);
 
-  track.setVolume(0);
+  track.setVolume(5);
   track.loop();
   
   peaks = track.getPeaks(wavLength);
   
-    // draw the unplayd waveform
+    // draw the unplayed waveform
     for(i=0; i < peaks.length; i++){
       p.stroke(255);
       p.strokeWeight(1);
