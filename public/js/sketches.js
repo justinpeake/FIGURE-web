@@ -1,4 +1,4 @@
-
+ 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -110,9 +110,11 @@ var wavLength = canvasX;
 var thisNum = 0;
 
 
+
 p.preload = function(){
 
   track = p.loadSound(trackName);
+
 }
 
 p.setup = function() {
@@ -149,8 +151,6 @@ intNum = p.int(thisNum);
   p.strokeWeight(2);
   p.fill(0);
 
-
-
  if (track.isPlaying()){
 
  // console.log("yup");
@@ -171,11 +171,8 @@ intNum = p.int(thisNum);
  
   p.fill(0);
   p.noStroke();
-  //rect(30, 0, 200,70);
-
   p.fill(255);
-  // p.textSize(60);
-  // p.text(intNum, 30, 60);
+ 
 }
 
 p.waveRedraw = function(){
@@ -190,6 +187,15 @@ p.waveRedraw = function(){
     //reset x for playback
     x = 0;
 }
+
+p.restart = function() {
+
+    console.log('restart');
+    console.log(trackName);
+   // track = p.loadSound(trackName);
+
+  }
+
 
 
 }; // waveform

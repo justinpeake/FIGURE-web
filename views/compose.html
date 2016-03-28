@@ -12,6 +12,10 @@
         <link rel="stylesheet" href=" /dropzone/dropzone.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
 
+        <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
+        <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
+
         <script>  var socket = io(); </script> 
 
         <title> Composer Dashboard </title>
@@ -24,52 +28,6 @@
                         });
 
                 </script> 
-
-         <style>
-
-                
-
-               /* .mainNav {
-                        width:140;
-                        height:400;
-                        background-color: 000000;
-                        color: FFFFFF;
-                        font-size: 20px;
-                        text-align: center;
-                        line-height:40px;
-                        display: block;
-                        margin: 2px;
-                        
-                    }
-
-                .figures{
-                    width: 740px;
-                    float: left;
-                    padding-top: 5px;
-                    padding-bottom: 5px;
-                
-                }    
-                .sidebar{
-                    width: 300px;
-                    height: 200px;
-                    float:left;
-                }
-
-                .navButton{
-                        width:160;
-                        height:40;
-                        border-radius: 40px;
-                        background-color: 000000;
-                        color: FFFFFF;
-                        font-size: 20px;
-                        text-align: center;
-                        line-height:40px;
-                        display: block;
-                        margin: 2px;
-                        
-                    }*/
-                    
-            </style>
     </head>
 <body>
 
@@ -143,6 +101,7 @@
 
 
 
+// for progress bar
 function uploadProgress(evt) {
     if (evt.lengthComputable) {
       var percentComplete = Math.round(evt.loaded * 100 / evt.total);
@@ -153,6 +112,7 @@ function uploadProgress(evt) {
     }
   }
 
+// for page refresh after upload complete
   function uploadComplete(evt){
     location.reload();
 
@@ -193,12 +153,15 @@ function get_signed_request(file){
         }
     };   
     xhr.send();
+
 }
+
 function upload_file(file, signed_request, url){
    // console.log('client 3');
 
    var firstProgressEvent = false;
     var xhr = new XMLHttpRequest();
+
     xhr.open("PUT", signed_request);
 
     xhr.upload.addEventListener("progress", uploadProgress, false);

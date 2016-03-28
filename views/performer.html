@@ -1,4 +1,4 @@
-<html>
+ <html>
 	<head>
 
 			<title> FIGURE :: PERFORMER</title>
@@ -28,7 +28,7 @@
 				<style>
 
 						#everythingConductor {
-							/*visibility: visible;*/
+							/*visibility: visible;*/ 
 							display: none;
 						}
 
@@ -133,36 +133,47 @@
 					// var myp5 = new p5(waveForm, 'timeLine');
 					// var myp5 = new p5(tempo, 'bpm'); 
 
-					var trackName = ' ';
-					var isPlayer = false;
-					
-
-					socket.on ('audioSketch', function (data){
-
-						if (myId == toWhom || toAll == 1) { 
-
-							trackName = data;
-							console.log('trackname ' + data);
-						} 
-
-					
-						var myp5 = new p5(waveForm, "sketchFigure"); 
-							
-					
-						if (trackName == 'remove'){
-							myp5.remove();
-							isPlayer = false;
-						}
-
-					});
-
-
 
 					//initialize globals
 					var myId = 0; 
 					var toWhom = 0;
 					var toAll = 0;
 
+
+
+					var trackName = '';
+					var playing = false;
+					var myp5;
+
+
+				socket.on ('audioSketch', function (data){
+
+					//console.log(waveReplace);
+
+					trackName = data;
+
+					console.log(playing);
+
+					if (myId == toWhom && playing == false) { 
+
+						//trackName = data;
+
+						var myp5 = new p5(waveForm, "sketchFigure"); 
+
+						playing = true;
+
+						console.log(playing);
+					
+					} else {
+
+							console.log('second call');
+						
+					}
+																	
+				});
+
+
+					
 
 		$(incoming).fadeTo(1,0);
 
