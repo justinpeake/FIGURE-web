@@ -153,7 +153,6 @@ intNum = p.int(thisNum);
 
  if (track.isPlaying()){
 
- // console.log("yup");
   p.fill(0);
   p.noStroke();
   p.rect(x,0, 2, canvasY);
@@ -188,7 +187,7 @@ p.waveRedraw = function(){
     x = 0;
 }
 
-p.restart = function() {
+p.waveRestart = function() {
 
     console.log('restart');
     console.log(trackName);

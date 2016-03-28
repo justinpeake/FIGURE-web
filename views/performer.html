@@ -37,6 +37,11 @@
 							display: block;
 						}
 
+						#sketchFigure {
+							/*visibility: hidden;*/
+							display: block;
+						}
+
 				</style>
 
 			
@@ -143,7 +148,8 @@
 
 					var trackName = '';
 					var playing = false;
-					var myp5;
+					
+
 
 
 				socket.on ('audioSketch', function (data){
@@ -154,11 +160,13 @@
 
 					console.log(playing);
 
+					
+
 					if (myId == toWhom && playing == false) { 
 
-						//trackName = data;
-
 						var myp5 = new p5(waveForm, "sketchFigure"); 
+
+						//trackName = data;
 
 						playing = true;
 
@@ -166,11 +174,14 @@
 					
 					} else {
 
+							
+
 							console.log('second call');
 						
 					}
 																	
 				});
+
 
 
 					
