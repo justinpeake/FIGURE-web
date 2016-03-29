@@ -147,39 +147,30 @@
 
 					var trackName = '';
 					var playing = false;
-					
+
 					var myp5;
-					
+									
 
 
 
 				socket.on ('audioSketch', function (data){
 
-					//console.log(waveReplace);
-
+					
 					trackName = data;
-
-					console.log(playing);
-
 					
 
-					if (myId == toWhom && playing == false) { 
+					if (typeof(myp5) == 'undefined'){
+						
+						myp5 = new p5(waveForm, "sketchFigure"); 
+
+						} else {
+
+						myp5.remove();
 
 						myp5 = new p5(waveForm, "sketchFigure"); 
 
-						//trackName = data;
-
-						playing = true;
-
-						console.log(playing);
-
-						//console.log(myp5.waveForm.canvasX);
-
-						myp5.waveRestart();
-					
-					} 
-					
-																	
+						}
+												
 				});
 
 
