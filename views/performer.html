@@ -72,7 +72,6 @@
 
 <div id="everythingPerformer">
 
-			Hello {{user}}...  <br>
 
 		<div id="perfDialogue" align="left"> 
 
@@ -149,6 +148,8 @@
 					var trackName = '';
 					var playing = false;
 					
+					var myp5;
+					
 
 
 
@@ -164,21 +165,20 @@
 
 					if (myId == toWhom && playing == false) { 
 
-						var myp5 = new p5(waveForm, "sketchFigure"); 
+						myp5 = new p5(waveForm, "sketchFigure"); 
 
 						//trackName = data;
 
 						playing = true;
 
 						console.log(playing);
+
+						//console.log(myp5.waveForm.canvasX);
+
+						myp5.waveRestart();
 					
-					} else {
-
-							
-
-							console.log('second call');
-						
-					}
+					} 
+					
 																	
 				});
 
