@@ -22,6 +22,8 @@
 								socket.emit('perfAdd');  // no server listener for this yet
 								console.log("Performer in the house.");
 							});
+
+
 				</script>	
 
 
@@ -49,21 +51,21 @@
 
 	<script type="text/javascript">
 					
-					socket.on('switch', function (data){
+			socket.on('switch', function (data){
 
-						
-							document.getElementById("everythingPerformer").style.display = "none";
-							document.getElementById("everythingConductor").style.display= "block";
-					
+				
+				document.getElementById("everythingPerformer").style.display = "none";
+				document.getElementById("everythingConductor").style.display= "block";
+		
+				if (myId == toWhom || toAll == 1) {
 
-							if (myId == toWhom || toAll == 1) {
+				console.log("got tha switch " + data);
 
-							console.log("got tha switch " + data);
-
-							};
+				};
 
 
-						});
+			});
+
 	</script>
 
 
@@ -85,11 +87,9 @@
 				<div class="performerDiv" id="perf4"> 4 </div> 
 				<div class="performerDiv" id="perf5"> 5 </div> 
 
+			<p>
 
-				
-				<p>
-				<div id="bpm"> </div>
-				
+				<div id="bpm"> </div>				
 
 			</a>
 
@@ -97,6 +97,7 @@
 			<br>
 			<br>
 					 <!-- responds to the "incoming" function -->
+
 			<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
 
 	</div> 
@@ -111,7 +112,7 @@
 
 	 	  		<!-- <div id="timeLine"> </div>
  -->
-	 	  		<div id="sketchFigure"> </div>
+	 	  		<div id="waveSketch"> </div>
 
 			 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
 			 	
@@ -127,52 +128,46 @@
 
 /////// BEGIN PERFORMER SCRIPT
 
- 				// 	//variable to change p5
- 				// 	var sketch = q;
-
-
- 				
+	 				// 	//variable to change p5
+	 				// 	var sketch = q;
+				
  					// 	//actually calls th p5  (p5 sketches in /public/js)
 
 					// var myp5 = new p5(waveForm, 'timeLine');
 					// var myp5 = new p5(tempo, 'bpm'); 
 
 
-					//initialize globals
+
+
+					//initialize globals for performer id
 					var myId = 0; 
 					var toWhom = 0;
 					var toAll = 0;
 
-
-
+					// this var exists inside of the p5 instance "waveForm"
 					var trackName = '';
-					var playing = false;
-
-					var myp5;
-									
-
-
-
-				socket.on ('audioSketch', function (data){
-
 					
+					//changed this from myp5 to wave
+					var wave;	
+
+									
+				// this is handling the p5 instance for wavePlayer
+				socket.on ('waveSketch', function (data){
+
 					trackName = data;
 					
+					/* if there isn't an instance one on the page (it will be undefined) so create a new one
+					 if there is an instance, remove it and create a new one */
 
-					if (typeof(myp5) == 'undefined'){
-						
-						myp5 = new p5(waveForm, "sketchFigure"); 
-
-						} else {
-
-						myp5.remove();
-
-						myp5 = new p5(waveForm, "sketchFigure"); 
-
+					 //changed to add the toWhom conditional logic
+					if ( myId == toWhom || toAll == 1 && typeof(myp5) == 'undefined' ){						
+							wave = new p5(waveForm, "waveSketch"); 
+						} else if ( myId == toWhom || toAll == 1) {
+							wave.remove();
+							wave = new p5(waveForm, "waveSketch"); 
 						}
-												
-				});
 
+				});
 
 
 					
@@ -281,6 +276,8 @@
 	 		console.log("I am Performer " + myId);
 	 	}
 	 );
+
+
 
 	 				// functions (just one right now)
 	 				var flashIncoming = function(){

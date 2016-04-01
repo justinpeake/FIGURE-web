@@ -26,6 +26,9 @@ var http = require('http');
 var chalk = require('chalk'); 
 var userID;
 
+var performerCount = 0;
+var perfs = [];
+
 app.io = io;  //second iteration
  
 // if in development mode, load .env variables
@@ -123,9 +126,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
                         signed_request: data,
                         url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ folder + req.query.file_name
                     };
-
-                  //  console.log("string" + JSON.stringify(return_data));
-
                     res.write(JSON.stringify(return_data));
                     res.end();
                 }
@@ -139,11 +139,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
                 for (i = 0; i < folderLength; i++){
                   fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
                 };
-
-               //   console.log(fileArray);
-
               });
-
             });
 
 // >>>>>>>>>>>>>>>>>>>>>>> END AWS S3 SHIZ
@@ -174,8 +170,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
     });
 
 
-// DO NOT ERASE THIS
-var performerCount = 0;
+
 
 // start listen with socket.io
 
@@ -183,18 +178,7 @@ var performerCount = 0;
 
       console.log(chalk.red(userName) + ' connected to ' + page);
 
-              socket.on('perfAdd', function(data) {
-              performerCount = performerCount + 1;
-              // socket.broadcast.emit('performerCount', performerCount);
-              });
-
-              // if(page == 'performer'){
-              // performerCount = performerCount + 1;
-              // };
-
-          
             // When this user emits, client side: socket.emit('otherevent',some data);
-
 
             socket.on('gimme', function(){
 
@@ -235,41 +219,29 @@ var performerCount = 0;
                             ^ this could ultimately be buggy if the naming conventions change
                         3) checking to see whether the file extension matches any of the strings
                         4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
-
                     */
 
                     for (i = 0; i < folderLength; i++){
-
                       if (fileArray[i].split(".")[4] == 'jpg'){
-
                         imageArray.push(fileArray[i]);  
-
                       } else if (fileArray[i].split(".")[4] == 'png'){
-
                         imageArray.push(fileArray[i]);    
-
                       }  else if (fileArray[i].split(".")[4] == 'mov'){
-
                         videoArray.push(fileArray[i]); 
-
                       } else if (fileArray[i].split(".")[4] == 'wav'){
-
                         audioArray.push(fileArray[i]);
 
                         //splitting url to extract the name of the file  
                         audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-
                       } else if (fileArray[i].split(".")[4] == 'mp3'){
-
                         audioArray.push(fileArray[i]);
-
                         audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-                  
                       }                 
                       
-                    };  // end of for loop
+                    };  // end of file for loop
 
-                    
+   //////////////// these are the arrays being served to client ////////////////    
+
                     console.log('IMAGES: ' + imageArray.length);
                     console.log(imageArray);
 
@@ -279,9 +251,7 @@ var performerCount = 0;
                     console.log('AUDIO: ' + audioArray.length);
                     console.log(audioArray);
 
-
-                  });  // end of list objects
-              
+                  });  // end of list objects         
               });  // end of 'gimme' function
 
 
@@ -310,25 +280,34 @@ var performerCount = 0;
               socket.broadcast.emit('switch', data);
             });
 
-            socket.on('audioSketch', function(data) {
-              console.log("Received: audioSketch " + data);
-              socket.broadcast.emit('audioSketch', data);
+            socket.on('waveSketch', function(data) {
+              console.log("Received: waveSketch " + data);
+              socket.broadcast.emit('waveSketch', data);
             });
 
-            // socket.on('sketchFigure', function(data) {
-            //   console.log("Received: 'sketch' " + data);
-            //   socket.broadcast.emit('sketchFigure', data);
-            // });
+            socket.on('perfAdd', function(data) {
+              console.log("Received: new performer " + userName);              
+              performerCount = performerCount + 1; 
+              console.log('perfCount = ' + performerCount);            
+            });
+
+            socket.on('perfSub', function(data) {
+              console.log("Received: new performer " + userName);     
+              performerCount = performerCount - 1;              
+
+              console.log( chalk.red(userName) + ' disconnected from ' + page);
+              console.log('perfCount = ' + performerCount);
+            });
 
             socket.on('disconnect', function() {
               if (page =='performer'){
               performerCount = performerCount - 1;
-              // socket.broadcast.emit('performerCount', performerCount);   
             }              
               console.log( chalk.red(userName) + ' disconnected from ' + page);
-              console.log('performerCount = ' + performerCount);
-
+              console.log('perfCount = ' + performerCount);
             });
+
+
         });
 
 

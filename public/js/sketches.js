@@ -101,7 +101,7 @@ var waveForm = function(p){
 
   var track;
   var peaks=[];
-  var canvasX = 700;
+  var canvasX = 800;
   var canvasY = 400;
   var x = 0;
   var y = 200;

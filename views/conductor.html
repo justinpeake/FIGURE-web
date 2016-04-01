@@ -47,7 +47,7 @@
 
  	<div id="switcher"> SWITCH </div> <p>
 
-	<div class="sidebar"> You are the CONDUCTOR, {{user}}.
+	<div class="sidebar"> You are the CONDUCTOR, {{user}}.  
 
 				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
 
@@ -74,13 +74,15 @@
 
 			<div class="figures">
 
-				<p> Images <p>
-					
+				  <p> Images <p>
                   {{#images}}
-                  <img src={{.}} class="imageF" width="100px" height="100px">
+                
+                  <img src={{.}} class="imageF " width="100px" height="100px">  </img>  
+                                
                   {{/images}}
-
-                 <p> Videos <p>
+         
+         		  <p>
+                  <p> Videos <p>
                   {{#videos}}
                   <video src={{.}} class="videoF" width="100px" height="100px"> </video>
                   {{/videos}}
@@ -97,11 +99,13 @@
 
 
 
-    </div>
+    		</div>
 
 	
 	
 	<script type="text/javascript">
+
+
 
 
 		// BEGIN CONDUCTOR SCRIPT //
@@ -128,6 +132,7 @@
 		function fadeTheFadeI(index){
 			return function(){
 				$("#iF" + index).fadeTo("slow", 0.5);
+				
 				socket.emit('imageFigure', imageSrcs[index])
 			}
 		}	
@@ -188,7 +193,7 @@
 		function fadeTheFadeA(index){
 			return function(){
 				$("#aF" + index).fadeTo("slow", 0.5);
-				socket.emit('audioSketch', waveSrcs[index])
+				socket.emit('waveSketch', waveSrcs[index])
 			}
 		}	
 

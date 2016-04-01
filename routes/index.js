@@ -22,6 +22,10 @@ videoArray = [];
 audioArray = [];
 audioNames = [];
 
+perfs = [];
+performerCount = 0;
+
+
 //////////////////////////////////////////
 
     // index
@@ -31,9 +35,7 @@ audioNames = [];
     });
 
 
-    //PASSPORT SHIZ  ... NOTE: this router.post WAS above the submit-form
-
-    
+    //PASSPORT SHIZ  
 
     router.post('/login', passport.authenticate('local'), function(req, res) {
 
@@ -48,7 +50,8 @@ audioNames = [];
           videos: videoArray, 
           audio: audioArray, 
           audionames: audioNames,
-          length: folderLength
+          length: folderLength,
+          pcount: performerCount
           });
 
       });
@@ -98,7 +101,8 @@ router.get('/conductor', function(req,res){
           videos: videoArray, 
           audio: audioArray, 
           audionames: audioNames,
-          length: folderLength
+          length: folderLength,
+          pcount: performerCount
 
         });     
 
