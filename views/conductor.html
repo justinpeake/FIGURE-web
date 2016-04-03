@@ -47,7 +47,7 @@
 
  	<div id="switcher"> SWITCH </div> <p>
 
-	<div class="sidebar"> You are the CONDUCTOR, {{user}}.  
+			<div class="sidebar"> You are the CONDUCTOR, {{user}}.  
 
 				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
 
@@ -69,19 +69,21 @@
 				    <div class="navButton" id="conduct">  CONDUCT </div>
 				</nav>
 
-	</div>
+			</div>
 
 
-			<div class="figures">
+			<div class="main">
 
 				  <p> Images <p>
-                  {{#images}}
-                
-                  <img src={{.}} class="imageF " width="100px" height="100px">  </img>  
-                                
-                  {{/images}}
+
+             	{{#images}}                              		
+             	<div class="figures">                 
+                  <img src={{.}} class="imageF " width="100px" height="100px">  </img>
+                  <span class="imageText">  </span>   
+                </div>
+                {{/images}}
+              
          
-         		  <p>
                   <p> Videos <p>
                   {{#videos}}
                   <video src={{.}} class="videoF" width="100px" height="100px"> </video>
@@ -95,9 +97,6 @@
                   {{#audionames}}
                   <div class="audionames" title={{.}} style.visibility="hidden">  </div>
                   {{/audionames}}
-
-
-
 
     		</div>
 
@@ -113,29 +112,66 @@
 		// this block is taking the number of images and adding ID's for button functions
 
 		var imageIds = document.getElementsByClassName("imageF");  // from image tag above
-		var imageIdsLength = imageIds.length;
 		var imageSrcs = [];  //sending this to the socket emit
 
-		for (i = 0; i < imageIds.length; i++) {
-			imageIds[i].id = 'iF'+ i;	
-		};
-		// get the urls of images
-		for (i = 0; i < imageIds.length; i++) {
-			imageSrcs[i] = imageIds[i].src;
-		};
 
-		//seth helped with this  -- add button functionalities
-		for(var i = 0; i < imageIds.length; i ++){
-			$("#iF" + i).click(fadeTheFadeI(i));
-		}
+		var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
+
+		var whoWhat = {};
+	
+
+			//assign ids to all of the images
+			for (i = 0; i < imageIds.length; i++) {
+				imageIds[i].id = 'iF'+ i;	
+			};
+
+
+			//assign ids to the text overlay divs
+			for (i = 0; i < imageTxtIds.length; i++) {
+				imageTxtIds[i].id = 'iT'+ i;	
+
+				console.log(imageTxtIds[i].id);
+			};
+
+				
+
+				// get the urls of images
+				for (i = 0; i < imageIds.length; i++) {
+					imageSrcs[i] = imageIds[i].src;
+				};
+
+					//seth helped with this  -- add button functionalities
+					for(var i = 0; i < imageIds.length; i ++){
+						$("#iF" + i).click(fadeTheFadeI(i));
+					}
+
+		
 		//add the urls to the button
+
 		function fadeTheFadeI(index){
+
 			return function(){
+
 				$("#iF" + index).fadeTo("slow", 0.5);
 				
 				socket.emit('imageFigure', imageSrcs[index])
+
+				document.getElementById('iT' + index).innerHTML = toWhom;
+
+				console.log(toWhom);
+
+
 			}
 		}	
+
+
+
+				
+
+				
+			
+
+				
 
 
 		//video buttons

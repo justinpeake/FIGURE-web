@@ -53,25 +53,45 @@
 						}
 
 
-						
-					.figures{
+					
+					.main{
                     	width: 740px;
                     	float: left;
-                    	position: relative;
-						  
-                    	padding-top: 5px;
-                	    padding-bottom: 5px;
+                    	/*position: relative;*/
+						/*display: inline;*/
+                    	padding-top: 0px;
+                	    padding-bottom: 0px;
                 
               		  	} 
-		                
+
+
+					.figures{
+                    	width: 740px;
+                    	/*float: left;*/
+                    	position: relative;
+						display: inline;
+
+                    	padding-top: 0px;
+                	    padding-bottom: 0px;
+                
+              		  	} 
+		             
 		          
-              		 /*.overlay{
+              		 .imageF{
+															
+             		  	} 
+
+					  .imageText{
 						position:absolute;
 						z-index: 1000;
+						/*display:inline;*/
 						left:0;
-						right: 0						
+						right: 0;
+						bottom: 30px;
+						text-align: center;	
+						font-size: 30;					
              		  	} 
-					*/		
+									
 
 	                .sidebar{
 	                    width: 300px;
@@ -108,7 +128,6 @@
                     }
 
                
-
 	                .figuresBox{
 	                    width: 740px;
 	                    float: left;
