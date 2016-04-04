@@ -157,18 +157,11 @@
 					    	document.getElementById('performer-container').appendChild(perfs[i]);
 					    };
 
-			     		//makePerfIds();
-
-					// for (i = 0; i < perf.length; i++){
-					// 	perf[i].id = 'cp'+ (i+1);	
-					// 	console.log(perf[i].id)
-					// 	};
-
 						console.log(perfs);
 						console.log(pX);
 
 						for (var i = 0; i < pX; i++){
-		    				$('#cp' + (i+1) +'.performerDivB').click(doTheThing(i));
+		    				$('#cp' + (i+1)).click(doTheThing(i));
 		    			};
 	
 					};
@@ -178,25 +171,38 @@
 			    	return function(){ 
 
 			    		var num = index + 1;
-			    		var perfID = "#cp" + (num) + '.performerDivB';
+			    		var perfID = "#cp" + (num);
+					 			
+			 			// if (perfs[index].id == 'cp'+ num){
 
-				    	$(perfID).fadeTo("fast", 0.5); 
-				    	$(perfID).css('color', 'red')
+			 			  $(perfID).fadeTo("fast", 0.5); 
+				    	 $(perfID).css('color', 'red');
+
+			 			// }
+
+
+			 			// if (perfs[index].id != 'cp'+ num){
+
+			 			 // $(perfID).fadeTo("fast", 1); 
+				    // 	 $(perfID).css('color', 'white');
+
+			 			// }
+
+			 			// exclusive button (only one at a time)  THIS FLASHES THE BUTTON
+			 			for (i = 0; i < pX; i++){	
+			 					$(perfID).fadeTo("fast", 1); 
+			 					$(perfID).css('color', 'white')
+
+			 					//console.log(perfs[i].id);
+			 				};
+				    	
 
 				    	toAll = 0;
 			 			toWhom = num;
 
 			 			console.log(num);
 
-			 					// exclusive button (only one at a time)  THIS FLASHES THE BUTTON
-					 			for (i = 0; i < pX; i++){	
-
-					 				if (perfs[i] != perfID){
-					 					$(perfID).fadeTo("fast", 1); 
-					 					$(perfID).css('color', 'white')
-
-					 				}
-					 			};
+			 					
 
 
 			 			socket.emit('sendingTo', toWhom, toAll);
