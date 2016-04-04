@@ -96,6 +96,17 @@
 
 					.figures{
                     	width: 740px;
+                    	float: left;
+                    	position: relative;
+						display: inline;
+
+                    	padding-top: 0px;
+                	    padding-bottom: 0px;
+                
+              		  	} 
+
+              		  	.figuresB{
+                    	width: 740px;
                     	/*float: left;*/
                     	position: relative;
 						display: inline;
@@ -124,7 +135,7 @@
 
 	                .sidebar{
 	                    width: 300px;
-	                    height: 200px;
+	                    height: 70px;
 	                    float:left;
 	              	 }
 
