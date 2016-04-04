@@ -141,15 +141,15 @@
 		// WORKING performer channel update
 
 		var perf = [];
-
+		var pX;
 		function updatePerfCount() {
 
-		var x = document.getElementById("myNumber").value;
+		pX = document.getElementById("myNumber").value;
 
 	  			$('.performerDivB').remove();
 	  			perf =[];
 
-		    		for(i=0; i < x ; i++){
+		    		for(i=0; i < pX ; i++){
 					    	perf[i] = document.createElement('div');
 					    	perf[i].className = 'performerDivB';
 					    	perf[i].id = 'cp' + (i+1);
@@ -165,8 +165,30 @@
 					// 	};
 
 						console.log(perf);
+						console.log(pX);
+
+						for (var i = 0; i < pX; i++){
+		    				$('#cp' + (i+1) +'.performerDivB').click(doTheThing(i));
+		    			};
+	
 					};
 
+				function doTheThing(index) {
+
+			    	return function(){ 
+			    	var perf = "#cp" + (index+1) + '.performerDivB';
+
+			    	$(perf).fadeTo("fast", 0.5); 
+
+			    	toAll = 0;
+		 			toWhom = index+1;
+
+		 			console.log(index+1);
+		 			socket.emit('sendingTo', toWhom, toAll);
+		 			socket.emit('sendingAll', toAll);
+		 			};
+
+		 		};
 
 
 //////////////////////////////////////////////////////////////////////////////////////////

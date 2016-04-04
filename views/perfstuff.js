@@ -26,8 +26,8 @@ var perf = [];
 			
 			console.log(perf.length);
 
-			 for (var i = 0; i < perf.length; i++){
-		    	$('cp' + (i+1)).click(doTheThing(i));
+			 for (var i = 0; i < pX; i++){
+		    	$('#cp' + (i+1) +'.performerDivB').click(doTheThing(i));
 		    	};
 		  
 		  		
@@ -36,7 +36,7 @@ var perf = [];
 			    function doTheThing(index) {
 
 			    	return function(){ 
-			    	var perf = "#cp" + index;
+			    	var perf = "#cp" + index + '.performerDivB';
 
 			    	$(perf).fadeTo("fast", 0.5); 
 
