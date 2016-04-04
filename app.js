@@ -178,6 +178,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
       console.log(chalk.red(userName) + ' connected to ' + page);
 
+      
             // When this user emits, client side: socket.emit('otherevent',some data);
 
             socket.on('gimme', function(){
@@ -286,11 +287,17 @@ passport.use(new LocalStrategy(Account.authenticate()));
             });
 
             socket.on('perfCount', function(data) {
-          
-              socket.broadcast.emit('perfCount', data);            
-            
+              performerCount = data;
+              socket.broadcast.emit('perfCount', data);                   
               console.log('perfCount = ' + performerCount);            
             });
+
+
+            socket.on('gimmePerfCount', function(data) {
+              socket.emit('givenPerfCount', performerCount);                   
+              console.log('gimmePerfCount = ' + performerCount);            
+            });
+
 
             // socket.on('perfSub', function(data) {
             //   console.log("Received: new performer " + userName);     

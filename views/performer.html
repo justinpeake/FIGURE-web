@@ -19,9 +19,11 @@
 				<script type="text/javascript">
 
 							socket.on('connect', function() {
-								//socket.emit('perfAdd');  // no server listener for this yet
+								socket.emit('gimmePerfCount');  // no server listener for this yet
 								console.log("Performer in the house.");
 							});
+
+
 
 
 				</script>	
@@ -80,6 +82,7 @@
 				<!-- redo these with % -->
 
 				<div id="performer-container"> </div>
+
 
 				You are Performer:	 
 				<div id="youAre"> </div>			
@@ -291,18 +294,19 @@
 
 						};
 
-						// routes messages across channels
 
-							var perfCount;
-							var perfs = [];
+////////////////////////// DYNAMIC PERF SHIZZ					
+
+			// routes messages across channels
+
+				var perfCount;
+				var perfs = [];
 
 
-
-
-				socket.on('perfCount', function (data) {		
+				socket.on('perfCount', function (data) {	
 
 					perfCount= data;
-					console.log("toWhom = " + toWhom);
+					//console.log("toWhom = " + toWhom);
 
 					$('.performerDivB').remove();
 						perfs = [];
@@ -315,13 +319,34 @@
 				    	document.getElementById('performer-container').appendChild(perfs[i]);
 				    };
 
-					console.log(perfs);
-					console.log(perfCount);
+					//console.log(perfs);
+					//console.log(perfCount);
 
 					for (var i = 0; i < perfCount; i++){
 	    				$('#cp' + (i+1)).click(doTheThing(i));
 	    			};	
+				});
 
+				socket.on('givenPerfCount', function (data) {		
+
+					perfCount= data;
+					//console.log("toWhom = " + toWhom);
+
+					$('.performerDivB').remove();
+						perfs = [];
+
+	    			for(i=0; i < perfCount ; i++){
+				    	perfs[i] = document.createElement('div');
+				    	perfs[i].className = 'performerDivB';
+				    	perfs[i].id = 'cp' + (i+1);
+				    	perfs[i].innerHTML = i + 1;
+				    	document.getElementById('performer-container').appendChild(perfs[i]);
+				    };
+					// console.log(perfs);
+					// console.log(perfCount);
+					for (var i = 0; i < perfCount; i++){
+	    				$('#cp' + (i+1)).click(doTheThing(i));
+	    			};	
 				});
 
 
@@ -366,7 +391,7 @@
 
 
 
-////////////////////////////////////////////////////////
+///////////////////////////////////////////////////// END DYNAMIC PERF SHIZZ
 
 						socket.on('sendingTo', function (data) {							
 							toWhom = data;

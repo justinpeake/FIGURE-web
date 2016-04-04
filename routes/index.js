@@ -23,7 +23,7 @@ audioArray = [];
 audioNames = [];
 
 perfs = [];
-performerCount = 0;
+performerCount =0;
 
 
 //////////////////////////////////////////
