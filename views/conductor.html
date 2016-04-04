@@ -45,13 +45,13 @@
 
  <div id="everythingConductor">
 
- 	<div id="switcher"> SWITCH </div> <p>
+ 	<!-- <div id="switcher"> SWITCH </div> <p> -->
 
 			<div class="sidebar"> You are the CONDUCTOR, {{user}}.  
 
 				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
 
-			 	<p>
+			 	<!-- <p>
 
 				<div class="performerDiv" id="cp1"> 1 </div> 
 				<div class="performerDiv" id="cp2"> 2 </div> 
@@ -60,7 +60,8 @@
 				<div class="performerDiv" id="cp5"> 5 </div> 
 				<div class="performerDiv" id="cpAll" style="font-size:40px;width:90px"> ALL </div> 
 
-				<p>
+				<p> -->
+
 				<p>
 
 				<nav>
@@ -69,10 +70,34 @@
 				    <div class="navButton" id="conduct">  CONDUCT </div>
 				</nav>
 
+				<p>
+				<p>
+
+				<!-- PERFORMER channel update -->	
+
+				<input type="number" id="myNumber" value="0">
+				<p>
+				<button onclick="updatePerfCount()">Update Channel Count </button>
+				<!-- <p id="demo"> </p> -->
+			
 			</div>
 
 
-			<div class="main">
+			<div id="main">
+
+
+			<div id="performer-container">
+				<p>
+				<!-- <div class="performerDiv" id="cp1"> 1 </div> 
+				<div class="performerDiv" id="cp2"> 2 </div> 
+				<div class="performerDiv" id="cp3"> 3 </div> 
+				<div class="performerDiv" id="cp4"> 4 </div> 
+				<div class="performerDiv" id="cp5"> 5 </div> 
+				<div class="performerDiv" id="cpAll" > ALL </div>  -->
+				<div id="switcher"> SWITCH </div> <p>
+				<p>
+			</div>
+			
 
 				  <p> Images <p>
 
@@ -109,41 +134,72 @@
 
 		// BEGIN CONDUCTOR SCRIPT //
 
+
+	
+//////////////////////////////////////////////////////////////////////////////////////////
+
+		// WORKING performer channel update
+
+		var perf = [];
+
+		function updatePerfCount() {
+
+		var x = document.getElementById("myNumber").value;
+
+	  			$('.performerDivB').remove();
+	  			perf =[];
+
+		    		for(i=0; i < x ; i++){
+					    	perf[i] = document.createElement('div');
+					    	perf[i].className = 'performerDivB';
+					    	perf[i].id = 'cp' + (i+1);
+					    	perf[i].innerHTML = i + 1;
+					    	document.getElementById('performer-container').appendChild(perf[i]);
+					    };
+
+			     		//makePerfIds();
+
+					// for (i = 0; i < perf.length; i++){
+					// 	perf[i].id = 'cp'+ (i+1);	
+					// 	console.log(perf[i].id)
+					// 	};
+
+						console.log(perf);
+					};
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 		// this block is taking the number of images and adding ID's for button functions
 
 		var imageIds = document.getElementsByClassName("imageF");  // from image tag above
 		var imageSrcs = [];  //sending this to the socket emit
-
-
 		var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
 
-		var whoWhat = {};
+
+		//assign ids to all of the images
+		for (i = 0; i < imageIds.length; i++) {
+			imageIds[i].id = 'iF'+ i;	
+		};
+
+		//assign ids to the text overlay divs
+		for (i = 0; i < imageTxtIds.length; i++) {
+			imageTxtIds[i].id = 'iT'+ i;	
+			console.log(imageTxtIds[i].id);
+		};
 	
+		// get the urls of images
+		for (i = 0; i < imageIds.length; i++) {
+			imageSrcs[i] = imageIds[i].src;
+		};
 
-			//assign ids to all of the images
-			for (i = 0; i < imageIds.length; i++) {
-				imageIds[i].id = 'iF'+ i;	
-			};
-
-
-			//assign ids to the text overlay divs
-			for (i = 0; i < imageTxtIds.length; i++) {
-				imageTxtIds[i].id = 'iT'+ i;	
-
-				console.log(imageTxtIds[i].id);
-			};
-
-				
-
-				// get the urls of images
-				for (i = 0; i < imageIds.length; i++) {
-					imageSrcs[i] = imageIds[i].src;
-				};
-
-					//seth helped with this  -- add button functionalities
-					for(var i = 0; i < imageIds.length; i ++){
-						$("#iF" + i).click(fadeTheFadeI(i));
-					}
+		//seth helped with this  -- add button functionalities
+		for(var i = 0; i < imageIds.length; i ++){
+			$("#iF" + i).click(fadeTheFadeI(i));
+		}
 
 		
 		//add the urls to the button
@@ -151,27 +207,11 @@
 		function fadeTheFadeI(index){
 
 			return function(){
-
-				$("#iF" + index).fadeTo("slow", 0.5);
-				
-				socket.emit('imageFigure', imageSrcs[index])
-
-				document.getElementById('iT' + index).innerHTML = toWhom;
-
-				console.log(toWhom);
-
-
+				var image = "#iF" + index; 
+				$(image).fadeTo("slow", 0.5);				
+				socket.emit('imageFigure', imageSrcs[index]);
 			}
 		}	
-
-
-
-				
-
-				
-			
-
-				
 
 
 		//video buttons
@@ -272,168 +312,172 @@
 			        $(location).attr('href', '/conductor') ;   
 			    });
 					 
+
+
+
 						
-		 		$(cp1).click(function(){
+			 //    $(cp1).click(function(){
 
-		 			$(cp1).fadeTo("fast", 0.5); 
-		 			$(cp2).fadeTo("fast", 1); 
-		 			$(cp3).fadeTo("fast", 1);
-		 			$(cp4).fadeTo("fast", 1);
-		 			$(cp5).fadeTo("fast", 1);
-		 			$(cpAll).fadeTo("fast", 1);
+		 	// 		$(cp1).fadeTo("fast", 0.5); 
+		 	// 		$(cp2).fadeTo("fast", 1); 
+		 	// 		$(cp3).fadeTo("fast", 1);
+		 	// 		$(cp4).fadeTo("fast", 1);
+		 	// 		$(cp5).fadeTo("fast", 1);
+		 	// 		$(cpAll).fadeTo("fast", 1);
 
-		 			$(cp1).css('color', 'red');
- 					$(cp2).css('color', 'white');
- 					$(cp3).css('color', 'white');
- 					$(cp4).css('color', 'white');
- 					$(cp5).css('color', 'white');
- 					$(cpAll).css('color', 'white');
+		 	// 		$(cp1).css('color', 'red');
+ 			// 		$(cp2).css('color', 'white');
+ 			// 		$(cp3).css('color', 'white');
+ 			// 		$(cp4).css('color', 'white');
+ 			// 		$(cp5).css('color', 'white');
+ 			// 		$(cpAll).css('color', 'white');
 
-		 			toAll = 0;
-		 			toWhom = 1;
+		 	// 		toAll = 0;
+		 	// 		toWhom = 1;
 
-		 			console.log("one");
-		 			socket.emit('sendingTo', toWhom, toAll);
-		 			socket.emit('sendingAll', toAll);
+		 	// 		console.log("one");
+		 	// 		socket.emit('sendingTo', toWhom, toAll);
+		 	// 		socket.emit('sendingAll', toAll);
 
-				 	}
-				 );
-
-		 		$(cp2).click(function(){
-
-		 			$(cp1).fadeTo("fast", 1); 
-		 			$(cp2).fadeTo("fast", 0.5); 
-		 			$(cp3).fadeTo("fast", 1);
-		 			$(cp4).fadeTo("fast", 1);
-		 			$(cp5).fadeTo("fast", 1);
-		 			$(cpAll).fadeTo("fast", 1);
-
-		 			$(cp1).css('color', 'white');
- 					$(cp2).css('color', 'red');
- 					$(cp3).css('color', 'white');
- 					$(cp4).css('color', 'white');
- 					$(cp5).css('color', 'white');
- 					$(cpAll).css('color', 'white');
-
-
-		 			toAll = 0;
-		 			toWhom = 2;
-
-		 			console.log("two");
-		 			socket.emit('sendingTo', toWhom, toAll);
-		 		    socket.emit('sendingAll', toAll);
-				 	}
-				 );
-
-		 		$(cp3).click(function(){
-
-		 			$(cp1).fadeTo("fast", 1);
-		 			$(cp2).fadeTo("fast", 1);
-		 			$(cp3).fadeTo("fast", 0.5);
-		 			$(cp4).fadeTo("fast", 1);
-		 			$(cp5).fadeTo("fast", 1);
-		 			$(cpAll).fadeTo("fast", 1);
-
-		 			$(cp1).css('color', 'white');
- 					$(cp2).css('color', 'white');
- 					$(cp3).css('color', 'red');
- 					$(cp4).css('color', 'white');
- 					$(cp5).css('color', 'white');
- 					$(cpAll).css('color', 'white');
-
-
-		 			toAll = 0;
-		 			toWhom = 3;
-
-		 			
-					console.log("three");
-		 			socket.emit('sendingTo', toWhom, toAll);
-		 		    socket.emit('sendingAll', toAll);
+				//  	}
+				//  ); 
 		 		
-				 	}
-				 );
 
-		 		$(cp4).click(function(){
+		 	// 	$(cp2).click(function(){
 
-		 			$(cp1).fadeTo("fast", 1);
-		 			$(cp2).fadeTo("fast", 1);
-		 			$(cp3).fadeTo("fast", 1);
-		 			$(cp4).fadeTo("fast", 0.5);
-		 			$(cp5).fadeTo("fast", 1);
-		 			$(cpAll).fadeTo("fast", 1);
+		 	// 		$(cp1).fadeTo("fast", 1); 
+		 	// 		$(cp2).fadeTo("fast", 0.5); 
+		 	// 		$(cp3).fadeTo("fast", 1);
+		 	// 		$(cp4).fadeTo("fast", 1);
+		 	// 		$(cp5).fadeTo("fast", 1);
+		 	// 		$(cpAll).fadeTo("fast", 1);
 
-		 			$(cp1).css('color', 'white');
- 					$(cp2).css('color', 'white');
- 					$(cp3).css('color', 'white');
- 					$(cp4).css('color', 'red');
- 					$(cp5).css('color', 'white');
- 					$(cpAll).css('color', 'white');
+		 	// 		$(cp1).css('color', 'white');
+ 			// 		$(cp2).css('color', 'red');
+ 			// 		$(cp3).css('color', 'white');
+ 			// 		$(cp4).css('color', 'white');
+ 			// 		$(cp5).css('color', 'white');
+ 			// 		$(cpAll).css('color', 'white');
 
 
-		 			toAll = 0;
-		 			toWhom = 4;
+		 	// 		toAll = 0;
+		 	// 		toWhom = 2;
+
+		 	// 		console.log("two");
+		 	// 		socket.emit('sendingTo', toWhom, toAll);
+		 	// 	    socket.emit('sendingAll', toAll);
+				//  	}
+				//  );
+
+		 	// 	$(cp3).click(function(){
+
+		 	// 		$(cp1).fadeTo("fast", 1);
+		 	// 		$(cp2).fadeTo("fast", 1);
+		 	// 		$(cp3).fadeTo("fast", 0.5);
+		 	// 		$(cp4).fadeTo("fast", 1);
+		 	// 		$(cp5).fadeTo("fast", 1);
+		 	// 		$(cpAll).fadeTo("fast", 1);
+
+		 	// 		$(cp1).css('color', 'white');
+ 			// 		$(cp2).css('color', 'white');
+ 			// 		$(cp3).css('color', 'red');
+ 			// 		$(cp4).css('color', 'white');
+ 			// 		$(cp5).css('color', 'white');
+ 			// 		$(cpAll).css('color', 'white');
+
+
+		 	// 		toAll = 0;
+		 	// 		toWhom = 3;
 
 		 			
-					console.log("three");
-		 			socket.emit('sendingTo', toWhom, toAll);
-		 		    socket.emit('sendingAll', toAll);
+				// 	console.log("three");
+		 	// 		socket.emit('sendingTo', toWhom, toAll);
+		 	// 	    socket.emit('sendingAll', toAll);
 		 		
-				 	}
-				 );
+				//  	}
+				//  );
 
-		 		$(cp5).click(function(){
+		 	// 	$(cp4).click(function(){
 
-		 			$(cp1).fadeTo("fast", 1);
-		 			$(cp2).fadeTo("fast", 1);
-		 			$(cp3).fadeTo("fast", 1);
-		 			$(cp4).fadeTo("fast", 1);
-		 			$(cp5).fadeTo("fast", 0.5);
-		 			$(cpAll).fadeTo("fast", 1);
+		 	// 		$(cp1).fadeTo("fast", 1);
+		 	// 		$(cp2).fadeTo("fast", 1);
+		 	// 		$(cp3).fadeTo("fast", 1);
+		 	// 		$(cp4).fadeTo("fast", 0.5);
+		 	// 		$(cp5).fadeTo("fast", 1);
+		 	// 		$(cpAll).fadeTo("fast", 1);
 
-		 			$(cp1).css('color', 'white');
- 					$(cp2).css('color', 'white');
- 					$(cp3).css('color', 'white');
- 					$(cp4).css('color', 'white');
- 					$(cp5).css('color', 'red');
- 					$(cpAll).css('color', 'white');
+		 	// 		$(cp1).css('color', 'white');
+ 			// 		$(cp2).css('color', 'white');
+ 			// 		$(cp3).css('color', 'white');
+ 			// 		$(cp4).css('color', 'red');
+ 			// 		$(cp5).css('color', 'white');
+ 			// 		$(cpAll).css('color', 'white');
 
 
-		 			toAll = 0;
-		 			toWhom = 5;
+		 	// 		toAll = 0;
+		 	// 		toWhom = 4;
 
 		 			
-					console.log("three");
-		 			socket.emit('sendingTo', toWhom, toAll);
-		 		    socket.emit('sendingAll', toAll);
+				// 	console.log("three");
+		 	// 		socket.emit('sendingTo', toWhom, toAll);
+		 	// 	    socket.emit('sendingAll', toAll);
 		 		
-				 	}
-				 );
+				//  	}
+				//  );
 
-				$(cpAll).click(function(){
+		 	// 	$(cp5).click(function(){
 
-					$(cp1).fadeTo("fast", 1);
-		 			$(cp2).fadeTo("fast", 1);
-		 			$(cp3).fadeTo("fast", 1);
-		 			$(cp4).fadeTo("fast", 1);
-		 			$(cp5).fadeTo("fast", 1);
-		 			$(cpAll).fadeTo("fast", 0.5);
+		 	// 		$(cp1).fadeTo("fast", 1);
+		 	// 		$(cp2).fadeTo("fast", 1);
+		 	// 		$(cp3).fadeTo("fast", 1);
+		 	// 		$(cp4).fadeTo("fast", 1);
+		 	// 		$(cp5).fadeTo("fast", 0.5);
+		 	// 		$(cpAll).fadeTo("fast", 1);
 
-		 			$(cp1).css('color', 'white');
- 					$(cp2).css('color', 'white');
- 					$(cp3).css('color', 'white');
- 					$(cp4).css('color', 'white');
- 					$(cp5).css('color', 'white');
- 					$(cpAll).css('color', 'red');
+		 	// 		$(cp1).css('color', 'white');
+ 			// 		$(cp2).css('color', 'white');
+ 			// 		$(cp3).css('color', 'white');
+ 			// 		$(cp4).css('color', 'white');
+ 			// 		$(cp5).css('color', 'red');
+ 			// 		$(cpAll).css('color', 'white');
 
-					toWhom = 0;
-		 			toAll = 1;
+
+		 	// 		toAll = 0;
+		 	// 		toWhom = 5;
 
 		 			
-					console.log("three");
-		 			socket.emit('sendingTo', toWhom, toAll);
-		 			socket.emit('sendingAll', toAll);
-				 	}
-				 );
+				// 	console.log("three");
+		 	// 		socket.emit('sendingTo', toWhom, toAll);
+		 	// 	    socket.emit('sendingAll', toAll);
+		 		
+				//  	}
+				//  );
+
+				// $(cpAll).click(function(){
+
+				// 	$(cp1).fadeTo("fast", 1);
+		 	// 		$(cp2).fadeTo("fast", 1);
+		 	// 		$(cp3).fadeTo("fast", 1);
+		 	// 		$(cp4).fadeTo("fast", 1);
+		 	// 		$(cp5).fadeTo("fast", 1);
+		 	// 		$(cpAll).fadeTo("fast", 0.5);
+
+		 	// 		$(cp1).css('color', 'white');
+ 			// 		$(cp2).css('color', 'white');
+ 			// 		$(cp3).css('color', 'white');
+ 			// 		$(cp4).css('color', 'white');
+ 			// 		$(cp5).css('color', 'white');
+ 			// 		$(cpAll).css('color', 'red');
+
+				// 	toWhom = 0;
+		 	// 		toAll = 1;
+
+		 			
+				// 	console.log("three");
+		 	// 		socket.emit('sendingTo', toWhom, toAll);
+		 	// 		socket.emit('sendingAll', toAll);
+				//  	}
+				//  );
 
 			// END CONDUCTOR SCRIPT
 		

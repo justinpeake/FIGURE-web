@@ -27,7 +27,7 @@ var chalk = require('chalk');
 var userID;
 
 var performerCount = 0;
-var perfs = [];
+// var perfs = [];
 
 app.io = io;  //second iteration
  
@@ -285,26 +285,26 @@ passport.use(new LocalStrategy(Account.authenticate()));
               socket.broadcast.emit('waveSketch', data);
             });
 
-            socket.on('perfAdd', function(data) {
-              console.log("Received: new performer " + userName);              
-              performerCount = performerCount + 1; 
-              console.log('perfCount = ' + performerCount);            
-            });
+            // socket.on('perfAdd', function(data) {
+            //   console.log("Received: new performer " + userName);              
+            //   performerCount = performerCount + 1; 
+            //   console.log('perfCount = ' + performerCount);            
+            // });
 
-            socket.on('perfSub', function(data) {
-              console.log("Received: new performer " + userName);     
-              performerCount = performerCount - 1;              
+            // socket.on('perfSub', function(data) {
+            //   console.log("Received: new performer " + userName);     
+            //   performerCount = performerCount - 1;              
 
-              console.log( chalk.red(userName) + ' disconnected from ' + page);
-              console.log('perfCount = ' + performerCount);
-            });
+            //   console.log( chalk.red(userName) + ' disconnected from ' + page);
+            //   console.log('perfCount = ' + performerCount);
+            // });
 
             socket.on('disconnect', function() {
-              if (page =='performer'){
-              performerCount = performerCount - 1;
-            }              
+              // if (page =='performer'){
+              // performerCount = performerCount - 1;
+            // }              
               console.log( chalk.red(userName) + ' disconnected from ' + page);
-              console.log('perfCount = ' + performerCount);
+              // console.log('perfCount = ' + performerCount);
             });
 
 

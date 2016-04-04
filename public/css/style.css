@@ -42,10 +42,23 @@
 					.performerDiv {
 						width:50;
 						height:50;
-						border-radius: 40px;
+						border-radius: 50px;
 						background-color: 666666;
 						color: FFFFFF;
-						font-size: 30px;
+						font-size: 25px;
+						text-align: center;
+						line-height: 50px;
+						display: inline-block;
+						margin: 2px;
+						}
+
+						.performerDivB {
+						width:50;
+						height:50;
+						border-radius: 50px;
+						background-color: 666666;
+						color: FFFFFF;
+						font-size: 25px;
 						text-align: center;
 						line-height: 50px;
 						display: inline-block;
@@ -53,8 +66,10 @@
 						}
 
 
+
+
 					
-					.main{
+					#main{
                     	width: 740px;
                     	float: left;
                     	/*position: relative;*/

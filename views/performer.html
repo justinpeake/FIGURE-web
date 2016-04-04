@@ -19,7 +19,7 @@
 				<script type="text/javascript">
 
 							socket.on('connect', function() {
-								socket.emit('perfAdd');  // no server listener for this yet
+								//socket.emit('perfAdd');  // no server listener for this yet
 								console.log("Performer in the house.");
 							});
 
@@ -112,7 +112,12 @@
 
 	 	  		<!-- <div id="timeLine"> </div>
  -->
+	 	  		
+ 				<div class="perfsBox">
+
+
 	 	  		<div id="waveSketch"> </div>
+
 
 			 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
 			 	
@@ -135,9 +140,6 @@
 
 					// var myp5 = new p5(waveForm, 'timeLine');
 					// var myp5 = new p5(tempo, 'bpm'); 
-
-
-
 
 					//initialize globals for performer id
 					var myId = 0; 
