@@ -78,6 +78,10 @@
 				<input type="number" id="myNumber" value="0">
 				<p>
 				<button onclick="updatePerfCount()">Update Channel Count </button>
+				<p>
+				You are Sending To:
+				<div id="sendingTo">  </div>
+
 				<!-- <p id="demo"> </p> -->
 			
 			</div>
@@ -146,6 +150,8 @@
 
 		pX = document.getElementById("myNumber").value;
 
+		socket.emit('perfCount', pX);
+
 	  			$('.performerDivB').remove();
 	  			perfs = [];
 
@@ -173,9 +179,10 @@
 			    		var num = index + 1;
 			    		var perfID = "#cp" + (num);
 					 			
+					 	document.getElementById('sendingTo').innerHTML = num;
 			 			// if (perfs[index].id == 'cp'+ num){
 
-			 			  $(perfID).fadeTo("fast", 0.5); 
+			 			 $(perfID).fadeTo("fast", 0.5); 
 				    	 $(perfID).css('color', 'red');
 
 			 			// }

@@ -285,11 +285,12 @@ passport.use(new LocalStrategy(Account.authenticate()));
               socket.broadcast.emit('waveSketch', data);
             });
 
-            // socket.on('perfAdd', function(data) {
-            //   console.log("Received: new performer " + userName);              
-            //   performerCount = performerCount + 1; 
-            //   console.log('perfCount = ' + performerCount);            
-            // });
+            socket.on('perfCount', function(data) {
+          
+              socket.broadcast.emit('perfCount', data);            
+            
+              console.log('perfCount = ' + performerCount);            
+            });
 
             // socket.on('perfSub', function(data) {
             //   console.log("Received: new performer " + userName);     

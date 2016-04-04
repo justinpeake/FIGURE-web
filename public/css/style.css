@@ -79,6 +79,20 @@
                 
               		  	} 
 
+              		  	#youAre{
+              		  	width: 50;	
+                    	font-size: 60;
+                    	text-align: center;
+                
+              		  	} 
+
+              		  	#sendingTo{
+              		  	width: 50;	
+                    	font-size: 60;
+                    	text-align: center;
+                
+              		  	} 
+
 
 					.figures{
                     	width: 740px;

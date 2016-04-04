@@ -79,15 +79,13 @@
 
 				<!-- redo these with % -->
 
-				Join as Performer:	 			
-			<a>  
-				<div class="performerDiv" id="perf1"> 1 </div> 
-				<div class="performerDiv" id="perf2"> 2 </div> 
-				<div class="performerDiv" id="perf3"> 3 </div> 
-				<div class="performerDiv" id="perf4"> 4 </div> 
-				<div class="performerDiv" id="perf5"> 5 </div> 
+				<div id="performer-container"> </div>
 
-			<p>
+				You are Performer:	 
+				<div id="youAre"> </div>			
+			<!-- <a>  --> 
+
+				
 
 				<div id="bpm"> </div>				
 
@@ -104,6 +102,9 @@
 
 	 <br>
 	 
+
+	 		
+
 			<div id="figures" align="center">
 	 		
 	 <!-- This is where each new figure is injected into the performer page.
@@ -113,7 +114,7 @@
 	 	  		<!-- <div id="timeLine"> </div>
  -->
 	 	  		
- 				<div class="perfsBox">
+ 				<div id="performer-container"> </div>
 
 
 	 	  		<div id="waveSketch"> </div>
@@ -140,6 +141,7 @@
 
 					// var myp5 = new p5(waveForm, 'timeLine');
 					// var myp5 = new p5(tempo, 'bpm'); 
+
 
 					//initialize globals for performer id
 					var myId = 0; 
@@ -178,106 +180,106 @@
 
 		//performer buttons
 
-	 	$(perf1).click(function(){
+	 // 	$(perf1).click(function(){
 
-	 		myId = 1;
+	 // 		myId = 1;
 
-	 		$(perf1).fadeTo(500, 0.5);
-	 		$(perf2).fadeTo(500, 1);			 		
-	 		$(perf3).fadeTo(500, 1);
-	 		$(perf4).fadeTo(500, 1);
-	 		$(perf5).fadeTo(500, 1);
+	 // 		$(perf1).fadeTo(500, 0.5);
+	 // 		$(perf2).fadeTo(500, 1);			 		
+	 // 		$(perf3).fadeTo(500, 1);
+	 // 		$(perf4).fadeTo(500, 1);
+	 // 		$(perf5).fadeTo(500, 1);
 
-	 		$(perf1).css('color', 'red');
-	 		$(perf2).css('color', 'white');
-	 		$(perf3).css('color', 'white');
-	 		$(perf4).css('color', 'white');
-	 		$(perf5).css('color', 'white');
+	 // 		$(perf1).css('color', 'red');
+	 // 		$(perf2).css('color', 'white');
+	 // 		$(perf3).css('color', 'white');
+	 // 		$(perf4).css('color', 'white');
+	 // 		$(perf5).css('color', 'white');
 	 		
-			console.log("I am Performer " + myId);
-	 	}
-	 );
+		// 	console.log("I am Performer " + myId);
+	 // 	}
+	 // );
 
-	 	$(perf2).click(function(){
+	 // 	$(perf2).click(function(){
 
-	 		myId = 2;
+	 // 		myId = 2;
 
-	 		$(perf1).fadeTo(500, 1);
-	 		$(perf2).fadeTo(500, 0.5);			 		
-	 		$(perf3).fadeTo(500, 1);
-	 		$(perf4).fadeTo(500, 1);
-	 		$(perf5).fadeTo(500, 1);
+	 // 		$(perf1).fadeTo(500, 1);
+	 // 		$(perf2).fadeTo(500, 0.5);			 		
+	 // 		$(perf3).fadeTo(500, 1);
+	 // 		$(perf4).fadeTo(500, 1);
+	 // 		$(perf5).fadeTo(500, 1);
 
-	 		$(perf1).css('color', 'white');
-	 		$(perf2).css('color', 'red');
-	 		$(perf3).css('color', 'white');
-	 		$(perf4).css('color', 'white');
-	 		$(perf5).css('color', 'white');
+	 // 		$(perf1).css('color', 'white');
+	 // 		$(perf2).css('color', 'red');
+	 // 		$(perf3).css('color', 'white');
+	 // 		$(perf4).css('color', 'white');
+	 // 		$(perf5).css('color', 'white');
 
-			console.log("I am Performer " + myId);		
-	 	}
-	 );
+		// 	console.log("I am Performer " + myId);		
+	 // 	}
+	 // );
 
-	 	$(perf3).click(function(){
+	 // 	$(perf3).click(function(){
 
-	 		myId = 3;
+	 // 		myId = 3;
 
-	 		$(perf1).fadeTo(500, 1);
-	 		$(perf2).fadeTo(500, 1);			 		
-	 		$(perf3).fadeTo(500, 0.5);
-	 		$(perf4).fadeTo(500, 1);
-	 		$(perf5).fadeTo(500, 1);
+	 // 		$(perf1).fadeTo(500, 1);
+	 // 		$(perf2).fadeTo(500, 1);			 		
+	 // 		$(perf3).fadeTo(500, 0.5);
+	 // 		$(perf4).fadeTo(500, 1);
+	 // 		$(perf5).fadeTo(500, 1);
 
-	 		$(perf1).css('color', 'white');
-	 		$(perf2).css('color', 'white');
-	 		$(perf3).css('color', 'red');
-	 		$(perf4).css('color', 'white');
-	 		$(perf5).css('color', 'white');
+	 // 		$(perf1).css('color', 'white');
+	 // 		$(perf2).css('color', 'white');
+	 // 		$(perf3).css('color', 'red');
+	 // 		$(perf4).css('color', 'white');
+	 // 		$(perf5).css('color', 'white');
 
-	 		console.log("I am Performer " + myId);
-	 	}
-	 );
+	 // 		console.log("I am Performer " + myId);
+	 // 	}
+	 // );
 
-		$(perf4).click(function(){
+		// $(perf4).click(function(){
 
-	 		myId = 4;
+	 // 		myId = 4;
 
-	 		$(perf1).fadeTo(500, 1);
-	 		$(perf2).fadeTo(500, 1);			 		
-	 		$(perf3).fadeTo(500, 1);
-	 		$(perf4).fadeTo(500, 0.5);
-	 		$(perf5).fadeTo(500, 1);
+	 // 		$(perf1).fadeTo(500, 1);
+	 // 		$(perf2).fadeTo(500, 1);			 		
+	 // 		$(perf3).fadeTo(500, 1);
+	 // 		$(perf4).fadeTo(500, 0.5);
+	 // 		$(perf5).fadeTo(500, 1);
 
-	 		$(perf1).css('color', 'white');
-	 		$(perf2).css('color', 'white');
-	 		$(perf3).css('color', 'white');
-	 		$(perf4).css('color', 'red');
-	 		$(perf5).css('color', 'white');
+	 // 		$(perf1).css('color', 'white');
+	 // 		$(perf2).css('color', 'white');
+	 // 		$(perf3).css('color', 'white');
+	 // 		$(perf4).css('color', 'red');
+	 // 		$(perf5).css('color', 'white');
 
-	 		console.log("I am Performer " + myId);
-	 	}
-	 );	 	
+	 // 		console.log("I am Performer " + myId);
+	 // 	}
+	 // );	 	
 
 
-		$(perf5).click(function(){
+		// $(perf5).click(function(){
 
-	 		myId = 5;
+	 // 		myId = 5;
 
-	 		$(perf1).fadeTo(500, 1);
-	 		$(perf2).fadeTo(500, 1);			 		
-	 		$(perf3).fadeTo(500, 1);
-	 		$(perf4).fadeTo(500, 1);
-	 		$(perf5).fadeTo(500, 0.5);
+	 // 		$(perf1).fadeTo(500, 1);
+	 // 		$(perf2).fadeTo(500, 1);			 		
+	 // 		$(perf3).fadeTo(500, 1);
+	 // 		$(perf4).fadeTo(500, 1);
+	 // 		$(perf5).fadeTo(500, 0.5);
 
-	 		$(perf1).css('color', 'white');
-	 		$(perf2).css('color', 'white');
-	 		$(perf3).css('color', 'white');
-	 		$(perf4).css('color', 'white');
-	 		$(perf5).css('color', 'red');
+	 // 		$(perf1).css('color', 'white');
+	 // 		$(perf2).css('color', 'white');
+	 // 		$(perf3).css('color', 'white');
+	 // 		$(perf4).css('color', 'white');
+	 // 		$(perf5).css('color', 'red');
 
-	 		console.log("I am Performer " + myId);
-	 	}
-	 );
+	 // 		console.log("I am Performer " + myId);
+	 // 	}
+	 // );
 
 
 
@@ -290,6 +292,81 @@
 						};
 
 						// routes messages across channels
+
+							var perfCount;
+							var perfs = [];
+
+
+
+
+				socket.on('perfCount', function (data) {		
+
+					perfCount= data;
+					console.log("toWhom = " + toWhom);
+
+					$('.performerDivB').remove();
+						perfs = [];
+
+	    			for(i=0; i < perfCount ; i++){
+				    	perfs[i] = document.createElement('div');
+				    	perfs[i].className = 'performerDivB';
+				    	perfs[i].id = 'cp' + (i+1);
+				    	perfs[i].innerHTML = i + 1;
+				    	document.getElementById('performer-container').appendChild(perfs[i]);
+				    };
+
+					console.log(perfs);
+					console.log(perfCount);
+
+					for (var i = 0; i < perfCount; i++){
+	    				$('#cp' + (i+1)).click(doTheThing(i));
+	    			};	
+
+				});
+
+
+
+					function doTheThing(index) {
+
+			    	return function(){ 
+
+			    		var num = index + 1;
+			    		var perfID = "#cp" + (num);
+					 			
+			 			// if (perfs[index].id == 'cp'+ num){
+
+			 				myId = num;
+			 				document.getElementById('youAre').innerHTML = myId;
+			 				console.log("I am Performer " + myId);
+
+			 			 $(perfID).fadeTo("fast", 0.5); 
+				    	 $(perfID).css('color', 'red');
+
+			 			// }
+
+
+			 			// if (perfs[index].id != 'cp'+ num){
+
+			 			 // $(perfID).fadeTo("fast", 1); 
+				    // 	 $(perfID).css('color', 'white');
+
+			 			// }
+
+			 			// exclusive button (only one at a time)  THIS FLASHES THE BUTTON
+			 			for (i = 0; i < perfCount; i++){	
+			 					$(perfID).fadeTo("fast", 1); 
+			 					$(perfID).css('color', 'white')
+
+			 					//console.log(perfs[i].id);
+			 				};
+
+			 			};
+
+			 		};
+
+
+
+////////////////////////////////////////////////////////
 
 						socket.on('sendingTo', function (data) {							
 							toWhom = data;
