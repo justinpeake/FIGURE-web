@@ -48,20 +48,6 @@
  	<!-- <div id="switcher"> SWITCH </div> <p> -->
 
 			<div class="sidebar"> You are the CONDUCTOR, {{user}}.  
-
-				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
-
-			 	<!-- <p>
-
-				<div class="performerDiv" id="cp1"> 1 </div> 
-				<div class="performerDiv" id="cp2"> 2 </div> 
-				<div class="performerDiv" id="cp3"> 3 </div> 
-				<div class="performerDiv" id="cp4"> 4 </div> 
-				<div class="performerDiv" id="cp5"> 5 </div> 
-				<div class="performerDiv" id="cpAll" style="font-size:40px;width:90px"> ALL </div> 
-
-				<p> -->
-
 				<p>
 
 				<nav>
@@ -92,12 +78,6 @@
 
 			<div id="performer-container">
 				<p>
-				<!-- <div class="performerDiv" id="cp1"> 1 </div> 
-				<div class="performerDiv" id="cp2"> 2 </div> 
-				<div class="performerDiv" id="cp3"> 3 </div> 
-				<div class="performerDiv" id="cp4"> 4 </div> 
-				<div class="performerDiv" id="cp5"> 5 </div> 
-				<div class="performerDiv" id="cpAll" > ALL </div>  -->
 				<div id="switcher"> SWITCH </div> <p>
 				<p>
 			</div>
@@ -113,19 +93,19 @@
                 {{/images}}
               
          
-                  <p> Videos <p>
-                  {{#videos}}
-                  <video src={{.}} class="videoF" width="100px" height="100px"> </video>
-                  {{/videos}}
+              	<p> Videos <p>
+              	{{#videos}}
+              	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
+              	{{/videos}}
 
-                  <p> Waveforms <p>
-                  {{#audio}}
-                  <div class="audio" title={{.}}>  </div>
-                  {{/audio}}
+              	<p> Waveforms <p>
+              	{{#audio}}
+              	<div class="audio" title={{.}}>  </div>
+              	{{/audio}}
 
-                  {{#audionames}}
-                  <div class="audionames" title={{.}} style.visibility="hidden">  </div>
-                  {{/audionames}}
+              	{{#audionames}}
+              	<div class="audionames" title={{.}} style.visibility="hidden">  </div>
+              	{{/audionames}}
 
     		</div>
 
@@ -136,17 +116,55 @@
 
 
 
-		// BEGIN CONDUCTOR SCRIPT //
+//////////////////////////////////////////////// BEGIN CONDUCTOR SCRIPT //
 
 
-	
-//////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////// DYNAMIC PERF SHIZZ	
+				// working  (from line 322)
+				var toWhom = 0;  // initialize these globally, used in server and emit to performers
+				var toAll = 0;
+				var divs = [];
 
-		// WORKING performer channel update
+				//from line 154
+				var perfs = [];   
+				var pX;
 
-		var perfs = [];
-		var pX;
+				//navigation   (from line 328)
+				$(compose).click(function(){
+		        	$(location).attr('href', '/compose') ;   
+			    });
+
+			    $(perform).click(function(){
+			        $(location).attr('href', '/performer') ;   
+			    });
+
+			    $(conduct).click(function(){
+			        $(location).attr('href', '/conductor') ;   
+			    });
+
+			    //SWITCHER (from line 336)
+				$(switcher).click(function(){
+
+					console.log('switch ' + toWhom);
+					socket.emit('switch', toWhom);
+
+					document.getElementById("everythingPerformer").style.display = "block";
+					document.getElementById("everythingConductor").style.display= "none";
+
+					//this activates whichever p5 sketch
+					performerSketch();
+
+				});
+
+
+
+		// DYNAMIC PERF SHIZZ	
+
+		//  taking the number of performer channels input by conductor
+		//  sending the perfcount to all of the performers as a global var pX
+		//  adding event listeners for clikc functionality
+
+		// var perfs = [];
+		// var pX;
 		
 		function updatePerfCount() {
 
@@ -170,8 +188,7 @@
 
 						for (var i = 0; i < pX; i++){
 		    				$('#cp' + (i+1)).click(doTheThing(i));
-		    			};
-	
+		    			};	
 					};
 
 				function doTheThing(index) {
@@ -205,23 +222,20 @@
 			 					//console.log(perfs[i].id);
 			 				};
 				    	
-
 				    	toAll = 0;
 			 			toWhom = num;
 
 			 			console.log(num);
-
 			 					
-
-
 			 			socket.emit('sendingTo', toWhom, toAll);
 			 			socket.emit('sendingAll', toAll);
 			 			};
 		 			};
 
 ////////////////////////// END DYNAMIC PERF SHIZZ	
-//////////////////////////////////////////////////////////////////////////////////////////
 
+
+///////////////////////// FIGURE IMAGES > BUTTONS
 
 
 		// this block is taking the number of images and adding ID's for button functions
@@ -250,7 +264,7 @@
 		//seth helped with this  -- add button functionalities
 		for(var i = 0; i < imageIds.length; i ++){
 			$("#iF" + i).click(fadeTheFadeI(i));
-		}
+		};
 
 		
 		//add the urls to the button
@@ -261,8 +275,8 @@
 				var image = "#iF" + index; 
 				$(image).fadeTo("slow", 0.5);				
 				socket.emit('imageFigure', imageSrcs[index]);
-			}
-		}	
+			};
+		};	
 
 
 		//video buttons
@@ -282,14 +296,14 @@
 		//seth helped with this  -- add button functionalities
 		for(var i = 0; i < videoIds.length; i ++){
 			$("#vF" + i).click(fadeTheFadeV(i));
-		}
+		};
 		//add the urls to the button
 		function fadeTheFadeV(index){
 			return function(){
 				$("#vF" + index).fadeTo("slow", 0.5);
 				socket.emit('videoFigure', videoSrcs[index])
-			}
-		}	
+			};
+		};	
 
 
 		// audio buttons
@@ -315,220 +329,50 @@
 		//seth helped with this  -- add button functionalities
 		for(var i = 0; i < waveIds.length; i ++){
 			$("#aF" + i).click(fadeTheFadeA(i));
-		}
+		};
 		//add the urls to the button
 		function fadeTheFadeA(index){
 			return function(){
 				$("#aF" + index).fadeTo("slow", 0.5);
 				socket.emit('waveSketch', waveSrcs[index])
-			}
-		}	
+			};
+		};	
+
+				// // working
+				// var toWhom = 0;  // initialize these globally, used in server and emit to performers
+				// var toAll = 0;
+				// var divs = [];
 
 
+				// //SWITCHER
+				// $(switcher).click(function(){
+
+				// 	console.log('switch ' + toWhom);
+				// 	socket.emit('switch', toWhom);
+
+				// 	document.getElementById("everythingPerformer").style.display = "block";
+				// 	document.getElementById("everythingConductor").style.display= "none";
+
+				// 	//this activates whichever p5 sketch
+				// 	performerSketch();
+
+				// });
 
 
+				// //navigation   from line 328
 
-				// working
-				var toWhom = 0;  // initialize these globally, used in server and emit to performers
-				var toAll = 0;
-				var divs = [];
+				// $(compose).click(function(){
+		  //       	$(location).attr('href', '/compose') ;   
+			 //    });
 
+			 //    $(perform).click(function(){
+			 //        $(location).attr('href', '/performer') ;   
+			 //    });
 
-				//SWITCHER
-				$(switcher).click(function(){
-
-					console.log('switch ' + toWhom);
-					socket.emit('switch', toWhom);
-
-					document.getElementById("everythingPerformer").style.display = "block";
-					document.getElementById("everythingConductor").style.display= "none";
-
-					//this activates whichever p5 sketch
-					performerSketch();
-
-				});
-
-
-				//for autopropagating perf buttons
-
-				$(compose).click(function(){
-		        	$(location).attr('href', '/compose') ;   
-			    });
-
-			    $(perform).click(function(){
-			        $(location).attr('href', '/performer') ;   
-			    });
-
-			    $(conduct).click(function(){
-			        $(location).attr('href', '/conductor') ;   
-			    });
+			 //    $(conduct).click(function(){
+			 //        $(location).attr('href', '/conductor') ;   
+			 //    });
 					 
-
-
-
-						
-			 //    $(cp1).click(function(){
-
-		 	// 		$(cp1).fadeTo("fast", 0.5); 
-		 	// 		$(cp2).fadeTo("fast", 1); 
-		 	// 		$(cp3).fadeTo("fast", 1);
-		 	// 		$(cp4).fadeTo("fast", 1);
-		 	// 		$(cp5).fadeTo("fast", 1);
-		 	// 		$(cpAll).fadeTo("fast", 1);
-
-		 	// 		$(cp1).css('color', 'red');
- 			// 		$(cp2).css('color', 'white');
- 			// 		$(cp3).css('color', 'white');
- 			// 		$(cp4).css('color', 'white');
- 			// 		$(cp5).css('color', 'white');
- 			// 		$(cpAll).css('color', 'white');
-
-		 	// 		toAll = 0;
-		 	// 		toWhom = 1;
-
-		 	// 		console.log("one");
-		 	// 		socket.emit('sendingTo', toWhom, toAll);
-		 	// 		socket.emit('sendingAll', toAll);
-
-				//  	}
-				//  ); 
-		 		
-
-		 	// 	$(cp2).click(function(){
-
-		 	// 		$(cp1).fadeTo("fast", 1); 
-		 	// 		$(cp2).fadeTo("fast", 0.5); 
-		 	// 		$(cp3).fadeTo("fast", 1);
-		 	// 		$(cp4).fadeTo("fast", 1);
-		 	// 		$(cp5).fadeTo("fast", 1);
-		 	// 		$(cpAll).fadeTo("fast", 1);
-
-		 	// 		$(cp1).css('color', 'white');
- 			// 		$(cp2).css('color', 'red');
- 			// 		$(cp3).css('color', 'white');
- 			// 		$(cp4).css('color', 'white');
- 			// 		$(cp5).css('color', 'white');
- 			// 		$(cpAll).css('color', 'white');
-
-
-		 	// 		toAll = 0;
-		 	// 		toWhom = 2;
-
-		 	// 		console.log("two");
-		 	// 		socket.emit('sendingTo', toWhom, toAll);
-		 	// 	    socket.emit('sendingAll', toAll);
-				//  	}
-				//  );
-
-		 	// 	$(cp3).click(function(){
-
-		 	// 		$(cp1).fadeTo("fast", 1);
-		 	// 		$(cp2).fadeTo("fast", 1);
-		 	// 		$(cp3).fadeTo("fast", 0.5);
-		 	// 		$(cp4).fadeTo("fast", 1);
-		 	// 		$(cp5).fadeTo("fast", 1);
-		 	// 		$(cpAll).fadeTo("fast", 1);
-
-		 	// 		$(cp1).css('color', 'white');
- 			// 		$(cp2).css('color', 'white');
- 			// 		$(cp3).css('color', 'red');
- 			// 		$(cp4).css('color', 'white');
- 			// 		$(cp5).css('color', 'white');
- 			// 		$(cpAll).css('color', 'white');
-
-
-		 	// 		toAll = 0;
-		 	// 		toWhom = 3;
-
-		 			
-				// 	console.log("three");
-		 	// 		socket.emit('sendingTo', toWhom, toAll);
-		 	// 	    socket.emit('sendingAll', toAll);
-		 		
-				//  	}
-				//  );
-
-		 	// 	$(cp4).click(function(){
-
-		 	// 		$(cp1).fadeTo("fast", 1);
-		 	// 		$(cp2).fadeTo("fast", 1);
-		 	// 		$(cp3).fadeTo("fast", 1);
-		 	// 		$(cp4).fadeTo("fast", 0.5);
-		 	// 		$(cp5).fadeTo("fast", 1);
-		 	// 		$(cpAll).fadeTo("fast", 1);
-
-		 	// 		$(cp1).css('color', 'white');
- 			// 		$(cp2).css('color', 'white');
- 			// 		$(cp3).css('color', 'white');
- 			// 		$(cp4).css('color', 'red');
- 			// 		$(cp5).css('color', 'white');
- 			// 		$(cpAll).css('color', 'white');
-
-
-		 	// 		toAll = 0;
-		 	// 		toWhom = 4;
-
-		 			
-				// 	console.log("three");
-		 	// 		socket.emit('sendingTo', toWhom, toAll);
-		 	// 	    socket.emit('sendingAll', toAll);
-		 		
-				//  	}
-				//  );
-
-		 	// 	$(cp5).click(function(){
-
-		 	// 		$(cp1).fadeTo("fast", 1);
-		 	// 		$(cp2).fadeTo("fast", 1);
-		 	// 		$(cp3).fadeTo("fast", 1);
-		 	// 		$(cp4).fadeTo("fast", 1);
-		 	// 		$(cp5).fadeTo("fast", 0.5);
-		 	// 		$(cpAll).fadeTo("fast", 1);
-
-		 	// 		$(cp1).css('color', 'white');
- 			// 		$(cp2).css('color', 'white');
- 			// 		$(cp3).css('color', 'white');
- 			// 		$(cp4).css('color', 'white');
- 			// 		$(cp5).css('color', 'red');
- 			// 		$(cpAll).css('color', 'white');
-
-
-		 	// 		toAll = 0;
-		 	// 		toWhom = 5;
-
-		 			
-				// 	console.log("three");
-		 	// 		socket.emit('sendingTo', toWhom, toAll);
-		 	// 	    socket.emit('sendingAll', toAll);
-		 		
-				//  	}
-				//  );
-
-				// $(cpAll).click(function(){
-
-				// 	$(cp1).fadeTo("fast", 1);
-		 	// 		$(cp2).fadeTo("fast", 1);
-		 	// 		$(cp3).fadeTo("fast", 1);
-		 	// 		$(cp4).fadeTo("fast", 1);
-		 	// 		$(cp5).fadeTo("fast", 1);
-		 	// 		$(cpAll).fadeTo("fast", 0.5);
-
-		 	// 		$(cp1).css('color', 'white');
- 			// 		$(cp2).css('color', 'white');
- 			// 		$(cp3).css('color', 'white');
- 			// 		$(cp4).css('color', 'white');
- 			// 		$(cp5).css('color', 'white');
- 			// 		$(cpAll).css('color', 'red');
-
-				// 	toWhom = 0;
-		 	// 		toAll = 1;
-
-		 			
-				// 	console.log("three");
-		 	// 		socket.emit('sendingTo', toWhom, toAll);
-		 	// 		socket.emit('sendingAll', toAll);
-				//  	}
-				//  );
 
 			// END CONDUCTOR SCRIPT
 		

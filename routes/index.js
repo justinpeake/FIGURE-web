@@ -23,7 +23,7 @@ audioArray = [];
 audioNames = [];
 
 perfs = [];
-performerCount =0;
+performerCount = 0;
 
 
 //////////////////////////////////////////
@@ -116,7 +116,7 @@ router.get('/conductor', function(req,res){
 
 router.get('/performer', function(req,res){
 
-      //uncommenting this willmake performer page avail only to auth'd users
+      //uncommenting this will make performer page avail only to auth'd users
 
       // if(req.user) {   
       //   res.render('performer.html', {user: userName});  

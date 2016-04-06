@@ -32,7 +32,6 @@ var performerCount = 0;
 app.io = io;  //second iteration
  
 // if in development mode, load .env variables
-
 // !!!! Declare .env variables AFTER THIS
 
 if (app.get("env") === "development") {
@@ -205,7 +204,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
                   fileArray = [];
                   imageArray = [];
                   videoArray = [];
-
                   audioArray = [];
                   audioNames = [];
                   
@@ -298,21 +296,10 @@ passport.use(new LocalStrategy(Account.authenticate()));
               console.log('gimmePerfCount = ' + performerCount);            
             });
 
-
-            // socket.on('perfSub', function(data) {
-            //   console.log("Received: new performer " + userName);     
-            //   performerCount = performerCount - 1;              
-
-            //   console.log( chalk.red(userName) + ' disconnected from ' + page);
-            //   console.log('perfCount = ' + performerCount);
-            // });
-
             socket.on('disconnect', function() {
-              // if (page =='performer'){
-              // performerCount = performerCount - 1;
-            // }              
+                      
               console.log( chalk.red(userName) + ' disconnected from ' + page);
-              // console.log('perfCount = ' + performerCount);
+             
             });
 
 

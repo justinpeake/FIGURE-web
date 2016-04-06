@@ -14,17 +14,12 @@
 
 
 		<script>  var socket = io(); </script> 
-
-					
+				
 				<script type="text/javascript">
-
 							socket.on('connect', function() {
 								socket.emit('gimmePerfCount');  // no server listener for this yet
 								console.log("Performer in the house.");
 							});
-
-
-
 
 				</script>	
 
@@ -54,7 +49,6 @@
 	<script type="text/javascript">
 					
 			socket.on('switch', function (data){
-
 				
 				document.getElementById("everythingPerformer").style.display = "none";
 				document.getElementById("everythingConductor").style.display= "block";
@@ -64,8 +58,6 @@
 				console.log("got tha switch " + data);
 
 				};
-
-
 			});
 
 	</script>
