@@ -45,11 +45,11 @@
 
  <div id="everythingConductor">
 
- 	<!-- <div id="switcher"> SWITCH </div> <p> -->
+			<div class="sidebar" align="center"> 
 
-			<div class="sidebar"> You are the CONDUCTOR, {{user}}.  
-				<p>
-
+				<< {{user}} >>  
+				
+				<!-- simple nav -->
 				<nav>
 					<div class="navButton" id="compose">  COMPOSE </div>
 				    <div class="navButton" id="perform">  PERFORM </div>
@@ -60,7 +60,6 @@
 				<p>
 
 				<!-- PERFORMER channel update -->	
-
 				<input type="number" id="myNumber" value="0">
 				<p>
 				<button onclick="updatePerfCount()">Update Channel Count </button>
@@ -68,22 +67,21 @@
 				You are Sending To:
 				<div id="sendingTo">  </div>
 
-				<!-- <p id="demo"> </p> -->
-			
 			</div>
 
 
-			<div id="main">
+	<div id="main" align="center">
 
-
+			<!-- holds performer buttons -->
 			<div id="performer-container">
 				<p>
 				<div id="switcher"> SWITCH </div> <p>
 				<p>
-			</div>
+			 </div>
+			
 			
 
-				  <p> Images <p>
+				<p> Images <p>
 
              	{{#images}}                              		
              	<div class="figuresB">                 
@@ -107,7 +105,9 @@
               	<div class="audionames" title={{.}} style.visibility="hidden">  </div>
               	{{/audionames}}
 
-    		</div>
+
+
+    </div>
 
 	
 	
