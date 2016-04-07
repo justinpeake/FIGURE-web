@@ -1,184 +1,190 @@
-					body {
-						background-color: #FFF;
-						padding-top: 20px;
-						padding-left: 20px;
-					}
+		body {
+			background-color: #FFF;
+			padding-top: 20px;
+			padding-left: 20px;
+			}
 
 
-					#perfDialogue {
-							line-height:50px;
-						    background-color:#FFFFFF;
-						    height:70px;
-						    width:750px;
-						    float:left;
-						    padding-left:0px;
-						    padding-right:5px;
-						}
+		#perfDialogue {
+				line-height:50px;
+			    background-color:#FFFFFF;
+			    height:70px;
+			    width:50px;
+			    float:left;
+			    padding-left:0px;
+			    padding-right:0px;
+				}
 
-					#perfsBox {
-						width: 400px;
-						height: 200px;	
-						font-size: 45px;
-						padding-top: 6px;
-						color:FFFFFF;
-						text-align: center;
-						margin: 2px;
-						display:inline;
-						}
+		/*#perfsBox {
+			width: 400px;
+			height: 200px;	
+			font-size: 45px;
+			padding-top: 6px;
+			color:FFFFFF;
+			text-align: center;
+			margin: 2px;
+			display:inline;
+			}*/
 
-					#switcher {
-						width:140;
-						height:50;
-						border-radius: 40px;
-						background-color: 666666;
-						color: FFFFFF;
-						font-size: 25px;
-						text-align: center;
-						line-height: 50px;
-						display: inline-block;
-						margin: 2px;
-						}
+		#switcher {
+			width:140;
+			height:50;
+			border-radius: 40px;
+			background-color: 666666;
+			color: FFFFFF;
+			font-size: 25px;
+			text-align: center;
+			line-height: 50px;
+			display: inline-block;
+			margin: 2px;
+			}
 
-					.performerDiv {
-						width:50;
-						height:50;
-						border-radius: 50px;
-						background-color: 666666;
-						color: FFFFFF;
-						font-size: 25px;
-						text-align: center;
-						line-height: 50px;
-						display: inline-block;
-						margin: 2px;
-						}
+		#performer-container{
+			height:relative;
+			width:750px;
+			display: block;
+			padding-bottom: 25px;
 
-						.performerDivB {
-						width:50;
-						height:50;
-						border-radius: 50px;
-						background-color: 666666;
-						color: FFFFFF;
-						font-size: 25px;
-						text-align: center;
-						line-height: 50px;
-						display: inline-block;
-						margin: 2px;
-						}
+			}
+
+		.performerDiv {
+			width:50;
+			height:50;
+			border-radius: 50px;
+			background-color: 666666;
+			color: FFFFFF;
+			font-size: 25px;
+			text-align: center;
+			line-height: 50px;
+			display: inline-block;
+			margin: 2px;
+			}
+
+		.performerDivB {
+			width:50;
+			height:50;
+			border-radius: 50px;
+			background-color: 666666;
+			color: FFFFFF;
+			font-size: 25px;
+			text-align: center;
+			line-height: 50px;
+			display: inline-block;
+			margin: 2px;
+			}
+
+		#main{
+        	width: 740px;
+        	float: right;
+        	/*position: relative;*/
+			display: inline;
+        	padding-top: 0px;
+    	    padding-bottom: 0px;
+    
+  		  	} 
+
+  		#youAre{
+  		  	width: 50;	
+        	font-size: 100;
+        	padding-left: 20px;
+        	padding-right: 20px;
+        	padding-top: 20px;
+        	text-align: left;
+    
+  		  	} 
+
+  		#sendingTo{
+  		  	width: 50;	
+        	font-size: 60;
+        	text-align: center;
+    
+  		  	} 
+
+		.figures{
+        	width: 740px;
+        	float: left;
+          	position: relative;
+			display: inline;
+        	padding-top: 0px;
+    	    padding-bottom: 0px;
+    
+  		  	} 
+
+  		.figuresB{
+        	width: 740px;
+        	/*float: left;*/
+        	position: relative;
+			display: inline;
+
+        	padding-top: 0px;
+    	    padding-bottom: 0px;
+    
+  		  	} 
+         		          
+  		.imageFig{
+  			display: inline;
+  			float:left;
+  			height:70px;
+			width:750px;
+
+ 		  	} 
+
+		.imageText{
+			position:absolute;
+			z-index: 1000;
+			/*display:inline;*/
+			left:0;
+			right: 0;
+			bottom: 30px;
+			text-align: center;	
+			font-size: 30;					
+ 		  	} 
+						
+        .sidebar{
+            width: 300px;
+            height: 70px;
+            float:left;
+      	 }
+
+        .navButton{
+            width:160;
+            height:40;
+            border-radius: 40px;
+            background-color: 666666;
+            color: FFFFFF;
+            font-size: 20px;
+            text-align: center;
+            line-height:40px;
+            display: block;
+            margin: 2px;
+       		 }
+
+        .audio{
+
+        	width:200;
+            height:40;
+            border-radius: 40px;
+            background-color: 666666;
+            color: FFFFFF;
+            font-size: 20px;
+            text-align: center;
+            line-height:40px;
+            display: block;
+            margin: 2px;
+
+            }
+   
+        .figuresBox{
+            width: 740px;
+            float: left;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        
+        	} 
+
+    	#bpm { 
+			float: left;
+			}
 
 
-
-
-					
-					#main{
-                    	width: 740px;
-                    	float: right;
-                    	/*position: relative;*/
-						display: inline;
-                    	padding-top: 0px;
-                	    padding-bottom: 0px;
-                
-              		  	} 
-
-              		  	#youAre{
-              		  	width: 50;	
-                    	font-size: 60;
-                    	text-align: center;
-                
-              		  	} 
-
-              		  	#sendingTo{
-              		  	width: 50;	
-                    	font-size: 60;
-                    	text-align: center;
-                
-              		  	} 
-
-
-					.figures{
-                    	width: 740px;
-                    	float: left;
-                    	position: relative;
-						display: inline;
-
-                    	padding-top: 0px;
-                	    padding-bottom: 0px;
-                
-              		  	} 
-
-              		  	.figuresB{
-                    	width: 740px;
-                    	/*float: left;*/
-                    	position: relative;
-						display: inline;
-
-                    	padding-top: 0px;
-                	    padding-bottom: 0px;
-                
-              		  	} 
-		             
-		          
-              		 .imageF{
-															
-             		  	} 
-
-					  .imageText{
-						position:absolute;
-						z-index: 1000;
-						/*display:inline;*/
-						left:0;
-						right: 0;
-						bottom: 30px;
-						text-align: center;	
-						font-size: 30;					
-             		  	} 
-									
-
-	                .sidebar{
-	                    width: 300px;
-	                    height: 70px;
-	                    float:left;
-	              	 }
-
-		            .navButton{
-                        width:160;
-                        height:40;
-                        border-radius: 40px;
-                        background-color: 666666;
-                        color: FFFFFF;
-                        font-size: 20px;
-                        text-align: center;
-                        line-height:40px;
-                        display: block;
-                        margin: 2px;
-                    }
-
-                    .audio{
-
-                    	width:200;
-                        height:40;
-                        border-radius: 40px;
-                        background-color: 666666;
-                        color: FFFFFF;
-                        font-size: 20px;
-                        text-align: center;
-                        line-height:40px;
-                        display: block;
-                        margin: 2px;
-
-                    }
-
-               
-	                .figuresBox{
-	                    width: 740px;
-	                    float: left;
-	                    padding-top: 5px;
-	                    padding-bottom: 5px;
-	                
-	                	} 
-
-	                	#bpm { 
-							float: left;
-						}
-
-
-	                	
+        	
