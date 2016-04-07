@@ -166,92 +166,82 @@
 				var perfCount;
 				var perfs = [];
 
+				var oldID; // used to switch button activation in doTheThing()
 
+
+				// when conductor creates perf buttons, handle this 
 				socket.on('perfCount', function (data) {	
 
 					perfCount= data;
-					//console.log("toWhom = " + toWhom);
 
 					$('.performerDivB').remove();
 						perfs = [];
 
-	    			for(i=0; i < perfCount ; i++){
-				    	perfs[i] = document.createElement('div');
-				    	perfs[i].className = 'performerDivB';
-				    	perfs[i].id = 'cp' + (i+1);
-				    	perfs[i].innerHTML = i + 1;
-				    	document.getElementById('performer-container').appendChild(perfs[i]);
-				    };
+		    			for(i=0; i < perfCount ; i++){
+					    	perfs[i] = document.createElement('div');
+					    	perfs[i].className = 'performerDivB';
+					    	perfs[i].id = 'cp' + (i+1);
+					    	perfs[i].innerHTML = i + 1;
+					    	document.getElementById('performer-container').appendChild(perfs[i]);
+					    };
 
-					//console.log(perfs);
-					//console.log(perfCount);
-
-					for (var i = 0; i < perfCount; i++){
-	    				$('#cp' + (i+1)).click(doTheThing(i));
-	    			};	
+						for (var i = 0; i < perfCount; i++){
+		    				$('#cp' + (i+1)).click(doTheThing(i));
+		    			};	
 				});
 
+				// when performer logs on, handle this 
 				socket.on('givenPerfCount', function (data) {		
 
 					perfCount= data;
-					//console.log("toWhom = " + toWhom);
+					
 
 					$('.performerDivB').remove();
 						perfs = [];
 
-	    			for(i=0; i < perfCount ; i++){
-				    	perfs[i] = document.createElement('div');
-				    	perfs[i].className = 'performerDivB';
-				    	perfs[i].id = 'cp' + (i+1);
-				    	perfs[i].innerHTML = i + 1;
-				    	document.getElementById('performer-container').appendChild(perfs[i]);
-				    };
-					// console.log(perfs);
-					// console.log(perfCount);
-					for (var i = 0; i < perfCount; i++){
-	    				$('#cp' + (i+1)).click(doTheThing(i));
-	    			};	
+		    			for(i=0; i < perfCount ; i++){
+					    	perfs[i] = document.createElement('div');
+					    	perfs[i].className = 'performerDivB';
+					    	perfs[i].id = 'cp' + (i+1);
+					    	perfs[i].innerHTML = i + 1;
+					    	document.getElementById('performer-container').appendChild(perfs[i]);
+					    };
+					
+						for (var i = 0; i < perfCount; i++){
+		    				$('#cp' + (i+1)).click(doTheThing(i));
+		    			};	
 				});
 
 
-
+				//the function both of ^ are calling
 					function doTheThing(index) {
 
 			    	return function(){ 
 
+			    		 // resetting previous performer button to init values
+			    		 $(oldID).fadeTo("fast", 1); 
+				    	 $(oldID).css('color', 'white');
+
+				    	 console.log('reset' + oldID);
+
 			    		var num = index + 1;
 			    		var perfID = "#cp" + (num);
-					 			
-			 			// if (perfs[index].id == 'cp'+ num){
 
-			 				myId = num;
-			 				document.getElementById('youAre').innerHTML = myId;
-			 				console.log("I am Performer " + myId);
+					 			
+			 			myId = num;
+			 			console.log("I am Performer " + myId);
+
+			 			 // setting current perf. button to 'active' values
 
 			 			 $(perfID).fadeTo("fast", 0.5); 
 				    	 $(perfID).css('color', 'red');
 
-			 			// }
+				    	 // sets 'oldID' to the current ID so that upon change, button gets reset visually
+				    	 oldID = perfID;
 
+			 			};  //end return function
 
-			 			// if (perfs[index].id != 'cp'+ num){
-
-			 			 // $(perfID).fadeTo("fast", 1); 
-				    // 	 $(perfID).css('color', 'white');
-
-			 			// }
-
-			 			// exclusive button (only one at a time)  THIS FLASHES THE BUTTON
-			 			for (i = 0; i < perfCount; i++){	
-			 					$(perfID).fadeTo("fast", 1); 
-			 					$(perfID).css('color', 'white')
-
-			 					//console.log(perfs[i].id);
-			 				};
-
-			 			};
-
-			 		};
+			 		};  // end doTheThing
 
 
 
