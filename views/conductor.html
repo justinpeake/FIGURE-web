@@ -77,33 +77,31 @@
 				<p>
 				<div id="switcher"> SWITCH </div> <p>
 				<p>
-			 </div>
-			
-			
+			 </div>		
 
-				<p> Images <p>
+			<p> Images <p>
 
-             	{{#images}}                              		
-             	<div class="figuresB">                 
-                  <img src={{.}} class="imageF " width="100px" height="100px">  </img>
-                  <span class="imageText">  </span>   
-                </div>
-                {{/images}}
-              
-         
-              	<p> Videos <p>
-              	{{#videos}}
-              	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
-              	{{/videos}}
+         	{{#images}}                              		
+         	<div class="figuresB">                 
+              <img src={{.}} class="imageF " width="100px" height="100px">  </img>
+              <span class="imageText">  </span>   
+            </div>
+            {{/images}}
+          
+     
+          	<p> Videos <p>
+          	{{#videos}}
+          	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
+          	{{/videos}}
 
-              	<p> Waveforms <p>
-              	{{#audio}}
-              	<div class="audio" title={{.}}>  </div>
-              	{{/audio}}
+          	<p> Waveforms <p>
+          	{{#audio}}
+          	<div class="audio" title={{.}}>  </div>
+          	{{/audio}}
 
-              	{{#audionames}}
-              	<div class="audionames" title={{.}} style.visibility="hidden">  </div>
-              	{{/audionames}}
+          	{{#audionames}}
+          	<div class="audionames" title={{.}} style.visibility="hidden">  </div>
+          	{{/audionames}}
 
 
 
@@ -124,6 +122,9 @@
 				var toAll = 0;
 				var divs = [];
 
+				var member = 0;
+				var group = [];
+					
 				//from line 154
 				var perfs = [];   
 				var pX;
@@ -141,19 +142,19 @@
 			        $(location).attr('href', '/conductor') ;   
 			    });
 
-			    //SWITCHER (from line 336)
-				$(switcher).click(function(){
+				    //SWITCHER (from line 336)
+					$(switcher).click(function(){
 
-					console.log('switch ' + toWhom);
-					socket.emit('switch', toWhom);
+						console.log('switch ' + toWhom);
+						socket.emit('switch', toWhom);
 
-					document.getElementById("everythingPerformer").style.display = "block";
-					document.getElementById("everythingConductor").style.display= "none";
+						document.getElementById("everythingPerformer").style.display = "block";
+						document.getElementById("everythingConductor").style.display= "none";
 
-					//this activates whichever p5 sketch
-					performerSketch();
+						//this activates whichever p5 sketch
+						performerSketch();
 
-				});
+					});
 
 
 
@@ -183,8 +184,8 @@
 					    	document.getElementById('performer-container').appendChild(perfs[i]);
 					    };
 
-						console.log(perfs);
-						console.log(pX);
+						// console.log(perfs);
+						// console.log(pX);
 
 						for (var i = 0; i < pX; i++){
 		    				$('#cp' + (i+1)).click(doTheThing(i));
@@ -193,42 +194,39 @@
 
 				function doTheThing(index) {
 
+
 			    	return function(){ 
 
 			    		var num = index + 1;
 			    		var perfID = "#cp" + (num);
-					 			
+			    			
 					 	document.getElementById('sendingTo').innerHTML = num;
-			 			// if (perfs[index].id == 'cp'+ num){
+			 			
 
 			 			 $(perfID).fadeTo("fast", 0.5); 
 				    	 $(perfID).css('color', 'red');
 
-			 			// }
-
-
-			 			// if (perfs[index].id != 'cp'+ num){
-
-			 			 // $(perfID).fadeTo("fast", 1); 
-				    // 	 $(perfID).css('color', 'white');
-
-			 			// }
-
-			 			// exclusive button (only one at a time)  THIS FLASHES THE BUTTON
-			 			for (i = 0; i < pX; i++){	
-			 					$(perfID).fadeTo("fast", 1); 
-			 					$(perfID).css('color', 'white')
-
-			 					//console.log(perfs[i].id);
-			 				};
 				    	
 				    	toAll = 0;
 			 			toWhom = num;
 
-			 			console.log(num);
+			 			group[member] = toWhom;
+
+			 			member = member + 1;
+
+			 			//need to zero out 'member' when figure is sent
+
+			 			// console.log(num);
+			 			console.log(group);
+			 			//console.log(typeof "group");
 			 					
+
+			 			//may not need this when grouping is done	
+			 			
+			 			socket.emit('toGroup', group);
 			 			socket.emit('sendingTo', toWhom, toAll);
 			 			socket.emit('sendingAll', toAll);
+
 			 			};
 		 			};
 
@@ -253,7 +251,7 @@
 		//assign ids to the text overlay divs
 		for (i = 0; i < imageTxtIds.length; i++) {
 			imageTxtIds[i].id = 'iT'+ i;	
-			console.log(imageTxtIds[i].id);
+			//console.log(imageTxtIds[i].id);
 		};
 	
 		// get the urls of images

@@ -121,6 +121,10 @@
 					var toWhom = 0;
 					var toAll = 0;
 
+					var group = [];
+
+
+
 					// this var exists inside of the p5 instance "waveForm"
 					var trackName = '';
 					
@@ -247,6 +251,11 @@
 
 ///////////////////////////////////////////////////// END DYNAMIC PERF SHIZZ
 
+						socket.on('toGroup', function (data) {							
+							group = data;
+							console.log(group);
+						});
+
 						socket.on('sendingTo', function (data) {							
 							toWhom = data;
 							console.log("toWhom = " + toWhom);
@@ -293,7 +302,7 @@
 
 						socket.on('imageFigure', function (data) {
 
-							if (myId == toWhom || toAll == 1) {
+							if (group.indexOf(myId) > -1 || toAll == 1) {
 
 								//flashes "incoming" image 
 							var flasher = setInterval(function() {flashIncoming()} , 500);

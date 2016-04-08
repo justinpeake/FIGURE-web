@@ -25,7 +25,7 @@ var path = require('path');
 var http = require('http');  
 var chalk = require('chalk'); 
 var userID;
-
+ 
 var performerCount = 0;
 // var perfs = [];
 
@@ -262,6 +262,11 @@ passport.use(new LocalStrategy(Account.authenticate()));
             socket.on('sendingAll', function(data) {
               console.log("Received: 'sendingAll' " + data);
               socket.broadcast.emit('sendingAll', data);
+            });
+
+            socket.on('toGroup', function(data) {
+              console.log("Received: 'toGroup' " + data);
+              socket.broadcast.emit('toGroup', data);
             });
 
               socket.on('videoFigure', function(data) {
