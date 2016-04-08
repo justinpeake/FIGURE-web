@@ -53,7 +53,6 @@ performerCount = 0;
           length: folderLength,
           pcount: performerCount
           });
-
       });
 
 

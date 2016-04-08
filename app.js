@@ -62,6 +62,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
+
 // cookie stuff 
 app.use(require('express-session')({
     secret: 'keyboard cat',
@@ -83,12 +84,19 @@ app.use('/', routes);
 var Account = require('./models/account.js');
 
 passport.use(new LocalStrategy(Account.authenticate()));
+
     passport.serializeUser(function(user, done) {
        done(null, user.id);
        userID = user.id;
+       console.log(userID);
+
     });
-    passport.deserializeUser(function(obj, done) {
-       done(null, obj);
+
+    passport.deserializeUser(function(id, done) {
+      
+
+       done(null, id);
+
     });
 
 
@@ -103,7 +111,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
             var s3 = new aws.S3();
 
             // name the new AWS folder
-            var folder = userName + "/";
+            var folder = userName + "/"; 
 
             var s3_params = {
                 Bucket: S3_BUCKET,
@@ -175,12 +183,14 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
     io.on('connection', function(socket){ //second iteration
 
-      console.log(chalk.red(userName) + ' connected to ' + page);
+                   console.log(chalk.red(userName) + ' connected to ' + page);
 
       
             // When this user emits, client side: socket.emit('otherevent',some data);
 
-            socket.on('gimme', function(){
+            socket.on('gimme', function(){  // added "user to function argument"
+
+             // console.log(chalk.red(userName) + ' connected to ' + page);
 
               //polling aws based on user and listing assets
 

@@ -64,8 +64,9 @@
 				<p>
 				<button onclick="updatePerfCount()">Update Channel Count </button>
 				<p>
-				You are Sending To:
-				<div id="sendingTo">  </div>
+
+				<!-- You are Sending To:
+				<div id="sendingTo">  </div> -->
 
 			</div>
 
@@ -196,7 +197,7 @@
 			    		var num = index + 1;
 			    		var perfID = "#cp" + (num);
 			    			
-					 	document.getElementById('sendingTo').innerHTML = num;			 			
+					 	//document.getElementById('sendingTo').innerHTML = num;			 			
 
 			 			$(perfID).fadeTo("fast", 0.5); 
 				    	$(perfID).css('color', 'red');
@@ -268,13 +269,12 @@
 				member = 0;
 
 				// this clears the button states when an image is sent
-
 				for (i=0; i < perfs.length; i++){
 					$('#cp' + (i+1)).css('color', 'white');
 				};
 
 				for (i=0; i < perfs.length; i++){
-					$('#cp' + (i+1)).css("fast", 1.0);
+					$('#cp' + (i+1)).fadeTo("fast", 1.0);
 				};
 
 			};
