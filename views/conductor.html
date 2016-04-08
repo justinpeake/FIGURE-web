@@ -184,9 +184,6 @@
 					    	document.getElementById('performer-container').appendChild(perfs[i]);
 					    };
 
-						// console.log(perfs);
-						// console.log(pX);
-
 						for (var i = 0; i < pX; i++){
 		    				$('#cp' + (i+1)).click(doTheThing(i));
 		    			};	
@@ -194,18 +191,15 @@
 
 				function doTheThing(index) {
 
-
 			    	return function(){ 
 
 			    		var num = index + 1;
 			    		var perfID = "#cp" + (num);
 			    			
-					 	document.getElementById('sendingTo').innerHTML = num;
-			 			
+					 	document.getElementById('sendingTo').innerHTML = num;			 			
 
-			 			 $(perfID).fadeTo("fast", 0.5); 
-				    	 $(perfID).css('color', 'red');
-
+			 			$(perfID).fadeTo("fast", 0.5); 
+				    	$(perfID).css('color', 'red');
 				    	
 				    	toAll = 0;
 			 			toWhom = num;
@@ -215,14 +209,9 @@
 			 			member = member + 1;
 
 			 			//need to zero out 'member' when figure is sent
-
-			 			// console.log(num);
 			 			console.log(group);
-			 			//console.log(typeof "group");
-			 					
-
-			 			//may not need this when grouping is done	
 			 			
+			 			//may not need this when grouping is done	
 			 			socket.emit('toGroup', group);
 			 			socket.emit('sendingTo', toWhom, toAll);
 			 			socket.emit('sendingAll', toAll);
@@ -273,6 +262,21 @@
 				var image = "#iF" + index; 
 				$(image).fadeTo("slow", 0.5);				
 				socket.emit('imageFigure', imageSrcs[index]);
+				
+				// this clears the group when an image is sent
+				group = [];
+				member = 0;
+
+				// this clears the button states when an image is sent
+
+				for (i=0; i < perfs.length; i++){
+					$('#cp' + (i+1)).css('color', 'white');
+				};
+
+				for (i=0; i < perfs.length; i++){
+					$('#cp' + (i+1)).css("fast", 1.0);
+				};
+
 			};
 		};	
 
