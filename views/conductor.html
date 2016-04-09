@@ -125,7 +125,8 @@
 
 				var member = 0;
 				var group = [];
-				var whoWhat = [];
+				//var whoWhat = [];
+				var whoWhat = {};
 					
 				//from line 154
 				var perfs = [];   
@@ -171,29 +172,41 @@
 		
 		function updatePerfCount() {
 
-		pX = document.getElementById("myNumber").value;
+			pX = document.getElementById("myNumber").value;
 
-		socket.emit('perfCount', pX);
+				socket.emit('perfCount', pX);
 
-	  			$('.performerDivB').remove();
-	  			perfs = [];
+						//makes the circular buttons
+			  			$('.performerDivB').remove();
+			  			perfs = [];
 
-		    		for(i=0; i < pX ; i++){
-					    	perfs[i] = document.createElement('div');
-					    	perfs[i].className = 'performerDivB';
-					    	perfs[i].id = 'cp' + (i+1);
-					    	perfs[i].innerHTML = i + 1;
-					    	document.getElementById('performer-container').appendChild(perfs[i]);
-					    	whoWhat[i] = ' ';
-					    };
+				    		for(i=0; i < pX; i++){
+							    	perfs[i] = document.createElement('div');
+							    	perfs[i].className = 'performerDivB';
+							    	perfs[i].id = 'cp' + (i+1);
+							    	perfs[i].innerHTML = i + 1;
+							    	document.getElementById('performer-container').appendChild(perfs[i]);
+							    };
+
+							    //attaching the listener for click
+								for (var i = 0; i < pX; i++){
+				    				$('#cp' + (i+1)).click(doTheThing(i));
+				    			};
+
+				    			// right now filling object for cross check
+
+				    			for (i = 0; i < pX; i++){
+
+									var playerNum = i;
+
+									whoWhat['player' + playerNum] = ' ';
+								};
+
+									//console.log(whoWhat);	
+							};
 
 
-
-						for (var i = 0; i < pX; i++){
-		    				$('#cp' + (i+1)).click(doTheThing(i));
-		    			};	
-					};
-
+				// function than runs when clicked
 				function doTheThing(index) {
 
 			    	return function(){ 
@@ -214,7 +227,7 @@
 			 			member = member + 1;
 
 			 			//need to zero out 'member' when figure is sent
-			 			console.log(group);
+			 			// console.log(group);
 			 			
 			 			//may not need this when grouping is done	
 			 			socket.emit('toGroup', group);
@@ -258,6 +271,7 @@
 			$("#iF" + i).click(fadeTheFadeI(i));
 		};
 
+
 		
 		//add the urls to the button
 
@@ -271,33 +285,19 @@
 				$(image).fadeTo("slow", 0.5);				
 				socket.emit('imageFigure', imageSrcs[index]);
 
-				// for(i = 0; i< group.length; i++){
-				// 	console.log(group[i]);
-				// }
+				for(i=0; i<group.length; i++){
+					var who = group[i];
+					whoWhat['player' + who] = 'iT' + index;					
+				};
+
+				console.log(whoWhat);
+
 
 				// display who is playing figure
-				document.getElementById('iT' + index).innerHTML = group;
-
-				for (i=0; i<perfs.length; i++){
-
-					whoWhat[group[i]] =	'iT' + index;	
-				};
-
-				// for (var i = 0; i < whoWhat.length; i++){
-				// 	if (whoWhat[i]) === 'iT' + index;
-				// }
+				var overlay = group.toString();
+				document.getElementById('iT' + index).innerHTML = overlay;
 
 
-
-					console.log(whoWhat);	
-
-				for (i=0; i < whoWhat.length; i++){
-					
-					//console.log(whoWhat[i]);
-				
-				};
-				
-				
 				// this clears the group when an image is sent
 				group = [];
 				member = 0;
@@ -309,9 +309,7 @@
 
 				for (i=0; i < perfs.length; i++){
 					$('#cp' + (i+1)).fadeTo("fast", 1.0);
-				};
-
-		
+				};	
 
 			};
 		};	
