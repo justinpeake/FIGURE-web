@@ -24,6 +24,7 @@ var aws = require('aws-sdk');
 var path = require('path');
 var http = require('http');  
 var chalk = require('chalk'); 
+
 var userID;
  
 var performerCount = 0;
@@ -51,7 +52,6 @@ var S3_BUCKET = process.env.S3_BUCKET;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.set('layout','layout');
-
 app.engine('html', require('hogan-express'));;
 
 // uncomment after placing your favicon in /public
@@ -87,14 +87,13 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
     passport.serializeUser(function(user, done) {
        done(null, user.id);
-       userID = user.id;
+       userID = user.username;
        console.log(userID);
 
     });
 
     passport.deserializeUser(function(id, done) {
       
-
        done(null, id);
 
     });
@@ -111,7 +110,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
             var s3 = new aws.S3();
 
             // name the new AWS folder
-            var folder = userName + "/"; 
+            var folder = userID + "/";  // changed from userName
 
             var s3_params = {
                 Bucket: S3_BUCKET,
@@ -183,7 +182,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
     io.on('connection', function(socket){ //second iteration
 
-                   console.log(chalk.red(userName) + ' connected to ' + page);
+                   console.log(chalk.red(userID) + ' connected to ' + page);
 
       
             // When this user emits, client side: socket.emit('otherevent',some data);
@@ -197,7 +196,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
               aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
               var s3 = new aws.S3();
               // name the new AWS folder
-              var folder = userName + "/";
+              var folder = userID + "/";
               var s3_params = {
                   Bucket: S3_BUCKET,  
 
@@ -313,7 +312,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
             socket.on('disconnect', function() {
                       
-              console.log( chalk.red(userName) + ' disconnected from ' + page);
+              console.log( chalk.red(userID) + ' disconnected from ' + page);
              
             });
 

@@ -125,6 +125,7 @@
 
 				var member = 0;
 				var group = [];
+				var whoWhat = [];
 					
 				//from line 154
 				var perfs = [];   
@@ -183,7 +184,10 @@
 					    	perfs[i].id = 'cp' + (i+1);
 					    	perfs[i].innerHTML = i + 1;
 					    	document.getElementById('performer-container').appendChild(perfs[i]);
+					    	whoWhat[i] = ' ';
 					    };
+
+
 
 						for (var i = 0; i < pX; i++){
 		    				$('#cp' + (i+1)).click(doTheThing(i));
@@ -258,11 +262,41 @@
 		//add the urls to the button
 
 		function fadeTheFadeI(index){
+			
+			console.log('hello?');
+			//debugger
 
 			return function(){
 				var image = "#iF" + index; 
 				$(image).fadeTo("slow", 0.5);				
 				socket.emit('imageFigure', imageSrcs[index]);
+
+				// for(i = 0; i< group.length; i++){
+				// 	console.log(group[i]);
+				// }
+
+				// display who is playing figure
+				document.getElementById('iT' + index).innerHTML = group;
+
+				for (i=0; i<perfs.length; i++){
+
+					whoWhat[group[i]] =	'iT' + index;	
+				};
+
+				// for (var i = 0; i < whoWhat.length; i++){
+				// 	if (whoWhat[i]) === 'iT' + index;
+				// }
+
+
+
+					console.log(whoWhat);	
+
+				for (i=0; i < whoWhat.length; i++){
+					
+					//console.log(whoWhat[i]);
+				
+				};
+				
 				
 				// this clears the group when an image is sent
 				group = [];
@@ -276,6 +310,8 @@
 				for (i=0; i < perfs.length; i++){
 					$('#cp' + (i+1)).fadeTo("fast", 1.0);
 				};
+
+		
 
 			};
 		};	
@@ -376,7 +412,12 @@
 			 //    });
 					 
 
-			// END CONDUCTOR SCRIPT
+
+
+
+
+
+			////////////////// END CONDUCTOR SCRIPT
 		
 
 			</script>

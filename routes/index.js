@@ -9,7 +9,7 @@ var Account = require('../models/account.js');
 
 var chalk = require('chalk');
 
-userName = '';  //declared globally to go to app.js
+//userName = '';  //declared globally to go to app.js
 page = '';
 
 fileList = '';

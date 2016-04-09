@@ -1,6 +1,6 @@
 
-group = [3, 17, 45, 9];
+group = [3, 17, 45, 9, 45];
 
-console.log(group.indexOf(9));
+console.log(group.indexOf(45));
 
-console.log(group.indexOf(myId));
+//console.log(group.indexOf(myId));
