@@ -196,13 +196,11 @@
 				    			// right now filling object for cross check
 
 				    			for (i = 0; i < pX; i++){
-
-									var playerNum = i;
-
-									whoWhat['player' + playerNum] = ' ';
+									var playerNum = i+1; // this keeps player #'s straight
+									whoWhat['player'+ playerNum] = ' ';
 								};
 
-									//console.log(whoWhat);	
+									console.log(whoWhat);	
 							};
 
 
@@ -271,13 +269,12 @@
 			$("#iF" + i).click(fadeTheFadeI(i));
 		};
 
-
 		
 		//add the urls to the button
 
 		function fadeTheFadeI(index){
 			
-			console.log('hello?');
+			//console.log('hello?');
 			//debugger
 
 			return function(){
@@ -285,17 +282,37 @@
 				$(image).fadeTo("slow", 0.5);				
 				socket.emit('imageFigure', imageSrcs[index]);
 
-				for(i=0; i<group.length; i++){
-					var who = group[i];
-					whoWhat['player' + who] = 'iT' + index;					
-				};
-
-				console.log(whoWhat);
-
+				
 
 				// display who is playing figure
 				var overlay = group.toString();
 				document.getElementById('iT' + index).innerHTML = overlay;
+
+
+
+			/*	get the performers in new array
+
+				
+	
+				check what their current figures are
+					
+					
+				
+				return the innerhtml of those figure overlays
+
+					
+
+				replace that value in the string with ' '
+					
+					
+
+				trim the string
+
+					
+
+
+				put it back in the overlay  */
+
 
 
 				// this clears the group when an image is sent
