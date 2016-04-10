@@ -274,7 +274,7 @@
 
 		function fadeTheFadeI(index){
 			
-			//console.log('hello?');
+			console.log('hello?');
 			//debugger
 
 			return function(){
@@ -283,35 +283,67 @@
 				socket.emit('imageFigure', imageSrcs[index]);
 
 				
+				
 
 				// display who is playing figure
-				var overlay = group.toString();
-				document.getElementById('iT' + index).innerHTML = overlay;
+				//var overlay = group.toString();
 
 
+				//  KAT KAT KAT KAT KAT KAT KILLED THIS
 
-			/*	get the performers in new array
+			for(i=0; i < group.length; i++){
+				 whoWhat['player' + group[i]] = 'iT' + index;
+				};
+
+				console.log(whoWhat);
+
+
+			for (i=0; i < imageIds.length; i++){
+				document.getElementById('iT' + i).innerHTML = ' ';
+				}
+		
+
+			for (i=0; i < Object.keys(whoWhat).length; i++){
+
+				console.log(whoWhat['player' + (i+1)]);
+				 
+				 if (whoWhat['player' + (i+1)] !== " "){
+			 		console.log(document.getElementById(whoWhat['player' + (i+1)]).innerHTML);
+			 	
+			 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
+
+			 		};
+
+
+			 };
+
+				//get the performers in new array
+
+			// for (i=0; i < group.length; i++){
+			// 		var who = group[i];
+
+			// }
 
 				
 	
-				check what their current figures are
+				//check what their current figures are
 					
 					
 				
-				return the innerhtml of those figure overlays
+				// return the innerhtml of those figure overlays
 
 					
 
-				replace that value in the string with ' '
+				// replace that value in the string with ' '
 					
 					
 
-				trim the string
+				// trim the string
 
 					
 
 
-				put it back in the overlay  */
+				// put it back in the overlay  
 
 
 

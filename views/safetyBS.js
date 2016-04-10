@@ -7,15 +7,15 @@
 					
 
 								console.log(whoWhat['player' + who]);
-								console.log(typeof(whoWhat['player' + who]));
+								//console.log(typeof(whoWhat['player' + who]));
 
-							if (typeof(whoWhat['player' + who])=='null'){
-								console.log('its null yo');
+							// if (typeof(whoWhat['player' + who])=='null'){
+							// 	console.log('its null yo');
 								
-							 var overlay = group.toString();
-							 document.getElementById('iT' + index).innerHTML = overlay; 
+							//  var overlay = group.toString();
+							//  document.getElementById('iT' + index).innerHTML = overlay; 
 
-							}
+							// }
 							// 	whoWhat['player' + who] = 'iT' + index;		
 
 							// var newWho = whoWhat['player' + who];
