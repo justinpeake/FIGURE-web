@@ -74,8 +74,8 @@
 			}
 
 		#main{
-        	width: relative;
-        	/*float: right;*/
+        	width: 700px;
+        	float: right;
         	/*position: absolute;*/
 			display: block;
         	padding-top: 0px;

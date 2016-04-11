@@ -166,10 +166,14 @@ router.post('/register', function(req, res) {
 
  router.post('/submit_form', function(req, res){
 
+    
+
     var figureName = req.body.figurename;    // pull out the information from the req.body
     var keySig = req.body.keysig;
     var owner = req.user;
     //var keySig = req.body.keysig;
+
+   
 
     var figureObj = {                        // hold all this data in an object
       figureName: figureName,                // this object should be structured the same way as your db model
