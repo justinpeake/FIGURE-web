@@ -167,6 +167,10 @@
 
 					toAll = 1;
 
+					$(all).fadeTo("fast", 0.5); 
+				    $(all).css('color', 'red');
+
+
 					console.log('sendingAll ' + toAll);
 					socket.emit('sendingAll', toAll);
 
@@ -179,7 +183,7 @@
 
 		//  taking the number of performer channels input by conductor
 		//  sending the perfcount to all of the performers as a global var pX
-		//  adding event listeners for clikc functionality
+		//  adding event listeners for click functionality
 		
 		function updatePerfCount() {
 
@@ -319,7 +323,7 @@
 			 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
 
 			 		};
-			 };
+			 	};
 
 				// this clears the group when an image is sent
 				group = [];
@@ -332,7 +336,11 @@
 
 				for (i=0; i < perfs.length; i++){
 					$('#cp' + (i+1)).fadeTo("fast", 1.0);
-				};	
+				};
+
+				$(all).css('color', 'white');
+			  	$(all).fadeTo("fast", 1.0);
+
 			  };
 			};	// end fade the fade
 
