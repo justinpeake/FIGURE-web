@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
-var socket_io = require('socket.io');   // second iteracton socket try
+var socket_io = require('socket.io');   // second iteracton socket try 
 var app = express();  // first iteration socket try
 var io = socket_io();   // second iteration
 
@@ -82,6 +82,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 var Account = require('./models/account.js');
+
+
+
+// maybe need to send some of these through client to avoid global
 
 passport.use(new LocalStrategy(Account.authenticate()));
 
@@ -188,8 +192,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
             // When this user emits, client side: socket.emit('otherevent',some data);
 
             socket.on('gimme', function(){  // added "user to function argument"
-
-             // console.log(chalk.red(userName) + ' connected to ' + page);
 
               //polling aws based on user and listing assets
 

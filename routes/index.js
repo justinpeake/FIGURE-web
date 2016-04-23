@@ -9,7 +9,6 @@ var Account = require('../models/account.js');
 
 var chalk = require('chalk');
 
-//userName = '';  //declared globally to go to app.js
 page = '';
 
 fileList = '';
@@ -37,14 +36,13 @@ performerCount = 0;
 
     //PASSPORT SHIZ  
 
-    router.post('/login', passport.authenticate('local'), function(req, res) {
+    router.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
 
        //declared globally
        userName = req.user.username;
 
        console.log(chalk.white(req.user.username) + " logged in");
        res.render("dashboard.html", {
-
           user: userName, 
           images: imageArray, 
           videos: videoArray, 
@@ -65,10 +63,14 @@ performerCount = 0;
         res.render('register.html', {});
       });
 
-
     router.get('/login', function(req, res) {
       page = 'login'; 
         res.render('login.html', { });
+      });
+
+    router.get('/about', function(req, res) {
+      page = 'about'; 
+        res.render('about.html', { });
       });
 
     // router.get('/ping', function(req, res){
@@ -181,11 +183,9 @@ router.post('/register', function(req, res) {
       owner: owner
       };
      
-    var figure = new Figure(figureObj);     // create a new figre model instance, passing in the object
+    var figure = new Figure(figureObj);     // create a new figure model instance, passing in the object
 
     figure.save(function(err,data){         // now, save that instance to the database    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save   
-
-     
          
           if (err){                         // if err saving, respond back with error
 

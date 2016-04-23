@@ -53,24 +53,34 @@
 			<div class="navButton" id="compose">  COMPOSE </div>
 		    <div class="navButton" id="perform">  PERFORM </div>
 		    <div class="navButton" id="conduct">  CONDUCT </div>
+            <p>
+            <div class="navButton" id="about">  ABOUT </div>
 		</nav>
 
 
 	</div>	
 
+
+
 	<script type="text/javascript">
-                      
-    $(compose).click(function(){
-		$(location).attr('href', '/compose') ;   
-	});
 
-	$(perform).click(function(){
-		$(location).attr('href', '/performer') ;   
-	});
+        // nav handlers
+                          
+        $(compose).click(function(){
+    		$(location).attr('href', '/compose') ;   
+    	});
 
-	$(conduct).click(function(){
-		$(location).attr('href', '/conductor') ;   
-	});
+    	$(perform).click(function(){
+    		$(location).attr('href', '/performer') ;   
+    	});
+
+    	$(conduct).click(function(){
+    		$(location).attr('href', '/conductor') ;   
+    	});
+
+        $(about).click(function(){
+            $(location).attr('href', '/about') ;   
+        });
 
     </script> 
 

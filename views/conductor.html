@@ -47,7 +47,7 @@
 
 			<div class="sidebar" align="center"> 
 
-				<< {{user}} >>  
+				 {{user}} 
 				
 				<!-- simple nav -->
 				<nav>
@@ -77,9 +77,11 @@
 			<div id="performer-container">
 				
 				<p>
-				<div id="switcher"> SWITCH </div> <p>
+				<div id="all"> ALL </div>	
+				<div id="switcher"> SWITCH </div> 
 				<p>
-			 </div>	
+			
+			</div>	
 
 
 			<p> Images <p>
@@ -116,7 +118,6 @@
 
 
 
-
 //////////////////////////////////////////////// BEGIN CONDUCTOR SCRIPT //
 
 
@@ -147,19 +148,30 @@
 			        $(location).attr('href', '/conductor') ;   
 			    });
 
-				    //SWITCHER (from line 336)
-					$(switcher).click(function(){
 
-						console.log('switch ' + toWhom);
-						socket.emit('switch', toWhom);
+			    //SWITCHER 
+				$(switcher).click(function(){
 
-						document.getElementById("everythingPerformer").style.display = "block";
-						document.getElementById("everythingConductor").style.display= "none";
+					console.log('switch ' + toWhom);
+					socket.emit('switch', toWhom);
 
-						//this activates whichever p5 sketch
-						performerSketch();
+					document.getElementById("everythingPerformer").style.display = "block";
+					document.getElementById("everythingConductor").style.display= "none";
 
-					});
+					//this activates whichever p5 sketch
+					performerSketch();
+
+				});
+
+				$(all).click(function(){
+
+					toAll = 1;
+
+					console.log('sendingAll ' + toAll);
+					socket.emit('sendingAll', toAll);
+
+				});
+
 
 
 
@@ -168,9 +180,6 @@
 		//  taking the number of performer channels input by conductor
 		//  sending the perfcount to all of the performers as a global var pX
 		//  adding event listeners for clikc functionality
-
-		// var perfs = [];
-		// var pX;
 		
 		function updatePerfCount() {
 
@@ -196,7 +205,6 @@
 				    			};
 
 				    			// right now filling object for cross check
-
 				    			for (i = 0; i < pX; i++){
 									var playerNum = i+1; // this keeps player #'s straight
 									whoWhat['player'+ playerNum] = ' ';
@@ -285,12 +293,8 @@
 				socket.emit('imageFigure', imageSrcs[index]);
 
 				
-				
-
 				// display who is playing figure
-				//var overlay = group.toString();
-
-
+			
 				//  KAT KAT KAT KAT KAT KAT KILLED THIS
 
 			for(i=0; i < group.length; i++){
@@ -315,39 +319,7 @@
 			 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
 
 			 		};
-
-
 			 };
-
-				//get the performers in new array
-
-			// for (i=0; i < group.length; i++){
-			// 		var who = group[i];
-
-			// }
-
-				
-	
-				//check what their current figures are
-					
-					
-				
-				// return the innerhtml of those figure overlays
-
-					
-
-				// replace that value in the string with ' '
-					
-					
-
-				// trim the string
-
-					
-
-
-				// put it back in the overlay  
-
-
 
 				// this clears the group when an image is sent
 				group = [];
@@ -361,9 +333,8 @@
 				for (i=0; i < perfs.length; i++){
 					$('#cp' + (i+1)).fadeTo("fast", 1.0);
 				};	
-
-			};
-		};	
+			  };
+			};	// end fade the fade
 
 
 		//video buttons
@@ -425,48 +396,9 @@
 			};
 		};	
 
-				// // working
-				// var toWhom = 0;  // initialize these globally, used in server and emit to performers
-				// var toAll = 0;
-				// var divs = [];
+				
 
-
-				// //SWITCHER
-				// $(switcher).click(function(){
-
-				// 	console.log('switch ' + toWhom);
-				// 	socket.emit('switch', toWhom);
-
-				// 	document.getElementById("everythingPerformer").style.display = "block";
-				// 	document.getElementById("everythingConductor").style.display= "none";
-
-				// 	//this activates whichever p5 sketch
-				// 	performerSketch();
-
-				// });
-
-
-				// //navigation   from line 328
-
-				// $(compose).click(function(){
-		  //       	$(location).attr('href', '/compose') ;   
-			 //    });
-
-			 //    $(perform).click(function(){
-			 //        $(location).attr('href', '/performer') ;   
-			 //    });
-
-			 //    $(conduct).click(function(){
-			 //        $(location).attr('href', '/conductor') ;   
-			 //    });
-					 
-
-
-
-
-
-
-			////////////////// END CONDUCTOR SCRIPT
+			////////////////// END CONDUCTOR SCRIPT //////////////////
 		
 
 			</script>

@@ -116,15 +116,15 @@
 					// var myp5 = new p5(tempo, 'bpm'); 
 
 
+					// PERFORMER ID STUFF
 					//initialize globals for performer id
 					var myId = 0; 
 					var toWhom = 0;
 					var toAll = 0;
-
 					var group = [];
 
 
-
+					//p5 WAVE STUFF
 					// this var exists inside of the p5 instance "waveForm"
 					var trackName = '';
 					
@@ -137,7 +137,7 @@
 
 					trackName = data;
 					
-					/* logic: if there isn't an instance one on the page (it will be undefined) so create a new one
+					/* logic below: if there isn't an instance one on the page (it will be undefined) so create a new one
 					 if there is an instance, remove it and create a new one */
 
 					 //changed to add the toWhom conditional logic
@@ -156,11 +156,9 @@
 
 	 				// functions (just one right now)
 	 				var flashIncoming = function(){
-
 						$(incoming).fadeTo(500, 1);
 						$(incoming).fadeTo(500, 0);
-
-						};
+					};
 
 
 ////////////////////////// DYNAMIC PERF SHIZZ					
