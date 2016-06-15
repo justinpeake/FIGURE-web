@@ -1,3 +1,5 @@
+
+
 var express = require('express');
 var path = require('path'); 
 var favicon = require('serve-favicon');
@@ -10,27 +12,78 @@ var socket_io = require('socket.io');   // second iteracton socket try
 var app = express();  // first iteration socket try
 var io = socket_io();   // second iteration
 
+//added 6/7/16
+
+var redis = require("redis").createClient();
+
+var passport = require('passport');
+
+var session = require('express-session')
+
+var RedisStore = require('connect-redis')(session);
+
+var socketioRedis = require("passport-socketio-redis");
+
+var sessionStore = new RedisStore();
+
+var passportSocketIo = require("passport.socketio");
+
+//
+
+
+var aws = require('aws-sdk'); 
 var router = express.Router(); 
-var passport = require('passport');
-
-
 var LocalStrategy = require('passport-local').Strategy;
-var passport = require('passport');
-
 var routes = require('./routes/index.js');
 var users = require('./routes/users.js');
 
-var aws = require('aws-sdk'); 
 var path = require('path');
 var http = require('http');  
 var chalk = require('chalk'); 
 
-var userID;
+//var userID;
  
 var performerCount = 0;
-// var perfs = [];
 
 app.io = io;  //second iteration
+
+// cookie stuff 
+app.use(session({
+    key: 'express.sid',
+    store: sessionStore,
+    secret: 'keyboard horse',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+//added 6/7/16
+    io.use(socketioRedis.authorize({
+      passport:passport,
+      cookieParser: cookieParser,       // the same middleware you register in express
+      key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
+      secret:       'keyboard horse',    // the session_secret to parse the cookie
+      store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
+      success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
+       fail:         onAuthorizeFail,     // *optional* callback on fail/error - read more below
+    }));
+//
+
+function onAuthorizeSuccess(data, accept)
+{
+    console.log('Authorized success');
+    accept();
+    
+}
+ 
+function onAuthorizeFail(data, message, error, accept)
+{
+    if(error)
+        accept(new Error(message));
+}
+//
  
 // if in development mode, load .env variables
 // !!!! Declare .env variables AFTER THIS
@@ -42,10 +95,10 @@ if (app.get("env") === "development") {
 // connect to database
 app.db = mongoose.connect(process.env.MONGOLAB_URI);
 
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
 var S3_BUCKET = process.env.S3_BUCKET;
 
+// fixes clock skew issues
+aws.config.update({correctClockSkew: true});    
 
 // view engine setup - this app uses Hogan-Express
 // https://github.com/vol4ok/hogan-express
@@ -63,17 +116,6 @@ app.use(cookieParser());
 
 
 
-// cookie stuff 
-app.use(require('express-session')({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 // our routes will be contained in routes/index.js
@@ -83,24 +125,76 @@ app.use('/', routes);
 
 var Account = require('./models/account.js');
 
+console.log(process.env.RUNNING);  // hello world
 
 
-// maybe need to send some of these through client to avoid global
+  // maybe need to send some of these through client to avoid global
 
-passport.use(new LocalStrategy(Account.authenticate()));
+  passport.use(new LocalStrategy(Account.authenticate()));
 
-    passport.serializeUser(function(user, done) {
-       done(null, user.id);
-       userID = user.username;
-       console.log(userID);
+      passport.serializeUser(function(user, done) {
 
-    });
+         done(null, user.username);   // this affects what shows up in socket.request.user
+        
+         // userID = req.user.username;
+         
 
-    passport.deserializeUser(function(id, done) {
-      
-       done(null, id);
+      });
 
-    });
+      passport.deserializeUser(function(id, done) {
+        
+         done(null, id);
+
+      });
+
+app.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
+
+       console.log(chalk.white(req.user.username) + " logged in");
+
+      res.render("dashboard.html", {
+          user: req.user.username, 
+          images: imageArray, 
+          videos: videoArray, 
+          audio: audioArray, 
+          audionames: audioNames,
+          length: folderLength,
+          pcount: performerCount
+          });
+      });
+
+app.get('/dashboard', function(req,res){
+
+        if(req.user) {
+        res.render('dashboard.html', {user: req.user.username});     
+        page = 'dashboard';   
+        }else{        
+        res.render('index.html')       
+        }
+   });
+
+app.get('/conductor', function(req,res){
+
+  console.log(req.user);
+
+        if(req.user) {
+        res.render('conductor.html', {
+          
+          user: req.user, 
+          images: imageArray, 
+          videos: videoArray, 
+          audio: audioArray, 
+          audionames: audioNames,
+          length: folderLength,
+          pcount: performerCount
+
+        });     
+
+        page = 'conductor';   
+        }else{        
+        res.render('index.html')       
+        }
+   });
+
 
 
 // >>>>>>>>>>>>>>>>>>>>>>> AWS S3 SHIZ
@@ -166,7 +260,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
           message: err.message,
           error: err
         });
-      });
+      }); 
     }
 
     // production error handler
@@ -180,35 +274,47 @@ passport.use(new LocalStrategy(Account.authenticate()));
     });
 
 
-
+ 
 
 // start listen with socket.io
 
-    io.on('connection', function(socket){ //second iteration
+    io.on('connection', function(socket){ 
 
-                   console.log(chalk.red(userID) + ' connected to ' + page);
+                  var userID = socket.request.user;
 
+                  console.log(chalk.red(userID) + ' connected to ' + page);
+
+                  console.log(chalk.red(socket.request.user) + ' HAS ARRIVED @ ' + page);
+
+               
       
             // When this user emits, client side: socket.emit('otherevent',some data);
 
-            socket.on('gimme', function(){  // added "user to function argument"
+            socket.on('gimme', function(err){  // added "user to function argument"
 
               //polling aws based on user and listing assets
 
-              aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+            //  aws.config.update({accessKeyId: 'AKIAIUWEBSZCZK4Y6HFQ', secretAccessKey: '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'});
+
+             
               var s3 = new aws.S3();
               // name the new AWS folder
               var folder = userID + "/";
-              var s3_params = {
-                  Bucket: S3_BUCKET,  
 
-                  Key: folder, //+ req.query.file_name,   
+              console.log(folder);
+              var s3_params = {
+                  Bucket: 'justinpeakefigures',  
+
+                  Key: folder, 
 
                   Expires: 60,
-                  ACL: 'public-read' 
+                  ACL: 'public-read'  
               };
 
               s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
+
+                  // console.log(err);
+                  // console.log(data.Contents);
 
                   var folderLength = data.Contents.length;
 
@@ -261,8 +367,9 @@ passport.use(new LocalStrategy(Account.authenticate()));
                     console.log('AUDIO: ' + audioArray.length);
                     console.log(audioArray);
 
-                  });  // end of list objects         
-              });  // end of 'gimme' function
+                  });  // end of list objects    
+
+              });  // end of 'gimme' 
 
 
             socket.on('sendingTo', function(data) {

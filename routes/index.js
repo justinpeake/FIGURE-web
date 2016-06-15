@@ -36,22 +36,26 @@ performerCount = 0;
 
     //PASSPORT SHIZ  
 
-    router.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
+    // router.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
 
-       //declared globally
-       userName = req.user.username;
+    //    //declared globally
+    //    //userName = socket.request.user;
+    //    // ^^^^^^^^^^^^^^^^^^^^^^^^^
+    //    // is this req.user.username actually being returned from serialize?
+    //    // TRY putting serialize here? vvvvv
 
-       console.log(chalk.white(req.user.username) + " logged in");
-       res.render("dashboard.html", {
-          user: userName, 
-          images: imageArray, 
-          videos: videoArray, 
-          audio: audioArray, 
-          audionames: audioNames,
-          length: folderLength,
-          pcount: performerCount
-          });
-      });
+    //    console.log(chalk.white(req.user.username) + " logged in");
+
+    //   res.render("dashboard.html", {
+    //       user: userID, 
+    //       images: imageArray, 
+    //       videos: videoArray, 
+    //       audio: audioArray, 
+    //       audionames: audioNames,
+    //       length: folderLength,
+    //       pcount: performerCount
+    //       });
+    //   });
 
 
     router.get('/logout', function(req, res) {
@@ -73,45 +77,41 @@ performerCount = 0;
         res.render('about.html', { });
       });
 
-    // router.get('/ping', function(req, res){
-    //     res.status(200).send("pong!");
-    // });
-
-
-
-
 // the five main pages beyond userAuth
-router.get('/dashboard', function(req,res){
 
-        if(req.user) {
-        res.render('dashboard.html', {user: userName});     
-        page = 'dashboard';   
-        }else{        
-        res.render('index.html')       
-        }
-   });
+// router.get('/dashboard', function(req,res){
+
+//         if(req.user) {
+//         res.render('dashboard.html', {user: userID});     
+//         page = 'dashboard';   
+//         }else{        
+//         res.render('index.html')       
+//         }
+//    }); 
 
 
-router.get('/conductor', function(req,res){
+// router.get('/conductor', function(req,res){
 
-        if(req.user) {
-        res.render('conductor.html', {
+//   console.log(req.user);
+
+//         if(req.user) {
+//         res.render('conductor.html', {
           
-          user: userName, 
-          images: imageArray, 
-          videos: videoArray, 
-          audio: audioArray, 
-          audionames: audioNames,
-          length: folderLength,
-          pcount: performerCount
+//           user: userID, 
+//           images: imageArray, 
+//           videos: videoArray, 
+//           audio: audioArray, 
+//           audionames: audioNames,
+//           length: folderLength,
+//           pcount: performerCount
 
-        });     
+//         });     
 
-        page = 'conductor';   
-        }else{        
-        res.render('index.html')       
-        }
-   });
+//         page = 'conductor';   
+//         }else{        
+//         res.render('index.html')       
+//         }
+//    });
 
 
 
@@ -132,25 +132,25 @@ router.get('/performer', function(req,res){
     });
 
 
-router.get('/compose', function(req, res) {
+// router.get('/compose', function(req, res) {
     
-      if(req.user) {          
-        res.render('compose.html', {
+//       if(req.user) {          
+//         res.render('compose.html', {
 
-          user: userName, 
-          images: imageArray, 
-          videos: videoArray, 
-          audio: audioArray, 
-          audionames: audioNames,
-          length: folderLength
+//           user: userID, 
+//           images: imageArray, 
+//           videos: videoArray, 
+//           audio: audioArray, 
+//           audionames: audioNames,
+//           length: folderLength
 
-        }); 
+//         }); 
 
-        page = 'compose';        
-        }else{        
-        res.render('index.html')        
-        }
-    });
+//         page = 'compose';        
+//         }else{        
+//         res.render('index.html')        
+//         }
+//     });
 
 
 router.post('/register', function(req, res) {
@@ -206,149 +206,5 @@ router.post('/register', function(req, res) {
 });
 
 
-
-// router.get('/api/get/:id', function(req, res){
-
-//   var requestedId = req.param('id');
-
-//   // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model.findById
-//   Animal.findById(requestedId, function(err,data){
-
-//     // if err or no user found, respond with error 
-//     if(err || data == null){
-//       var error = {status:'ERROR', message: 'Could not find that animal'};
-//        return res.json(error);
-//     }
-
-//     // otherwise respond with JSON data of the animal
-//     var jsonData = {
-//       status: 'OK',
-//       animal: data
-//     }
-
-//     return res.json(jsonData);
-  
-//   })
-// })
-
-// router.get('/api/get', function(req, res){
-
-//   // mongoose method to find all, see http://mongoosejs.com/docs/api.html#model_Model.find
-//   Figure.count(function(err, data){
-//     // if err or no animals found, respond with error 
-//     if(err || data == null){
-//       var error = {status:'ERROR', message: 'Could not find animals'};
-//       return res.json(error);
-//     }
-
-//     // otherwise, respond with the data 
-
-//     var jsonData = {
-//       status: 'OK',
-//       figures: data
-//     } 
-
-//     res.json(jsonData);
-
-//   })
-
-// })
-
-// router.post('/api/update/:id', function(req, res){
-
-//    var requestedId = req.param('id');
-
-//    var dataToUpdate = {}; // a blank object of data to update
-
-//     // pull out the information from the req.body and add it to the object to update
-//     var name, age, weight, color, url; 
-
-//     // we only want to update any field if it actually is contained within the req.body
-//     // otherwise, leave it alone.
-//     if(req.body.name) {
-//       name = req.body.name;
-//       // add to object that holds updated data
-//       dataToUpdate['name'] = name;
-//     }
-//     if(req.body.age) {
-//       age = req.body.age;
-//       // add to object that holds updated data
-//       dataToUpdate['age'] = age;
-//     }
-//     if(req.body.weight) {
-//       weight = req.body.weight;
-//       // add to object that holds updated data
-//       dataToUpdate['description'] = {};
-//       dataToUpdate['description']['weight'] = weight;
-//     }
-//     if(req.body.color) {
-//       color = req.body.color;
-//       // add to object that holds updated data
-//       if(!dataToUpdate['description']) dataToUpdate['description'] = {};
-//       dataToUpdate['description']['color'] = color;
-//     }
-//     if(req.body.url) {
-//       url = req.body.url;
-//       // add to object that holds updated data
-//       dataToUpdate['url'] = url;
-//     }
-
-//     var tags = []; // blank array to hold tags
-//     if(req.body.tags){
-//       tags = req.body.tags.split(","); // split string into array
-//       // add to object that holds updated data
-//       dataToUpdate['tags'] = tags;
-//     }
-
-
-//     console.log('the data to update is ' + JSON.stringify(dataToUpdate));
-
-//     // now, update that animal
-//     // mongoose method findByIdAndUpdate, see http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate  
-//     Animal.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
-//       // if err saving, respond back with error
-//       if (err){
-//         var error = {status:'ERROR', message: 'Error updating animal'};
-//         return res.json(error);
-//       }
-
-//       console.log('updated the animal!');
-//       console.log(data);
-
-//       // now return the json data of the new person
-//       var jsonData = {
-//         status: 'OK',
-//         animal: data
-//       }
-
-//       return res.json(jsonData);
-
-//     })
-
-// })
-
-
-// router.get('/api/delete/:id', function(req, res){
-
-//   var requestedId = req.param('id');
-
-//   // Mongoose method to remove, http://mongoosejs.com/docs/api.html#model_Model.findByIdAndRemove
-//   Animal.findByIdAndRemove(requestedId,function(err, data){
-//     if(err || data == null){
-//       var error = {status:'ERROR', message: 'Could not find that animal to delete'};
-//       return res.json(error);
-//     }
-
-//     // otherwise, respond back with success
-//     var jsonData = {
-//       status: 'OK',
-//       message: 'Successfully deleted id ' + requestedId
-//     }
-
-//     res.json(jsonData);
-
-//   })
-
-// })
 
 module.exports = router;
