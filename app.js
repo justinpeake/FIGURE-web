@@ -74,8 +74,7 @@ app.use(passport.session());
 function onAuthorizeSuccess(data, accept)
 {
     console.log('Authorized success');
-    accept();
-    
+    accept();    
 }
  
 function onAuthorizeFail(data, message, error, accept)
@@ -83,7 +82,6 @@ function onAuthorizeFail(data, message, error, accept)
     if(error)
         accept(new Error(message));
 }
-//
  
 // if in development mode, load .env variables
 // !!!! Declare .env variables AFTER THIS
@@ -113,8 +111,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-
 
 app.use(express.static(path.join(__dirname, 'public')));
 
