@@ -298,14 +298,13 @@ app.get('/conductor', function(req,res){
       
             // When this user emits, client side: socket.emit('otherevent',some data);
 
-            socket.on('gimme', function(data){  // added "user to function argument"
+            socket.on('gimme', function(){  // added "user to function argument"
 
               //polling aws based on user and listing assets
-              console.log(data + " is the data");
              
               var s3 = new aws.S3();
               // name the new AWS folder
-              var folder = data + "/";
+              var folder = userID + "/";
 
               console.log(folder);
 
