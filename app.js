@@ -143,11 +143,9 @@ console.log(process.env.RUNNING);  // hello world
   passport.use(new LocalStrategy(Account.authenticate()));
 
       passport.serializeUser(function(user, done) {
-
          done(null, user.username);   // this affects what shows up in socket.request.user
         
-         // userID = req.user.username;
-         
+         // userID = req.user.username;        
 
       });
 
@@ -162,7 +160,7 @@ app.post('/login', passport.authenticate('local', {session:true}), function(req,
        console.log(chalk.white(req.user.username) + " logged in");
 
       res.render("dashboard.html", {
-          user: req.user.username, 
+          user: req.user, 
           images: imageArray, 
           videos: videoArray, 
           audio: audioArray, 
@@ -184,12 +182,12 @@ app.get('/dashboard', function(req,res){
 
 app.get('/conductor', function(req,res){
 
-  console.log(req.user);
+  console.log(req.user + " is req.user");
 
         if(req.user) {
         res.render('conductor.html', {
           
-          user: req.user, 
+          user: req.user, // staying still
           images: imageArray, 
           videos: videoArray, 
           audio: audioArray, 
@@ -292,33 +290,27 @@ app.get('/conductor', function(req,res){
 
                   var userID = socket.request.user;
 
-                  console.log(chalk.red(userID) + ' connected to ' + page);
+                  // console.log(chalk.red(userID) + ' connected to ' + page);
 
                   console.log(chalk.red(socket.request.user) + ' HAS ARRIVED @ ' + page);
-
-                 
-if ( socket.request.user.logged_in == true){
-console.log(TRUE);
-};
 
                
       
             // When this user emits, client side: socket.emit('otherevent',some data);
 
-            socket.on('gimme', function(err){  // added "user to function argument"
+            socket.on('gimme', function(data){  // added "user to function argument"
 
               //polling aws based on user and listing assets
-
-            //  aws.config.update({accessKeyId: 'AKIAIUWEBSZCZK4Y6HFQ', secretAccessKey: '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'});
-
+              console.log(data + " is the data");
              
               var s3 = new aws.S3();
               // name the new AWS folder
-              var folder = userID + "/";
+              var folder = data + "/";
 
               console.log(folder);
+
               var s3_params = {
-                  Bucket: 'justinpeakefigures',  
+                  Bucket: S3_BUCKET,  
 
                   Key: folder, 
 
@@ -326,12 +318,13 @@ console.log(TRUE);
                   ACL: 'public-read'  
               };
 
+
+
               s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
 
-                  // console.log(err);
-                  // console.log(data.Contents);
-
                   var folderLength = data.Contents.length;
+
+
 
                   fileArray = [];
                   imageArray = [];
@@ -382,6 +375,8 @@ console.log(TRUE);
                     console.log('AUDIO: ' + audioArray.length);
                     console.log(audioArray);
 
+                    folder = ' ';
+                 
                   });  // end of list objects    
 
               });  // end of 'gimme' 
