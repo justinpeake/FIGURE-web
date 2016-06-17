@@ -1,5 +1,4 @@
 
-
 var express = require('express');
 var path = require('path'); 
 var favicon = require('serve-favicon');
@@ -8,13 +7,23 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
-var socket_io = require('socket.io');   // second iteracton socket try 
-var app = express();  // first iteration socket try
-var io = socket_io();   // second iteration
+var socket_io = require('socket.io');  
+var app = express();  
+var io = socket_io();   
+
+
 
 //added 6/7/16
 
+if (process.env.REDISTOGO_URL) {
+  var rtg = require('url').parse(process.env.REDISTOGO_URL);
+  var redis = require('redis').creaeClient(rtg.port, rtg.hostname);
+
+  redis.auth(rtg.auth.spli(':')[1]);
+
+} else {
 var redis = require("redis").createClient();
+}
 
 var passport = require('passport');
 
@@ -24,7 +33,7 @@ var RedisStore = require('connect-redis')(session);
 
 var socketioRedis = require("passport-socketio-redis");
 
-var sessionStore = new RedisStore();
+var sessionStore = new RedisStore({ host: 'localhost', port: 6379, client: redis});
 
 var passportSocketIo = require("passport.socketio");
 
@@ -46,6 +55,24 @@ var chalk = require('chalk');
 var performerCount = 0;
 
 app.io = io;  //second iteration
+
+
+// newly added heroku redis stuff
+
+// app.configure(‘production’, function(){
+ // var redisUrl = url.parse(process.env.REDISTOGO_URL);
+ // var redisAuth = redisUrl.auth.split(‘:’);
+
+
+ // app.use(session({ secret: 'password', 
+ //                           store: new RedisStore({
+ //                                        host: process.env.REDISTOGO_URL,
+ //                                        port: 9234,
+ //                                        db: redisAuth[0],
+ //                                        pass: redisAuth[1]
+ //                                      })  
+ //         }));
+// });
 
 // cookie stuff 
 app.use(session({
@@ -70,6 +97,7 @@ app.use(passport.session());
        fail:         onAuthorizeFail,     // *optional* callback on fail/error - read more below
     }));
 //
+
 
 function onAuthorizeSuccess(data, accept)
 {
@@ -281,6 +309,11 @@ app.get('/conductor', function(req,res){
                   console.log(chalk.red(userID) + ' connected to ' + page);
 
                   console.log(chalk.red(socket.request.user) + ' HAS ARRIVED @ ' + page);
+
+                 
+if ( socket.request.user.logged_in == true){
+console.log(TRUE);
+};
 
                
       
