@@ -160,7 +160,7 @@ app.post('/login', passport.authenticate('local', {session:true}), function(req,
        console.log(chalk.white(req.user.username) + " logged in");
 
       res.render("dashboard.html", {
-          user: req.user, 
+          user: req.user.username, 
           images: imageArray, 
           videos: videoArray, 
           audio: audioArray, 
