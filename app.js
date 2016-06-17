@@ -17,7 +17,7 @@ var io = socket_io();
 
 if (process.env.REDISTOGO_URL) {
   var rtg = require('url').parse(process.env.REDISTOGO_URL);
-  var redis = require('redis').creaeClient(rtg.port, rtg.hostname);
+  var redis = require('redis').createClient(rtg.port, rtg.hostname);
 
   redis.auth(rtg.auth.spli(':')[1]);
 
@@ -33,7 +33,7 @@ var RedisStore = require('connect-redis')(session);
 
 var socketioRedis = require("passport-socketio-redis");
 
-var sessionStore = new RedisStore({ host: 'localhost', port: 6379, client: redis});
+var sessionStore = new RedisStore({ host: rtg, port: redis, client: redis});
 
 var passportSocketIo = require("passport.socketio");
 
@@ -59,20 +59,6 @@ app.io = io;  //second iteration
 
 // newly added heroku redis stuff
 
-// app.configure(‘production’, function(){
- // var redisUrl = url.parse(process.env.REDISTOGO_URL);
- // var redisAuth = redisUrl.auth.split(‘:’);
-
-
- // app.use(session({ secret: 'password', 
- //                           store: new RedisStore({
- //                                        host: process.env.REDISTOGO_URL,
- //                                        port: 9234,
- //                                        db: redisAuth[0],
- //                                        pass: redisAuth[1]
- //                                      })  
- //         }));
-// });
 
 // cookie stuff 
 app.use(session({
