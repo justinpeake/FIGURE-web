@@ -433,11 +433,11 @@ console.log(process.env.RUNNING);  // hello world
             console.log('hiiiiiiii');
             // this is against AWS recommendation
 
-            aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+           // aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
             var s3 = new aws.S3();
 
             // name the new AWS folder
-            var folder = userID + "/";  // changed from userName
+            var folder = req.user + "/";  // changed from userName
 
             var s3_params = {
                 Bucket: S3_BUCKET,
@@ -446,6 +446,13 @@ console.log(process.env.RUNNING);  // hello world
                 ContentType: req.query.file_type,
                 ACL: 'public-read' 
             };
+
+            var folderLength;
+            var fileArray = [];
+            var imageArray = [];
+            var videoArray = [];
+            var audioArray = [];
+            var audioNames = [];
 
             // if someone is signed in, then make folder with their name, 
             // otherwise, place in public folder
