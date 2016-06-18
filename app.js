@@ -12,53 +12,38 @@ var app = express();
 var io = socket_io();   
 
 
-
-//added 6/7/16
-
 if (process.env.REDISTOGO_URL) {
   var rtg = require('url').parse(process.env.REDISTOGO_URL);
   var redis = require('redis').createClient(rtg.port, rtg.hostname);
 
-  redis.auth(rtg.auth.split(':')[1]);
-
+redis.auth(rtg.auth.split(':')[1]);
 } else {
 var redis = require("redis").createClient();
 }
 
+//
+
 var passport = require('passport');
-
 var session = require('express-session')
-
 var RedisStore = require('connect-redis')(session);
-
 var socketioRedis = require("passport-socketio-redis");
-
 var sessionStore = new RedisStore({ host: rtg, port: redis, client: redis});
-
 var passportSocketIo = require("passport.socketio");
 
 //
-
 
 var aws = require('aws-sdk'); 
 var router = express.Router(); 
 var LocalStrategy = require('passport-local').Strategy;
 var routes = require('./routes/index.js');
 var users = require('./routes/users.js');
-
 var path = require('path');
 var http = require('http');  
 var chalk = require('chalk'); 
 
-//var userID;
- 
 var performerCount = 0;
 
 app.io = io;  //second iteration
-
-
-// newly added heroku redis stuff
-
 
 // cookie stuff 
 app.use(session({
@@ -118,14 +103,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.set('layout','layout');
 app.engine('html', require('hogan-express'));;
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 // our routes will be contained in routes/index.js
@@ -144,66 +127,199 @@ console.log(process.env.RUNNING);  // hello world
 
       passport.serializeUser(function(user, done) {
          done(null, user.username);   // this affects what shows up in socket.request.user
-        
-         // userID = req.user.username;        
-
       });
 
-      passport.deserializeUser(function(id, done) {
-        
+      passport.deserializeUser(function(id, done) {        
          done(null, id);
-
       });
 
-app.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
 
-       console.log(chalk.white(req.user.username) + " logged in");
+          app.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
+                 //console.log(chalk.white(req.user.username) + " logged in");
 
-      res.render("dashboard.html", {
-          user: req.user.username, 
-          images: imageArray, 
-          videos: videoArray, 
-          audio: audioArray, 
-          audionames: audioNames,
-          length: folderLength,
-          pcount: performerCount
-          });
-      });
-
-app.get('/dashboard', function(req,res){
-
-        if(req.user) {
-        res.render('dashboard.html', {user: req.user.username});     
-        page = 'dashboard';   
-        }else{        
-        res.render('index.html')       
-        }
-   });
-
-app.get('/conductor', function(req,res){
-
-  console.log(req.user + " is req.user");
-
-        if(req.user) {
-        res.render('conductor.html', {
-          
-          user: req.user, // staying still
-          images: imageArray, 
-          videos: videoArray, 
-          audio: audioArray, 
-          audionames: audioNames,
-          length: folderLength,
-          pcount: performerCount
-
-        });     
-
-        page = 'conductor';   
-        }else{        
-        res.render('index.html')       
-        }
-   });
+                 var s3 = new aws.S3();            
+            var folder = req.user + "/";
+            console.log(folder);
+            var s3_params = {
+                Bucket: S3_BUCKET,  
+                Key: folder, 
+                Expires: 60,
+                ACL: 'public-read'  
+            };
+            var folderLength;
+            var fileArray = [];
+            var imageArray = [];
+            var videoArray = [];
+            var audioArray = [];
+            var audioNames = [];
 
 
+              s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
+
+                  var folderLength = data.Contents.length;
+                  
+                  // filling fileArray[] with all the URL's from amazon
+                  for (i = 0; i < folderLength; i++){
+                     fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+                     };
+
+                    /*  
+                        1) this is splitting the urls > 
+                        2) looking at the last array element (which is 'most likely' the file extension)
+                            ^ this could ultimately be buggy if the naming conventions change
+                        3) checking to see whether the file extension matches any of the strings
+                        4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
+                    */
+
+                    for (i = 0; i < folderLength; i++){
+                      if (fileArray[i].split(".")[4] == 'jpg'){
+                        imageArray.push(fileArray[i]);  
+                      } else if (fileArray[i].split(".")[4] == 'png'){
+                        imageArray.push(fileArray[i]);    
+                      }  else if (fileArray[i].split(".")[4] == 'mov'){
+                        videoArray.push(fileArray[i]); 
+                      } else if (fileArray[i].split(".")[4] == 'wav'){
+                        audioArray.push(fileArray[i]);
+
+                        //splitting url to extract the name of the file  
+                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+                      } else if (fileArray[i].split(".")[4] == 'mp3'){
+                        audioArray.push(fileArray[i]);
+                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+                      }                 
+                      
+                    };  // end of file for loop
+
+   //////////////// these are the arrays being served to client ////////////////    
+
+                    console.log('IMAGES: ' + imageArray.length);
+                    console.log(imageArray);
+
+                    console.log('VIDEOS: ' + videoArray.length);
+                    console.log(videoArray);
+
+                    console.log('AUDIO: ' + audioArray.length);
+                    console.log(audioArray);
+                  });
+                 
+                     // end of list objects
+
+
+                res.render("dashboard.html", {
+                    user: req.user.username, 
+                    images: imageArray, 
+                    videos: videoArray, 
+                    audio: audioArray, 
+                    audionames: audioNames,
+                    length: folderLength,
+                    pcount: performerCount
+                    });
+                });
+
+          app.get('/dashboard', function(req,res){
+                  if(req.user) {
+
+                  res.render('dashboard.html', {user: req.user.username});     
+                  page = 'dashboard';   
+                  }else{        
+                  res.render('index.html')       
+                  }
+             });
+
+
+
+
+          app.get('/conductor', function(req,res){
+            console.log(req.user + " is req.user");
+
+                  if(req.user) {
+
+
+            var s3 = new aws.S3();            
+            var folder = req.user + "/";
+            console.log(folder);
+            var s3_params = {
+                Bucket: S3_BUCKET,  
+                Key: folder, 
+                Expires: 60,
+                ACL: 'public-read'  
+            };
+            var folderLength;
+            var fileArray = [];
+            var imageArray = [];
+            var videoArray = [];
+            var audioArray = [];
+            var audioNames = [];
+
+
+              s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
+
+                  var folderLength = data.Contents.length;
+                  
+                  // filling fileArray[] with all the URL's from amazon
+                  for (i = 0; i < folderLength; i++){
+                     fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+                     };
+
+                    /*  
+                        1) this is splitting the urls > 
+                        2) looking at the last array element (which is 'most likely' the file extension)
+                            ^ this could ultimately be buggy if the naming conventions change
+                        3) checking to see whether the file extension matches any of the strings
+                        4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
+                    */
+
+                    for (i = 0; i < folderLength; i++){
+                      if (fileArray[i].split(".")[4] == 'jpg'){
+                        imageArray.push(fileArray[i]);  
+                      } else if (fileArray[i].split(".")[4] == 'png'){
+                        imageArray.push(fileArray[i]);    
+                      }  else if (fileArray[i].split(".")[4] == 'mov'){
+                        videoArray.push(fileArray[i]); 
+                      } else if (fileArray[i].split(".")[4] == 'wav'){
+                        audioArray.push(fileArray[i]);
+
+                        //splitting url to extract the name of the file  
+                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+                      } else if (fileArray[i].split(".")[4] == 'mp3'){
+                        audioArray.push(fileArray[i]);
+                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+                      }                 
+                      
+                    };  // end of file for loop
+
+   //////////////// these are the arrays being served to client ////////////////    
+
+                    console.log('IMAGES: ' + imageArray.length);
+                    console.log(imageArray);
+
+                    console.log('VIDEOS: ' + videoArray.length);
+                    console.log(videoArray);
+
+                    console.log('AUDIO: ' + audioArray.length);
+                    console.log(audioArray);
+
+                 
+                     // end of list objects    
+
+                  res.render('conductor.html', {
+                    user: req.user, // staying still
+                    images: imageArray, 
+                    videos: videoArray, 
+                    audio: audioArray, 
+                    audionames: audioNames,
+                    length: folderLength,
+                    pcount: performerCount
+                  });   
+
+                  page = 'conductor';  
+
+                  });
+
+                  }else{        
+                  res.render('index.html')       
+                  }
+             });
 
 // >>>>>>>>>>>>>>>>>>>>>>> AWS S3 SHIZ
 
@@ -234,6 +350,7 @@ app.get('/conductor', function(req,res){
                     console.log(err);            
                }
                 else {
+
                     var return_data = {
                         signed_request: data,
                         url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ folder + req.query.file_name
@@ -288,95 +405,84 @@ app.get('/conductor', function(req,res){
 
     io.on('connection', function(socket){ 
 
-                  var userID = socket.request.user;
+          //console.log(chalk.red(socket.request.user) + ' HAS ARRIVED @ ' + page);
 
-                  // console.log(chalk.red(userID) + ' connected to ' + page);
+          console.log('socket id = ' + socket.id);
 
-                  console.log(chalk.red(socket.request.user) + ' HAS ARRIVED @ ' + page);
+        socket.on('gimme', function(){  // added "user to function argument"
 
-               
-      
-            // When this user emits, client side: socket.emit('otherevent',some data);
+            //polling aws based on user and listing assets
+           
+            userID = socket.request.user;
 
-            socket.on('gimme', function(){  // added "user to function argument"
+   //          var s3 = new aws.S3();
+            
+   //          var folder = userID + "/";
 
-              //polling aws based on user and listing assets
-             
-              var s3 = new aws.S3();
-              // name the new AWS folder
-              var folder = userID + "/";
+   //          console.log(folder);
 
-              console.log(folder);
+   //          var s3_params = {
+   //              Bucket: S3_BUCKET,  
+   //              Key: folder, 
+   //              Expires: 60,
+   //              ACL: 'public-read'  
+   //          };
 
-              var s3_params = {
-                  Bucket: S3_BUCKET,  
+   //            s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
 
-                  Key: folder, 
+   //                var folderLength = data.Contents.length;
 
-                  Expires: 60,
-                  ACL: 'public-read'  
-              };
-
-
-
-              s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
-
-                  var folderLength = data.Contents.length;
-
-
-
-                  fileArray = [];
-                  imageArray = [];
-                  videoArray = [];
-                  audioArray = [];
-                  audioNames = [];
+   //                var fileArray = [];
+   //                var imageArray = [];
+   //                var videoArray = [];
+   //                var audioArray = [];
+   //                var audioNames = [];
                   
-                  // filling fileArray[] with all the URL's from amazon
-                  for (i = 0; i < folderLength; i++){
-                     fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
-                     };
+   //                // filling fileArray[] with all the URL's from amazon
+   //                for (i = 0; i < folderLength; i++){
+   //                   fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+   //                   };
 
-                    /*  
-                        1) this is splitting the urls > 
-                        2) looking at the last array element (which is 'most likely' the file extension)
-                            ^ this could ultimately be buggy if the naming conventions change
-                        3) checking to see whether the file extension matches any of the strings
-                        4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
-                    */
+   //                  /*  
+   //                      1) this is splitting the urls > 
+   //                      2) looking at the last array element (which is 'most likely' the file extension)
+   //                          ^ this could ultimately be buggy if the naming conventions change
+   //                      3) checking to see whether the file extension matches any of the strings
+   //                      4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
+   //                  */
 
-                    for (i = 0; i < folderLength; i++){
-                      if (fileArray[i].split(".")[4] == 'jpg'){
-                        imageArray.push(fileArray[i]);  
-                      } else if (fileArray[i].split(".")[4] == 'png'){
-                        imageArray.push(fileArray[i]);    
-                      }  else if (fileArray[i].split(".")[4] == 'mov'){
-                        videoArray.push(fileArray[i]); 
-                      } else if (fileArray[i].split(".")[4] == 'wav'){
-                        audioArray.push(fileArray[i]);
+   //                  for (i = 0; i < folderLength; i++){
+   //                    if (fileArray[i].split(".")[4] == 'jpg'){
+   //                      imageArray.push(fileArray[i]);  
+   //                    } else if (fileArray[i].split(".")[4] == 'png'){
+   //                      imageArray.push(fileArray[i]);    
+   //                    }  else if (fileArray[i].split(".")[4] == 'mov'){
+   //                      videoArray.push(fileArray[i]); 
+   //                    } else if (fileArray[i].split(".")[4] == 'wav'){
+   //                      audioArray.push(fileArray[i]);
 
-                        //splitting url to extract the name of the file  
-                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-                      } else if (fileArray[i].split(".")[4] == 'mp3'){
-                        audioArray.push(fileArray[i]);
-                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-                      }                 
+   //                      //splitting url to extract the name of the file  
+   //                      audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+   //                    } else if (fileArray[i].split(".")[4] == 'mp3'){
+   //                      audioArray.push(fileArray[i]);
+   //                      audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+   //                    }                 
                       
-                    };  // end of file for loop
+   //                  };  // end of file for loop
 
-   //////////////// these are the arrays being served to client ////////////////    
+   // //////////////// these are the arrays being served to client ////////////////    
 
-                    console.log('IMAGES: ' + imageArray.length);
-                    console.log(imageArray);
+   //                  console.log('IMAGES: ' + imageArray.length);
+   //                  console.log(imageArray);
 
-                    console.log('VIDEOS: ' + videoArray.length);
-                    console.log(videoArray);
+   //                  console.log('VIDEOS: ' + videoArray.length);
+   //                  console.log(videoArray);
 
-                    console.log('AUDIO: ' + audioArray.length);
-                    console.log(audioArray);
+   //                  console.log('AUDIO: ' + audioArray.length);
+   //                  console.log(audioArray);
 
-                    folder = ' ';
                  
-                  });  // end of list objects    
+   //                });  // end of list objects    
 
               });  // end of 'gimme' 
 
@@ -428,8 +534,7 @@ app.get('/conductor', function(req,res){
               console.log('gimmePerfCount = ' + performerCount);            
             });
 
-            socket.on('disconnect', function() {
-                      
+            socket.on('disconnect', function() {  
               console.log( chalk.red(userID) + ' disconnected from ' + page);
              
             });

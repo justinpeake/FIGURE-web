@@ -12,14 +12,15 @@ var chalk = require('chalk');
 page = '';
 
 fileList = '';
-fileArray = [];
-folderLength = '';
 
-imageArray = [];
-videoArray = [];
+// fileArray = [];
+// folderLength = '';
 
-audioArray = [];
-audioNames = [];
+// imageArray = [];
+// videoArray = [];
+
+// audioArray = [];
+// audioNames = [];
 
 perfs = [];
 performerCount = 0;
@@ -155,7 +156,7 @@ router.get('/performer', function(req,res){
 
 router.post('/register', function(req, res) {
 
-        Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+        Account.register(new Account({ username : req.body.username, dbtarget : req.body.username }), req.body.password, function(err, account) {
             if (err) {          
               return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});        
             }
