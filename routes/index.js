@@ -13,15 +13,6 @@ page = '';
 
 fileList = '';
 
-// fileArray = [];
-// folderLength = '';
-
-// imageArray = [];
-// videoArray = [];
-
-// audioArray = [];
-// audioNames = [];
-
 perfs = [];
 performerCount = 0;
 
@@ -33,31 +24,6 @@ performerCount = 0;
     router.get('/', function (req, res) {
         res.render('index.html', {});
     });
-
-
-    //PASSPORT SHIZ  
-
-    // router.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
-
-    //    //declared globally
-    //    //userName = socket.request.user;
-    //    // ^^^^^^^^^^^^^^^^^^^^^^^^^
-    //    // is this req.user.username actually being returned from serialize?
-    //    // TRY putting serialize here? vvvvv
-
-    //    console.log(chalk.white(req.user.username) + " logged in");
-
-    //   res.render("dashboard.html", {
-    //       user: userID, 
-    //       images: imageArray, 
-    //       videos: videoArray, 
-    //       audio: audioArray, 
-    //       audionames: audioNames,
-    //       length: folderLength,
-    //       pcount: performerCount
-    //       });
-    //   });
-
 
     router.get('/logout', function(req, res) {
         req.logout();
@@ -77,81 +43,6 @@ performerCount = 0;
       page = 'about'; 
         res.render('about.html', { });
       });
-
-// the five main pages beyond userAuth
-
-// router.get('/dashboard', function(req,res){
-
-//         if(req.user) {
-//         res.render('dashboard.html', {user: userID});     
-//         page = 'dashboard';   
-//         }else{        
-//         res.render('index.html')       
-//         }
-//    }); 
-
-
-// router.get('/conductor', function(req,res){
-
-//   console.log(req.user);
-
-//         if(req.user) {
-//         res.render('conductor.html', {
-          
-//           user: userID, 
-//           images: imageArray, 
-//           videos: videoArray, 
-//           audio: audioArray, 
-//           audionames: audioNames,
-//           length: folderLength,
-//           pcount: performerCount
-
-//         });     
-
-//         page = 'conductor';   
-//         }else{        
-//         res.render('index.html')       
-//         }
-//    });
-
-
-
-router.get('/performer', function(req,res){
-
-      //uncommenting this will make performer page avail only to auth'd users
-
-      // if(req.user) {   
-      //   res.render('performer.html', {user: userName});  
-      //   page = 'performer';        
-      //   }else{        
-      //   res.render('index.html')        
-      //   }
-
-        res.render('performer.html');
-        page = 'performer';
-
-    });
-
-
-// router.get('/compose', function(req, res) {
-    
-//       if(req.user) {          
-//         res.render('compose.html', {
-
-//           user: userID, 
-//           images: imageArray, 
-//           videos: videoArray, 
-//           audio: audioArray, 
-//           audionames: audioNames,
-//           length: folderLength
-
-//         }); 
-
-//         page = 'compose';        
-//         }else{        
-//         res.render('index.html')        
-//         }
-//     });
 
 
 router.post('/register', function(req, res) {
