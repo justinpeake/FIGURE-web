@@ -139,7 +139,7 @@ console.log(process.env.RUNNING);  // hello world
 
             var s3 = new aws.S3();            
             var folder = req.user + "/";
-            console.log(folder);
+           // console.log(folder);
             var s3_params = {
                 Bucket: S3_BUCKET,  
                 Key: folder, 
@@ -193,13 +193,13 @@ console.log(process.env.RUNNING);  // hello world
    //////////////// these are the arrays being served to client ////////////////    
 
                     console.log('IMAGES: ' + imageArray.length);
-                    console.log(imageArray);
+                    //console.log(imageArray);
 
                     console.log('VIDEOS: ' + videoArray.length);
-                    console.log(videoArray);
+                    //console.log(videoArray);
 
                     console.log('AUDIO: ' + audioArray.length);
-                    console.log(audioArray);
+                    //console.log(audioArray);
                   });
                  
                      // end of list objects
@@ -245,12 +245,12 @@ console.log(process.env.RUNNING);  // hello world
 
 
           app.get('/conductor', function(req,res){
-            console.log(req.user + " is req.user");
+           // console.log(req.user + " is req.user");
 
                   if(req.user) {
                       var s3 = new aws.S3();            
                       var folder = req.user + "/";
-                      console.log(folder);
+                     // console.log(folder);
                       var s3_params = {
                           Bucket: S3_BUCKET,  
                           Key: folder, 
@@ -304,13 +304,13 @@ console.log(process.env.RUNNING);  // hello world
    //////////////// these are the arrays being served to client ////////////////    
 
                     console.log('IMAGES: ' + imageArray.length);
-                    console.log(imageArray);
+                    // console.log(imageArray);
 
                     console.log('VIDEOS: ' + videoArray.length);
-                    console.log(videoArray);
+                    // console.log(videoArray);
 
                     console.log('AUDIO: ' + audioArray.length);
-                    console.log(audioArray);
+                    // console.log(audioArray);
 
                  
                      // end of list objects    
@@ -341,7 +341,7 @@ console.log(process.env.RUNNING);  // hello world
                 if(req.user) {
                       var s3 = new aws.S3();            
                       var folder = req.user + "/";
-                      console.log(folder);
+                     // console.log(folder);
                       var s3_params = {
                           Bucket: S3_BUCKET,  
                           Key: folder, 
@@ -395,32 +395,26 @@ console.log(process.env.RUNNING);  // hello world
    //////////////// these are the arrays being served to client ////////////////    
 
                     console.log('IMAGES: ' + imageArray.length);
-                    console.log(imageArray);
+                    // console.log(imageArray);
 
                     console.log('VIDEOS: ' + videoArray.length);
-                    console.log(videoArray);
+                    // console.log(videoArray);
 
                     console.log('AUDIO: ' + audioArray.length);
-                    console.log(audioArray);
-
+                    // console.log(audioArray);
                  
                      // end of list objects    
  
                   res.render('compose.html', {
-
                     user: req.user, 
                     images: imageArray, 
                     videos: videoArray, 
                     audio: audioArray, 
                     audionames: audioNames,
                     length: folderLength
-
                   }); 
-
                 });
-
                   page = 'compose';      
-
                   }else{        
                   res.render('index.html')        
                   }
@@ -431,14 +425,9 @@ console.log(process.env.RUNNING);  // hello world
         app.get('/sign_s3', function(req, res){
 
             console.log('hiiiiiiii');
-            // this is against AWS recommendation
-
-           // aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
             var s3 = new aws.S3();
-
             // name the new AWS folder
             var folder = req.user + "/";  // changed from userName
-
             var s3_params = {
                 Bucket: S3_BUCKET,
                 Key: folder + req.query.file_name, 
@@ -446,7 +435,6 @@ console.log(process.env.RUNNING);  // hello world
                 ContentType: req.query.file_type,
                 ACL: 'public-read' 
             };
-
             var folderLength;
             var fileArray = [];
             var imageArray = [];
@@ -517,13 +505,8 @@ console.log(process.env.RUNNING);  // hello world
 
     io.on('connection', function(socket){ 
 
-          //console.log(chalk.red(socket.request.user) + ' HAS ARRIVED @ ' + page);
-
-          console.log('socket id = ' + socket.id);
 
         socket.on('gimme', function(){  // added "user to function argument"
-
-  
             });  // end of 'gimme' 
 
 
@@ -575,8 +558,7 @@ console.log(process.env.RUNNING);  // hello world
             });
 
             socket.on('disconnect', function() {  
-              //console.log( chalk.red(userID) + ' disconnected from ' + page);
-             
+              //console.log( chalk.red(req.user) + ' disconnected from ' + page);
             });
 
 
