@@ -1,4 +1,3 @@
-
 var express = require('express');
 var path = require('path'); 
 var favicon = require('serve-favicon');
@@ -38,46 +37,8 @@ var performerCount = 0;
 
 app.io = io;  //second iteration
 
-// cookie stuff 
-app.use(session({
-    key: 'express.sid',
-    store: sessionStore,
-    secret: 'keyboard horse',
-    resave: false,
-    saveUninitialized: false
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-//added 6/7/16
-    io.use(socketioRedis.authorize({
-      passport:passport,
-      cookieParser: cookieParser,        // the same middleware you register in express
-      key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
-      secret:       'keyboard horse',    // the session_secret to parse the cookie
-      store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
-      success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
-       fail:        onAuthorizeFail,    // *optional* callback on fail/error - read more below
-    }));
-//
-
-
-function onAuthorizeSuccess(data, accept)
-{
-    console.log('Authorized success');
-    accept();    
-}
- 
-function onAuthorizeFail(data, message, error, accept)
-{
-    if(error)
-        accept(new Error(message));
-}
- 
 // if in development mode, load .env variables
 // !!!! Declare .env variables AFTER THIS
-
 if (app.get("env") === "development") {
     env(__dirname + '/.env');
 }
@@ -85,6 +46,40 @@ if (app.get("env") === "development") {
 var S3_BUCKET = process.env.S3_BUCKET;
 
 
+
+// Passport, Session, Redis, Cookie stuff ------------------------
+
+app.use(session({
+    key: 'express.sid',
+    store: sessionStore,
+    secret: 'keyboard horse',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+io.use(socketioRedis.authorize({
+    passport:passport,
+    cookieParser: cookieParser,        // the same middleware you register in express
+    key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
+    secret:       'keyboard horse',    // the session_secret to parse the cookie
+    store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
+    success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
+    fail:        onAuthorizeFail,    // *optional* callback on fail/error - read more below
+}));
+
+  function onAuthorizeSuccess(data, accept) {
+    console.log('Authorized success');
+    accept();    
+  }
+ 
+  function onAuthorizeFail(data, message, error, accept){
+    if(error)
+        accept(new Error(message));
+  }
+
+//-------------------------------------------------------------------
+ 
 // connect to mLab database-----------------------------
 
 app.db = mongoose.connect(process.env.MONGOLAB_URI);
@@ -93,22 +88,25 @@ app.db = mongoose.connect(process.env.MONGOLAB_URI);
 
 // mlab API query stuff --------------------------------
 
-var MLABKEY = process.env.MLABKEY;
+var MLABDB = process.env.MLABDB;  // keep this secure in .env
+var MLABKEY = process.env.MLABKEY;  // keep this secure in .env
 var mLab = require('mongolab-data-api')(MLABKEY);
 var options = {
-  database: 'heroku_fnss68m3',
+  database: MLABDB,
   collectionName: 'accounts',
   setOfFields: '{"salt": 0, "hash":0, "_id":0, "__v":0}'
 };
 
 mLab.listDocuments(options, function (err, data) {
-  console.log(data); //=> [ { _id: 1234, ...  } ]
+  for(i = 0; i < data.length; i++){
+  console.log(data[i].username); // strips username from JSON
+}
 }); 
 
 //-------------------------------------------------------
 
 
-// fixes clock skew issues with AWS-SDK -----------------
+// fixes clock skew issues with AWS-SDK ----------- 6/17/16
 
 aws.config.update({correctClockSkew: true});    
 
@@ -508,7 +506,7 @@ console.log(process.env.RUNNING);  // hello world
               });
             });
 
-// >>>>>>>>>>>>>>>>>>>>>>> END AWS S3 SHIZ
+//-------------------------------------------------------------------
 
     // error handlers
 
