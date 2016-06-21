@@ -84,6 +84,7 @@
 
 	 		 <!-- container for all figures -->
 			<div id="figures" align="center">
+
 	 		
 	 	  		<!-- container where performer channel buttons show up -->
  				<div id="performer-container" > </div>
@@ -113,7 +114,7 @@
  					// 	//actually calls th p5  (p5 sketches in /public/js)
 
 					// var myp5 = new p5(waveForm, 'timeLine');
-					// var myp5 = new p5(tempo, 'bpm'); 
+					//var myp5 = new p5(tempo, 'bpm'); 
 
 
 					// PERFORMER ID STUFF
@@ -192,6 +193,8 @@
 				});
 
 				// when performer logs on, handle this 
+
+				// NB : Not really sure this is still relevant
 				socket.on('givenPerfCount', function (data) {		
 
 					perfCount= data;

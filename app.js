@@ -94,6 +94,20 @@ app.db = mongoose.connect(process.env.MONGOLAB_URI);
 
 var S3_BUCKET = process.env.S3_BUCKET;
 
+var MLABKEY = process.env.MLABKEY;
+
+var mLab = require('mongolab-data-api')(MLABKEY);
+
+// mlab API query stuff 
+var options = {
+  database: 'heroku_fnss68m3',
+  collectionName: 'accounts',
+  setOfFields: '{"salt": 0, "hash":0, "_id":0, "__v":0}'
+};
+
+mLab.listDocuments(options, function (err, data) {
+  console.log(data); //=> [ { _id: 1234, ...  } ]
+});
 // fixes clock skew issues
 aws.config.update({correctClockSkew: true});    
 
@@ -248,6 +262,7 @@ console.log(process.env.RUNNING);  // hello world
            // console.log(req.user + " is req.user");
 
                   if(req.user) {
+
                       var s3 = new aws.S3();            
                       var folder = req.user + "/";
                      // console.log(folder);
@@ -327,7 +342,7 @@ console.log(process.env.RUNNING);  // hello world
 
                   page = 'conductor';  
 
-                  });
+                 });
 
                   }else{        
                   res.render('index.html')       
@@ -473,7 +488,6 @@ console.log(process.env.RUNNING);  // hello world
 
 // >>>>>>>>>>>>>>>>>>>>>>> END AWS S3 SHIZ
 
-
     // error handlers
 
     // development error handler
@@ -557,12 +571,10 @@ console.log(process.env.RUNNING);  // hello world
               console.log('gimmePerfCount = ' + performerCount);            
             });
 
-            socket.on('disconnect', function() {  
-              //console.log( chalk.red(req.user) + ' disconnected from ' + page);
-            });
-
 
         });
+
+
 
 
 module.exports = app;

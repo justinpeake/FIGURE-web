@@ -14,7 +14,7 @@ page = '';
 fileList = '';
 
 perfs = [];
-performerCount = 0;
+//performerCount = 0;
 
 
 //////////////////////////////////////////
@@ -47,7 +47,7 @@ performerCount = 0;
 
 router.post('/register', function(req, res) {
 
-        Account.register(new Account({ username : req.body.username, dbtarget : req.body.username }), req.body.password, function(err, account) {
+        Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
             if (err) {          
               return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});        
             }
@@ -60,15 +60,10 @@ router.post('/register', function(req, res) {
 
  router.post('/submit_form', function(req, res){
 
-    
-
     var figureName = req.body.figurename;    // pull out the information from the req.body
     var keySig = req.body.keysig;
     var owner = req.user;
     //var keySig = req.body.keysig;
-
-   
-
     var figureObj = {                        // hold all this data in an object
       figureName: figureName,                // this object should be structured the same way as your db model
       keySig: keySig,
