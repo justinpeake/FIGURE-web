@@ -14,13 +14,15 @@
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
 
 
-		<script>  var socket = io(); </script> 
+		<script>  var socket = io(); </script>  
 				
 				<script type="text/javascript">
-							//socket.on('connect', function() {
+
+							var socket = io(); // moved here
+							socket.on('connect', function() {
 								//socket.emit('gimmePerfCount');  // no server listener for this yet
 								console.log("Performer in the house.");
-							//});
+							});
 
 				</script>	 
 
@@ -45,8 +47,6 @@
 
 			
 	</head>
-
-	Please enter the name of the conductor you are joining.  <- make an alert box
 
 	<script type="text/javascript">
 					
@@ -188,7 +188,7 @@
 
 	
 				// when conductor creates perf buttons, handle this 
-				socket.on(subscribedTo + ' perfCount', function (data) {
+				socket.on (subscribedTo + ' perfCount', function (data) {
 
 				console.log("got a new subscribed perf count");
 
