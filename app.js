@@ -568,14 +568,15 @@ console.log(process.env.RUNNING);  // hello world
 
             socket.on(socket.request.user + ' perfCount', function(data) {
               performerCount = data;
+              console.log("socket request.user is " + socket.request.user);
               socket.broadcast.emit(socket.request.user + ' perfCount', data);                   
               console.log('perfCount = ' + performerCount);            
             });
 
-            socket.on('gimmePerfCount', function(data) {
-              socket.emit('givenPerfCount', performerCount);                   
-              console.log('gimmePerfCount = ' + performerCount);            
-            });
+            // socket.on('gimmePerfCount', function(data) {
+            //   socket.emit('givenPerfCount', performerCount);                   
+            //   console.log('gimmePerfCount = ' + performerCount);            
+            // });
         });
 
 module.exports = app;
