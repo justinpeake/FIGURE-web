@@ -17,10 +17,10 @@
 		<script>  var socket = io(); </script> 
 				
 				<script type="text/javascript">
-							socket.on('connect', function() {
+							//socket.on('connect', function() {
 								//socket.emit('gimmePerfCount');  // no server listener for this yet
 								console.log("Performer in the house.");
-							});
+							//});
 
 				</script>	 
 
@@ -191,7 +191,7 @@
 				socket.on(subscribedTo + ' perfCount', function (data) {
 
 				console.log("got a new subscribed perf count");
-					
+
 					perfCount= data;
 					$('.performerDivB').remove();
 						perfs = [];
