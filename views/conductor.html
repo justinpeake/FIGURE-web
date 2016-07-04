@@ -17,7 +17,7 @@
 				
 				<script type="text/javascript">
 							// socket.on('connect', function() {
-							//socket.emit('gimme');
+							// socket.emit('gimme');
 							console.log("Conducter in the house.");
 						// });
 				</script>	
@@ -184,6 +184,8 @@
 		function updatePerfCount() {
 
 			pX = document.getElementById("myNumber").value;
+
+
 
 				socket.emit(acct + ' perfCount', pX);   //CHANGE added acct 7/2
 
