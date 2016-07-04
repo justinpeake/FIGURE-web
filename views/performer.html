@@ -190,7 +190,8 @@
 				// when conductor creates perf buttons, handle this 
 				socket.on(subscribedTo + ' perfCount', function (data) {
 
-				console.log("got a new subscribed perf count")	
+				console.log("got a new subscribed perf count");
+					
 					perfCount= data;
 					$('.performerDivB').remove();
 						perfs = [];
