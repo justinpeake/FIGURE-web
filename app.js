@@ -533,37 +533,37 @@ console.log(process.env.RUNNING);  // hello world
 
             socket.on(socket.request.user + ' sendingTo', function(data) {
               console.log("Received: 'sendingTo' " + data);
-              socket.broadcast.emit('sendingTo', data);
+              socket.broadcast.emit(socket.request.user + ' sendingTo', data);
             });         
 
             socket.on(socket.request.user + ' sendingAll', function(data) {
               console.log("Received: 'sendingAll' " + data);
-              socket.broadcast.emit('sendingAll', data);
+              socket.broadcast.emit(socket.request.user + ' sendingAll', data);
             });
 
             socket.on(socket.request.user + ' toGroup', function(data) {
               console.log("Received: 'toGroup' " + data);
-              socket.broadcast.emit('toGroup', data);
+              socket.broadcast.emit(socket.request.user + ' toGroup', data);
             });
 
               socket.on(socket.request.user + ' videoFigure', function(data) {
               console.log("Received: 'videoFigure' " + data);
-              socket.broadcast.emit('videoFigure', data);
+              socket.broadcast.emit(socket.request.user + ' videoFigure', data);
             });
 
             socket.on(socket.request.user + ' imageFigure', function(data) {
               console.log("Received: 'imageFigure' " + data);
-              socket.broadcast.emit('imageFigure', data);
+              socket.broadcast.emit(socket.request.user + ' imageFigure', data);
             });
 
             socket.on(socket.request.user + ' switch', function(data) {
               console.log("Received: switch " + data);
-              socket.broadcast.emit('switch', data);
+              socket.broadcast.emit(socket.request.user + ' switch', data);
             });
 
             socket.on(socket.request.user + ' waveSketch', function(data) {
               console.log("Received: waveSketch " + data);
-              socket.broadcast.emit('waveSketch', data);
+              socket.broadcast.emit(socket.request.user + ' waveSketch', data);
             });
 
             socket.on(socket.request.user + ' perfCount', function(data) {

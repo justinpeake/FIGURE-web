@@ -118,6 +118,18 @@
 					// var myp5 = new p5(waveForm, 'timeLine');
 					//var myp5 = new p5(tempo, 'bpm'); 
 
+					var subscribedTo;
+
+					var whosBoss = prompt("Please enter the name of the composer you are joining");
+						if (whosBoss != null) {
+     						   subscribedTo = whosBoss;
+  						}
+
+  						console.log("whosBoss is " + subscribedTo);
+    
+
+
+
 
 					// PERFORMER ID STUFF
 						//initialize globals for performer id
@@ -128,7 +140,7 @@
 
 					// this determines which composition you receive messages from
 
-					var subscribedTo = 'shawn';  
+					//var subscribedTo = 'shawn';  
 
 					//p5 WAVE STUFF
 						// this var exists inside of the p5 instance "waveForm"
@@ -195,26 +207,26 @@
 				// when performer logs on, handle this 
 
 				// NB : Not really sure this is still relevant
-				// socket.on('givenPerfCount', function (data) {		
+				socket.on(subscribedTo +' givenPerfCount', function (data) {		
 
-				// 	perfCount= data;
+					perfCount= data;
 					
 
-				// 	$('.performerDivB').remove();
-				// 		perfs = [];
+					$('.performerDivB').remove();
+						perfs = [];
 
-		  //   			for(i=0; i < perfCount ; i++){
-				// 	    	perfs[i] = document.createElement('div');
-				// 	    	perfs[i].className = 'performerDivB';
-				// 	    	perfs[i].id = 'cp' + (i+1);
-				// 	    	perfs[i].innerHTML = i + 1;
-				// 	    	document.getElementById('performer-container').appendChild(perfs[i]);
-				// 	    };
+		    			for(i=0; i < perfCount ; i++){
+					    	perfs[i] = document.createElement('div');
+					    	perfs[i].className = 'performerDivB';
+					    	perfs[i].id = 'cp' + (i+1);
+					    	perfs[i].innerHTML = i + 1;
+					    	document.getElementById('performer-container').appendChild(perfs[i]);
+					    };
 					
-				// 		for (var i = 0; i < perfCount; i++){
-		  //   				$('#cp' + (i+1)).click(doTheThing(i));
-		  //   			};	
-				// });
+						for (var i = 0; i < perfCount; i++){
+		    				$('#cp' + (i+1)).click(doTheThing(i));
+		    			};	
+				});
 
 
 				//the function called above in  " socket.on('perfCount', function (data){...} " 
