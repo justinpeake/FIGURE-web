@@ -98,7 +98,7 @@ var mLab = require('mongolab-data-api')(MLABKEY);
 var options = {
   database: MLABDB,
   collectionName: 'accounts',
-  setOfFields: '{"salt": 0, "hash":0, "_id":0, "__v":0}'
+  setOfFields: '{"salt": 0, "hash":0, "_id":0, "__v":0}'  //"0" means "false" or " "dont return those"
 };
 
 mLab.listDocuments(options, function (err, data) {
@@ -354,7 +354,6 @@ console.log(process.env.RUNNING);  // hello world
           app.get('/compose', function(req, res) {
               
                        
-
                 if(req.user) {
 
                       var s3 = new aws.S3();            
@@ -532,130 +531,51 @@ console.log(process.env.RUNNING);  // hello world
             });  // end of 'gimme' 
 
 
-            socket.on('sendingTo', function(data) {
+            socket.on(socket.request.user + ' sendingTo', function(data) {
               console.log("Received: 'sendingTo' " + data);
               socket.broadcast.emit('sendingTo', data);
             });         
 
-            socket.on('sendingAll', function(data) {
+            socket.on(socket.request.user + ' sendingAll', function(data) {
               console.log("Received: 'sendingAll' " + data);
               socket.broadcast.emit('sendingAll', data);
             });
 
-            socket.on('toGroup', function(data) {
+            socket.on(socket.request.user + ' toGroup', function(data) {
               console.log("Received: 'toGroup' " + data);
               socket.broadcast.emit('toGroup', data);
             });
 
-              socket.on('videoFigure', function(data) {
+              socket.on(socket.request.user + ' videoFigure', function(data) {
               console.log("Received: 'videoFigure' " + data);
               socket.broadcast.emit('videoFigure', data);
             });
 
-            socket.on('imageFigure', function(data) {
+            socket.on(socket.request.user + ' imageFigure', function(data) {
               console.log("Received: 'imageFigure' " + data);
               socket.broadcast.emit('imageFigure', data);
             });
 
-            socket.on('switch', function(data) {
+            socket.on(socket.request.user + ' switch', function(data) {
               console.log("Received: switch " + data);
               socket.broadcast.emit('switch', data);
             });
 
-            socket.on('waveSketch', function(data) {
+            socket.on(socket.request.user + ' waveSketch', function(data) {
               console.log("Received: waveSketch " + data);
               socket.broadcast.emit('waveSketch', data);
             });
 
-            socket.on('perfCount', function(data) {
+            socket.on(socket.request.user + ' perfCount', function(data) {
               performerCount = data;
-              socket.broadcast.emit('perfCount', data);                   
+              socket.broadcast.emit(socket.request.user + ' perfCount', data);                   
               console.log('perfCount = ' + performerCount);            
             });
-
 
             socket.on('gimmePerfCount', function(data) {
               socket.emit('givenPerfCount', performerCount);                   
               console.log('gimmePerfCount = ' + performerCount);            
             });
         });
-
-
-function awsListObjects(reqUser){
-
-          var s3 = new aws.S3();            
-          var folder = reqUser + "/";
-
-          var s3_params = {
-              Bucket: S3_BUCKET,  
-              Key: folder, 
-              Expires: 60,
-              ACL: 'public-read'  
-          };
-
-          var folderLength;
-          var fileArray = [];
-          var imageArray = [];
-          var videoArray = [];
-          var audioArray = [];
-          var audioNames = [];
-
-  s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
-
-        var folderLength = data.Contents.length;
-        
-        // filling fileArray[] with all the URL's from amazon
-        for (i = 0; i < folderLength; i++){
-           fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
-           };
-
-          /*  
-              1) this is splitting the urls > 
-              2) looking at the last array element (which is 'most likely' the file extension)
-                  ^ this could ultimately be buggy if the naming conventions change
-              3) checking to see whether the file extension matches any of the strings
-              4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
-          */
-
-          for (i = 0; i < folderLength; i++){
-            if (fileArray[i].split(".")[4] == 'jpg'){
-              imageArray.push(fileArray[i]);  
-            } else if (fileArray[i].split(".")[4] == 'png'){
-              imageArray.push(fileArray[i]);    
-            }  else if (fileArray[i].split(".")[4] == 'mov'){
-              videoArray.push(fileArray[i]); 
-            } else if (fileArray[i].split(".")[4] == 'wav'){
-              audioArray.push(fileArray[i]);
-
-              //splitting url to extract the name of the file  
-              audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-            } else if (fileArray[i].split(".")[4] == 'mp3'){
-              audioArray.push(fileArray[i]);
-              audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-            }                 
-            
-          };  // end of file for loop
-
-          console.log('IMAGES: ' + imageArray.length);
-          // console.log(imageArray);
-
-          console.log('VIDEOS: ' + videoArray.length);
-          // console.log(videoArray);
-
-          console.log('AUDIO: ' + audioArray.length);
-          // console.log(audioArray);
-
-          return folderLength;
-          return fileArray;
-          return imageArray;
-          return videoArray;
-          return audioArray;
-          return audioNames;
-
-
-    });
-
-};   // end awsListObject Function
-
 
 module.exports = app;

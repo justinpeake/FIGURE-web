@@ -114,6 +114,9 @@
 
 
 				// working  (from line 322)
+				var acct = "{{user}}";
+
+				console.log("user is " + acct);
 				var toWhom = 0;  // initialize these globally, used in server and emit to performers
 				var toAll = 0;
 				var divs = [];
@@ -180,7 +183,9 @@
 
 			pX = document.getElementById("myNumber").value;
 
-				socket.emit('perfCount', pX);
+
+
+				socket.emit(acct + ' perfCount', pX);   //CHANGE added acct 7/2
 
 						//makes the circular buttons
 			  			$('.performerDivB').remove();
@@ -230,9 +235,9 @@
 			 			member = member + 1;
 		
 			 			//may not need this when grouping is done	
-			 			socket.emit('toGroup', group);
-			 			socket.emit('sendingTo', toWhom, toAll);
-			 			socket.emit('sendingAll', toAll);
+			 			socket.emit(acct + ' toGroup', group);
+			 			socket.emit(acct + ' sendingTo', toWhom, toAll);
+			 			socket.emit(acct + ' sendingAll', toAll);
 
 			 			};
 		 			};
@@ -279,12 +284,10 @@
 			return function(){
 				var image = "#iF" + index; 
 				$(image).fadeTo("slow", 0.5);				
-				socket.emit('imageFigure', imageSrcs[index]);
+				socket.emit(acct + ' imageFigure', imageSrcs[index]);
 
 				
 				// display who is playing which figure
-			
-				//  KAT KILLED THIS
 
 			for(i=0; i < group.length; i++){
 				 whoWhat['player' + group[i]] = 'iT' + index;
@@ -353,7 +356,7 @@
 		function fadeTheFadeV(index){
 			return function(){
 				$("#vF" + index).fadeTo("slow", 0.5);
-				socket.emit('videoFigure', videoSrcs[index])
+				socket.emit(acct + ' videoFigure', videoSrcs[index])
 			};
 		};	
 
@@ -386,7 +389,7 @@
 		function fadeTheFadeA(index){
 			return function(){
 				$("#aF" + index).fadeTo("slow", 0.5);
-				socket.emit('waveSketch', waveSrcs[index])
+				socket.emit(acct + ' waveSketch', waveSrcs[index])
 			};
 		};	
 
@@ -458,9 +461,7 @@
 /////// BEGIN PERFORMER SCRIPT
 
  				
- 				//actually calls th p5  (p5 sketches in /public/js)
-
-					
+ 					//actually calls th p5  (p5 sketches in /public/js)
 
 					// DEFAULT p5 elements should be called globally?
 					// maybe better to call them to preserve cpu 
@@ -482,106 +483,106 @@
 
 		//performer buttons
 
-	 	$(perf1).click(function(){
+	 // 	$(perf1).click(function(){
 
-	 		myId = 1;
+	 // 		myId = 1;
 
-	 		$(perf1).fadeTo(500, 0.5);
-	 		$(perf2).fadeTo(500, 1);			 		
-	 		$(perf3).fadeTo(500, 1);
-	 		$(perf4).fadeTo(500, 1);
-	 		$(perf5).fadeTo(500, 1);
+	 // 		$(perf1).fadeTo(500, 0.5);
+	 // 		$(perf2).fadeTo(500, 1);			 		
+	 // 		$(perf3).fadeTo(500, 1);
+	 // 		$(perf4).fadeTo(500, 1);
+	 // 		$(perf5).fadeTo(500, 1);
 
-	 		$(perf1).css('color', 'red');
-	 		$(perf2).css('color', 'white');
-	 		$(perf3).css('color', 'white');
-	 		$(perf4).css('color', 'white');
-	 		$(perf5).css('color', 'white');
+	 // 		$(perf1).css('color', 'red');
+	 // 		$(perf2).css('color', 'white');
+	 // 		$(perf3).css('color', 'white');
+	 // 		$(perf4).css('color', 'white');
+	 // 		$(perf5).css('color', 'white');
 	 		
-			console.log("I am Performer " + myId);
-	 	}
-	 );
+		// 	console.log("I am Performer " + myId);
+	 // 	}
+	 // );
 
-	 	$(perf2).click(function(){
+	 // 	$(perf2).click(function(){
 
-	 		myId = 2;
+	 // 		myId = 2;
 
-	 		$(perf1).fadeTo(500, 1);
-	 		$(perf2).fadeTo(500, 0.5);			 		
-	 		$(perf3).fadeTo(500, 1);
-	 		$(perf4).fadeTo(500, 1);
-	 		$(perf5).fadeTo(500, 1);
+	 // 		$(perf1).fadeTo(500, 1);
+	 // 		$(perf2).fadeTo(500, 0.5);			 		
+	 // 		$(perf3).fadeTo(500, 1);
+	 // 		$(perf4).fadeTo(500, 1);
+	 // 		$(perf5).fadeTo(500, 1);
 
-	 		$(perf1).css('color', 'white');
-	 		$(perf2).css('color', 'red');
-	 		$(perf3).css('color', 'white');
-	 		$(perf4).css('color', 'white');
-	 		$(perf5).css('color', 'white');
+	 // 		$(perf1).css('color', 'white');
+	 // 		$(perf2).css('color', 'red');
+	 // 		$(perf3).css('color', 'white');
+	 // 		$(perf4).css('color', 'white');
+	 // 		$(perf5).css('color', 'white');
 
-			console.log("I am Performer " + myId);		
-	 	}
-	 );
+		// 	console.log("I am Performer " + myId);		
+	 // 	}
+	 // );
 
-	 	$(perf3).click(function(){
+	 // 	$(perf3).click(function(){
 
-	 		myId = 3;
+	 // 		myId = 3;
 
-	 		$(perf1).fadeTo(500, 1);
-	 		$(perf2).fadeTo(500, 1);			 		
-	 		$(perf3).fadeTo(500, 0.5);
-	 		$(perf4).fadeTo(500, 1);
-	 		$(perf5).fadeTo(500, 1);
+	 // 		$(perf1).fadeTo(500, 1);
+	 // 		$(perf2).fadeTo(500, 1);			 		
+	 // 		$(perf3).fadeTo(500, 0.5);
+	 // 		$(perf4).fadeTo(500, 1);
+	 // 		$(perf5).fadeTo(500, 1);
 
-	 		$(perf1).css('color', 'white');
-	 		$(perf2).css('color', 'white');
-	 		$(perf3).css('color', 'red');
-	 		$(perf4).css('color', 'white');
-	 		$(perf5).css('color', 'white');
+	 // 		$(perf1).css('color', 'white');
+	 // 		$(perf2).css('color', 'white');
+	 // 		$(perf3).css('color', 'red');
+	 // 		$(perf4).css('color', 'white');
+	 // 		$(perf5).css('color', 'white');
 
-	 		console.log("I am Performer " + myId);
-	 	}
-	 );
+	 // 		console.log("I am Performer " + myId);
+	 // 	}
+	 // );
 
-		$(perf4).click(function(){
+		// $(perf4).click(function(){
 
-	 		myId = 4;
+	 // 		myId = 4;
 
-	 		$(perf1).fadeTo(500, 1);
-	 		$(perf2).fadeTo(500, 1);			 		
-	 		$(perf3).fadeTo(500, 1);
-	 		$(perf4).fadeTo(500, 0.5);
-	 		$(perf5).fadeTo(500, 1);
+	 // 		$(perf1).fadeTo(500, 1);
+	 // 		$(perf2).fadeTo(500, 1);			 		
+	 // 		$(perf3).fadeTo(500, 1);
+	 // 		$(perf4).fadeTo(500, 0.5);
+	 // 		$(perf5).fadeTo(500, 1);
 
-	 		$(perf1).css('color', 'white');
-	 		$(perf2).css('color', 'white');
-	 		$(perf3).css('color', 'white');
-	 		$(perf4).css('color', 'red');
-	 		$(perf5).css('color', 'white');
+	 // 		$(perf1).css('color', 'white');
+	 // 		$(perf2).css('color', 'white');
+	 // 		$(perf3).css('color', 'white');
+	 // 		$(perf4).css('color', 'red');
+	 // 		$(perf5).css('color', 'white');
 
-	 		console.log("I am Performer " + myId);
-	 	}
-	 );	 	
+	 // 		console.log("I am Performer " + myId);
+	 // 	}
+	 // );	 	
 
 
-		$(perf5).click(function(){
+		// $(perf5).click(function(){
 
-	 		myId = 5;
+	 // 		myId = 5;
 
-	 		$(perf1).fadeTo(500, 1);
-	 		$(perf2).fadeTo(500, 1);			 		
-	 		$(perf3).fadeTo(500, 1);
-	 		$(perf4).fadeTo(500, 1);
-	 		$(perf5).fadeTo(500, 0.5);
+	 // 		$(perf1).fadeTo(500, 1);
+	 // 		$(perf2).fadeTo(500, 1);			 		
+	 // 		$(perf3).fadeTo(500, 1);
+	 // 		$(perf4).fadeTo(500, 1);
+	 // 		$(perf5).fadeTo(500, 0.5);
 
-	 		$(perf1).css('color', 'white');
-	 		$(perf2).css('color', 'white');
-	 		$(perf3).css('color', 'white');
-	 		$(perf4).css('color', 'white');
-	 		$(perf5).css('color', 'red');
+	 // 		$(perf1).css('color', 'white');
+	 // 		$(perf2).css('color', 'white');
+	 // 		$(perf3).css('color', 'white');
+	 // 		$(perf4).css('color', 'white');
+	 // 		$(perf5).css('color', 'red');
 
-	 		console.log("I am Performer " + myId);
-	 	}
-	 );
+	 // 		console.log("I am Performer " + myId);
+	 // 	}
+	 // );
 
 	 				// functions (just one right now)
 	 				var flashIncoming = function(){

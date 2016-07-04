@@ -46,6 +46,8 @@
 			
 	</head>
 
+	Please enter the name of the conductor you are joining.  <- make an alert box
+
 	<script type="text/javascript">
 					
 			socket.on('switch', function (data){
@@ -118,23 +120,25 @@
 
 
 					// PERFORMER ID STUFF
-					//initialize globals for performer id
+						//initialize globals for performer id
 					var myId = 0; 
 					var toWhom = 0;
 					var toAll = 0;
 					var group = [];
 
+					// this determines which composition you receive messages from
+
+					var subscribedTo = 'shawn';  
 
 					//p5 WAVE STUFF
-					// this var exists inside of the p5 instance "waveForm"
+						// this var exists inside of the p5 instance "waveForm"
 					var trackName = '';
-					
 					//changed this from myp5 to wave
 					var wave;	
 
 									
 				// this is handling the p5 instance for wavePlayer
-				socket.on ('waveSketch', function (data){
+				socket.on (subscribedTo + ' waveSketch', function (data){
 
 					trackName = data;
 					
@@ -170,15 +174,12 @@
 
 				var oldID; // used to switch button activation in doTheThing()
 
-
+	
 				// when conductor creates perf buttons, handle this 
-				socket.on('perfCount', function (data) {	
-
+				socket.on(subscribedTo + ' perfCount', function (data) {	
 					perfCount= data;
-
 					$('.performerDivB').remove();
 						perfs = [];
-
 		    			for(i=0; i < perfCount ; i++){
 					    	perfs[i] = document.createElement('div');
 					    	perfs[i].className = 'performerDivB';
@@ -186,7 +187,6 @@
 					    	perfs[i].innerHTML = i + 1;
 					    	document.getElementById('performer-container').appendChild(perfs[i]);
 					    };
-
 						for (var i = 0; i < perfCount; i++){
 		    				$('#cp' + (i+1)).click(doTheThing(i));
 		    			};	
@@ -195,29 +195,29 @@
 				// when performer logs on, handle this 
 
 				// NB : Not really sure this is still relevant
-				socket.on('givenPerfCount', function (data) {		
+				// socket.on('givenPerfCount', function (data) {		
 
-					perfCount= data;
+				// 	perfCount= data;
 					
 
-					$('.performerDivB').remove();
-						perfs = [];
+				// 	$('.performerDivB').remove();
+				// 		perfs = [];
 
-		    			for(i=0; i < perfCount ; i++){
-					    	perfs[i] = document.createElement('div');
-					    	perfs[i].className = 'performerDivB';
-					    	perfs[i].id = 'cp' + (i+1);
-					    	perfs[i].innerHTML = i + 1;
-					    	document.getElementById('performer-container').appendChild(perfs[i]);
-					    };
+		  //   			for(i=0; i < perfCount ; i++){
+				// 	    	perfs[i] = document.createElement('div');
+				// 	    	perfs[i].className = 'performerDivB';
+				// 	    	perfs[i].id = 'cp' + (i+1);
+				// 	    	perfs[i].innerHTML = i + 1;
+				// 	    	document.getElementById('performer-container').appendChild(perfs[i]);
+				// 	    };
 					
-						for (var i = 0; i < perfCount; i++){
-		    				$('#cp' + (i+1)).click(doTheThing(i));
-		    			};	
-				});
+				// 		for (var i = 0; i < perfCount; i++){
+		  //   				$('#cp' + (i+1)).click(doTheThing(i));
+		  //   			};	
+				// });
 
 
-				//the function both of ^ are calling
+				//the function called above in  " socket.on('perfCount', function (data){...} " 
 					function doTheThing(index) {
 
 			    	return function(){ 
@@ -251,18 +251,18 @@
 
 ///////////////////////////////////////////////////// END DYNAMIC PERF SHIZZ
 
-						socket.on('toGroup', function (data) {							
+						socket.on(subscribedTo + ' toGroup', function (data) {							
 							group = data;
 							console.log(group);
 						});
 
-						socket.on('sendingTo', function (data) {							
+						socket.on(subscribedTo + ' sendingTo', function (data) {							
 							toWhom = data;
 							console.log("toWhom = " + toWhom);
 							
 						});
 
-						socket.on('sendingAll', function (data) {							
+						socket.on(subscribedTo + ' sendingAll', function (data) {							
 							toAll = data;
 							console.log("toAll= " + toAll);	
 							
@@ -272,7 +272,7 @@
 				
 
 
-						socket.on('videoFigure', function (data) {
+						socket.on(subscribedTo + ' videoFigure', function (data) {
 
 
 								//checks to see if conductor is talking to "you"
@@ -300,7 +300,7 @@
 
 					
 
-						socket.on('imageFigure', function (data) {
+						socket.on(subscribedTo + ' imageFigure', function (data) {
 
 							if (group.indexOf(myId) > -1 || toAll == 1) {
 
