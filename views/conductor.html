@@ -150,7 +150,7 @@
 				$(switcher).click(function(){
 
 					console.log('switch ' + toWhom);
-					socket.emit('switch', toWhom);
+					socket.emit(acct + ' switch', toWhom);
 
 					document.getElementById("everythingPerformer").style.display = "block";
 					document.getElementById("everythingConductor").style.display= "none";
@@ -168,7 +168,7 @@
 				    $(all).css('color', 'red');
 
 					console.log('sendingAll ' + toAll);
-					socket.emit('sendingAll', toAll);
+					socket.emit(acct + ' sendingAll', toAll);
 
 				});
 

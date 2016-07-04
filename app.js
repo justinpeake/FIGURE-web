@@ -532,7 +532,7 @@ console.log(process.env.RUNNING);  // hello world
 
 
             socket.on(socket.request.user + ' sendingTo', function(data) {
-              console.log("Received: 'sendingTo' " + data);
+              console.log("Received:" + socket.request.user + "' sendingTo' " + data);
               socket.broadcast.emit(socket.request.user + ' sendingTo', data);
             });         
 
