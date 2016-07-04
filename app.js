@@ -527,8 +527,8 @@ console.log(process.env.RUNNING);  // hello world
     io.on('connection', function(socket){ 
 
 
-        socket.on('gimme', function(){  // added "user to function argument"
-            });  // end of 'gimme' 
+        // socket.on('gimme', function(){  // added "user to function argument"
+        //     });  // end of 'gimme' 
 
 
             socket.on(socket.request.user + ' sendingTo', function(data) {
