@@ -1,7 +1,7 @@
  <html>
 	<head>
 
-			<title> FIGURE :: PERFORMER</title>
+		<title> FIGURE :: PERFORMER</title>
 
 		<link rel="stylesheet" type="text/css" href="/css/style.css">
 
@@ -14,58 +14,55 @@
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
 				
 
-				<script> 
+		<script> 
 
-						var whosBoss = prompt("Please enter the name of the composer you are joining");
+			var whosBoss = prompt("Please enter the name of the composer you are joining");
 
-						if (whosBoss != null) {
-     						   subscribedTo = whosBoss;
+			if (whosBoss != null) {
+					   subscribedTo = whosBoss;	   
+				}
 
-     						   // put socket connection here?
-  						}
+				//console.log("whosBoss is " + subscribedTo);
+				
+			var socket = io(); 
+			console.log("Socket thing");
 
-  						console.log("whosBoss is " + subscribedTo);
-  						
-						var socket = io(); 
-						console.log("Socket thing");
-				</script>
+		</script>
 
-				<script type="text/javascript">
+		<script type="text/javascript">
+			
+			socket.on('connect', function() {
+				//socket.emit('gimmePerfCount');  // no server listener for this yet
+				console.log("Socket Connection");
+			});
 
-							// this is new
-
-							
-							socket.on('connect', function() {
-								//socket.emit('gimmePerfCount');  // no server listener for this yet
-								console.log("Socket Connection");
-							});
-
-				</script>	 
+		</script>	 
 
 
-				<style>
-						#everythingConductor {
-							/*visibility: visible;*/ 
-							display: none;
-						}
+		<style>
+			
+			#everythingConductor {
+				/*visibility: visible;*/ 
+				display: none;
+			}
 
-						#everythingPerformer {
-							/*visibility: hidden;*/
-							display: block;
-						}
+			#everythingPerformer {
+				/*visibility: hidden;*/
+				display: block;
+			}
 
-					/*	#sketchFigure {
-							visibility: hidden;
-							display: block;
-						}  */
+		/*	#sketchFigure {
+				visibility: hidden;
+				display: block;
+			}  */
 
-				</style>
+		</style>
 
 			
 	</head>
 
-	<script type="text/javascript">
-					
+		<script type="text/javascript">
+						
 			socket.on('switch', function (data){
 				
 				document.getElementById("everythingPerformer").style.display = "none";
@@ -79,7 +76,7 @@
 			});
 
 
-	</script>
+		</script>
 
 
 <body>
@@ -88,266 +85,260 @@
 <div id="everythingPerformer" align="center">
 
 
-		<div id="perfDialogue"> 				 
+	<div id="perfDialogue"> 				 
 
-			<div id="youAre"> </div>			
-						 		
-			<!-- responds to the "incoming" function -->
+		<div id="youAre"> </div>			
+					 		
+		<!-- responds to the "incoming" function -->
 
-			<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
+		<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
 
-		</div> 
+</div> 
 
 
-	 
+			 <!-- container for all figures -->
+	<div id="figures" align="center">
 
-	 		 <!-- container for all figures -->
-			<div id="figures" align="center">
+			
+  		<!-- container where performer channel buttons show up -->
+		<div id="performer-container" > </div>
 
-	 		
-	 	  		<!-- container where performer channel buttons show up -->
- 				<div id="performer-container" > </div>
+		 <!-- container where the waveForm visualizer sketch shows up -->
+  		<div id="waveSketch"> </div>
 
- 				 <!-- container where the waveForm visualizer sketch shows up -->
-	 	  		<div id="waveSketch"> </div>
+	  		<!-- container where video figures show up -->
+	 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
+	 	
+	 	<!-- container where image figures show up -->
+	 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
+		 	
+	</div>
 
-	 	  		<!-- container where video figures show up -->
-			 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
-			 	
-			 	<!-- container where image figures show up -->
-			 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
-			 	
-			</div>
 </div>
 
  
  <script type="text/javascript">
 
-
-
 /////// BEGIN PERFORMER SCRIPT
 
-	 				// 	//variable to change p5
-	 				// 	var sketch = q;
-				
- 					// 	//actually calls th p5  (p5 sketches in /public/js)
+	// 	//variable to change p5
+	// 	var sketch = q;
 
-					// var myp5 = new p5(waveForm, 'timeLine');
-					//var myp5 = new p5(tempo, 'bpm'); 
+	// 	//actually calls th p5  (p5 sketches in /public/js)
 
-					var subscribedTo;
+	// var myp5 = new p5(waveForm, 'timeLine');
+	//var myp5 = new p5(tempo, 'bpm'); 
+
+	var subscribedTo;
 
 
-					// PERFORMER ID STUFF
-						//initialize globals for performer id
+	// PERFORMER ID STUFF
+		//initialize globals for performer id
 
-					var myId = 0; 
-					var toWhom = 0;
-					var toAll = 0;
-					var group = [];
+	var myId = 0; 
+	var toWhom = 0;
+	var toAll = 0;
+	var group = [];
 
-					// this determines which composition you receive messages from
+	// this determines which composition you receive messages from
 
-					//var subscribedTo = 'shawn';  
+	//var subscribedTo = 'shawn';  
 
-					//p5 WAVE STUFF
-						// this var exists inside of the p5 instance "waveForm"
-					var trackName = '';
-					//changed this from myp5 to wave
-					var wave;	
+	//p5 WAVE STUFF
+		// this var exists inside of the p5 instance "waveForm"
+	var trackName = '';
+	//changed this from myp5 to wave
+	var wave;	
 
 									
-				// this is handling the p5 instance for wavePlayer
-				socket.on (subscribedTo + ' waveSketch', function (data){
+	// this is handling the p5 instance for wavePlayer
+	socket.on (subscribedTo + ' waveSketch', function (data){
 
-					trackName = data;
-					
-					/* logic below: if there isn't an instance one on the page (it will be undefined) so create a new one
-					 if there is an instance, remove it and create a new one */
+		trackName = data;
+		
+		/* logic below: if there isn't an instance one on the page (it will be undefined) so create a new one
+		 if there is an instance, remove it and create a new one */
 
-					 //changed to add the toWhom conditional logic
-					if ( myId == toWhom || toAll == 1 && typeof(myp5) == 'undefined' ){						
-							wave = new p5(waveForm, "waveSketch"); 
-						} else if ( myId == toWhom || toAll == 1) {
-							wave.remove();
-							wave = new p5(waveForm, "waveSketch"); 
-						}
+		 //changed to add the toWhom conditional logic
+		if ( myId == toWhom || toAll == 1 && typeof(myp5) == 'undefined' ){						
+				wave = new p5(waveForm, "waveSketch"); 
+			} else if ( myId == toWhom || toAll == 1) {
+				wave.remove();
+				wave = new p5(waveForm, "waveSketch"); 
+			}
 
-				});
+	});
 
 
-					 $(incoming).fadeTo(1,0);
+	$(incoming).fadeTo(1,0);
 
-	 				// functions (just one right now)
-	 				var flashIncoming = function(){
-						$(incoming).fadeTo(500, 1);
-						$(incoming).fadeTo(500, 0);
-					};
+		// functions (just one right now)
+	var flashIncoming = function(){
+		$(incoming).fadeTo(500, 1);
+		$(incoming).fadeTo(500, 0);
+	};
 
 
 ////////////////////////// DYNAMIC PERF SHIZZ					
 
-			// routes messages across channels
+// routes messages across channels
 
-				var perfCount;
-				var perfs = [];
+	var perfCount;
+	var perfs = [];
 
-				var oldID; // used to switch button activation in doTheThing()
+	var oldID; // used to switch button activation in doTheThing()
 
 	
-				// when conductor creates perf buttons, handle this 
-				socket.on (subscribedTo + ' perfCount', function (data) {
+	// when conductor creates perf buttons, handle this 
+	socket.on (subscribedTo + ' perfCount', function (data) {
 
-				console.log("got a new subscribed perf count");
+		console.log("got a new subscribed perf count");
 
-					perfCount= data;
-					$('.performerDivB').remove();
-						perfs = [];
-		    			for(i=0; i < perfCount ; i++){
-					    	perfs[i] = document.createElement('div');
-					    	perfs[i].className = 'performerDivB';
-					    	perfs[i].id = 'cp' + (i+1);
-					    	perfs[i].innerHTML = i + 1;
-					    	document.getElementById('performer-container').appendChild(perfs[i]);
-					    };
-						for (var i = 0; i < perfCount; i++){
-		    				$('#cp' + (i+1)).click(doTheThing(i));
-		    			};	
-				});
+		perfCount= data;
+		$('.performerDivB').remove();
+			perfs = [];
+			for(i=0; i < perfCount ; i++){
+		    	perfs[i] = document.createElement('div');
+		    	perfs[i].className = 'performerDivB';
+		    	perfs[i].id = 'cp' + (i+1);
+		    	perfs[i].innerHTML = i + 1;
+		    	document.getElementById('performer-container').appendChild(perfs[i]);
+		    };
+			for (var i = 0; i < perfCount; i++){
+				$('#cp' + (i+1)).click(doTheThing(i));
+			};	
+	});
 
-				// when performer logs on, handle this 
+	// when performer logs on, handle this 
 
-				// NB : Not really sure this is still relevant
-				socket.on(subscribedTo +' givenPerfCount', function (data) {		
+	// NB : Not really sure this is still relevant
+	socket.on(subscribedTo +' givenPerfCount', function (data) {		
 
-					perfCount= data;
-					
+		perfCount= data;
+		
+		$('.performerDivB').remove();
+			perfs = [];
 
-					$('.performerDivB').remove();
-						perfs = [];
-
-		    			for(i=0; i < perfCount ; i++){
-					    	perfs[i] = document.createElement('div');
-					    	perfs[i].className = 'performerDivB';
-					    	perfs[i].id = 'cp' + (i+1);
-					    	perfs[i].innerHTML = i + 1;
-					    	document.getElementById('performer-container').appendChild(perfs[i]);
-					    };
-					
-						for (var i = 0; i < perfCount; i++){
-		    				$('#cp' + (i+1)).click(doTheThing(i));
-		    			};	
-				});
+			for(i=0; i < perfCount ; i++){
+		    	perfs[i] = document.createElement('div');
+		    	perfs[i].className = 'performerDivB';
+		    	perfs[i].id = 'cp' + (i+1);
+		    	perfs[i].innerHTML = i + 1;
+		    	document.getElementById('performer-container').appendChild(perfs[i]);
+		    };
+		
+			for (var i = 0; i < perfCount; i++){
+				$('#cp' + (i+1)).click(doTheThing(i));
+			};	
+	});
 
 
-				//the function called above in  " socket.on('perfCount', function (data){...} " 
-					function doTheThing(index) {
+	//the function called above in  " socket.on('perfCount', function (data){...} " 
+		
+		function doTheThing(index) {
 
-			    	return function(){ 
+    	return function(){ 
 
-			    		 // resetting previous performer button to init values
-			    		 $(oldID).fadeTo("fast", 1); 
-				    	 $(oldID).css('color', 'white');
+    		 // resetting previous performer button to init values
+    		 $(oldID).fadeTo("fast", 1); 
+	    	 $(oldID).css('color', 'white');
 
-				    	 console.log('reset' + oldID);
+	    	 console.log('reset' + oldID);
 
-			    		var num = index + 1;
-			    		var perfID = "#cp" + (num);
+    		var num = index + 1;
+    		var perfID = "#cp" + (num);
 
-					 			
-			 			myId = num;
-			 			console.log("I am Performer " + myId);
+		 			
+ 			myId = num;
+ 			console.log("I am Performer " + myId);
 
-			 			 // setting current perf. button to 'active' values
+ 			 // setting current perf. button to 'active' values
 
-			 			 $(perfID).fadeTo("fast", 0.5); 
-				    	 $(perfID).css('color', 'red');
+ 			 $(perfID).fadeTo("fast", 0.5); 
+	    	 $(perfID).css('color', 'red');
 
-				    	 // sets 'oldID' to the current ID so that upon change, button gets reset visually
-				    	 oldID = perfID;
+	    	 // sets 'oldID' to the current ID so that upon change, button gets reset visually
+	    	 oldID = perfID;
 
-			 			};  //end return function
+ 			};  //end return function
 
-			 		};  // end doTheThing
+ 		};  // end doTheThing
 
 
 
 ///////////////////////////////////////////////////// END DYNAMIC PERF SHIZZ
 
-						socket.on(subscribedTo + ' toGroup', function (data) {							
-							group = data;
-							console.log(group);
-						});
+	socket.on(subscribedTo + ' toGroup', function (data) {							
+		group = data;
+		console.log(group);
+	});
 
-						socket.on(subscribedTo + ' sendingTo', function (data) {							
-							toWhom = data;
-							console.log("toWhom = " + toWhom);
-							
-						});
+	socket.on(subscribedTo + ' sendingTo', function (data) {							
+		toWhom = data;
+		console.log("toWhom = " + toWhom);
+		
+	});
 
-						socket.on(subscribedTo + ' sendingAll', function (data) {							
-							toAll = data;
-							console.log("toAll= " + toAll);	
-							
-						});
-
-						//sets up flashing of incoming image referenced above
-				
+	socket.on(subscribedTo + ' sendingAll', function (data) {							
+		toAll = data;
+		console.log("toAll= " + toAll);	
+		
+	});
 
 
-						socket.on(subscribedTo + ' videoFigure', function (data) {
+	//sets up flashing of incoming image referenced above
 
+	socket.on(subscribedTo + ' videoFigure', function (data) {
 
-								//checks to see if conductor is talking to "you"
-							if (myId == toWhom || toAll == 1) { 
+			//checks to see if conductor is talking to "you"
+		if (myId == toWhom || toAll == 1) { 
 
-								//flashes "incoming" image 
-							var flasher = setInterval(function() {flashIncoming()} , 500);
+			//flashes "incoming" image 
+		var flasher = setInterval(function() {flashIncoming()} , 500);
 
-								// shuts off incoming flasher after interval
-							setTimeout(function() {clearInterval(flasher)}, 2000);
-							setTimeout(function() {display()}, 3000);
+			// shuts off incoming flasher after interval
+		setTimeout(function() {clearInterval(flasher)}, 2000);
+		setTimeout(function() {display()}, 3000);
 
-							// display shitz
-							var display = function(){
-							console.log(data + "performerside" + toWhom);
+		// display shitz
+		var display = function(){
+		console.log(data + "performerside" + toWhom);
 
-							document.getElementById('imageFig').src = "";
-							document.getElementById('imageFig').height = "0";
+		document.getElementById('imageFig').src = "";
+		document.getElementById('imageFig').height = "0";
 
-							document.getElementById('videoFig').src = data;
-							document.getElementById('videoFig').height = "600";
-								}
-							}							
-						});
+		document.getElementById('videoFig').src = data;
+		document.getElementById('videoFig').height = "600";
+			}
+		}							
+	});
 
 					
+	socket.on(subscribedTo + ' imageFigure', function (data) {
 
-						socket.on(subscribedTo + ' imageFigure', function (data) {
+		if (group.indexOf(myId) > -1 || toAll == 1) {
 
-							if (group.indexOf(myId) > -1 || toAll == 1) {
+			//flashes "incoming" image 
+		var flasher = setInterval(function() {flashIncoming()} , 500);
 
-								//flashes "incoming" image 
-							var flasher = setInterval(function() {flashIncoming()} , 500);
+			// shuts off incoming flasher after interval
+		setTimeout(function() {clearInterval(flasher)}, 1500);
+		setTimeout(function() {display()}, 3000);
 
-								// shuts off incoming flasher after interval
-							setTimeout(function() {clearInterval(flasher)}, 1500);
-							setTimeout(function() {display()}, 3000);
+			// display shitz
+		var display = function(){
+		console.log(data + "performerside" + toWhom);
 
-								// display shitz
-							var display = function(){
-							console.log(data + "performerside" + toWhom);
+		// NEED TO GET RID OF THIS HACKY WAY AND MAKE ONLY ONE DISPLAY AT A TIME
+	    document.getElementById('videoFig').src = "";
+	    document.getElementById('videoFig').height = "0";
 
-							// NEED TO GET RID OF THIS HACKY WAY AND MAKE ONLY ONE DISPLAY AT A TIME
-						    document.getElementById('videoFig').src = "";
-						    document.getElementById('videoFig').height = "0";
+		document.getElementById('imageFig').src = data;
+		document.getElementById('imageFig').height = "600";
 
-							document.getElementById('imageFig').src = data;
-							document.getElementById('imageFig').height = "600";
-
-								}	
-							}
-						});
+			}	
+		}
+	});
 
 
 
