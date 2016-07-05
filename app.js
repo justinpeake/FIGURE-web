@@ -226,7 +226,7 @@ console.log(process.env.RUNNING);  // hello world
                     });
                 });
 
-// Render Dashboard --------------------------------------
+// Render Dashboard Page --------------------------------------
 
           app.get('/dashboard', function(req,res){
                   if(req.user) {
@@ -247,7 +247,7 @@ console.log(process.env.RUNNING);  // hello world
              });
 
 
-// Render Performer ----------------------------------------
+// Render Performer Page ----------------------------------------
 
           app.get('/performer', function(req,res){
 
@@ -265,7 +265,7 @@ console.log(process.env.RUNNING);  // hello world
             });
 
 
-// Render Conductor ----------------------------------------
+// Render Conductor Page ----------------------------------------
 
           app.get('/conductor', function(req,res){
         
@@ -349,7 +349,7 @@ console.log(process.env.RUNNING);  // hello world
                   }
              });
 
-// Render Compose ----------------------------------------
+// Render Compose Page ----------------------------------------
 
           app.get('/compose', function(req, res) {
               
@@ -526,10 +526,8 @@ console.log(process.env.RUNNING);  // hello world
 
     io.on('connection', function(socket){ 
 
-
         // socket.on('gimme', function(){  // added "user to function argument"
         //     });  // end of 'gimme' 
-
 
             socket.on(socket.request.user + ' sendingTo', function(data) {
               console.log("Received:" + socket.request.user + "' sendingTo' " + data);
@@ -567,7 +565,9 @@ console.log(process.env.RUNNING);  // hello world
             });
 
             socket.on(socket.request.user + ' perfCount', function(data) {
-              performerCount = data;
+
+              performerCount = data;  // this may be deprecated
+              
                 console.log("socket.request.user is " + socket.request.user);
               socket.broadcast.emit(socket.request.user + ' perfCount', data);                   
                 console.log('perfCount = ' + performerCount);            
