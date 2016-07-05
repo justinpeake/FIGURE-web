@@ -13,14 +13,31 @@
 		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
 				
+
+				<script> 
+
+						var whosBoss = prompt("Please enter the name of the composer you are joining");
+
+						if (whosBoss != null) {
+     						   subscribedTo = whosBoss;
+
+     						   // put socket connection here?
+  						}
+
+  						console.log("whosBoss is " + subscribedTo);
+  						
+						var socket = io(); 
+						console.log("Socket thing");
+				</script>
+
 				<script type="text/javascript">
 
 							// this is new
 
-							var socket = io(); // moved here
+							
 							socket.on('connect', function() {
 								//socket.emit('gimmePerfCount');  // no server listener for this yet
-								console.log("Performer in the house.");
+								console.log("Socket Connection");
 							});
 
 				</script>	 
@@ -60,6 +77,7 @@
 
 				};
 			});
+
 
 	</script>
 
@@ -119,14 +137,6 @@
 
 					var subscribedTo;
 
-					var whosBoss = prompt("Please enter the name of the composer you are joining");
-						if (whosBoss != null) {
-     						   subscribedTo = whosBoss;
-
-     						   // put socket connection here?
-  						}
-
-  						console.log("whosBoss is " + subscribedTo);
 
 					// PERFORMER ID STUFF
 						//initialize globals for performer id
