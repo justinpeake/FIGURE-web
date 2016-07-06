@@ -12,6 +12,11 @@
         <link rel="stylesheet" href=" /dropzone/dropzone.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
 
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> 
+
+   <!-- load fontawesome -->
+
         <script>  var socket = io(); </script> 
 
         <script type="text/javascript">
@@ -28,13 +33,21 @@
 
             body{
 
-                background-color: #FFF;
+                background-color: #080336;
+                color: fff;
+                font-size: 20px;
+            }
+
+            .btn {
+            background-color: #080336;
+            color: #666666;
+
             }
 
         	#navContainer{
-
+                float:left;
 				margin: 0 auto;
-   				width: 200px;         	
+   				width: 400px;         	
             }
 
 
@@ -46,15 +59,21 @@
 
 	<div id="navContainer">
 
-		Hi {{user}}...
+		Heya! It's your dashboard, {{user}}.
 		<p>
 
 		<nav>
-			<div class="navButton" id="compose">  COMPOSE </div>
-		    <div class="navButton" id="perform">  PERFORM </div>
-		    <div class="navButton" id="conduct">  CONDUCT </div>
-            <p>
-            <div class="navButton" id="about">  ABOUT </div>
+<!-- 			<div class="navButton" id="compose">  COMPOSE </div> -->            
+            <a href="/conductor" class="btn btn-default"> CONDUCT</a> 
+            <a href="/compose" class="btn btn-default"> COMPOSE</a> 
+            <a href="/about" class="btn btn-default"> ABOUT</a> 
+
+
+            <!-- <div class="btn btn-default" id="compose">  COMPOSE </div> <p>
+		    <div class="btn btn-default" id="conduct">  CONDUCT </div> <p>
+            <div class="btn btn-default" id="about">  ABOUT </div> <p> -->
+
+           <!--  DEPRECATED^^^^ -->
 		</nav>
 
 
@@ -66,21 +85,23 @@
 
         // nav handlers
                           
-        $(compose).click(function(){
-    		$(location).attr('href', '/compose') ;   
-    	});
+     //    $(compose).click(function(){
+    	// 	$(location).attr('href', '/compose') ;   
+    	// });
 
-    	$(perform).click(function(){
-    		$(location).attr('href', '/performer') ;   
-    	});
+    	// $(perform).click(function(){
+    	// 	$(location).attr('href', '/performer') ;   
+    	// });
 
-    	$(conduct).click(function(){
-    		$(location).attr('href', '/conductor') ;   
-    	});
+    	// $(conduct).click(function(){
+    	// 	$(location).attr('href', '/conductor') ;   
+    	// });
 
-        $(about).click(function(){
-            $(location).attr('href', '/about') ;   
-        });
+     //    $(about).click(function(){
+     //        $(location).attr('href', '/about') ;   
+     //    });
+
+    //DEPRECATED?^^^^^
 
     </script> 
 

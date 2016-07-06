@@ -225,9 +225,9 @@ p.draw=function() {
   p.fill(200, opaF);
   p.text("FIGURE",170,115)
   p.fill(200, opaN);
-  p.textSize(20);
-  p.text("Login", 200, 200)
-  p.text("Sign-Up", 400, 200)
+  // p.textSize(20);
+  // p.text("Login", 200, 200)
+  // p.text("Sign-Up", 400, 200)
   p.strokeWeight(1);
   p.stroke(190, opaL1);
   p.line(20, 40, lineLength, 40);
@@ -263,58 +263,9 @@ p.draw=function() {
   if(iconOpa < 0){
     iconOpa == 0;
   }
-
-
   }
 };
 
-////
-
-var introLogin=function(s){
-
-  var font;
-
-  s.preload = function(){
-    font = s.loadFont('assets/Elevation.ttf');
-  }
-
-  s.setup = function() {
-    s.createCanvas(100,30);
-    s.textFont(font);
-  }
-
-  s.draw = function(){
-    s.background(8,3,54);
-    s.textSize(20);
-    s.fill(200);
-    s.text("Login", 20, 20)
-  }
-
-}
-
-/////
-
-var introSign=function(q){
-
-  var font;
-
-  q.preload = function(){
-    font = q.loadFont('assets/Elevation.ttf');
-  }
-
-  q.setup = function() {
-    q.createCanvas(100,30);
-    q.textFont(font);
-  }
-
-  q.draw = function(){
-    q.background(8,3,54);
-    q.textSize(20);
-    q.fill(200);
-    q.text("Sign-Up", 20, 20)
-  }
-
-};
 
 
 
