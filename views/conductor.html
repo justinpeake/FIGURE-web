@@ -1,181 +1,190 @@
-         
-   <html>
-		<head>
-			<title>FIGURE :: CONDUCT</title>
+<html>
+<head>
+	<title>FIGURE :: CONDUCT</title>
 			
-		        <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
-				<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
-				<script src="/socket.io/socket.io.js"></script>  
-				<link rel="stylesheet" type="text/css" href="/css/style.css">
-				<script type="text/javascript" src="/js/sketches.js"></script> 
-				<script type="text/javascript" src="/js/classes.js"></script> 
-		        <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
-	        	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
-	        	<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
+	<script src="/socket.io/socket.io.js"></script>  
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<script type="text/javascript" src="/js/sketches.js"></script> 
+	<script type="text/javascript" src="/js/classes.js"></script> 
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> 
+	<!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> 
+	<!-- load fontawesome -->
 			
-				<script>  var socket = io(); </script> 	
-				
-				<script type="text/javascript">
-<<<<<<< HEAD
-							// socket.on('connect', function() {
-							// socket.emit('gimme');
-=======
-							socket.on('connect', function() {
-							//socket.emit('gimme');
->>>>>>> 062f36889252da4b910e3764d5d7561b46d74577
-							console.log("Conducter in the house.");
-						 });
-				</script>	
-			
+	<script>  var socket = io(); </script> 	
+	
+	<script type="text/javascript">
+				socket.on('connect', function() {
+				console.log("Conducter in the house.");
+			 });
+	</script>	
 
-					<style>
-							#everythingConductor {
-								/*visibility: visible;*/
-								display: block;
-							}
+	<style>
 
-							#everythingPerformer {
-								/*visibility: hidden;*/
-								display: none;
-							}
-					</style>
-		</head>
+		body{
+			background-color: #080336;
+			color: fff;
+			    font-size: 15px;
+		}
+
+		.btn {
+			background-color: #080336;
+			color: #666666;
+			font-size: 20px;
+
+		    }
+		#everythingConductor {
+			/*visibility: visible;*/
+			display: block;
+		}
+
+		#everythingPerformer {
+			/*visibility: hidden;*/
+			display: none;
+		}
+	</style>
+
+</head>
 
 <body> 
  			
+<div id="everythingConductor">
 
- <div id="everythingConductor">
+	<div class="sidebar" align="center"> 
 
-			<div class="sidebar" align="center"> 
+		 {{user}} 
+		
+		<!-- simple nav -->
+		<nav>
 
-				 {{user}} 
-				
-				<!-- simple nav -->
-				<nav>
-					<div class="navButton" id="compose">  COMPOSE </div>
-				    <div class="navButton" id="perform">  PERFORM </div>
-				    <div class="navButton" id="conduct">  CONDUCT </div>
-				</nav>
+		<!-- <a href="/conductor" class="btn btn-default"> CONDUCT</a>  -->
+		<a href="/compose" class="btn btn-default"> Dashboard </a> 
+			 
 
-				<p>
-				<p>
+		<!-- <div class="navButton" id="compose">  COMPOSE </div>
+	    <div class="navButton" id="perform">  PERFORM </div>
+	    <div class="navButton" id="conduct">  CONDUCT </div> -->
+	    <!-- DEPRECATED^^^^???? -->
+		</nav>
 
-				<!-- PERFORMER channel update -->	
-				<input type="number" id="myNumber" value="0">
-				<p>
-				<button onclick="updatePerfCount()">Update Channel Count </button>
-				<p>
+		<p>
+		<p>
 
-				<!-- You are Sending To:
-				<div id="sendingTo">  </div> -->
+		<!-- PERFORMER channel update -->	
+		<input type="number" id="myNumber" value="0">
+		<p>
+		<button onclick="updatePerfCount()">Update Channel Count </button>
+		<p>
 
-			</div>
+		<!-- You are Sending To:
+		<div id="sendingTo">  </div> -->
 
-
-	<div id="main" >
-
-			<!-- holds performer buttons -->
-			<div id="performer-container">
-				<p>
-				<div id="all"> ALL </div>	
-				<div id="switcher"> SWITCH </div> 
-				<p>
-			</div>	
+	</div>
 
 
-			<p> Images <p>
+<div id="main" >
 
-         	{{#images}}                              		
-         	<div class="figuresB">                 
-              <img src={{.}} class="imageF " width="100px" height="100px">  </img>
-              <span class="imageText">  </span>   
-            </div>
-            {{/images}}
-          
-     
-          	<p> Videos <p>
-          	{{#videos}}
-          	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
-          	{{/videos}}
+		<!-- holds performer buttons -->
+		<div id="performer-container">
+			<p>
+				<a class="btn btn-default" id="all"> ALL </a>
+				<a class="btn btn-default" id="switcher"> SWITCH </a> 
 
-          	<p> Waveforms <p>
-          	{{#audio}}
-          	<div class="audio" title={{.}}>  </div>
-          	{{/audio}}
 
-          	{{#audionames}}
-          	<div class="audionames" title={{.}} style.visibility="hidden">  </div>
-          	{{/audionames}}
+			<!-- <div id="all"> ALL </div>	 -->
+			<!-- <div id="switcher"> SWITCH </div>  -->
+				<!-- DEPRECATED^^^^ -->
 
-    </div>
+			<p>
+		</div>	
+
+
+		<p> Images <p>
+
+	 	{{#images}}                              		
+	 	<div class="figuresB">                 
+	      <img src={{.}} class="imageF " width="100px" height="100px">  </img>
+	      <span class="imageText">  </span>   
+	    </div>
+	    {{/images}}
+	  
+
+	  	<p> Videos <p>
+	  	{{#videos}}
+	  	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
+	  	{{/videos}}
+
+	  	<p> Waveforms <p>
+	  	{{#audio}}
+	  	<div class="audio" title={{.}}>  </div>
+	  	{{/audio}}
+
+	  	{{#audionames}}
+	  	<div class="audionames" title={{.}} style.visibility="hidden">  </div>
+	  	{{/audionames}}
+
+</div>
 
 	
-	
-	<script type="text/javascript">
-
-
+<script type="text/javascript">
 
 		//////////////////////////////// BEGIN CONDUCTOR SCRIPT //////////////////////////////////
+	
+	var acct = "{{user}}";
+	var toWhom = 0;  // initialize these globally, used in server and emit to performers
+	var toAll = 0;
+	var divs = [];
+	var member = 0;
+	var group = [];
+	var whoWhat = {};
+	var perfs = [];   
+	var pX;
+
+		//navigation   
+		$(compose).click(function(){
+        	$(location).attr('href', '/compose') ;   
+	    });
+
+	    $(perform).click(function(){
+	        $(location).attr('href', '/performer') ;   
+	    });
+
+	    $(conduct).click(function(){
+	        $(location).attr('href', '/conductor') ;   
+	    });
 
 
+	    //SWITCHER 
+		$(switcher).click(function(){
 
+			console.log('switch ' + toWhom);
+			socket.emit(acct + ' switch', toWhom);
 
-				// working  (from line 322)
-				var acct = "{{user}}";
+			document.getElementById("everythingPerformer").style.display = "block";
+			document.getElementById("everythingConductor").style.display= "none";
 
-				console.log("user is " + acct);
-				var toWhom = 0;  // initialize these globally, used in server and emit to performers
-				var toAll = 0;
-				var divs = [];
+			//this activates whichever p5 sketch
+			performerSketch();
 
-				var member = 0;
-				var group = [];
-				//var whoWhat = [];
-				var whoWhat = {};
-					
-				//from line 154
-				var perfs = [];   
-				var pX;
+		});
 
-				//navigation   (from line 328)
-				$(compose).click(function(){
-		        	$(location).attr('href', '/compose') ;   
-			    });
+		// ALL selector
+		$(all).click(function(){
 
-			    $(perform).click(function(){
-			        $(location).attr('href', '/performer') ;   
-			    });
+			toAll = 1;
 
-			    $(conduct).click(function(){
-			        $(location).attr('href', '/conductor') ;   
-			    });
+			$(all).fadeTo("fast", 0.5); 
+		    $(all).css('color', 'red');
 
+			console.log('sendingAll ' + toAll);
+			socket.emit(acct + ' sendingAll', toAll);
 
-			    //SWITCHER 
-				$(switcher).click(function(){
-
-					console.log('switch ' + toWhom);
-					socket.emit(acct + ' switch', toWhom);
-
-					document.getElementById("everythingPerformer").style.display = "block";
-					document.getElementById("everythingConductor").style.display= "none";
-
-					//this activates whichever p5 sketch
-					performerSketch();
-
-				});
-
-				$(all).click(function(){
-
-					toAll = 1;
-
-					$(all).fadeTo("fast", 0.5); 
-				    $(all).css('color', 'red');
-
-					console.log('sendingAll ' + toAll);
-					socket.emit(acct + ' sendingAll', toAll);
-
-				});
+		});
 
 
 
@@ -190,224 +199,212 @@
 
 			pX = document.getElementById("myNumber").value;
 
+			socket.emit(acct + ' perfCount', pX);   //CHANGE added acct 7/2
+
+				//makes the circular buttons
+	  			$('.performerDivB').remove();
+	  			perfs = [];
+
+	    		for(i=0; i < pX; i++){
+			    	perfs[i] = document.createElement('div');
+			    	perfs[i].className = 'performerDivB';
+			    	perfs[i].id = 'cp' + (i+1);
+			    	perfs[i].innerHTML = i + 1;
+			    	document.getElementById('performer-container').appendChild(perfs[i]);
+				};
+
+			    //attaching the listener for click
+				for (var i = 0; i < pX; i++){
+    				$('#cp' + (i+1)).click(doTheThing(i));
+    			};
+
+    			// right now filling object for cross check
+    			for (i = 0; i < pX; i++){
+					var playerNum = i+1; // this keeps player #'s straight
+					whoWhat['player'+ playerNum] = ' ';
+				};
+
+				console.log(whoWhat);	
+		};
 
 
-				socket.emit(acct + ' perfCount', pX);   //CHANGE added acct 7/2
+		// function than runs when clicked
+		function doTheThing(index) {
 
-						//makes the circular buttons
-			  			$('.performerDivB').remove();
-			  			perfs = [];
+	    	return function(){ 
 
-				    		for(i=0; i < pX; i++){
-							    	perfs[i] = document.createElement('div');
-							    	perfs[i].className = 'performerDivB';
-							    	perfs[i].id = 'cp' + (i+1);
-							    	perfs[i].innerHTML = i + 1;
-							    	document.getElementById('performer-container').appendChild(perfs[i]);
-							    };
+	    		var num = index + 1;
+	    		var perfID = "#cp" + (num);
+	    			
+			 	//document.getElementById('sendingTo').innerHTML = num;			 			
 
-							    //attaching the listener for click
-								for (var i = 0; i < pX; i++){
-				    				$('#cp' + (i+1)).click(doTheThing(i));
-				    			};
+	 			$(perfID).fadeTo("fast", 0.5); 
+		    	$(perfID).css('color', 'red');
+		    	
+		    	toAll = 0;
+	 			toWhom = num;
 
-				    			// right now filling object for cross check
-				    			for (i = 0; i < pX; i++){
-									var playerNum = i+1; // this keeps player #'s straight
-									whoWhat['player'+ playerNum] = ' ';
-								};
+	 			group[member] = toWhom;
 
-									console.log(whoWhat);	
-							};
+	 			member = member + 1;
 
+	 			//may not need this when grouping is done	
+	 			socket.emit(acct + ' toGroup', group);
+	 			socket.emit(acct + ' sendingTo', toWhom, toAll);
+	 			socket.emit(acct + ' sendingAll', toAll);
 
-				// function than runs when clicked
-				function doTheThing(index) {
-
-			    	return function(){ 
-
-			    		var num = index + 1;
-			    		var perfID = "#cp" + (num);
-			    			
-					 	//document.getElementById('sendingTo').innerHTML = num;			 			
-
-			 			$(perfID).fadeTo("fast", 0.5); 
-				    	$(perfID).css('color', 'red');
-				    	
-				    	toAll = 0;
-			 			toWhom = num;
-
-			 			group[member] = toWhom;
-
-			 			member = member + 1;
-		
-			 			//may not need this when grouping is done	
-			 			socket.emit(acct + ' toGroup', group);
-			 			socket.emit(acct + ' sendingTo', toWhom, toAll);
-			 			socket.emit(acct + ' sendingAll', toAll);
-
-			 			};
-		 			};
+	 			};
+ 		};
 
 ////////////////////////// END DYNAMIC PERF SHIZZ	
-
-
 ///////////////////////// FIGURE IMAGES > BUTTONS
 
 
-		// this block is taking the number of images and adding ID's for button functions
+	// this block is taking the number of images and adding ID's for button functions
 
-		var imageIds = document.getElementsByClassName("imageF");  // from image tag above
-		var imageSrcs = [];  //sending this to the socket emit
-		var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
+	var imageIds = document.getElementsByClassName("imageF");  // from image tag above
+	var imageSrcs = [];  //sending this to the socket emit
+	var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
 
 
-		//assign ids to all of the images
-		for (i = 0; i < imageIds.length; i++) {
-			imageIds[i].id = 'iF'+ i;	
-		};
+	//assign ids to all of the images
+	for (i = 0; i < imageIds.length; i++) {
+		imageIds[i].id = 'iF'+ i;	
+	};
 
-		//assign ids to the text overlay divs
-		for (i = 0; i < imageTxtIds.length; i++) {
-			imageTxtIds[i].id = 'iT'+ i;	
-			//console.log(imageTxtIds[i].id);
-		};
+	//assign ids to the text overlay divs
+	for (i = 0; i < imageTxtIds.length; i++) {
+		imageTxtIds[i].id = 'iT'+ i;	
+		//console.log(imageTxtIds[i].id);
+	};
+
+	// get the urls of images
+	for (i = 0; i < imageIds.length; i++) {
+		imageSrcs[i] = imageIds[i].src;
+	};
+
+	//seth helped with this  -- add button functionalities
+	for(var i = 0; i < imageIds.length; i ++){
+		$("#iF" + i).click(fadeTheFadeI(i));
+	};
+
 	
-		// get the urls of images
-		for (i = 0; i < imageIds.length; i++) {
-			imageSrcs[i] = imageIds[i].src;
-		};
+	//add the urls to the button
 
-		//seth helped with this  -- add button functionalities
-		for(var i = 0; i < imageIds.length; i ++){
-			$("#iF" + i).click(fadeTheFadeI(i));
-		};
-
-		
-		//add the urls to the button
-
-		function fadeTheFadeI(index){
-		
-			return function(){
-				var image = "#iF" + index; 
-				$(image).fadeTo("slow", 0.5);				
-				socket.emit(acct + ' imageFigure', imageSrcs[index]);
-
-				
-				// display who is playing which figure
-
-			for(i=0; i < group.length; i++){
-				 whoWhat['player' + group[i]] = 'iT' + index;
-				};
-
-				console.log(whoWhat);
-
-
-			for (i=0; i < imageIds.length; i++){
-				document.getElementById('iT' + i).innerHTML = ' ';
-				}
-		
-
-			for (i=0; i < Object.keys(whoWhat).length; i++){
-
-				console.log(whoWhat['player' + (i+1)]);
-				 
-				 if (whoWhat['player' + (i+1)] !== " "){
-			 		console.log(document.getElementById(whoWhat['player' + (i+1)]).innerHTML);
-			 	
-			 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
-
-			 		};
-			 	};
-
-				// this clears the group when an image is sent
-				group = [];
-				member = 0;
-
-				// this clears the button states when an image is sent
-				for (i=0; i < perfs.length; i++){
-					$('#cp' + (i+1)).css('color', 'white');
-				};
-
-				for (i=0; i < perfs.length; i++){
-					$('#cp' + (i+1)).fadeTo("fast", 1.0);
-				};
-
-				// zeros out the 'ALL' button when a figure is sent
-				$(all).css('color', 'white');
-			  	$(all).fadeTo("fast", 1.0);
-
-			  };
-			};	// end fade the fade
-
-
-		//video buttons
-
-		var videoIds = document.getElementsByClassName("videoF");  // from image tag above
-		var videoIdsLength = videoIds.length;
-		var videoSrcs = [];  //sending this to the socket emit
-
-		//create unique id's for videos
-		for (i = 0; i < videoIds.length; i++) {
-			videoIds[i].id = 'vF'+ i;	
-		};
-		// gut the urls of videos
-		for (i = 0; i < videoIds.length; i++) {
-			videoSrcs[i] = videoIds[i].src;
-		};
-		//seth helped with this  -- add button functionalities
-		for(var i = 0; i < videoIds.length; i ++){
-			$("#vF" + i).click(fadeTheFadeV(i));
-		};
-		//add the urls to the button
-		function fadeTheFadeV(index){
-			return function(){
-				$("#vF" + index).fadeTo("slow", 0.5);
-				socket.emit(acct + ' videoFigure', videoSrcs[index])
+	function fadeTheFadeI(index){
+	
+		return function(){
+			var image = "#iF" + index; 
+			$(image).fadeTo("slow", 0.5);				
+			socket.emit(acct + ' imageFigure', imageSrcs[index]);
+	
+			// display who is playing which figure
+		for(i=0; i < group.length; i++){
+			 whoWhat['player' + group[i]] = 'iT' + index;
 			};
-		};	
+			console.log(whoWhat);
 
+		for (i=0; i < imageIds.length; i++){
+			document.getElementById('iT' + i).innerHTML = ' ';
+			}
+	
+		for (i=0; i < Object.keys(whoWhat).length; i++){
+			console.log(whoWhat['player' + (i+1)]);
+			 if (whoWhat['player' + (i+1)] !== " "){
+		 		console.log(document.getElementById(whoWhat['player' + (i+1)]).innerHTML);
+		 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
+		 		};
+		 	};
 
-		// audio buttons
+			// this clears the group when an image is sent
+			group = [];
+			member = 0;
 
-		var waveIds = document.getElementsByClassName("audio");  // from image tag above
-		var waveIdsLength = waveIds.length;
-		var waveSrcs = [];  //sending this to the socket emit
-		var waveNames = document.getElementsByClassName("audionames");
-		
-		//console.log(audioNames)
-		//create unique id's for videos
-		for (i = 0; i < waveIds.length; i++) {
-			waveIds[i].id = 'aF'+ i;	
-		};
-		// gut the urls of videos
-		for (i = 0; i < waveIds.length; i++) {
-
-			waveIds[i].innerHTML = waveNames[i].title;
-
-			waveSrcs[i] = waveIds[i].title;
-			//console.log(waveSrcs);
-		};
-		//seth helped with this  -- add button functionalities
-		for(var i = 0; i < waveIds.length; i ++){
-			$("#aF" + i).click(fadeTheFadeA(i));
-		};
-		//add the urls to the button
-		function fadeTheFadeA(index){
-			return function(){
-				$("#aF" + index).fadeTo("slow", 0.5);
-				socket.emit(acct + ' waveSketch', waveSrcs[index])
+			// this clears the button states when an image is sent
+			for (i=0; i < perfs.length; i++){
+				$('#cp' + (i+1)).css('color', 'white');
 			};
-		};	
 
-				
+			for (i=0; i < perfs.length; i++){
+				$('#cp' + (i+1)).fadeTo("fast", 1.0);
+			};
 
-			////////////////// END CONDUCTOR SCRIPT //////////////////
-		
+			// zeros out the 'ALL' button when a figure is sent
+			$(all).css('color', 'white');
+		  	$(all).fadeTo("fast", 1.0);
 
-			</script>
+		  };
+	};	// end fade the fade
 
-		</div>
+
+	//video buttons
+
+	var videoIds = document.getElementsByClassName("videoF");  // from image tag above
+	var videoIdsLength = videoIds.length;
+	var videoSrcs = [];  //sending this to the socket emit
+
+	//create unique id's for videos
+	for (i = 0; i < videoIds.length; i++) {
+		videoIds[i].id = 'vF'+ i;	
+	};
+	// gut the urls of videos
+	for (i = 0; i < videoIds.length; i++) {
+		videoSrcs[i] = videoIds[i].src;
+	};
+	//seth helped with this  -- add button functionalities
+	for(var i = 0; i < videoIds.length; i ++){
+		$("#vF" + i).click(fadeTheFadeV(i));
+	};
+	//add the urls to the button
+	function fadeTheFadeV(index){
+		return function(){
+			$("#vF" + index).fadeTo("slow", 0.5);
+			socket.emit(acct + ' videoFigure', videoSrcs[index])
+		};
+	};	
+
+
+	// audio buttons
+
+	var waveIds = document.getElementsByClassName("audio");  // from image tag above
+	var waveIdsLength = waveIds.length;
+	var waveSrcs = [];  //sending this to the socket emit
+	var waveNames = document.getElementsByClassName("audionames");
+	
+	//console.log(audioNames)
+	//create unique id's for videos
+	for (i = 0; i < waveIds.length; i++) {
+		waveIds[i].id = 'aF'+ i;	
+	};
+	// gut the urls of videos
+	for (i = 0; i < waveIds.length; i++) {
+
+		waveIds[i].innerHTML = waveNames[i].title;
+
+		waveSrcs[i] = waveIds[i].title;
+		//console.log(waveSrcs);
+	};
+	//seth helped with this  -- add button functionalities
+	for(var i = 0; i < waveIds.length; i ++){
+		$("#aF" + i).click(fadeTheFadeA(i));
+	};
+	//add the urls to the button
+	function fadeTheFadeA(index){
+		return function(){
+			$("#aF" + index).fadeTo("slow", 0.5);
+			socket.emit(acct + ' waveSketch', waveSrcs[index])
+		};
+	};	
+
+////////////////// END CONDUCTOR SCRIPT //////////////////
+</script>
+
+</div>
+
+
+
+
+
 
 		<div id="everythingPerformer">
 
