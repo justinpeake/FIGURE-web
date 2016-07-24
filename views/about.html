@@ -1,0 +1,80 @@
+<html>
+<head>
+    <title>FIGURE :: CONDUCT</title>
+            
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"> </script>
+    <script src="/socket.io/socket.io.js"></script>  
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script type="text/javascript" src="/js/sketches.js"></script> 
+    <script type="text/javascript" src="/js/classes.js"></script> 
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> 
+    <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> 
+    <!-- load fontawesome -->
+            
+    <script>  var socket = io(); </script>  
+    
+    <script type="text/javascript">
+                socket.on('connect', function() {
+                console.log("Conducter in the house.");
+             });
+    </script>   
+
+    <style>
+
+        body{
+            background-color: #080336;
+            color: fff;
+                font-size: 15px;
+        }
+
+        .btn {
+            background-color: #080336;
+            color: #666666;
+            font-size: 20px;
+
+            }
+        #everythingConductor {
+            /*visibility: visible;*/
+            display: block;
+        }
+
+        #everythingPerformer {
+            /*visibility: hidden;*/
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body> 
+            
+<div id="everythingConductor">
+
+    <div class="sidebar" align="center"> 
+
+         {{user}} 
+        
+        <!-- simple nav -->
+        <nav>
+
+        <!-- <a href="/conductor" class="btn btn-default"> CONDUCT</a>  -->
+        <a href="/dashboard" class="btn btn-default"> Back to Dashboard </a> 
+             
+
+     
+        </nav>
+
+    </div> 
+
+        <div> Figure allows the delivery of musical cues to any or all of a group of networked screens </div>
+
+       
+ 
+    </body>
+
+</html>

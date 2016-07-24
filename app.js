@@ -51,24 +51,24 @@ var S3_BUCKET = process.env.S3_BUCKET;
 
 // Passport, Session, Redis, Cookie stuff --------------
 
-app.use(session({
-    key: 'express.sid',
-    store: sessionStore,
-    secret: 'keyboard horse',
-    resave: false,
-    saveUninitialized: false
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-io.use(socketioRedis.authorize({
-    passport:passport,
-    cookieParser: cookieParser,        // the same middleware you register in express
-    key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
-    secret:       'keyboard horse',    // the session_secret to parse the cookie
-    store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
-    success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
-    fail:         onAuthorizeFail,    // *optional* callback on fail/error - read more below
-}));
+      app.use(session({
+          key: 'express.sid',
+          store: sessionStore,
+          secret: 'keyboard horse',
+          resave: false,
+          saveUninitialized: false
+      }));
+      app.use(passport.initialize());
+      app.use(passport.session());
+      io.use(socketioRedis.authorize({
+          passport:passport,
+          cookieParser: cookieParser,        // the same middleware you register in express
+          key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
+          secret:       'keyboard horse',    // the session_secret to parse the cookie
+          store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
+          success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
+          fail:         onAuthorizeFail,    // *optional* callback on fail/error - read more below
+      }));
 
   function onAuthorizeSuccess(data, accept) {
     console.log('Authorized success');

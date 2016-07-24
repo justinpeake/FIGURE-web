@@ -113,7 +113,6 @@
 	    </div>
 	    {{/images}}
 	  
-
 	  	<p> Videos <p>
 	  	{{#videos}}
 	  	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
@@ -145,19 +144,6 @@
 	var perfs = [];   
 	var pX;
 
-		// //navigation   
-		// $(compose).click(function(){
-  //       	$(location).attr('href', '/compose') ;   
-	 //    });
-
-	 //    $(perform).click(function(){
-	 //        $(location).attr('href', '/performer') ;   
-	 //    });
-
-	 //    $(conduct).click(function(){
-	 //        $(location).attr('href', '/conductor') ;   
-	 //    });
-
 
 	    //SWITCHER 
 		$(switcher).click(function(){
@@ -173,7 +159,7 @@
 
 		});
 
-		// ALL selector
+		// ALL SELECTOR
 		$(all).click(function(){
 
 			toAll = 1;
@@ -185,8 +171,6 @@
 			socket.emit(acct + ' sendingAll', toAll);
 
 		});
-
-
 
 
 		// DYNAMIC PERF SHIZZ	
@@ -400,11 +384,6 @@
 </script>
 
 </div>
-
-
-
-
-
 
 		<div id="everythingPerformer">
 
