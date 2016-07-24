@@ -86,17 +86,6 @@
 			margin: 2px;
 			}
 
-		#main{
-        	width: 700px;
-        	float: right;
-        	/*position: absolute;*/
-			display: block;
-        	padding-top: 0px;
-    	    padding-bottom: 0px;
-    	    margin-left: 20px;
-    
-  		  	} 
-
   		#youAre{
   		  	width: 50;	
         	font-size: 100;
@@ -160,6 +149,17 @@
             float:left;
             margin-right: 100px;
       	 }
+
+      	 #main{
+        	width: 700px;
+        	float: left;
+        	/*position: absolute;*/
+			display: block;
+        	padding-top: 0px;
+    	    padding-bottom: 0px;
+    	    margin-left: 20px;
+    
+  		  	} 
 
         .navButton{
             width:160;
