@@ -40,7 +40,18 @@
 
 
 		<style>
+
+			body{
+				background-color: #080336;
+				color: fff;
+				    font-size: 15px;
+			}
 			
+			#perfDialogue {
+				background-color: #080336;
+			
+			}
+
 			#everythingConductor {
 				/*visibility: visible;*/ 
 				display: none;
@@ -325,6 +336,8 @@
 		setTimeout(function() {clearInterval(flasher)}, 1500);
 		setTimeout(function() {display()}, 3000);
 
+		$(imageFig).fadeTo(3000,0);
+
 			// display shitz
 		var display = function(){
 		console.log(data + "performerside" + toWhom);
@@ -333,8 +346,13 @@
 	    document.getElementById('videoFig').src = "";
 	    document.getElementById('videoFig').height = "0";
 
+
+	    
+
 		document.getElementById('imageFig').src = data;
 		document.getElementById('imageFig').height = "600";
+
+		$(imageFig).fadeTo(2000,1);
 
 			}	
 		}

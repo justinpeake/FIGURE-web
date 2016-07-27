@@ -79,10 +79,13 @@
 		<input type="number" id="myNumber" value="0">
 		<p>
 		<button onclick="updatePerfCount()">Update Channel Count </button>
-		<p>
-
-		<!-- You are Sending To:
-		<div id="sendingTo">  </div> -->
+	</br>
+	</br>
+	</br>
+	</br>
+        <input type="file" id="file_input"/>
+        <p>
+		<div id="progressNumber"></div>
 
 	</div>
 
@@ -378,7 +381,92 @@
 			$("#aF" + index).fadeTo("slow", 0.5);
 			socket.emit(acct + ' waveSketch', waveSrcs[index])
 		};
-	};	
+	};
+
+	// FILE UPLOAD STUFF for progress bar
+function uploadProgress(evt) {
+    if (evt.lengthComputable) {
+      var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+      document.getElementById('progressNumber').innerHTML = 'Upload Progress: ' + percentComplete.toString() + '%';
+    }
+    else {
+      document.getElementById('progressNumber').innerHTML = 'unable to compute';
+    }
+  }
+
+// for page refresh after upload complete
+  function uploadComplete(evt){
+    location.reload();
+
+  }
+
+
+	(function() {
+
+	document.getElementById("file_input").onchange = function(){
+	    var files = document.getElementById("file_input").files;
+	    var file = files[0];
+	     if(file == null){
+	       alert("No file selected.");
+	    }
+	    else {
+	        get_signed_request(file);
+	    }
+	};
+	})();
+
+function get_signed_request(file){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+            console.log(xhr);
+            if(xhr.status === 200){
+                var response = JSON.parse(xhr.responseText);
+               // console.log("response " + response);
+                upload_file(file, response.signed_request, response.url);
+            }
+            else {
+                console.log("Could not get signed URL.");                
+            }
+        }
+    };   
+    xhr.send();
+
+}
+
+function upload_file(file, signed_request, url){
+   // console.log('client 3');
+
+   var firstProgressEvent = false;
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("PUT", signed_request);
+
+    xhr.upload.addEventListener("progress", uploadProgress, false);
+
+    xhr.addEventListener("load", uploadComplete, false);
+
+    xhr.setRequestHeader('x-amz-acl', 'public-read');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+          // 4//   document.getElementById("preview").src = url;
+          //  document.getElementById("avatar_url").value = url;
+        }
+    };
+    xhr.onerror = function() {
+        alert("Could not upload file.");
+    };
+
+    //console.log("presend" + file);
+
+    xhr.send(file);
+    
+    //console.log('client 5');
+
+
+};	
+
 
 ////////////////// END CONDUCTOR SCRIPT //////////////////
 </script>

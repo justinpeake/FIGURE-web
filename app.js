@@ -215,7 +215,7 @@ console.log(process.env.RUNNING);  // hello world
                   
                   });
                  
-          res.render("dashboard.html", {
+          res.render('dashboard.html', {
                     user: req.user.username, 
                     images: imageArray, 
                     videos: videoArray, 
@@ -231,7 +231,7 @@ console.log(process.env.RUNNING);  // hello world
           app.get('/dashboard', function(req,res){
                   if(req.user) {
 
-                    var s3 = new aws.S3();            
+            var s3 = new aws.S3();            
             var folder = req.user + "/";
             var s3_params = {
                 Bucket: S3_BUCKET,  
