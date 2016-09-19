@@ -10,6 +10,17 @@ var socket_io = require('socket.io');
 var app = express();  
 var io = socket_io();   
 
+// inital file system demo
+  var fse = require('fs-extra');
+
+  fse.readFile('./public/hello.txt', 'utf8', function(err, data){
+    if(err) {
+        return console.log(err);
+    }
+    console.log(data);
+  });
+//
+
 if (process.env.REDISTOGO_URL) {
   var rtg = require('url').parse(process.env.REDISTOGO_URL);
   var redis = require('redis').createClient(rtg.port, rtg.hostname);
