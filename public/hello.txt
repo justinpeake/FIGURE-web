@@ -1,1 +1,1 @@
-this is a test
+tHiS iS bEiNg read from ./public/hello.txt

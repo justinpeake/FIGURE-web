@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>FIGURE :: CONDUCT</title>
+	<title>FIGURE :: CONDUCT</title> 
 			
     <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
 	<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
@@ -123,7 +123,7 @@
 
 		//////////////////////////////// BEGIN CONDUCTOR SCRIPT //////////////////////////////////
 	
-	var acct = "{{user}}";
+	var acct = "{{user}}";  // coming in from server / session stuff
 	var toWhom = 0;  // initialize these globally, used in server and emit to performers
 	var toAll = 0;
 	var divs = [];
@@ -168,7 +168,7 @@
 		//  sending the perfcount to all of the performers as a global var pX
 		//  adding event listeners for click functionality
 		
-		function updatePerfCount() {
+		function updatePerfCount() {   // CALLED IN LINE 73 ^ HTML
 
 			pX = document.getElementById("myNumber").value;
 
@@ -230,6 +230,7 @@
  		};
 
 ////////////////////////// END DYNAMIC PERF SHIZZ	
+
 ///////////////////////// FIGURE IMAGES > BUTTONS
 
 
@@ -370,6 +371,7 @@
 	};
 
 	// FILE UPLOAD STUFF for progress bar
+
 function uploadProgress(evt) {
     if (evt.lengthComputable) {
       var percentComplete = Math.round(evt.loaded * 100 / evt.total);
@@ -387,7 +389,7 @@ function uploadProgress(evt) {
   }
 
 
-	(function() {
+	// (function() {
 
 	document.getElementById("file_input").onchange = function(){
 	    var files = document.getElementById("file_input").files;
@@ -399,7 +401,7 @@ function uploadProgress(evt) {
 	        get_signed_request(file);
 	    }
 	};
-	})();
+	// })();
 
 function get_signed_request(file){
     var xhr = new XMLHttpRequest();
@@ -418,7 +420,6 @@ function get_signed_request(file){
         }
     };   
     xhr.send();
-
 }
 
 function upload_file(file, signed_request, url){
@@ -538,108 +539,6 @@ function upload_file(file, signed_request, url){
 
 		$(incoming).fadeTo(1,0);
 
-		//performer buttons
-
-	 // 	$(perf1).click(function(){
-
-	 // 		myId = 1;
-
-	 // 		$(perf1).fadeTo(500, 0.5);
-	 // 		$(perf2).fadeTo(500, 1);			 		
-	 // 		$(perf3).fadeTo(500, 1);
-	 // 		$(perf4).fadeTo(500, 1);
-	 // 		$(perf5).fadeTo(500, 1);
-
-	 // 		$(perf1).css('color', 'red');
-	 // 		$(perf2).css('color', 'white');
-	 // 		$(perf3).css('color', 'white');
-	 // 		$(perf4).css('color', 'white');
-	 // 		$(perf5).css('color', 'white');
-	 		
-		// 	console.log("I am Performer " + myId);
-	 // 	}
-	 // );
-
-	 // 	$(perf2).click(function(){
-
-	 // 		myId = 2;
-
-	 // 		$(perf1).fadeTo(500, 1);
-	 // 		$(perf2).fadeTo(500, 0.5);			 		
-	 // 		$(perf3).fadeTo(500, 1);
-	 // 		$(perf4).fadeTo(500, 1);
-	 // 		$(perf5).fadeTo(500, 1);
-
-	 // 		$(perf1).css('color', 'white');
-	 // 		$(perf2).css('color', 'red');
-	 // 		$(perf3).css('color', 'white');
-	 // 		$(perf4).css('color', 'white');
-	 // 		$(perf5).css('color', 'white');
-
-		// 	console.log("I am Performer " + myId);		
-	 // 	}
-	 // );
-
-	 // 	$(perf3).click(function(){
-
-	 // 		myId = 3;
-
-	 // 		$(perf1).fadeTo(500, 1);
-	 // 		$(perf2).fadeTo(500, 1);			 		
-	 // 		$(perf3).fadeTo(500, 0.5);
-	 // 		$(perf4).fadeTo(500, 1);
-	 // 		$(perf5).fadeTo(500, 1);
-
-	 // 		$(perf1).css('color', 'white');
-	 // 		$(perf2).css('color', 'white');
-	 // 		$(perf3).css('color', 'red');
-	 // 		$(perf4).css('color', 'white');
-	 // 		$(perf5).css('color', 'white');
-
-	 // 		console.log("I am Performer " + myId);
-	 // 	}
-	 // );
-
-		// $(perf4).click(function(){
-
-	 // 		myId = 4;
-
-	 // 		$(perf1).fadeTo(500, 1);
-	 // 		$(perf2).fadeTo(500, 1);			 		
-	 // 		$(perf3).fadeTo(500, 1);
-	 // 		$(perf4).fadeTo(500, 0.5);
-	 // 		$(perf5).fadeTo(500, 1);
-
-	 // 		$(perf1).css('color', 'white');
-	 // 		$(perf2).css('color', 'white');
-	 // 		$(perf3).css('color', 'white');
-	 // 		$(perf4).css('color', 'red');
-	 // 		$(perf5).css('color', 'white');
-
-	 // 		console.log("I am Performer " + myId);
-	 // 	}
-	 // );	 	
-
-
-		// $(perf5).click(function(){
-
-	 // 		myId = 5;
-
-	 // 		$(perf1).fadeTo(500, 1);
-	 // 		$(perf2).fadeTo(500, 1);			 		
-	 // 		$(perf3).fadeTo(500, 1);
-	 // 		$(perf4).fadeTo(500, 1);
-	 // 		$(perf5).fadeTo(500, 0.5);
-
-	 // 		$(perf1).css('color', 'white');
-	 // 		$(perf2).css('color', 'white');
-	 // 		$(perf3).css('color', 'white');
-	 // 		$(perf4).css('color', 'white');
-	 // 		$(perf5).css('color', 'red');
-
-	 // 		console.log("I am Performer " + myId);
-	 // 	}
-	 // );
 
 	 				// functions (just one right now)
 	 				var flashIncoming = function(){

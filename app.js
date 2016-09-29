@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path'); 
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+var logger = require('morgan'); 
 var cookieParser = require('cookie-parser'); 
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -10,7 +10,7 @@ var socket_io = require('socket.io');
 var app = express();  
 var io = socket_io();   
 
-// inital file system demo
+// inital file system - reading - writing  :: added 9/19/16
   var fse = require('fs-extra');
 
   fse.readFile('./public/hello.txt', 'utf8', function(err, data){
@@ -20,6 +20,18 @@ var io = socket_io();
     console.log(data);
   });
 //
+
+// time stamping stuff for datalogging :: added 9/19/16
+  var now = new Date();
+
+  var dateArray = [now.getMonth() + 1,now.getDate(), now.getFullYear()]; // use for deriving lengths that figures happened
+  var date = (now.getMonth() + 1)+"-"+now.getDate()+"-"+now.getFullYear(); // use for time stamping
+
+  var timeArray = [now.getHours(), now.getMinutes(), now.getSeconds()];  
+  var time = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
+  console.log(date,"@",time);
+
+//  redis (sessions) stuff
 
 if (process.env.REDISTOGO_URL) {
   var rtg = require('url').parse(process.env.REDISTOGO_URL);
@@ -633,17 +645,20 @@ console.log(process.env.RUNNING);  // hello world
 
             socket.on(socket.request.user + ' perfCount', function(data) {
 
-              performerCount = data;  // this may be deprecated
+              performerCount = data;  // using this for autoPerfCount on performer page
               
-                console.log("socket.request.user is " + socket.request.user);
-              socket.broadcast.emit(socket.request.user + ' perfCount', data);                   
-                console.log('perfCount = ' + performerCount);            
+              console.log("socket.request.user is " + socket.request.user);
+
+              socket.broadcast.emit(socket.request.user + ' perfCount', data); 
+
+              console.log('perfCount = ' + performerCount);
+
             });
 
-            // socket.on('gimmePerfCount', function(data) {
-            //   socket.emit('givenPerfCount', performerCount);                   
-            //   console.log('gimmePerfCount = ' + performerCount);            
-            // });
+            socket.on('gimmePerfCount', function(data) {
+              socket.emit(socket.request.user + ' perfCount', performerCount);                   
+              console.log('gimmePerfCount = ' + socket.request.user + performerCount);            
+            });
         });
 
 module.exports = app;

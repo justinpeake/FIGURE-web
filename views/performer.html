@@ -1,4 +1,4 @@
- <html>
+ <html> 
 	<head>
 
 		<title> FIGURE :: PERFORMER</title>
@@ -19,20 +19,17 @@
 			var whosBoss = prompt("Please enter the name of the composer you are joining");
 
 			if (whosBoss != null) {
-					   subscribedTo = whosBoss;	   
-				}
-
-				//console.log("whosBoss is " + subscribedTo);
-				
+					   subscribedTo = whosBoss;	   			
 			var socket = io(); 
 			console.log("Socket thing");
+		}
 
 		</script>
 
 		<script type="text/javascript">
 			
 			socket.on('connect', function() {
-				//socket.emit('gimmePerfCount');  // no server listener for this yet
+				// socket.emit('gimmePerfCount');  // no server listener for this yet
 				console.log("Socket Connection");
 			});
 
@@ -131,6 +128,8 @@
  
  <script type="text/javascript">
 
+ socket.emit('gimmePerfCount');
+
 /////// BEGIN PERFORMER SCRIPT
 
 	// 	//variable to change p5
@@ -204,7 +203,7 @@
 	// when conductor creates perf buttons, handle this 
 	socket.on (subscribedTo + ' perfCount', function (data) {
 
-		console.log("got a new subscribed perf count");
+		console.log("got a new subscribed perf count " + data);
 
 		perfCount= data;
 		$('.performerDivB').remove();
