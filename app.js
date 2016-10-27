@@ -1,4 +1,4 @@
-var express = require('express');
+ var express = require('express');
 var path = require('path'); 
 var favicon = require('serve-favicon');
 var logger = require('morgan'); 
@@ -588,8 +588,7 @@ console.log(process.env.RUNNING);  // hello world
           error: err
         });
       }); 
-    }
-
+    } 
     // production error handler
     // no stacktraces leaked to user
     app.use(function(err, req, res, next) {
@@ -603,62 +602,66 @@ console.log(process.env.RUNNING);  // hello world
 
  // Socket Connections ----------------------------------------------
 
-    io.on('connection', function(socket){ 
+io.on('connection', function(socket){ 
 
-        // socket.on('gimme', function(){  // added "user to function argument"
-        //     });  // end of 'gimme' 
+socket.on(socket.request.user + ' sendingTo', function(data) {
+// console.log("Received:" + socket.request.user + "' sendingTo' " + data);
+socket.broadcast.emit(socket.request.user + ' sendingTo', data);
+});         
 
-            socket.on(socket.request.user + ' sendingTo', function(data) {
-              console.log("Received:" + socket.request.user + "' sendingTo' " + data);
-              socket.broadcast.emit(socket.request.user + ' sendingTo', data);
-            });         
+socket.on(socket.request.user + ' sendingAll', function(data) {
+// console.log("Received: 'sendingAll' " + data);
+socket.broadcast.emit(socket.request.user + ' sendingAll', data);
+});
 
-            socket.on(socket.request.user + ' sendingAll', function(data) {
-              console.log("Received: 'sendingAll' " + data);
-              socket.broadcast.emit(socket.request.user + ' sendingAll', data);
-            });
+socket.on(socket.request.user + ' toGroup', function(data) {
+// console.log("Received: 'toGroup' " + data);
+socket.broadcast.emit(socket.request.user + ' toGroup', data);
+});
 
-            socket.on(socket.request.user + ' toGroup', function(data) {
-              console.log("Received: 'toGroup' " + data);
-              socket.broadcast.emit(socket.request.user + ' toGroup', data);
-            });
+socket.on(socket.request.user + ' videoFigure', function(data) {
+// console.log("Received: 'videoFigure' " + data);
+socket.broadcast.emit(socket.request.user + ' videoFigure', data);
+});
 
-              socket.on(socket.request.user + ' videoFigure', function(data) {
-              console.log("Received: 'videoFigure' " + data);
-              socket.broadcast.emit(socket.request.user + ' videoFigure', data);
-            });
+socket.on(socket.request.user + ' imageFigure', function(data) {
+// console.log("Received: 'imageFigure' " + data);
+socket.broadcast.emit(socket.request.user + ' imageFigure', data);
+});
 
-            socket.on(socket.request.user + ' imageFigure', function(data) {
-              console.log("Received: 'imageFigure' " + data);
-              socket.broadcast.emit(socket.request.user + ' imageFigure', data);
-            });
+socket.on(socket.request.user + ' switch', function(data) {
+// console.log("Received: switch " + data);
+socket.broadcast.emit(socket.request.user + ' switch', data);
+});
 
-            socket.on(socket.request.user + ' switch', function(data) {
-              console.log("Received: switch " + data);
-              socket.broadcast.emit(socket.request.user + ' switch', data);
-            });
+socket.on(socket.request.user + ' waveSketch', function(data) {
+// console.log("Received: waveSketch " + data);
+socket.broadcast.emit(socket.request.user + ' waveSketch', data);
+});
 
-            socket.on(socket.request.user + ' waveSketch', function(data) {
-              console.log("Received: waveSketch " + data);
-              socket.broadcast.emit(socket.request.user + ' waveSketch', data);
-            });
+socket.on(socket.request.user + ' perfCount', function(data) {
+performerCount = data;  // using this for autoPerfCount on performer page              
+// console.log("socket.request.user is " + socket.request.user);
+socket.broadcast.emit(socket.request.user + ' perfCount', data); 
+// console.log('perfCount = ' + performerCount);
+});
 
-            socket.on(socket.request.user + ' perfCount', function(data) {
+socket.on('gimmePerfCount', function(data) {  // called when performer logs in and auto proagates their pag
+socket.emit(socket.request.user + ' perfCount', performerCount);                   
+// console.log('gimmePerfCount = ' + socket.request.user + performerCount);            
+});
 
-              performerCount = data;  // using this for autoPerfCount on performer page
-              
-              console.log("socket.request.user is " + socket.request.user);
+// socket.on('newCount', function(data) {  
+// //socket.emit(socket.request.user + ' perfCount', performerCount);                   
+// console.log('count = ' + data);            
+// });
 
-              socket.broadcast.emit(socket.request.user + ' perfCount', data); 
+socket.on('testCount', function(data) {  // called when performer logs in and auto proagates their pag
+//updatedCompName = data;  
+console.log('ggot a test count ' + data);             
+// console.log('gimmePerfCount = ' + socket.request.user + performerCount); 
+});
 
-              console.log('perfCount = ' + performerCount);
-
-            });
-
-            socket.on('gimmePerfCount', function(data) {
-              socket.emit(socket.request.user + ' perfCount', performerCount);                   
-              console.log('gimmePerfCount = ' + socket.request.user + performerCount);            
-            });
-        });
+});
 
 module.exports = app;

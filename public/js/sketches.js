@@ -9,9 +9,12 @@
 
 var tempo = function( p ) {
 
-  var x = 50; 
-  var y = 50;
-  var fill = 0;
+  p.x = 50; 
+  p.y = 50;
+  p.fillcol = 0;
+  p.count = 0;
+  p.latch = false;
+
 
   p.setup = function() {
     p.createCanvas(100, 100);
@@ -20,13 +23,18 @@ var tempo = function( p ) {
   p.draw = function() {
     p.background(255);
     p.noStroke();
-    p.fill(fill, 0, 0);
-    p.ellipse(x,y,75,75);
+    p.fill(p.fillcol, 0, 0);
+    //p.ellipse(x,y,75,75);
+    p.text(p.count, p.x, p.y);
 
-    fill = fill + 5;
+    p.fillcol = p.fillcol + 2;
 
-    if (fill > 255){
-    fill = 0;
+    if (p.fillcol > 255){
+    p.fillcol = 0;
+    p.count = p.count + 1;
+
+    socket.emit('testCount', p.count); // sends from client, back to server
+
     }
   };
 };
@@ -109,8 +117,6 @@ var waveForm = function(p){
   var wavLength = canvasX;
 
   var thisNum = 0;
-
-
 
   p.preload = function(){
 

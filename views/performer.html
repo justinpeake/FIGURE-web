@@ -1,5 +1,5 @@
- <html> 
-	<head>
+ <html>  
+	<head> 
 
 		<title> FIGURE :: PERFORMER</title>
 
@@ -15,15 +15,12 @@
 				
 
 		<script> 
-
 			var whosBoss = prompt("Please enter the name of the composer you are joining");
-
-			if (whosBoss != null) {
-					   subscribedTo = whosBoss;	   			
-			var socket = io(); 
-			console.log("Socket thing");
-		}
-
+				if (whosBoss != null) {
+					subscribedTo = whosBoss;	   			
+				var socket = io(); 
+				console.log("Socket thing " + subscribedTo);
+				}
 		</script>
 
 		<script type="text/javascript">
@@ -69,75 +66,60 @@
 			
 	</head>
 
-		<script type="text/javascript">
-						
-			socket.on('switch', function (data){
-				
-				document.getElementById("everythingPerformer").style.display = "none";
-				document.getElementById("everythingConductor").style.display= "block";
-		
-				if (myId == toWhom || toAll == 1) {
+<script type="text/javascript">
 
-				console.log("got tha switch " + data);
+	socket.on('switch', function (data){
 
-				};
-			});
+	document.getElementById("everythingPerformer").style.display = "none";
+	document.getElementById("everythingConductor").style.display= "block";
 
+	if (myId == toWhom || toAll == 1) {
 
-		</script>
+		console.log("got tha switch " + data);
 
+	};
+});
+</script>
 
 <body>
 
-
 <div id="everythingPerformer" align="center">
-
-
 	<div id="perfDialogue"> 				 
-
 		<div id="youAre"> </div>	
-		<div id="bpm"> </div>			
-					 		
+		<div id="bpm"> </div>								 		
 		<!-- responds to the "incoming" function -->
-
 		<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
-
-</div> 
-
-
+	</div> 
 			 <!-- container for all figures -->
 	<div id="figures" align="center">
-
-			
   		<!-- container where performer channel buttons show up -->
 		<div id="performer-container" > </div>
-
 		 <!-- container where the waveForm visualizer sketch shows up -->
   		<div id="waveSketch"> </div>
-
 	  		<!-- container where video figures show up -->
-	 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
-	 	
+	 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>	 	
 	 	<!-- container where image figures show up -->
-	 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
-		 	
+	 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>		 	
 	</div>
-
 </div>
 
  
  <script type="text/javascript">
 
- socket.emit('gimmePerfCount');
+ // INIT stuff
+
+socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performer page connects
+
 
 /////// BEGIN PERFORMER SCRIPT
 
 	// 	//variable to change p5
 	// 	var sketch = q;
 
-	// 	//actually calls th p5  (p5 sketches in /public/js)
+	// 	//actually calls the p5  (p5 sketches in /public/js)
 
 	 //var myp5 = new p5(waveForm, 'timeLine');
+
 	var myp5 = new p5(tempo, 'bpm'); 
 
 	var subscribedTo;
@@ -152,8 +134,6 @@
 	var group = [];
 
 	// this determines which composition you receive messages from
-
-	//var subscribedTo = 'shawn';  
 
 	//p5 WAVE STUFF
 		// this var exists inside of the p5 instance "waveForm"
