@@ -72,15 +72,16 @@ var S3_BUCKET = process.env.S3_BUCKET;
 
 // Passport, Session, Redis, Cookie stuff --------------
 
-      app.use(session({
-          key: 'express.sid',
-          store: sessionStore,
-          secret: 'keyboard horse',
-          resave: false,
-          saveUninitialized: false
-      }));
-      app.use(passport.initialize());
-      app.use(passport.session());
+
+      // app.use(session({
+      //     key: 'express.sid',
+      //     store: sessionStore,
+      //     secret: 'keyboard horse',
+      //     resave: false,
+      //     saveUninitialized: false
+      // }));
+      // app.use(passport.initialize());
+      // app.use(passport.session());
       io.use(socketioRedis.authorize({
           passport:passport,
           cookieParser: cookieParser,        // the same middleware you register in express
@@ -124,7 +125,7 @@ var options = {
 
 mLab.listDocuments(options, function (err, data) {
   for(i = 0; i < data.length; i++){
-  console.log(data[i].username); // strips username from JSON
+  console.log("ACCOUNTS: " + data[i].username); // strips username from JSON
 }
 }); 
 
@@ -152,6 +153,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret:"horse"}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
@@ -166,10 +171,12 @@ console.log(process.env.RUNNING);  // hello world
 
       passport.serializeUser(function(user, done) {
          done(null, user.username);   // this affects what shows up in socket.request.user
+         console.log("serializeUser")
       });
 
       passport.deserializeUser(function(id, done) {        
          done(null, id);
+         console.log("deserializeUser")
       });
 
 //--------------------------------------------------------
@@ -180,6 +187,9 @@ console.log(process.env.RUNNING);  // hello world
 
             var s3 = new aws.S3();            
             var folder = req.user + "/";
+
+            console.log(req.user);
+
             var s3_params = {
                 Bucket: S3_BUCKET,  
                 Key: folder, 
@@ -238,6 +248,7 @@ console.log(process.env.RUNNING);  // hello world
                  
           res.render('dashboard.html', {
                     user: req.user.username, 
+                    id: req.user,
                     images: imageArray, 
                     videos: videoArray, 
                     audio: audioArray, 
@@ -347,6 +358,8 @@ console.log(process.env.RUNNING);  // hello world
 // Render Conductor Page ----------------------------------------
 
           app.get('/conductor', function(req,res){
+            console.log(req)
+            console.log(req.user)
         
               if(req.user) {
 
@@ -424,7 +437,8 @@ console.log(process.env.RUNNING);  // hello world
              });
 
                   }else{        
-                  res.render('index.html')       
+                  res.render('index.html');
+                  console.log("apparently not a req.user");       
                   }
              });
 
@@ -658,7 +672,7 @@ socket.emit(socket.request.user + ' perfCount', performerCount);
 
 socket.on('testCount', function(data) {  // called when performer logs in and auto proagates their pag
 //updatedCompName = data;  
-console.log('ggot a test count ' + data);             
+console.log('got a test count ' + data);             
 // console.log('gimmePerfCount = ' + socket.request.user + performerCount); 
 });
 
