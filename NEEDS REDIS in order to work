@@ -1,0 +1,3 @@
+NEEDS REDIS in order to work
+
+New terminal > type "redis-server" <enter>
