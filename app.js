@@ -73,15 +73,16 @@ var S3_BUCKET = process.env.S3_BUCKET;
 // Passport, Session, Redis, Cookie stuff --------------
 
 
-      // app.use(session({
-      //     key: 'express.sid',
-      //     store: sessionStore,
-      //     secret: 'keyboard horse',
-      //     resave: false,
-      //     saveUninitialized: false
-      // }));
-      // app.use(passport.initialize());
-      // app.use(passport.session());
+      app.use(session({
+          key: 'express.sid',
+          store: sessionStore,
+          secret: 'keyboard horse',
+          resave: false,
+          saveUninitialized: false
+      }));
+      app.use(passport.initialize());
+      app.use(passport.session());
+
       io.use(socketioRedis.authorize({
           passport:passport,
           cookieParser: cookieParser,        // the same middleware you register in express
@@ -153,7 +154,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret:"horse"}));
+app.use(session({secret:"keyboard horse"}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -618,10 +619,36 @@ console.log(process.env.RUNNING);  // hello world
 
 io.on('connection', function(socket){ 
 
+socket.on(socket.request.user + ' deleteTest', function(data) {
+
+console.log("Received:" + socket.request.user + ' deleteTest'  + data);
+
+
+  var s3 = new aws.S3();
+  var folder = socket.request.user + "/";  
+  var params = {
+  Bucket: S3_BUCKET, /* required */
+  Key: folder + data , /* required */
+};
+
+  s3.deleteObject(params, function(err, data) {
+    if (err) console.log(err, err.stack); // an error occurred
+    else     
+    console.log(data);         // successful response
+    console.log('deleted that shit');
+    socket.emit('deleteReload');  
+
+  });
+
+
+
+});  
+
 socket.on(socket.request.user + ' sendingTo', function(data) {
 // console.log("Received:" + socket.request.user + "' sendingTo' " + data);
 socket.broadcast.emit(socket.request.user + ' sendingTo', data);
-});         
+});  
+
 
 socket.on(socket.request.user + ' sendingAll', function(data) {
 // console.log("Received: 'sendingAll' " + data);
@@ -665,14 +692,10 @@ socket.emit(socket.request.user + ' perfCount', performerCount);
 // console.log('gimmePerfCount = ' + socket.request.user + performerCount);            
 });
 
-// socket.on('newCount', function(data) {  
-// //socket.emit(socket.request.user + ' perfCount', performerCount);                   
-// console.log('count = ' + data);            
-// });
 
 socket.on('testCount', function(data) {  // called when performer logs in and auto proagates their pag
 //updatedCompName = data;  
-console.log('got a test count ' + data);             
+//console.log('got a test count ' + data);             
 // console.log('gimmePerfCount = ' + socket.request.user + performerCount); 
 });
 

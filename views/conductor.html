@@ -89,6 +89,7 @@
 			<p>
 				<a class="btn btn-default" id="all"> ALL </a>
 				<a class="btn btn-default" id="switcher"> SWITCH </a> 
+				<a class="btn btn-default" id="delButton"> delMode </a> 
 			<p>
 		</div>	
 
@@ -133,8 +134,12 @@
 	var perfs = [];   
 	var pX;
 
+	var delMode = false;
 
-	    //SWITCHER 
+
+socket.on('deleteReload', uploadComplete);
+
+//SWITCHER button
 		$(switcher).click(function(){
 
 			console.log('switch ' + toWhom);
@@ -148,18 +153,39 @@
 
 		});
 
-		// ALL SELECTOR
-		$(all).click(function(){
-
-			toAll = 1;
-
+// ALL button
+	$(all).click(function(){
+		if(toAll == 0){
 			$(all).fadeTo("fast", 0.5); 
 		    $(all).css('color', 'red');
+			  toAll = 1;
+			  console.log('sendingAll ' + toAll);
+			  socket.emit(acct + ' sendingAll', toAll);
+		} else if (toAll == 1){
+			$(all).fadeTo("fast", 0.5); 
+		    $(all).css('color', 'gray');
+		      toAll = 0;
+		      console.log('sendingAll ' + toAll);
+		};
+	});
 
-			console.log('sendingAll ' + toAll);
-			socket.emit(acct + ' sendingAll', toAll);
+// DELETE button
+	$(delButton).click(function(){  
+        if(delMode == false){
+        	$(delButton).fadeTo("fast", 0.5); 
+		    $(delButton).css('color', 'red');
+              delMode = true;
+              console.log("delMode = " + delMode);
 
-		});
+    //$(location).attr('href', '/deleteFile') ;  
+
+        } else if (delMode == true){
+        	$(delButton).fadeTo("fast", 0.5); 
+		    $(delButton).css('color', 'gray');
+            delMode = false;
+            console.log("delMode = " + delMode);
+        };
+    });
 
 
 		// DYNAMIC PERF SHIZZ	
@@ -270,7 +296,18 @@
 		return function(){
 			var image = "#iF" + index; 
 			$(image).fadeTo("slow", 0.5);				
-			socket.emit(acct + ' imageFigure', imageSrcs[index]);
+			
+//delete mode stuff
+
+			 if(delMode == false){
+					socket.emit(acct + ' imageFigure', imageSrcs[index]);
+				 } else if(delMode == true){
+					 console.log(acct + ' delMode ' + imageSrcs[index].split('/')[4]);
+					 socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]); 
+					};
+
+
+
 	
 			// display who is playing which figure
 		for(i=0; i < group.length; i++){
@@ -593,6 +630,9 @@ function upload_file(file, signed_request, url){
 						});
 
 					
+			
+
+
 
 						socket.on('imageFigure', function (data) {
 
