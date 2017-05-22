@@ -124,11 +124,10 @@
     
   		  	} 
          		          
-  		.imageFig{
-  			display: inline;
-  			float:left;
-  			height:70px;
-			width:750px;
+  		#imageFig{
+  			height:600px;
+			width:800px;
+			opacity: .4;
 
  		  	} 
 

@@ -86,7 +86,7 @@
 <div id="everythingPerformer" align="center">
 	<div id="perfDialogue"> 				 
 		<div id="youAre"> </div>	
-		<div id="bpm"> </div>								 		
+		<div id="fftDiv"> </div>								 		
 		<!-- responds to the "incoming" function -->
 		<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
 	</div> 
@@ -120,7 +120,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 	 //var myp5 = new p5(waveForm, 'timeLine');
 
-	var myp5 = new p5(fft, 'bpm'); 
+	var myp5 = new p5(fft, 'fftDiv'); 
 
 	var subscribedTo;
 

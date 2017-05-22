@@ -9,32 +9,32 @@ var fft = function (p){
 
  p.mic, p.fft;
 
-p.setup = function() {
-   p.createCanvas(710,400);
-   p.noFill();
+  p.setup = function() {
+     p.createCanvas(p.displayWidth,400);
+     p.noFill();
 
-   p.mic = new p5.AudioIn();
-   p.mic.start();
-   p.fft = new p5.FFT();
-   p.fft.setInput(p.mic);
+     p.mic = new p5.AudioIn();
+     p.mic.start();
+     p.fft = new p5.FFT();
+     p.fft.setInput(p.mic);
+  }
+
+  p.draw = function() {
+     p.background(0,0,60);
+     p.stroke(255);
+
+     var spectrum = p.fft.analyze();
+
+     p.beginShape();
+
+     for (i = 0; i<spectrum.length; i++) {
+      p.vertex(i, p.map(spectrum[i], 0, 255, p.height, 0) );
+     }
+     p.endShape();
+
+     console.log(p.fft.getEnergy("bass"));  }
+
 }
-
-p.draw = function() {
-   p.background(200);
-
-   var spectrum = p.fft.analyze();
-
-   p.beginShape();
-
-   for (i = 0; i<spectrum.length; i++) {
-    p.vertex(i, p.map(spectrum[i], 0, 255, p.height, 0) );
-   }
-   p.endShape();
-}
-
-}
-
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
