@@ -194,7 +194,7 @@ socket.on('deleteReload', uploadComplete)
 		//  sending the perfcount to all of the performers as a global var pX
 		//  adding event listeners for click functionality
 		
-		function updatePerfCount() {   // CALLED IN LINE 73 ^ HTML
+		function updatePerfCount() {   
 
 			pX = document.getElementById("myNumber").value;
 
@@ -235,8 +235,6 @@ socket.on('deleteReload', uploadComplete)
 	    		var num = index + 1;
 	    		var perfID = "#cp" + (num);
 	    			
-			 	//document.getElementById('sendingTo').innerHTML = num;			 			
-
 	 			$(perfID).fadeTo("fast", 0.5); 
 		    	$(perfID).css('color', 'red');
 		    	

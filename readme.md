@@ -1,5 +1,7 @@
 
-FIGURE is a scalable, multi-channel screen interface for music performance and education that enables a new kind of improvisation. Musical prompts can be sent to one, some, or all performers' screens, on-the-fly.  
+FIGURE is a scalable, multi-channel screen interface for music & performance.
+
+Musical prompts can be sent to one, some, or all performers' screens, on-the-fly.  
 
 It consists of a combination of three main screen views/modes:
 
