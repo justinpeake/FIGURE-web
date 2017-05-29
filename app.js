@@ -1,4 +1,4 @@
- var express = require('express');
+var express = require('express');
 var path = require('path'); 
 var favicon = require('serve-favicon');
 var logger = require('morgan'); 
@@ -10,6 +10,10 @@ var socket_io = require('socket.io');
 var app = express();  
 var io = socket_io();   
 
+console.log("***************************");
+console.log("REDIS? REDIS? REDIS? REDIS?");
+console.log("***************************");
+
 // inital file system - reading - writing  :: added 9/19/16
   var fse = require('fs-extra');
 
@@ -19,7 +23,7 @@ var io = socket_io();
     }
     console.log(data);
   });
-//
+
 
 // time stamping stuff for datalogging :: added 9/19/16
   var now = new Date();
@@ -71,7 +75,6 @@ if (app.get("env") === "development") {
 var S3_BUCKET = process.env.S3_BUCKET;
 
 // Passport, Session, Redis, Cookie stuff --------------
-
 
       app.use(session({
           key: 'express.sid',
@@ -131,8 +134,6 @@ mLab.listDocuments(options, function (err, data) {
 }); 
 
 //-------------------------------------------------------
-
-
 // fixes clock skew issues with AWS-SDK ----------- 6/17/16
 
 aws.config.update({correctClockSkew: true});    

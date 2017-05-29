@@ -13,33 +13,40 @@ www.github.co/sslover
 
 				\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ TODO \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+added todos: 5_21_17
 
-> REALTIME chat shows up as a semi-opaque overlay briefly (settable)
+		_ MAKE IT TALK TO ABLETON via max for live
 
-√√√√√√  wrap the AWS query in a function that returns the arrays into the correct scope for hogan.
+		_ COLLAGE MODE
 
-> compositions	
+		_ WEBS SCRAPER MODE
 
-> Practice Mode 
+	_ Practice Mode 
 
-> Chat Function
-	- performer subvert
+	_ timer between events - per performer - on conductor dash - on performer dash
 
-> Switch 
+		. conductor can set max time for any given performer (sends Tacet once timer is up)
 
-√√√√√√  Re-add 'All' Button 
 
-√√√√√√  DELETE FIGURES from composer interface
+	_ REALTIME chat shows up as a semi-opaque overlay briefly (settable)
 
-√√√√√√  build an FFT listener into performerPage --->  FFT data switcher for conductor.
+
+	_ Switch 
+
+		. needs to be implemented once all session variables are being tracked 
+
+	_ user accounts / dashboard functionality
+		 .create new composition basically folders in AWS - propagate a dropdown
+	_ save composition
+	_ edit vs performance mode.... necessary?
+
+
+	_ different 'incoming' cue
+
 
 > SECURITY issue with uploads .... key is getting transmitted openly  << might be unavoidable with client side shiz
 
 
-> user accounts / dashboard functionality
-	- create new composition
-	- save composition
-	- edit vs performance mode.... necessary?
 
 
 
@@ -48,8 +55,6 @@ www.github.co/sslover
 > HOW to TEMPO?! TEMPO TEMPO TEMPO
 
 > appropriate on page responsiveness
-
-> different 'incoming' cue
 
 > DEAL WITH LATENCY? 
 	- add tempo flasher?
@@ -63,89 +68,62 @@ www.github.co/sslover
 
 					\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ DONE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+					as of 5_21_17
 
+√ Re-add 'All' Button 
 
-4/19:
+√ DELETE FIGURES from composer interface
 
-> conductor display overlay shadow 'who is playing what'
+√ build an FFT listener into performerPage --->  FFT data switcher for conductor.
 
+√ conductor display overlay shadow 'who is playing what'
 
-> ADD overlayed info for figures from mongolab (KeySig etc)
+√ ADD overlayed info for figures from mongolab (KeySig etc)
 	- if peformer is playing, overlay which figure.	
 
-4/5:
+√ DYNAMIC PERFORMER BUTTONS
 
-> DYNAMIC PERFORMER BUTTONS
+√ fix 'browse images' is uploading before "update" is clicked... why?
 
-> fix 'browse images' is uploading before "update" is clicked... why?
+√ HOW to TEMPO?! TEMPO TEMPO TEMPO
 
-> HOW to TEMPO?! TEMPO TEMPO TEMPO
+√ how to pass 'baton' to performer
 
+√ GET array length into html
 
-3/28:
+√ MAKE A DAMN CSS file!!!  <<<------
 
-> how to pass 'baton' to performer
+√ Make login immediately redirect to dashboard (outide of /login)
 
-GET array length into html
+√ user uploads
+	
+√ SERVE p5 sketch!!!!
 
-MAKE A DAMN CSS file!!!  <<<------
+√ imageFigure sizes for display?
 
-Make login immediately redirect to dashboard (outide of /login)
+√ upload progress bar
 
-> user uploads
-	- deal with buckets
-	- how to rename files appropriately to be queried.
+√ MAKE CLICKABLE NAV DIVS	
 
-> SERVE p5 sketch!!!!
+√ go to dashboard at login... nav divs going to local routes
 
-> imageFigure sizes for display?
-
-upload progress bar
-
-
-2/29/16:
-
-> MAKE CLICKABLE NAV DIVS	
-
-2/27/16:
-
-> go to dashboard at login... nav divs going to local routes
-
-> on login ... instantiate all relevant variables / database queries:
+√  on login ... instantiate all relevant variables / database queries:
 		- who is user
 		- what are their compositions
 
-> GET THE FOLDER VALUES INTO HTML	
+√  GET THE FOLDER VALUES INTO HTML	
 
-2/26/16:
+√ get user id to pull username from mongolab < did this with req.user.username
 
-fixed double logins
+√  make sure pages can only be accessed from an account	
 
+√ default figures: "play", "don't play"
 
-2/23/16:
+√ clickable div's for performer's
 
-> get user id to pull username from mongolab < did this with req.user.username
-
-> make sure pages can only be accessed from an account	
-
-> default figures: "play", "don't play"
+√ added console.log "reg.user.username" inside auth block in index.html
 
 
-2/16/16:
-	
-	> clickable div's for performer's
-
-	> added console.log "reg.user.username" inside auth block in index.html
-
-
-
-	//////
-
-PREdate:
-
-added:  Chalk.js (for console.log coloring)
-
-fixed: user is deserialized upon navigating to a different page causing UserID to be undefined upon new 		page load
 
 
 
