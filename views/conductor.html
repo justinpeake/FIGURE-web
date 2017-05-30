@@ -37,7 +37,7 @@
 			color: #666666;
 			font-size: 20px;
 
-		    }
+		    } 
 		#everythingConductor {
 			/*visibility: visible;*/
 			display: block;
@@ -64,13 +64,14 @@
 		<a href="/dashboard" class="btn btn-default"> Dashboard </a> 
 		</nav>
 
-		<p>
-		<p>
+		<br>
+		<br>
+
 
 		<!-- PERFORMER channel update -->	
 		<input type="number" id="myNumber" value="0">
 		<p>
-		<button onclick="updatePerfCount()">Update Channel Count </button>
+		<button class="btn btn-default" onclick="updatePerfCount()"># of Performers</button>
 	</br>
 	</br>
 	</br>
@@ -87,6 +88,7 @@
 		<!-- holds performer buttons -->
 		<div id="performer-container">
 			<p>
+				<a class="btn btn-default" id="clear"> CLEAR </a>
 				<a class="btn btn-default" id="all"> ALL </a>
 				<a class="btn btn-default" id="switcher"> SWITCH </a> 
 				<a class="btn btn-default" id="delButton"> delMode </a> 
@@ -137,7 +139,7 @@
 	var delMode = false;
 
 
-socket.on('deleteReload', uploadComplete)
+socket.on('deleteReload', uploadComplete);
 
 //SWITCHER button
 		$(switcher).click(function(){
@@ -163,7 +165,7 @@ socket.on('deleteReload', uploadComplete)
 			  socket.emit(acct + ' sendingAll', toAll);
 		} else if (toAll == 1){
 			$(all).fadeTo("fast", 0.5); 
-		    $(all).css('color', 'gray');
+		    $(all).css('color', 'lightgray');
 		      toAll = 0;
 		      console.log('sendingAll ' + toAll);
 		};
@@ -181,12 +183,34 @@ socket.on('deleteReload', uploadComplete)
 
         } else if (delMode == true){
         	$(delButton).fadeTo("fast", 0.5); 
-		    $(delButton).css('color', 'gray');
+		    $(delButton).css('color', 'lightgray');
             delMode = false;
             console.log("delMode = " + delMode);
         };
     });
 
+
+//CLEAR BUTTON
+$(clear).click(function(){
+
+	// this clears the group when an image is sent
+	group = [];
+	member = 0;
+	toAll = 0;
+
+	// this clears the button states when an image is sent
+	for (i=0; i < perfs.length; i++){
+		$('#cp' + (i+1)).css('color', 'white');
+	};
+
+	for (i=0; i < perfs.length; i++){
+		$('#cp' + (i+1)).fadeTo("fast", 1.0);
+	};
+
+	// zeros out the 'ALL' button when a figure is sent
+	$(all).fadeTo("fast", 1.0);
+		
+	});
 
 		// DYNAMIC PERF SHIZZ	
 
@@ -295,18 +319,15 @@ socket.on('deleteReload', uploadComplete)
 			var image = "#iF" + index; 
 			$(image).fadeTo("slow", 0.5);				
 			
-//delete mode stuff
+//DELETE mode stuff
 
-			 if(delMode == false){
-					socket.emit(acct + ' imageFigure', imageSrcs[index]);
-				 } else if(delMode == true){
-					 console.log(acct + ' delMode ' + imageSrcs[index].split('/')[4]);
-					 socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]); 
-					};
+	if(delMode == false){
+		socket.emit(acct + ' imageFigure', imageSrcs[index]);
+	} else if(delMode == true){
+		console.log(acct + ' delMode ' + imageSrcs[index].split('/')[4]);
+		socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]); 
+	};
 
-
-
-	
 			// display who is playing which figure
 		for(i=0; i < group.length; i++){
 			 whoWhat['player' + group[i]] = 'iT' + index;
@@ -340,7 +361,7 @@ socket.on('deleteReload', uploadComplete)
 
 			// zeros out the 'ALL' button when a figure is sent
 			$(all).css('color', 'white');
-		  	$(all).fadeTo("fast", 1.0);
+			$(all).fadeTo("fast", 1.0);
 
 		  };
 	};	// end fade the fade

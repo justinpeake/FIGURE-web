@@ -24,7 +24,6 @@ console.log("***************************");
     console.log(data);
   });
 
-
 // time stamping stuff for datalogging :: added 9/19/16
   var now = new Date();
 
@@ -635,7 +634,7 @@ console.log("Received:" + socket.request.user + ' deleteTest'  + data);
   s3.deleteObject(params, function(err, data) {
     if (err) console.log(err, err.stack); // an error occurred
     else     
-    console.log(data);         // successful response
+   // console.log(data);         // successful response
     console.log('deleted that shit');
     socket.emit('deleteReload');  
 
