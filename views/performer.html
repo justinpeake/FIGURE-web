@@ -1,5 +1,5 @@
- <html>  
-	<head> 
+ <html>
+	<head>
 
 		<title> FIGURE :: PERFORMER</title>
 
@@ -7,30 +7,30 @@
 
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
-		<script type="text/javascript" src="/js/sketches.js"></script> 
-		<script type="text/javascript" src="/js/classes.js"></script> 
+		<script type="text/javascript" src="/js/sketches.js"></script>
+		<script type="text/javascript" src="/js/classes.js"></script>
 		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
-				
 
-		<script> 
+
+		<script>
 			var whosBoss = prompt("Please enter the name of the composer you are joining");
 				if (whosBoss != null) {
-					subscribedTo = whosBoss;	   			
-				var socket = io(); 
+					subscribedTo = whosBoss;
+				var socket = io();
 				console.log("Socket thing " + subscribedTo);
 				}
 		</script>
 
 		<script type="text/javascript">
-			
+
 			socket.on('connect', function() {
 				// socket.emit('gimmePerfCount');  // no server listener for this yet
 				console.log("Socket Connection");
 			});
 
-		</script>	 
+		</script>
 
 
 		<style>
@@ -40,14 +40,14 @@
 				color: fff;
 				    font-size: 15px;
 			}
-			
+
 			#perfDialogue {
 				background-color: #080336;
-			
+
 			}
 
 			#everythingConductor {
-				/*visibility: visible;*/ 
+				/*visibility: visible;*/
 				display: none;
 			}
 
@@ -63,7 +63,7 @@
 
 		</style>
 
-			
+
 	</head>
 
 <script type="text/javascript">
@@ -84,26 +84,26 @@
 <body>
 
 <div id="everythingPerformer" align="center">
-	<div id="perfDialogue"> 				 
-		<div id="youAre"> </div>	
-		<div id="fftDiv"> </div>								 		
+	<div id="perfDialogue">
+		<div id="youAre"> </div>
+		<!-- <div id="fftDiv"> </div>								 		 -->
 		<!-- responds to the "incoming" function -->
 		<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
-	</div> 
+	</div>
 			 <!-- container for all figures -->
 	<div id="figures" align="center">
   		<!-- container where performer channel buttons show up -->
 		<div id="performer-container" > </div>
 		 <!-- container where the waveForm visualizer sketch shows up -->
-  		<div id="waveSketch"> </div>
+  		<!-- <div id="waveSketch"> </div> -->
 	  		<!-- container where video figures show up -->
-	 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>	 	
+	 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
 	 	<!-- container where image figures show up -->
-	 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>		 	
+	 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
 	</div>
 </div>
 
- 
+
  <script type="text/javascript">
 
  // INIT stuff
@@ -120,7 +120,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 	 //var myp5 = new p5(waveForm, 'timeLine');
 
-	var myp5 = new p5(fft, 'fftDiv'); 
+	// var myp5 = new p5(fft, 'fftDiv');
 
 	var subscribedTo;
 
@@ -128,7 +128,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 	// PERFORMER ID STUFF
 		//initialize globals for performer id
 
-	var myId = 0; 
+	var myId = 0;
 	var toWhom = 0;
 	var toAll = 0;
 	var group = [];
@@ -139,23 +139,23 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		// this var exists inside of the p5 instance "waveForm"
 	var trackName = '';
 	//changed this from myp5 to wave
-	var wave;	
+	var wave;
 
-									
+
 	// this is handling the p5 instance for wavePlayer
 	socket.on (subscribedTo + ' waveSketch', function (data){
 
 		trackName = data;
-		
+
 		/* logic below: if there isn't an instance one on the page (it will be undefined) so create a new one
 		 if there is an instance, remove it and create a new one */
 
 		 //changed to add the toWhom conditional logic
-		if ( myId == toWhom || toAll == 1 && typeof(myp5) == 'undefined' ){						
-				wave = new p5(waveForm, "waveSketch"); 
+		if ( myId == toWhom || toAll == 1 && typeof(myp5) == 'undefined' ){
+				wave = new p5(waveForm, "waveSketch");
 			} else if ( myId == toWhom || toAll == 1) {
 				wave.remove();
-				wave = new p5(waveForm, "waveSketch"); 
+				wave = new p5(waveForm, "waveSketch");
 			}
 
 	});
@@ -170,7 +170,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 	};
 
 
-////////////////////////// DYNAMIC PERF SHIZZ					
+////////////////////////// DYNAMIC PERF SHIZZ
 
 // routes messages across channels
 
@@ -179,8 +179,8 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 	var oldID; // used to switch button activation in doTheThing()
 
-	
-	// when conductor creates perf buttons, handle this 
+
+	// when conductor creates perf buttons, handle this
 	socket.on (subscribedTo + ' perfCount', function (data) {
 
 		console.log("got a new subscribed perf count " + data);
@@ -197,16 +197,16 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		    };
 			for (var i = 0; i < perfCount; i++){
 				$('#cp' + (i+1)).click(doTheThing(i));
-			};	
+			};
 	});
 
-	// when performer logs on, handle this 
+	// when performer logs on, handle this
 
 	// NB : Not really sure this is still relevant
-	socket.on(subscribedTo +' givenPerfCount', function (data) {		
+	socket.on(subscribedTo +' givenPerfCount', function (data) {
 
 		perfCount= data;
-		
+
 		$('.performerDivB').remove();
 			perfs = [];
 
@@ -217,21 +217,21 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		    	perfs[i].innerHTML = i + 1;
 		    	document.getElementById('performer-container').appendChild(perfs[i]);
 		    };
-		
+
 			for (var i = 0; i < perfCount; i++){
 				$('#cp' + (i+1)).click(doTheThing(i));
-			};	
+			};
 	});
 
 
-	//the function called above in  " socket.on('perfCount', function (data){...} " 
+	//the function called above in  " socket.on('perfCount', function (data){...} "
 
 		function doTheThing(index) {
 
-    	return function(){ 
+    	return function(){
 
     		 // resetting previous performer button to init values
-    		 $(oldID).fadeTo("fast", 1); 
+    		 $(oldID).fadeTo("fast", 1);
 	    	 $(oldID).css('color', 'white');
 
 	    	 console.log('reset' + oldID);
@@ -239,13 +239,13 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
     		var num = index + 1;
     		var perfID = "#cp" + (num);
 
-		 			
+
  			myId = num;
  			console.log("I am Performer " + myId);
 
  			 // setting current perf. button to 'active' values
 
- 			 $(perfID).fadeTo("fast", 0.5); 
+ 			 $(perfID).fadeTo("fast", 0.5);
 	    	 $(perfID).css('color', 'red');
 
 	    	 // sets 'oldID' to the current ID so that upon change, button gets reset visually
@@ -259,21 +259,21 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 ///////////////////////////////////////////////////// END DYNAMIC PERF SHIZZ
 
-	socket.on(subscribedTo + ' toGroup', function (data) {							
+	socket.on(subscribedTo + ' toGroup', function (data) {
 		group = data;
 		console.log(group);
 	});
 
-	socket.on(subscribedTo + ' sendingTo', function (data) {							
+	socket.on(subscribedTo + ' sendingTo', function (data) {
 		toWhom = data;
 		console.log("toWhom = " + toWhom);
-		
+
 	});
 
-	socket.on(subscribedTo + ' sendingAll', function (data) {							
+	socket.on(subscribedTo + ' sendingAll', function (data) {
 		toAll = data;
-		console.log("toAll= " + toAll);	
-		
+		console.log("toAll= " + toAll);
+
 	});
 
 
@@ -282,9 +282,9 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 	socket.on(subscribedTo + ' videoFigure', function (data) {
 
 			//checks to see if conductor is talking to "you"
-		if (myId == toWhom || toAll == 1) { 
+		if (myId == toWhom || toAll == 1) {
 
-			//flashes "incoming" image 
+			//flashes "incoming" image
 		var flasher = setInterval(function() {flashIncoming()} , 500);
 
 			// shuts off incoming flasher after interval
@@ -301,15 +301,15 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		document.getElementById('videoFig').src = data;
 		document.getElementById('videoFig').height = "600";
 			}
-		}							
+		}
 	});
 
-					
+
 	socket.on(subscribedTo + ' imageFigure', function (data) {
 
 		if (group.indexOf(myId) > -1 || toAll == 1) {
 
-			//flashes "incoming" image 
+			//flashes "incoming" image
 		var flasher = setInterval(function() {flashIncoming()} , 500);
 
 			// shuts off incoming flasher after interval
@@ -327,24 +327,24 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 	    document.getElementById('videoFig').height = "0";
 
 
-	    
+
 
 		document.getElementById('imageFig').src = data;
 		document.getElementById('imageFig').height = "600";
 
 		$(imageFig).fadeTo(2000,1);
 
-			}	
+			}
 		}
 	});
 
 
 
-				
-// // // // // // // // // //  END PERFORMER SCRIPT	
+
+// // // // // // // // // //  END PERFORMER SCRIPT
 
 		</script>
-	</div>   
+	</div>
 
 
 
@@ -357,12 +357,12 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 				<!--  Make autopropagating performer number boxes  !!!! dammit !!!!!-->
 			 	<p>
 
-				<div class="performerDiv" id="cp1"> 1 </div> 
-				<div class="performerDiv" id="cp2"> 2 </div> 
-				<div class="performerDiv" id="cp3"> 3 </div> 
-				<div class="performerDiv" id="cp4"> 4 </div> 
-				<div class="performerDiv" id="cp5"> 5 </div> 
-				<div class="performerDiv" id="cpAll" style="font-size:40px;width:90px"> ALL </div> 
+				<div class="performerDiv" id="cp1"> 1 </div>
+				<div class="performerDiv" id="cp2"> 2 </div>
+				<div class="performerDiv" id="cp3"> 3 </div>
+				<div class="performerDiv" id="cp4"> 4 </div>
+				<div class="performerDiv" id="cp5"> 5 </div>
+				<div class="performerDiv" id="cpAll" style="font-size:40px;width:90px"> ALL </div>
 
 				<p>
 				<p>
@@ -392,13 +392,13 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
             </div>
 
-	
-	
+
+
 	<script type="text/javascript">
 
 
 		// BEGIN CONDUCTOR SCRIPT
-		
+
 		// this block is taking the number of images and adding ID's for button fucntions
 
 		var imageIds = document.getElementsByClassName("imageF");  // from image tag above
@@ -406,7 +406,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		var imageSrcs = [];  //sending this to the socket emit
 
 		for (i = 0; i < imageIds.length; i++) {
-			imageIds[i].id = 'iF'+ i;	
+			imageIds[i].id = 'iF'+ i;
 		};
 
 		// gut the urls of images
@@ -425,7 +425,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 				$("#iF" + index).fadeTo("slow", 0.5);
 				socket.emit('imageFigure', imageSrcs[index])
 			}
-		};	
+		};
 
 
 		//video buttons
@@ -436,7 +436,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 		//create unique id's for videos
 		for (i = 0; i < videoIds.length; i++) {
-			videoIds[i].id = 'vF'+ i;	
+			videoIds[i].id = 'vF'+ i;
 		};
 		// gut the urls of videos
 		for (i = 0; i < videoIds.length; i++) {
@@ -452,7 +452,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 				$("#vF" + index).fadeTo("slow", 0.5);
 				socket.emit('videoFigure', videoSrcs[index])
 			}
-		}	
+		}
 
 
 				// working
@@ -473,22 +473,22 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 				//for autopropagating perf buttons
 
 				$(compose).click(function(){
-		        	$(location).attr('href', '/compose') ;   
+		        	$(location).attr('href', '/compose') ;
 			    });
 
 			    $(perform).click(function(){
-			        $(location).attr('href', '/performer') ;   
+			        $(location).attr('href', '/performer') ;
 			    });
 
 			    $(conduct).click(function(){
-			        $(location).attr('href', '/conductor') ;   
+			        $(location).attr('href', '/conductor') ;
 			    });
-					 
-						
+
+
 		 		$(cp1).click(function(){
 
-		 			$(cp1).fadeTo("fast", 0.5); 
-		 			$(cp2).fadeTo("fast", 1); 
+		 			$(cp1).fadeTo("fast", 0.5);
+		 			$(cp2).fadeTo("fast", 1);
 		 			$(cp3).fadeTo("fast", 1);
 		 			$(cp4).fadeTo("fast", 1);
 		 			$(cp5).fadeTo("fast", 1);
@@ -513,8 +513,8 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 		 		$(cp2).click(function(){
 
-		 			$(cp1).fadeTo("fast", 1); 
-		 			$(cp2).fadeTo("fast", 0.5); 
+		 			$(cp1).fadeTo("fast", 1);
+		 			$(cp2).fadeTo("fast", 0.5);
 		 			$(cp3).fadeTo("fast", 1);
 		 			$(cp4).fadeTo("fast", 1);
 		 			$(cp5).fadeTo("fast", 1);
@@ -557,11 +557,11 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		 			toAll = 0;
 		 			toWhom = 3;
 
-		 			
+
 					console.log("three");
 		 			socket.emit('sendingTo', toWhom, toAll);
 		 		    socket.emit('sendingAll', toAll);
-		 		
+
 				 	}
 				 );
 
@@ -585,11 +585,11 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		 			toAll = 0;
 		 			toWhom = 4;
 
-		 			
+
 					console.log("three");
 		 			socket.emit('sendingTo', toWhom, toAll);
 		 		    socket.emit('sendingAll', toAll);
-		 		
+
 				 	}
 				 );
 
@@ -613,11 +613,11 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		 			toAll = 0;
 		 			toWhom = 5;
 
-		 			
+
 					console.log("three");
 		 			socket.emit('sendingTo', toWhom, toAll);
 		 		    socket.emit('sendingAll', toAll);
-		 		
+
 				 	}
 				 );
 
@@ -640,7 +640,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 					toWhom = 0;
 		 			toAll = 1;
 
-		 			
+
 					console.log("three");
 		 			socket.emit('sendingTo', toWhom, toAll);
 		 			socket.emit('sendingAll', toAll);
@@ -648,7 +648,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 				 );
 
 			// END CONDUCTOR SCRIPT
-		
+
 
 			</script>
 
