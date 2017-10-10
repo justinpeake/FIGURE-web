@@ -1,4 +1,4 @@
- 
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -41,7 +41,7 @@ var fft = function (p){
 
 var tempo = function( p ) {
 
-  p.x = 50; 
+  p.x = 50;
   p.y = 50;
   p.fillcol = 0;
   p.count = 0;
@@ -76,7 +76,7 @@ var tempo = function( p ) {
 
 var q = function( p ) {
 
-  var x = 100; 
+  var x = 100;
   var y = 100;
 
   p.setup = function() {
@@ -95,10 +95,10 @@ var q = function( p ) {
 
 var time = function( p ) {
 
-  var x = 100; 
+  var x = 100;
   var y = 100;
   var speed = .7;
-  
+
   p.setup = function() {
     p.createCanvas(800, 200);
   };
@@ -119,10 +119,10 @@ var time = function( p ) {
 
 var tacet= function( p ) {
 
-  var x = 100; 
+  var x = 100;
   var y = 100;
-  
-  
+
+
   p.setup = function() {
     p.createCanvas(800, 800);
   };
@@ -131,7 +131,7 @@ var tacet= function( p ) {
     p.background(170);
     p.fill(0);
     p.rect(x,y,1,90);
-  
+
   };
 };
 
@@ -161,11 +161,11 @@ var waveForm = function(p){
     p.createCanvas(canvasX,canvasY);
     p.background(0);
 
-    track.setVolume(0);
+    track.setVolume(1);
     track.loop();
-    
+
     peaks = track.getPeaks(wavLength);
-    
+
       // draw the unplayed waveform
       for(i=0; i < peaks.length; i++){
         p.stroke(255);
@@ -173,7 +173,7 @@ var waveForm = function(p){
         p.line(x, y + (wavHeight * peaks[i]),x, y - (wavHeight * peaks[i]))
         x = x + 1;
       };
-      
+
       //reset x for playback
       x = 0;
   }; // end setup
@@ -181,7 +181,7 @@ var waveForm = function(p){
 
   p.draw = function(){
 
-    // map the length of song to the amount of samples in peake.length  
+    // map the length of song to the amount of samples in peake.length
   thisNum = p.map(track.currentTime(), 0, track.duration(), 0, peaks.length)
   intNum = p.int(thisNum);
 
@@ -195,28 +195,28 @@ var waveForm = function(p){
     p.fill(0);
     p.noStroke();
     p.rect(x,0, 2, canvasY);
-    
+
     p.fill(255,255,0);
     p.stroke(0,255,255);
     p.line(x, y + (wavHeight * peaks[intNum]),x, y - (wavHeight * peaks[intNum]));
    //x = x + 1;
     x = intNum;
    }
-   
+
    if (x == 0){
      p.waveRedraw();
    }
-   
+
     p.fill(0);
     p.noStroke();
     p.fill(255);
-   
+
   }
 
   p.waveRedraw = function(){
-    
+
      for(i=0; i < peaks.length; i++){
-      
+
         p.stroke(255);
         p.strokeWeight(1);
         p.line(x, y + (wavHeight * peaks[i]),x, y - (wavHeight * peaks[i]))
@@ -277,14 +277,14 @@ p.draw=function() {
   p.line(20, 100, lineLength, 100);
   p.stroke(170, opaL5);
   p.line(20, 120, lineLength, 120);
- 
+
 
   opaL1 = opaL1 + 2;
   opaL2 = opaL1 - 20;
   opaL3 = opaL2 - 20;
   opaL4 = opaL3 - 20;
   opaL5 = opaL4 - 10;
- 
+
   opaF = opaL4 - 100;
   opaN = opaL4 - 180;
 
@@ -292,7 +292,7 @@ p.draw=function() {
 
   lineLength = lineLength + 5;
 }
- 
+
 
  p.tint(0,200,0, iconOpa);
  p.image(img, 305, 25);
@@ -303,8 +303,3 @@ p.draw=function() {
   }
   }
 };
-
-
-
-
-
