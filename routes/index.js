@@ -1,7 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
-var mongoose = require('mongoose');  
+var mongoose = require('mongoose');
 
 // our db models
 var Figure = require("../models/figure.js");
@@ -35,12 +35,12 @@ perfs = [];
       });
 
     router.get('/login', function(req, res) {
-      page = 'login'; 
+      page = 'login';
         res.render('login.html', { });
       });
 
     router.get('/about', function(req, res) {
-      page = 'about'; 
+      page = 'about';
         res.render('about.html', { });
       });
 
@@ -48,11 +48,12 @@ perfs = [];
 router.post('/register', function(req, res) {
 
         Account.register(new Account({ username : req.body.username, publicPracticeEnabled : ' ' }), req.body.password, function(err, account) {
-            if (err) {          
-              return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});        
+            if (err) {
+              return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});
             }
             passport.authenticate('local')(req, res, function () {
                // res.redirect('/');
+      
                 res.render("login.html");  // direct to login
             });
         });
@@ -69,11 +70,11 @@ router.post('/register', function(req, res) {
       keySig: keySig,
       owner: owner
       };
-     
+
     var figure = new Figure(figureObj);     // create a new figure model instance, passing in the object
 
-    figure.save(function(err,data){         // now, save that instance to the database    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save   
-         
+    figure.save(function(err,data){         // now, save that instance to the database    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save
+
           if (err){                         // if err saving, respond back with error
 
             var error = {status:'ERROR', message: 'Error saving figure'};
@@ -89,7 +90,7 @@ router.post('/register', function(req, res) {
             animal: data
           }
       return res.json(jsonData);
-    })  
+    })
 });
 
 

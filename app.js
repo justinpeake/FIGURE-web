@@ -361,7 +361,7 @@ console.log(process.env.RUNNING);  // hello world
 // Render Conductor Page ----------------------------------------
 
           app.get('/conductor', function(req,res){
-            console.log(req)
+            // console.log(req)
             console.log("req.user = " + req.user)
 
               if(req.user) {
@@ -623,7 +623,7 @@ io.on('connection', function(socket){
 
 socket.on(socket.request.user + ' deleteTest', function(data) {
 
-console.log("Received:" + socket.request.user + ' deleteTest'  + data);
+// console.log("Received:" + socket.request.user + ' deleteTest'  + data);
 
 
   var s3 = new aws.S3();

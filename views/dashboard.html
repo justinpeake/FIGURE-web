@@ -2,31 +2,31 @@
 <head>
 
 	<title>FIGURE :: DASHBOARD</title>
-        
+
        <!--  <meta charset="utf-8"> -->
 
         <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
         <script type="text/javascript" src="/socket.io/socket.io.js"> </script>
-        <script src="/socket.io/socket.io.js"></script>  
+        <script src="/socket.io/socket.io.js"></script>
         <script src="/dropzone/dropzone.js"></script>
         <link rel="stylesheet" href=" /dropzone/dropzone.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
 
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> 
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
    <!-- load fontawesome -->
 
-        <script>  var socket = io(); </script> 
+        <script>  var socket = io(); </script>
 
         <script type="text/javascript">
 
         socket.on('connect', function() {
-        console.log("Dashboard");  
-        //socket.emit('gimme');              
+        console.log("Dashboard");
+        //socket.emit('gimme');
         });
 
-        </script> 
+        </script>
 
         <style>
 
@@ -47,7 +47,7 @@
         	#navContainer{
                 float:left;
 				margin: 0 auto;
-   				width: 400px;         	
+   				width: 400px;
             }
 
 
@@ -63,10 +63,14 @@
 		<p>
 
 		<nav>
-<!-- 			<div class="navButton" id="compose">  COMPOSE </div> -->            
-            <a href="/conductor" class="btn btn-default"> CONDUCT</a> 
+<!-- 			<div class="navButton" id="compose">  COMPOSE </div> -->
+            <a href="/conductor" class="btn btn-default"> Open Set</a>
            <!--  <a href="/compose" class="btn btn-default"> COMPOSE</a>  -->
-            <a href="/about" class="btn btn-default"> ABOUT</a> 
+					 	<a href="/newComp" class="btn btn-default"> Create Set</a>
+						
+            <a href="/about" class="btn btn-default"> ABOUT</a>
+
+
 
 
             <!-- <div class="btn btn-default" id="compose">  COMPOSE </div> <p>
@@ -77,33 +81,33 @@
 		</nav>
 
 
-	</div>	
+	</div>
 
 
 
 	<script type="text/javascript">
 
         // nav handlers
-                          
+
      //    $(compose).click(function(){
-    	// 	$(location).attr('href', '/compose') ;   
+    	// 	$(location).attr('href', '/compose') ;
     	// });
 
     	// $(perform).click(function(){
-    	// 	$(location).attr('href', '/performer') ;   
+    	// 	$(location).attr('href', '/performer') ;
     	// });
 
     	// $(conduct).click(function(){
-    	// 	$(location).attr('href', '/conductor') ;   
+    	// 	$(location).attr('href', '/conductor') ;
     	// });
 
      //    $(about).click(function(){
-     //        $(location).attr('href', '/about') ;   
+     //        $(location).attr('href', '/about') ;
      //    });
 
     //DEPRECATED?^^^^^
 
-    </script> 
+    </script>
 
 </body>
 </html>
