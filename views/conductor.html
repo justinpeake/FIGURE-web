@@ -1,28 +1,28 @@
 <html>
 <head>
-	<title>FIGURE :: CONDUCT</title> 
-			
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+	<title>FIGURE :: CONDUCT</title>
+
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
 	<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
-	<script src="/socket.io/socket.io.js"></script>  
+	<script src="/socket.io/socket.io.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
-	<script type="text/javascript" src="/js/sketches.js"></script> 
-	
-    <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
+	<script type="text/javascript" src="/js/sketches.js"></script>
+
+  <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> 
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<!-- load fontawesome -->
-			
-	<script>  var socket = io(); </script> 	
-	
+
+	<script>  var socket = io(); </script>
+
 	<script type="text/javascript">
 				socket.on('connect', function() {
 				console.log("Conducter in the house.");
 			 });
-	</script>	
+	</script>
 
 	<style>
 
@@ -31,13 +31,12 @@
 			color: fff;
 			    font-size: 15px;
 		}
-
 		.btn {
 			background-color: #080336;
 			color: #666666;
 			font-size: 20px;
 
-		    } 
+		    }
 		#everythingConductor {
 			/*visibility: visible;*/
 			display: block;
@@ -51,24 +50,23 @@
 
 </head>
 
-<body> 
- 			
+<body>
+
 <div id="everythingConductor">
 
-	<div class="sidebar" align="center"> 
+	<div class="sidebar" align="center">
 
-		 {{user}} 
-		
+		 Hi, {{user}}
+
 		<!-- simple nav -->
 		<nav>
-		<a href="/dashboard" class="btn btn-default"> Dashboard </a> 
+		<a href="/dashboard" class="btn btn-default"> Dashboard </a>
 		</nav>
 
 		<br>
 		<br>
 
-
-		<!-- PERFORMER channel update -->	
+		<!-- PERFORMER channel update -->
 		<input type="number" id="myNumber" value="0">
 		<p>
 		<button class="btn btn-default" onclick="updatePerfCount()"># of Performers</button>
@@ -90,21 +88,21 @@
 			<p>
 				<a class="btn btn-default" id="clear"> CLEAR </a>
 				<a class="btn btn-default" id="all"> ALL </a>
-				<a class="btn btn-default" id="switcher"> SWITCH </a> 
-				<a class="btn btn-default" id="delButton"> delMode </a> 
+				<a class="btn btn-default" id="switcher"> SWITCH </a>
+				<a class="btn btn-default" id="delButton"> delMode </a>
 			<p>
-		</div>	
+		</div>
 
 
 		<p> Images <p>
 
-	 	{{#images}}                              		
-	 	<div class="figuresB">                 
+	 	{{#images}}
+	 	<div class="figuresB">
 	      <img src={{.}} class="imageF " width="100px" height="100px">  </img>
-	      <span class="imageText">  </span>   
+	      <span class="imageText">  </span>
 	    </div>
 	    {{/images}}
-	  
+
 	  	<p> Videos <p>
 	  	{{#videos}}
 	  	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
@@ -121,27 +119,32 @@
 
 </div>
 
-	
+
 <script type="text/javascript">
 
 		//////////////////////////////// BEGIN CONDUCTOR SCRIPT //////////////////////////////////
-	
+
 	var acct = "{{user}}";  // coming in from server / session stuff
 	var toWhom = 0;  // initialize these globally, used in server and emit to performers
 	var toAll = 0;
 	var divs = [];
 	var member = 0;
 	var group = [];
-	var whoWhat = {};
-	var perfs = [];   
+	var whoWhat = {}; // object not array
+	var perfs = [];
 	var pX;
 
-	var delMode = false;
+	var delMode = false; // only true when a figure needs to be deleted
 
 
+// DELETE RELOAD PAGE
 socket.on('deleteReload', uploadComplete);
 
 //SWITCHER button
+// this should maybe be outside of socket reload
+
+// NEED TO MAKE A TEMPORARY SWITCHER TEXT FILE
+
 		$(switcher).click(function(){
 
 			console.log('switch ' + toWhom);
@@ -158,13 +161,13 @@ socket.on('deleteReload', uploadComplete);
 // ALL button
 	$(all).click(function(){
 		if(toAll == 0){
-			$(all).fadeTo("fast", 0.5); 
+			$(all).fadeTo("fast", 0.5);
 		    $(all).css('color', 'red');
 			  toAll = 1;
 			  console.log('sendingAll ' + toAll);
 			  socket.emit(acct + ' sendingAll', toAll);
 		} else if (toAll == 1){
-			$(all).fadeTo("fast", 0.5); 
+			$(all).fadeTo("fast", 0.5);
 		    $(all).css('color', 'lightgray');
 		      toAll = 0;
 		      console.log('sendingAll ' + toAll);
@@ -172,17 +175,15 @@ socket.on('deleteReload', uploadComplete);
 	});
 
 // DELETE button
-	$(delButton).click(function(){  
+	$(delButton).click(function(){
         if(delMode == false){
-        	$(delButton).fadeTo("fast", 0.5); 
+        	$(delButton).fadeTo("fast", 0.5);
 		    $(delButton).css('color', 'red');
               delMode = true;
               console.log("delMode = " + delMode);
 
-    //$(location).attr('href', '/deleteFile') ;  
-
         } else if (delMode == true){
-        	$(delButton).fadeTo("fast", 0.5); 
+        	$(delButton).fadeTo("fast", 0.5);
 		    $(delButton).css('color', 'lightgray');
             delMode = false;
             console.log("delMode = " + delMode);
@@ -209,21 +210,21 @@ $(clear).click(function(){
 
 	// zeros out the 'ALL' button when a figure is sent
 	$(all).fadeTo("fast", 1.0);
-		
+
 	});
 
-		// DYNAMIC PERF SHIZZ	
+		// DYNAMIC PERF SHIZZ
 
 		//  taking the number of performer channels input by conductor
 		//  sending the perfcount to all of the performers as a global var pX
 		//  adding event listeners for click functionality
-		
-		function updatePerfCount() {   
+
+		function updatePerfCount() {
 
 			pX = document.getElementById("myNumber").value;
 
 			socket.emit(acct + ' perfCount', pX);   //CHANGE added acct 7/2
-			
+
 				//makes the circular buttons
 	  			$('.performerDivB').remove();
 	  			perfs = [];
@@ -247,29 +248,29 @@ $(clear).click(function(){
 					whoWhat['player'+ playerNum] = ' ';
 				};
 
-				console.log(whoWhat);	
+				//console.log(whoWhat);
 		};
 
 
 		// function than runs when clicked
 		function doTheThing(index) {
 
-	    	return function(){ 
+	    	return function(){
 
-	    		var num = index + 1;
-	    		var perfID = "#cp" + (num);
-	    			
-	 			$(perfID).fadeTo("fast", 0.5); 
+	    	var num = index + 1;
+	    	var perfID = "#cp" + (num);
+
+	 			$(perfID).fadeTo("fast", 0.5);
 		    	$(perfID).css('color', 'red');
-		    	
-		    	toAll = 0;
+
+		    toAll = 0;
 	 			toWhom = num;
 
 	 			group[member] = toWhom;
 
 	 			member = member + 1;
 
-	 			//may not need this when grouping is done	
+	 			//may not need this when grouping is done
 	 			socket.emit(acct + ' toGroup', group);
 	 			socket.emit(acct + ' sendingTo', toWhom, toAll);
 	 			socket.emit(acct + ' sendingAll', toAll);
@@ -277,7 +278,7 @@ $(clear).click(function(){
 	 			};
  		};
 
-////////////////////////// END DYNAMIC PERF SHIZZ	
+////////////////////////// END DYNAMIC PERF SHIZZ
 
 ///////////////////////// FIGURE IMAGES > BUTTONS
 
@@ -291,12 +292,12 @@ $(clear).click(function(){
 
 	//assign ids to all of the images
 	for (i = 0; i < imageIds.length; i++) {
-		imageIds[i].id = 'iF'+ i;	
+		imageIds[i].id = 'iF'+ i;
 	};
 
 	//assign ids to the text overlay divs
 	for (i = 0; i < imageTxtIds.length; i++) {
-		imageTxtIds[i].id = 'iT'+ i;	
+		imageTxtIds[i].id = 'iT'+ i;
 		//console.log(imageTxtIds[i].id);
 	};
 
@@ -310,25 +311,25 @@ $(clear).click(function(){
 		$("#iF" + i).click(fadeTheFadeI(i));
 	};
 
-	
+
 	//add the urls to the button
 
 	function fadeTheFadeI(index){
-	
 		return function(){
-			var image = "#iF" + index; 
-			$(image).fadeTo("slow", 0.5);				
-			
+			var image = "#iF" + index;
+			$(image).fadeTo("slow", 0.5);
+
 //DELETE mode stuff
 
 	if(delMode == false){
 		socket.emit(acct + ' imageFigure', imageSrcs[index]);
 	} else if(delMode == true){
 		console.log(acct + ' delMode ' + imageSrcs[index].split('/')[4]);
-		socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]); 
+		socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]);
 	};
 
-			// display who is playing which figure
+// WHOWHAT - Display who is playing which figure on top of image
+
 		for(i=0; i < group.length; i++){
 			 whoWhat['player' + group[i]] = 'iT' + index;
 			};
@@ -337,7 +338,7 @@ $(clear).click(function(){
 		for (i=0; i < imageIds.length; i++){
 			document.getElementById('iT' + i).innerHTML = ' ';
 			}
-	
+
 		for (i=0; i < Object.keys(whoWhat).length; i++){
 			console.log(whoWhat['player' + (i+1)]);
 			 if (whoWhat['player' + (i+1)] !== " "){
@@ -347,6 +348,7 @@ $(clear).click(function(){
 		 	};
 
 			// this clears the group when an image is sent
+			// maybe don't clear this when SWITCH is called?
 			group = [];
 			member = 0;
 
@@ -375,7 +377,7 @@ $(clear).click(function(){
 
 	//create unique id's for videos
 	for (i = 0; i < videoIds.length; i++) {
-		videoIds[i].id = 'vF'+ i;	
+		videoIds[i].id = 'vF'+ i;
 	};
 	// gut the urls of videos
 	for (i = 0; i < videoIds.length; i++) {
@@ -390,8 +392,27 @@ $(clear).click(function(){
 		return function(){
 			$("#vF" + index).fadeTo("slow", 0.5);
 			socket.emit(acct + ' videoFigure', videoSrcs[index])
+
+
+			// adding
+					group = [];
+					member = 0;
+
+					// this clears the button states when an image is sent
+					for (i=0; i < perfs.length; i++){
+						$('#cp' + (i+1)).css('color', 'white');
+					};
+
+					for (i=0; i < perfs.length; i++){
+						$('#cp' + (i+1)).fadeTo("fast", 1.0);
+					};
+
+					// zeros out the 'ALL' button when a figure is sent
+					$(all).css('color', 'white');
+					$(all).fadeTo("fast", 1.0);
+
 		};
-	};	
+	};
 
 
 	// audio buttons
@@ -400,11 +421,11 @@ $(clear).click(function(){
 	var waveIdsLength = waveIds.length;
 	var waveSrcs = [];  //sending this to the socket emit
 	var waveNames = document.getElementsByClassName("audionames");
-	
+
 	//console.log(audioNames)
 	//create unique id's for videos
 	for (i = 0; i < waveIds.length; i++) {
-		waveIds[i].id = 'aF'+ i;	
+		waveIds[i].id = 'aF'+ i;
 	};
 	// gut the urls of videos
 	for (i = 0; i < waveIds.length; i++) {
@@ -423,6 +444,27 @@ $(clear).click(function(){
 		return function(){
 			$("#aF" + index).fadeTo("slow", 0.5);
 			socket.emit(acct + ' waveSketch', waveSrcs[index])
+
+
+			// adding
+					group = [];
+					member = 0;
+
+					// this clears the button states when an image is sent
+					for (i=0; i < perfs.length; i++){
+						$('#cp' + (i+1)).css('color', 'white');
+					};
+
+					for (i=0; i < perfs.length; i++){
+						$('#cp' + (i+1)).fadeTo("fast", 1.0);
+					};
+
+					// zeros out the 'ALL' button when a figure is sent
+					$(all).css('color', 'white');
+					$(all).fadeTo("fast", 1.0);
+
+
+
 		};
 	};
 
@@ -444,8 +486,7 @@ function uploadProgress(evt) {
 
   }
 
-
-	// (function() {
+// FILE UPLOAD STUFF
 
 	document.getElementById("file_input").onchange = function(){
 	    var files = document.getElementById("file_input").files;
@@ -457,7 +498,6 @@ function uploadProgress(evt) {
 	        get_signed_request(file);
 	    }
 	};
-	// })();
 
 function get_signed_request(file){
     var xhr = new XMLHttpRequest();
@@ -471,44 +511,31 @@ function get_signed_request(file){
                 upload_file(file, response.signed_request, response.url);
             }
             else {
-                console.log("Could not get signed URL.");                
+                console.log("Could not get signed URL.");
             }
         }
-    };   
+    };
     xhr.send();
 }
 
 function upload_file(file, signed_request, url){
-   // console.log('client 3');
 
-   var firstProgressEvent = false;
+    var firstProgressEvent = false;
     var xhr = new XMLHttpRequest();
-
     xhr.open("PUT", signed_request);
-
     xhr.upload.addEventListener("progress", uploadProgress, false);
-
     xhr.addEventListener("load", uploadComplete, false);
-
     xhr.setRequestHeader('x-amz-acl', 'public-read');
     xhr.onload = function() {
         if (xhr.status === 200) {
-          // 4//   document.getElementById("preview").src = url;
-          //  document.getElementById("avatar_url").value = url;
+
         }
     };
     xhr.onerror = function() {
         alert("Could not upload file.");
     };
-
-    //console.log("presend" + file);
-
     xhr.send(file);
-    
-    //console.log('client 5');
-
-
-};	
+};
 
 
 ////////////////// END CONDUCTOR SCRIPT //////////////////
@@ -516,27 +543,27 @@ function upload_file(file, signed_request, url){
 
 </div>
 
-		<div id="everythingPerformer">
+<div id="everythingPerformer">
 
 			Hello {{user}}...  <br>
 
-		<div id="perfDialogue" align="left"> 
+		<div id="perfDialogue" align="left">
 
 				<!-- redo these with % -->
 
-				Join as Performer:	 			
-			<a>  
-				<div class="performerDiv" id="perf1"> 1 </div> 
-				<div class="performerDiv" id="perf2"> 2 </div> 
-				<div class="performerDiv" id="perf3"> 3 </div> 
-				<div class="performerDiv" id="perf4"> 4 </div> 
-				<div class="performerDiv" id="perf5"> 5 </div> 
+				Join as Performer:
+			<a>
+				<div class="performerDiv" id="perf1"> 1 </div>
+				<div class="performerDiv" id="perf2"> 2 </div>
+				<div class="performerDiv" id="perf3"> 3 </div>
+				<div class="performerDiv" id="perf4"> 4 </div>
+				<div class="performerDiv" id="perf5"> 5 </div>
 
 
-				
+
 				<p>
 				<div id="bpm"> </div>
-				
+
 
 			</a>
 
@@ -546,49 +573,49 @@ function upload_file(file, signed_request, url){
 					 <!-- responds to the "incoming" function -->
 			<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
 
-	</div> 
+	</div>
 
 	 <br>
-	 
+
 			<div id="figures" align="center">
-	 		
+
 	 <!-- This is where each new figure is injected into the performer page.
 	 	  "currentFigure" is the name of the element that needs to be updated from conductor page. -->
 
 
 	 	  		<!-- <div id="timeLine"> </div> -->
 
-	 	  		<div id="sketchFigure"> </div>
+	 	  <div id="sketchFigure"> </div>
 
 			 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
-			 	
+
 			 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
-			 	
+
 
 			</div>
 
- 
+
  <script type="text/javascript">
 
 
 
 /////// BEGIN PERFORMER SCRIPT
 
- 				
+
  					//actually calls th p5  (p5 sketches in /public/js)
 
 					// DEFAULT p5 elements should be called globally?
-					// maybe better to call them to preserve cpu 
+					// maybe better to call them to preserve cpu
 
-					//var myp5 = new p5(tempo, 'bpm'); 
+					//var myp5 = new p5(tempo, 'bpm');
 
 					// var myp5 = new p5(waveForm, 'timeLine');
-					  
 
-					
+
+
 
 					//initialize globals
-					var myId = 0; 
+					var myId = 0;
 					var toWhom = 0;
 					var toAll = 0;
 
@@ -606,29 +633,29 @@ function upload_file(file, signed_request, url){
 
 						// routes messages across channels
 
-						socket.on('sendingTo', function (data) {							
+						socket.on('sendingTo', function (data) {
 							toWhom = data;
 							console.log("toWhom = " + toWhom);
-							
+
 						});
 
-						socket.on('sendingAll', function (data) {							
+						socket.on('sendingAll', function (data) {
 							toAll = data;
-							console.log("toAll= " + toAll);	
-							
+							console.log("toAll= " + toAll);
+
 						});
 
 						//sets up flashing of incoming image referenced above
-				
+
 
 
 						socket.on('videoFigure', function (data) {
 
 
 								//checks to see if conductor is talking to "you"
-							if (myId == toWhom || toAll == 1) { 
+							if (myId == toWhom || toAll == 1) {
 
-								//flashes "incoming" image 
+								//flashes "incoming" image
 							var flasher = setInterval(function() {flashIncoming()} , 500);
 
 								// shuts off incoming flasher after interval
@@ -645,11 +672,11 @@ function upload_file(file, signed_request, url){
 							document.getElementById('videoFig').src = data;
 							document.getElementById('videoFig').height = "600";
 								}
-							}							
+							}
 						});
 
-					
-			
+
+
 
 
 
@@ -657,7 +684,7 @@ function upload_file(file, signed_request, url){
 
 							if (myId == toWhom || toAll == 1) {
 
-								//flashes "incoming" image 
+								//flashes "incoming" image
 							var flasher = setInterval(function() {flashIncoming()} , 500);
 
 								// shuts off incoming flasher after interval
@@ -675,18 +702,18 @@ function upload_file(file, signed_request, url){
 							document.getElementById('imageFig').src = data;
 							document.getElementById('imageFig').height = "600";
 
-								}	
+								}
 							}
 						});
 
 
 
-				
-// // // // // // // // // //  END PERFORMER SCRIPT	
+
+// // // // // // // // // //  END PERFORMER SCRIPT
 
 		</script>
-	</div>   
- 
+	</div>
+
  	</body>
 
 </html>

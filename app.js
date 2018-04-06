@@ -14,6 +14,8 @@ console.log("***************************");
 console.log("REDIS? REDIS? REDIS? REDIS?");
 console.log("***************************");
 
+// HOW TO: type "redis-server" in file directory
+
 // inital file system - reading - writing  :: added 9/19/16
   var fse = require('fs-extra');
 

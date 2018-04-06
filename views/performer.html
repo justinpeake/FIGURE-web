@@ -26,7 +26,6 @@
 		<script type="text/javascript">
 
 			socket.on('connect', function() {
-				// socket.emit('gimmePerfCount');  // no server listener for this yet
 				console.log("Socket Connection");
 			});
 
@@ -68,17 +67,19 @@
 
 <script type="text/javascript">
 
-	socket.on('switch', function (data){
+////// MAYBE SWITCH STUFF  //////  not hooked up yet
 
+	socket.on('switch', function (data){
 	document.getElementById("everythingPerformer").style.display = "none";
 	document.getElementById("everythingConductor").style.display= "block";
 
-	if (myId == toWhom || toAll == 1) {
+	if (myId == toWhom || toAll == 1) {   // this should never be "toAll = 1 so maybe take out?"
 
 		console.log("got tha switch " + data);
-
 	};
 });
+
+
 </script>
 
 <body>
@@ -86,7 +87,7 @@
 <div id="everythingPerformer" align="center">
 	<div id="perfDialogue">
 		<div id="youAre"> </div>
-		<!-- <div id="fftDiv"> </div>								 		 -->
+		<div id="timelineDiv"> </div>
 		<!-- responds to the "incoming" function -->
 		<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
 	</div>
@@ -95,7 +96,7 @@
   		<!-- container where performer channel buttons show up -->
 		<div id="performer-container" > </div>
 		 <!-- container where the waveForm visualizer sketch shows up -->
-  		<!-- <div id="waveSketch"> </div> -->
+  		<div id="waveSketch"> </div>
 	  		<!-- container where video figures show up -->
 	 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
 	 	<!-- container where image figures show up -->
@@ -108,25 +109,25 @@
 
  // INIT stuff
 
+// this may not be working currently
 socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performer page connects
 
 
 /////// BEGIN PERFORMER SCRIPT
 
-	// 	//variable to change p5
+	 // 	//variable to change p5
 	// 	var sketch = q;
 
 	// 	//actually calls the p5  (p5 sketches in /public/js)
 
 	 //var myp5 = new p5(waveForm, 'timeLine');
 
-	// var myp5 = new p5(fft, 'fftDiv');
+	 var myp5 = new p5(time, 'timelineDiv');
 
 	var subscribedTo;
 
 
-	// PERFORMER ID STUFF
-		//initialize globals for performer id
+	// PERFORMER ID STUFF (initialize globals for performer id)
 
 	var myId = 0;
 	var toWhom = 0;
@@ -135,17 +136,18 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 	// this determines which composition you receive messages from
 
-	//p5 WAVE STUFF
-		// this var exists inside of the p5 instance "waveForm"
+	////////// p5 WAVE STUFF  //////////
+
+	// this var exists inside of the p5 instance "waveForm"
 	var trackName = '';
 	//changed this from myp5 to wave
 	var wave;
-
-
 	// this is handling the p5 instance for wavePlayer
 	socket.on (subscribedTo + ' waveSketch', function (data){
 
 		trackName = data;
+
+//THIS IS NOT WORKING resulting in MULTIPLE AUDIO FILES PLAYING
 
 		/* logic below: if there isn't an instance one on the page (it will be undefined) so create a new one
 		 if there is an instance, remove it and create a new one */
@@ -157,9 +159,9 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 				wave.remove();
 				wave = new p5(waveForm, "waveSketch");
 			}
-
 	});
 
+  /////// INCOMING FLASHER ///////
 
 	$(incoming).fadeTo(1,0);
 
@@ -295,8 +297,11 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		var display = function(){
 		console.log(data + "performerside" + toWhom);
 
-		document.getElementById('imageFig').src = "";
-		document.getElementById('imageFig').height = "0";
+		// document.getElementById('imageFig').src = "";
+		// document.getElementById('imageFig').height = "0";
+
+    document.getElementById("imageFig").style.display = "none";
+    document.getElementById("videoFig").style.display= "block";
 
 		document.getElementById('videoFig').src = data;
 		document.getElementById('videoFig').height = "600";
@@ -323,22 +328,20 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 		console.log(data + "performerside" + toWhom);
 
 		// NEED TO GET RID OF THIS HACKY WAY AND MAKE ONLY ONE DISPLAY AT A TIME
-	    document.getElementById('videoFig').src = "";
-	    document.getElementById('videoFig').height = "0";
+	    // document.getElementById('videoFig').src = "";
+	    // document.getElementById('videoFig').height = "0";
 
+      document.getElementById("videoFig").style.display = "none";
+      document.getElementById("imageFig").style.display = "block";
 
-
-
-		document.getElementById('imageFig').src = data;
-		document.getElementById('imageFig').height = "600";
+		  document.getElementById('imageFig').src = data;
+		  document.getElementById('imageFig').height = "600";
 
 		$(imageFig).fadeTo(2000,1);
 
 			}
 		}
 	});
-
-
 
 
 // // // // // // // // // //  END PERFORMER SCRIPT
