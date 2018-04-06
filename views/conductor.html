@@ -2,18 +2,18 @@
 <head>
 	<title>FIGURE :: CONDUCT</title>
 
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
 	<script type="text/javascript" src="/socket.io/socket.io.js"> </script>
 	<script src="/socket.io/socket.io.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<script type="text/javascript" src="/js/sketches.js"></script>
 
-    <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
+  <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<!-- load fontawesome -->
 
 	<script>  var socket = io(); </script>
@@ -31,7 +31,6 @@
 			color: fff;
 			    font-size: 15px;
 		}
-
 		.btn {
 			background-color: #080336;
 			color: #666666;
@@ -66,7 +65,6 @@
 
 		<br>
 		<br>
-
 
 		<!-- PERFORMER channel update -->
 		<input type="number" id="myNumber" value="0">
@@ -132,16 +130,21 @@
 	var divs = [];
 	var member = 0;
 	var group = [];
-	var whoWhat = {};
+	var whoWhat = {}; // object not array
 	var perfs = [];
 	var pX;
 
-	var delMode = false;
+	var delMode = false; // only true when a figure needs to be deleted
 
 
+// DELETE RELOAD PAGE
 socket.on('deleteReload', uploadComplete);
 
 //SWITCHER button
+// this should maybe be outside of socket reload
+
+// NEED TO MAKE A TEMPORARY SWITCHER TEXT FILE
+
 		$(switcher).click(function(){
 
 			console.log('switch ' + toWhom);
@@ -178,8 +181,6 @@ socket.on('deleteReload', uploadComplete);
 		    $(delButton).css('color', 'red');
               delMode = true;
               console.log("delMode = " + delMode);
-
-    //$(location).attr('href', '/deleteFile') ;
 
         } else if (delMode == true){
         	$(delButton).fadeTo("fast", 0.5);
@@ -247,7 +248,7 @@ $(clear).click(function(){
 					whoWhat['player'+ playerNum] = ' ';
 				};
 
-				console.log(whoWhat);
+				//console.log(whoWhat);
 		};
 
 
@@ -256,13 +257,13 @@ $(clear).click(function(){
 
 	    	return function(){
 
-	    		var num = index + 1;
-	    		var perfID = "#cp" + (num);
+	    	var num = index + 1;
+	    	var perfID = "#cp" + (num);
 
 	 			$(perfID).fadeTo("fast", 0.5);
 		    	$(perfID).css('color', 'red');
 
-		    	toAll = 0;
+		    toAll = 0;
 	 			toWhom = num;
 
 	 			group[member] = toWhom;
@@ -327,7 +328,7 @@ $(clear).click(function(){
 		socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]);
 	};
 
-// Display who is playing which figure
+// WHOWHAT - Display who is playing which figure on top of image
 
 		for(i=0; i < group.length; i++){
 			 whoWhat['player' + group[i]] = 'iT' + index;
@@ -347,6 +348,7 @@ $(clear).click(function(){
 		 	};
 
 			// this clears the group when an image is sent
+			// maybe don't clear this when SWITCH is called?
 			group = [];
 			member = 0;
 
@@ -408,9 +410,6 @@ $(clear).click(function(){
 					// zeros out the 'ALL' button when a figure is sent
 					$(all).css('color', 'white');
 					$(all).fadeTo("fast", 1.0);
-
-
-
 
 		};
 	};
@@ -544,7 +543,7 @@ function upload_file(file, signed_request, url){
 
 </div>
 
-		<div id="everythingPerformer">
+<div id="everythingPerformer">
 
 			Hello {{user}}...  <br>
 
@@ -586,7 +585,7 @@ function upload_file(file, signed_request, url){
 
 	 	  		<!-- <div id="timeLine"> </div> -->
 
-	 	  		<div id="sketchFigure"> </div>
+	 	  <div id="sketchFigure"> </div>
 
 			 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
 

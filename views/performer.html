@@ -26,7 +26,6 @@
 		<script type="text/javascript">
 
 			socket.on('connect', function() {
-				// socket.emit('gimmePerfCount');  // no server listener for this yet
 				console.log("Socket Connection");
 			});
 
@@ -88,7 +87,7 @@
 <div id="everythingPerformer" align="center">
 	<div id="perfDialogue">
 		<div id="youAre"> </div>
-		<!-- <div id="fftDiv"> </div>								 		 -->
+		<div id="timelineDiv"> </div>
 		<!-- responds to the "incoming" function -->
 		<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
 	</div>
@@ -123,7 +122,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 	 //var myp5 = new p5(waveForm, 'timeLine');
 
-	// var myp5 = new p5(fft, 'fftDiv');
+	 var myp5 = new p5(time, 'timelineDiv');
 
 	var subscribedTo;
 
