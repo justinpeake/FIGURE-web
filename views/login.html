@@ -27,33 +27,21 @@
 <div class="alert alert-danger">{{message}}</div>
 <% } %> -->
 
-<!-- LOGIN FORM -->
-
-<form action="/login" method="post">
-
-    <div class="form-group" style="color:lightgray">
-
-        <label><h3>USERNAME</h3></label>
-        <input type="text" class="form-control" name="username">
-
-        <br>
-
-        <label><h3>PASSWORD</h3></label>
-        <input type="password" class="form-control" name="password">
-
+            <!-- LOGIN FORM -->
+            <form action="/login" method="post">
+              <div class="form-group" style="color:lightgray">
+                <label><h3>USERNAME</h3></label>
+                <input type="text" class="form-control" name="username">
+                <br>
+                <label><h3>PASSWORD</h3></label>
+                <input type="password" class="form-control" name="password">
+              </div>
+            <button type="submit" class="btn btn-lg">LOG IN</button>
+            </form>
+            <hr>
+            <p>Don't have an account yet? <a href="/register">Signup</a></p>
+        </div>
     </div>
-
-    <button type="submit" class="btn btn-lg">LOG IN</button>
-
-</form>
-
-<hr>
-
-<p>Don't have an account yet? <a href="/register">Signup</a></p>
-<br>
-
-</div>
-
 </div>
 </body>
 </html>
