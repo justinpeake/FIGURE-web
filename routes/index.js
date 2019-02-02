@@ -44,6 +44,11 @@ perfs = [];
         res.render('about.html', { });
       });
 
+      router.get('/help', function(req, res) {
+        page = 'help';
+          res.render('help.html', { });
+        });
+
 
 router.post('/register', function(req, res) {
 
