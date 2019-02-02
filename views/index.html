@@ -7,42 +7,63 @@
    <!-- load fontawesome -->
     <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
     <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
-
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
     <script type="text/javascript" src="/js/sketches.js"></script>
 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="font-awesome/css/brands.css"/>
+    <link rel="stylesheet" href="css/animate.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
   <style>
+     
         body {
-            padding-top:10px;
+            /* padding-top:10px; */
             /*background-color: #080336;*/
-        background-color: #080336;
+            /* background-color: #333; */
         }
 
         .jumbotron {
-            background-color: #080336;
-            padding-top: 100px;
+            background-color: #000;
+            /* padding-top: 100px; */
+            color: white;;
+            font-size: 10px;
+        }
+        .jumbotron h1 {
+            font-size: 200;
         }
 
         .btn {
-            background-color: #080336;
+            background-color: #fff;
         }
   </style>
 </head>
 
 <body>
-<div id="container" align="center">
+        
+<div class="container" align="center">
 
     <div class="jumbotron text-center">
-        <h1> FIGURE </h1>
+            <img src=img/figure_logo.png class=img-fluid>
+            <div align= "right">
+            Powered by <img src=img/awlogo.png  height="20" width="20">
+        </div>
 
         <div id="introTitle" align="center">
         </div>
 
-        <a href="/login" class="btn btn-default"> Login</a>
-        <a href="/register" class="btn btn-default"> Signup</a>
     </div>
+    <a href="/login" type=button class="btn btn-lg" width="100px"> Login</a>
+    <a href="/register" type=button class="btn btn-lg" width="100px"> Signup</a>
 
-</div>
 
 
 </div>
