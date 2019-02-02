@@ -1,10 +1,8 @@
 <html>
 <head>
 
-	<title>FIGURE :: DASHBOARD</title>
-
-       <!--  <meta charset="utf-8"> -->
-
+    <title>FIGURE :: DASHBOARD</title>
+    
         <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
         <script type="text/javascript" src="/socket.io/socket.io.js"> </script>
         <script src="/socket.io/socket.io.js"></script>
@@ -15,99 +13,48 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous" />
+        <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="font-awesome/css/brands.css"/>
+        <link rel="stylesheet" href="css/animate.min.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
    <!-- load fontawesome -->
 
-        <script>  var socket = io(); </script>
-
-        <script type="text/javascript">
-
-        socket.on('connect', function() {
+<script>  var socket = io(); </script>
+<script type="text/javascript">
+    socket.on('connect', function() {
         console.log("Dashboard");
         //socket.emit('gimme');
-        });
-
-        </script>
-
-        <style>
-
-
-            body{
-
-                background-color: #080336;
-                color: fff;
-                font-size: 20px;
-            }
-
-            .btn {
-            background-color: #080336;
-            color: #666666;
-
-            }
-
-        	#navContainer{
-                float:left;
-				margin: 0 auto;
-   				width: 400px;
-            }
-
-
-        </style>
-
+    });
+</script>
 </head>
 
 <body>
 
-	<div id="navContainer">
-
-		Heya! It's your dashboard, {{user}}.
-		<p>
-
-		<nav>
-<!-- 			<div class="navButton" id="compose">  COMPOSE </div> -->
-            <a href="/conductor" class="btn btn-default"> Open Set</a>
-           <!--  <a href="/compose" class="btn btn-default"> COMPOSE</a>  -->
-					 	<a href="/newComp" class="btn btn-default"> Create Set</a>
-						
-            <a href="/about" class="btn btn-default"> ABOUT</a>
-
-
-
-
-            <!-- <div class="btn btn-default" id="compose">  COMPOSE </div> <p>
-		    <div class="btn btn-default" id="conduct">  CONDUCT </div> <p>
-            <div class="btn btn-default" id="about">  ABOUT </div> <p> -->
-
-           <!--  DEPRECATED^^^^ -->
-		</nav>
-
-
-	</div>
-
-
-
-	<script type="text/javascript">
-
-        // nav handlers
-
-     //    $(compose).click(function(){
-    	// 	$(location).attr('href', '/compose') ;
-    	// });
-
-    	// $(perform).click(function(){
-    	// 	$(location).attr('href', '/performer') ;
-    	// });
-
-    	// $(conduct).click(function(){
-    	// 	$(location).attr('href', '/conductor') ;
-    	// });
-
-     //    $(about).click(function(){
-     //        $(location).attr('href', '/about') ;
-     //    });
-
-    //DEPRECATED?^^^^^
-
-    </script>
+<section id="nav">
+    <div class="row">
+        <div class="col" align="center">
+            <a href="/dashboard" ><img src="img/figure_logo_small.png" class="img-fluid"> </a>
+                <div>
+                <li class="btn btn-md"><a class="nav-link" href="/conductor"> SCORES </a></li>
+                <li class="btn btn-md"><a class="nav-link" href="/newComp"> CREATE NEW </a></li>
+                <li class="btn btn-md"><a class="nav-link" href="/help"> HELP </a></li> 
+                </div>
+                <!-- <div class="col">
+                <div id="userName" align="center"> <p> |: {{user}} :| </p> </div>
+                </div> -->
+            <hr>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>
