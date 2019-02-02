@@ -1,10 +1,8 @@
 <html>
 <head>
 
-	<title>FIGURE :: DASHBOARD</title>
-
-       <!--  <meta charset="utf-8"> -->
-
+    <title>FIGURE :: DASHBOARD</title>
+    
         <script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
         <script type="text/javascript" src="/socket.io/socket.io.js"> </script>
         <script src="/socket.io/socket.io.js"></script>
@@ -30,126 +28,33 @@
 
    <!-- load fontawesome -->
 
-        <script>  var socket = io(); </script>
-
-        <script type="text/javascript">
-
-        socket.on('connect', function() {
+<script>  var socket = io(); </script>
+<script type="text/javascript">
+    socket.on('connect', function() {
         console.log("Dashboard");
         //socket.emit('gimme');
-        });
-
-        </script>
-
-        <style>
-
-
-            body{
-
-                /* background-color: #080336; */
-                color: fff;
-                font-size: 20px;
-            }
-
-        	/* #navContainer{
-                float:left;
-				margin: 0 auto;
-   				width: 400px;
-            } */
-
-
-        </style>
-
+    });
+</script>
 </head>
 
 <body>
 
-	
-		<!-- <nav> -->
-<!-- 			<div class="navButton" id="compose">  COMPOSE </div> -->
-            <!-- <a href="/conductor" class="btn btn-default"> Open Set</a> -->
-           <!--  <a href="/compose" class="btn btn-default"> COMPOSE</a>  -->
-					 	<!-- <a href="/newComp" class="btn btn-default"> Create Set</a> -->
-						
-            <!-- <a href="/about" class="btn btn-default"> ABOUT</a> -->
-
-
-
-
-            <!-- <div class="btn btn-default" id="compose">  COMPOSE </div> <p>
-		    <div class="btn btn-default" id="conduct">  CONDUCT </div> <p>
-            <div class="btn btn-default" id="about">  ABOUT </div> <p> -->
-
-           <!--  DEPRECATED^^^^ -->
-        <!-- </nav> -->
-        <section id="nav">
-            <div class="row">
-            <div class="col" align="center">
-
-                <!-- <nav class="navbar navbar-expand-lg fixed-top"> -->
-                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation-bar"> -->
-                    <!-- <span class="navbar-toggler-icon">  &#9776; </span> -->
-                <!-- </button> -->
-                <a href="/dashboard" ><img src="img/figure_logo_small.png" class="img-fluid"> </a>
-                  <!-- <div class="collapse navbar-collapse" id="navigation-bar"> -->
-                    <!-- <ul class="navbar-nav ml-auto"> -->
-
-                    <div>
-                      <li class="btn btn-md"><a class="nav-link" href="/conductor"> SCORES </a></li>
-                      <li class="btn btn-md"><a class="nav-link" href="/newComp"> CREATE NEW </a></li>
-                      <li class="btn btn-md"><a class="nav-link" href="/help"> HELP </a></li>
-                      
-                    </div>
-                    <!-- <div class="col">
-                    <div id="userName" align="center"> <p> |: {{user}} :| </p> </div>
-                     </div> -->
-                    <hr>
-                    <!-- </ul> -->
-                  <!-- </div> -->
-          
-              <!-- </nav> -->
-            <!-- <div class="row">
-                <div class="col-md-11">
-                <div id="userName" align="right"> <p> |: {{user}} :| </p> </div>
-            </div>
-            </div> -->
-            </div>
+<section id="nav">
+    <div class="row">
+        <div class="col" align="center">
+            <a href="/dashboard" ><img src="img/figure_logo_small.png" class="img-fluid"> </a>
+                <div>
+                <li class="btn btn-md"><a class="nav-link" href="/conductor"> SCORES </a></li>
+                <li class="btn btn-md"><a class="nav-link" href="/newComp"> CREATE NEW </a></li>
+                <li class="btn btn-md"><a class="nav-link" href="/help"> HELP </a></li> 
+                </div>
+                <!-- <div class="col">
+                <div id="userName" align="center"> <p> |: {{user}} :| </p> </div>
+                </div> -->
+            <hr>
         </div>
-            
-
-        </section>
-
-    
-              
-
-
-
-
-
-
-	<script type="text/javascript">
-
-        // nav handlers
-
-     //    $(compose).click(function(){
-    	// 	$(location).attr('href', '/compose') ;
-    	// });
-
-    	// $(perform).click(function(){
-    	// 	$(location).attr('href', '/performer') ;
-    	// });
-
-    	// $(conduct).click(function(){
-    	// 	$(location).attr('href', '/conductor') ;
-    	// });
-
-     //    $(about).click(function(){
-     //        $(location).attr('href', '/about') ;
-     //    });
-
-    //DEPRECATED?^^^^^
-
-    </script>
+    </div>
+</section>
 
 </body>
 </html>
