@@ -1,6 +1,6 @@
 
 .jumbotron {
-background-color: #000;
+background-color: #555;
 color: white;;
 font-size: 10px;
 }
@@ -12,20 +12,45 @@ color: #FFFFFF;
 }
 
 #jum .btn-block:hover {
-	background-color: rgb(37, 184, 221);
-	color: rgb(0, 0, 0); 
+background-color: rgb(37, 184, 221);
+color: rgb(0, 0, 0); 
+}
+
+.btn {
+background-color: #333;
+color: #FFFFFF 
+}
+
+.btn:hover {
+background-color: rgb(37, 184, 221);
+color: rgb(0, 0, 0); 
+}
+
+p {
+font-size:12px;
 }
 
 h1 {
-	color:aquamarine;
-	font-size: 70;
+color:aquamarine;
+font-size: 70;
 }
-	
-body {	
-	background-color: #555;
-	padding-top: 1%;
-	}
 
+h3{
+	font-size: 14px;
+}
+
+body {	
+background-color: #555;
+padding-top: 1%;
+}
+
+:link {
+	color: #fff;
+}
+
+:link:hover {
+	color: rgb(19, 197, 252);
+}
 
 #perfDialogue {
 		line-height:50px;
