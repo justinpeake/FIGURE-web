@@ -3,57 +3,45 @@
     <title>FIGURE</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-    <style>
-        body { 
-
-            padding-top:80px; 
-            background-color: #03032b;
-
-        }
-
-        .btn{
-            background-color: #03032b;
-        }   
-
-    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="font-awesome/css/brands.css"/>
+    <link rel="stylesheet" href="css/animate.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 </head>
 <body>
+
 <div class="container">
-
-<div class="col-sm-6 col-sm-offset-3">
-
-    <h1><span class="fa fa-sign-in" id="signin"></span> Signup</h1>
+    <div class="col-md-6 col-sm-offset-3">
+        <div class="loginText" style="color:lightgray"> 
+            <img src=img/figure_logo.png class=img-fluid>
 
     <!-- show any messages that come back with authentication -->
+                {{#err}}
+                    <div class="alert alert-danger">{{message}}</div>
+                {{/err}}
 
-    {{#err}}
-        <div class="alert alert-danger">{{message}}</div>
-    {{/err}}
-
-    <!-- LOGIN FORM -->
-    <form action="/register" method="post">
-        
-        <div class="form-group">
-            <label>USERNAME</label>
-            <input type="text" class="form-control" name="username">
+                <form action="/register" method="post">
+                  <div class="form-group">
+                    <label><h3>USERNAME</h3></label>
+                    <input type="text" class="form-control" name="username">
+                    <br>
+                    <label><h3>PASSWORD</h3></label>
+                    <input type="password" class="form-control" name="password">
+                  </div>
+                  <button type="submit" class="btn btn-lg">SIGN UP</button>
+                </form>
+                <hr>
+                 <p>Already have an account? <a href="/login">Login</a></p>
         </div>
-
-        <div class="form-group">
-            <label>PASSWORD</label>
-            <input type="password" class="form-control" name="password">
-        </div>
-
-        <button type="submit" class="btn btn-warning btn-lg">Signup</button>
-        
-    </form>
-
-    <hr>
-
-    <p>Already have an account? <a href="/login">Login</a></p>
-    <p>Or go <a href="/">home</a>.</p>
-
-</div>
-
+    </div>
 </div>
 </body>
 </html>
