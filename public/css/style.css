@@ -1,174 +1,189 @@
 
-			h1{
-				color:aquamarine;
-				font-size: 70;
-			}
-		body {
-			/* color:white; */
-			/* background-color: #FFF; */
-			background-color: #333
-			/* padding-top: 20px; */
-			/* padding-left: 20px; */
-			}
+.jumbotron {
+background-color: #000;
+color: white;;
+font-size: 10px;
+}
 
 
-		#perfDialogue {
-				line-height:50px;
-			    background-color:#FFFFFF;
-			    height:70px;
-			    width:50px;
-			    float:left;
-			    padding-left:0px;
-			    padding-right:0px;
-				}
+#jum .btn-block {
+background-color: #333;
+color: #FFFFFF; 
+}
 
-		#performer-container{
-			height:relative;
-			width:750px;
-			display: block;
-			padding-bottom: 25px;
+#jum .btn-block:hover {
+	background-color: rgb(37, 184, 221);
+	color: rgb(0, 0, 0); 
+}
 
-			}
+h1 {
+	color:aquamarine;
+	font-size: 70;
+}
+	
+body {	
+	background-color: #555;
+	padding-top: 1%;
+	}
 
-		.performerDiv {
-			width:50;
-			height:50;
-			border-radius: 50px;
-			background-color: 666666;
-			color: FFFFFF;
-			font-size: 25px;
-			text-align: center;
-			line-height: 50px;
-			display: inline-block;
-			margin: 2px;
-			}
 
-		.performerDivB {
-			width:50;
-			height:50;
-			border-radius: 50px;
-			background-color: 666666;
-			color: FFFFFF;
-			font-size: 25px;
-			text-align: center;
-			line-height: 50px;
-			display: inline-block;
-			margin: 2px;
-			}
+#perfDialogue {
+		line-height:50px;
+		background-color:#FFFFFF;
+		height:70px;
+		width:50px;
+		float:left;
+		padding-left:0px;
+		padding-right:0px;
+		}
 
-  		#youAre{
-  		  	width: 50;
-        	font-size: 100;
-        	padding-left: 20px;
-        	padding-right: 20px;
-        	padding-top: 20px;
-        	text-align: left;
+#performer-container{
+	height:relative;
+	width:750px;
+	display: block;
+	padding-bottom: 25px;
 
-  		  	}
+	}
 
-  		#sendingTo{
-  		  	width: 50;
-        	font-size: 60;
-        	text-align: center;
+.performerDiv {
+	width:50;
+	height:50;
+	border-radius: 50px;
+	background-color: 666666;
+	color: FFFFFF;
+	font-size: 25px;
+	text-align: center;
+	line-height: 50px;
+	display: inline-block;
+	margin: 2px;
+	}
 
-  		  	}
+.performerDivB {
+	width:50;
+	height:50;
+	border-radius: 50px;
+	background-color: 666666;
+	color: FFFFFF;
+	font-size: 25px;
+	text-align: center;
+	line-height: 50px;
+	display: inline-block;
+	margin: 2px;
+	}
 
-		.figures{
-        	width: 740px;
-        	float: left;
-          	position: relative;
-			display: inline;
-        	padding-top: 0px;
-    	    padding-bottom: 0px;
+#youAre{
+	width: 50;
+	font-size: 100;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 20px;
+	text-align: left;
 
-  		  	}
+	}
 
-  		.figuresB{
-        	width: 740px;
-        	/*float: left;*/
-        	position: relative;
-			display: inline;
+#sendingTo{
+	width: 50;
+	font-size: 60;
+	text-align: center;
 
-        	padding-top: 0px;
-    	    padding-bottom: 0px;
+	}
 
-  		  	}
+.figures{
+	width: 740px;
+	float: left;
+	position: relative;
+	display: inline;
+	padding-top: 0px;
+	padding-bottom: 0px;
 
-  		#imageFig{
-  			height:600px;
-			width:800px;
-			opacity: .4;
+	}
 
- 		  	}
+.figuresB{
+	width: 740px;
+	/*float: left;*/
+	position: relative;
+	display: inline;
 
-		.imageText{
-			position:absolute;
-			z-index: 1000;
-			/*display:inline;*/
-			left:0;
-			right: 0;
-			bottom: 30px;
-			text-align: center;
-			margin: auto;
-			font-size: 30;
- 		  	}
+	padding-top: 0px;
+	padding-bottom: 0px;
 
-        .sidebar{
-            width: 130px;
-            height: 70px;
-            float:left;
-            margin-right: 100px;
-      	 }
+	}
 
-      	 #main{
-        	width: 700px;
-        	float: left;
-        	/*position: absolute;*/
-			display: block;
-        	padding-top: 0px;
-    	    padding-bottom: 0px;
-    	    margin-left: 20px;
+#imageFig{
+	height:600px;
+	width:800px;
+	opacity: .4;
 
-  		  	}
+	}
 
-        .navButton{
-            width:160;
-            height:40;
-            border-radius: 40px;
-            background-color: 666666;
-            color: FFFFFF;
-            font-size: 20px;
-            text-align: center;
-            line-height:40px;
-            display: block;
-            margin: 2px;
-            margin-bottom: 10px;
-            margin-top: 10px;
-       		 }
+.imageText{
+	position:absolute;
+	z-index: 1000;
+	/*display:inline;*/
+	left:0;
+	right: 0;
+	bottom: 30px;
+	text-align: center;
+	margin: auto;
+	font-size: 30;
+	}
 
-        .audio{
+.sidebar{
+	width: 130px;
+	height: 70px;
+	float:left;
+	margin-right: 100px;
+	}
 
-        	width:200;
-            height:40;
-            border-radius: 40px;
-            background-color: 666666;
-            color: FFFFFF;
-            font-size: 20px;
-            text-align: center;
-            line-height:40px;
-            display: inline-block;
-            margin: 2px;
+	#main{
+	width: 700px;
+	float: left;
+	/*position: absolute;*/
+	display: block;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-left: 20px;
 
-            }
+	}
 
-        .figuresBox{
-            width: 740px;
-            float: left;
-            padding-top: 5px;
-            padding-bottom: 5px;
+.navButton{
+	width:160;
+	height:40;
+	border-radius: 40px;
+	background-color: 666666;
+	color: FFFFFF;
+	font-size: 20px;
+	text-align: center;
+	line-height:40px;
+	display: block;
+	margin: 2px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+		}
 
-        	}
+.audio{
 
-    	#bpm {
-			float: left;
-			}
+	width:200;
+	height:40;
+	border-radius: 40px;
+	background-color: 666666;
+	color: FFFFFF;
+	font-size: 20px;
+	text-align: center;
+	line-height:40px;
+	display: inline-block;
+	margin: 2px;
+
+	}
+
+.figuresBox{
+	width: 740px;
+	float: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+
+	}
+
+#bpm {
+	float: left;
+	}
