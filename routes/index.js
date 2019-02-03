@@ -46,7 +46,10 @@ perfs = [];
 
       router.get('/help', function(req, res) {
         page = 'help';
-          res.render('help.html', { });
+          res.render('help.html', { 
+            user: req.user.username,
+            id: req.user,
+          });
         });
 
 
