@@ -16,27 +16,28 @@
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<!-- load fontawesome -->
 
-	<script>  var socket = io(); </script>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+	<link
+	  rel="stylesheet"
+	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	  integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	  crossorigin="anonymous" />
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="font-awesome/css/brands.css"/>
+	<link rel="stylesheet" href="css/animate.min.css"/>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 
-	<script type="text/javascript">
-				socket.on('connect', function() {
-				console.log("Conducter in the house.");
-			 });
-	</script>
+<script>  var socket = io(); </script>
 
+<script type="text/javascript">
+	socket.on('connect', function() {
+	console.log("Conducter in the house.");
+	});
+</script>
 	<style>
-
-		body{
-			background-color: #080336;
-			color: fff;
-			    font-size: 15px;
-		}
-		.btn {
-			background-color: #080336;
-			color: #666666;
-			font-size: 20px;
-
-		    }
+	 /* These need to STAY for SWITCH function */
 		#everythingConductor {
 			/*visibility: visible;*/
 			display: block;
@@ -47,75 +48,86 @@
 			display: none;
 		}
 	</style>
-
 </head>
-
 <body>
 
 <div id="everythingConductor">
+	<section id="nav">
+		<div class="row">
+			<div class="col-md-4" align="center">
+				<a href="/dashboard" ><img src="img/figure_logo_small.png" class="img-fluid"> </a>
+					<div>
+					<!-- <li class="btn btn-md"><a class="nav-link" href="/conductor"> SCORES </a></li>
+					<li class="btn btn-md"><a class="nav-link" href="/newComp"> CREATE NEW </a></li>
+					<li class="btn btn-md"><a class="nav-link" href="/help"> HELP </a></li>  -->
+					<li class="btn btn-md"><a class="nav-link" href="/dashboard"> BACK TO DASHBOARD </a></li> 
+					</div>
+					
+					<!-- <a href="/dashboard" class="btn btn-default"> Dashboard </a> -->
+					<div class="col">
+					<div id="userName" align="center"> <p> |: {{user}} :| </p> </div>
+					</div>
+			</div>
+			
+			<!-- BUTTONS PROPAGATE IN HERE -->
+			<div class="col-md-6" id="performer-container"></div>
 
-	<div class="sidebar" align="center">
+		</div>
+		<hr>
+	</section>
 
-		 Hi, {{user}}
-
-		<!-- simple nav -->
-		<nav>
-		<a href="/dashboard" class="btn btn-default"> Dashboard </a>
-		</nav>
-
-		<br>
-		<br>
+	<div class="col-md-4" align="center">
 
 		<!-- PERFORMER channel update -->
-		<input type="number" id="myNumber" value="0">
-		<p>
-		<button class="btn btn-default" onclick="updatePerfCount()"># of Performers</button>
+		<input type="number" id="myNumber" value="0" style="width:100">
+		<button class="btn btn-lg" onclick="updatePerfCount()"># of Performers</button>
 	</br>
 	</br>
+			<div>	
+				<li class="btn btn-md"><a class="btn btn-md" id="clear"> CLEAR </a></li>
+				<li class="btn btn-md"><a class="btn btn-md" id="all"> ALL </a> </li> 
+				<li class="btn btn-md"><a class="btn btn-md" id="switcher"> SWITCH </a></li> 
+				<li class="btn btn-md"><a class="btn btn-md" id="delButton"> delMode </a></li> 
+			</div>
+		
 	</br>
 	</br>
         <input type="file" id="file_input"/>
         <p>
 		<div id="progressNumber"></div>
-
-	</div>
+</div>
 
 
 <div id="main" >
 
-		<!-- holds performer buttons -->
-		<div id="performer-container">
-			<p>
-				<a class="btn btn-default" id="clear"> CLEAR </a>
-				<a class="btn btn-default" id="all"> ALL </a>
-				<a class="btn btn-default" id="switcher"> SWITCH </a>
-				<a class="btn btn-default" id="delButton"> delMode </a>
-			<p>
-		</div>
+<br>
+<h4> Images </h4>
+<br>
+	{{#images}}
+	<div class="figuresB">
+	<img src={{.}} class="imageF " width="100px" height="100px">  </img>
+	<span class="imageText">  </span>
+	</div>
+	{{/images}}
 
+<br>
+<br>
+<h4> Videos </h4>
+<br>
+	{{#videos}}
+	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
+	{{/videos}}
 
-		<p> Images <p>
+<br>
+<h4> Waveforms </h4>
+<br>
+	{{#audio}}
+	<div class="audio" title={{.}}>  </div>
+	{{/audio}}
 
-	 	{{#images}}
-	 	<div class="figuresB">
-	      <img src={{.}} class="imageF " width="100px" height="100px">  </img>
-	      <span class="imageText">  </span>
-	    </div>
-	    {{/images}}
-
-	  	<p> Videos <p>
-	  	{{#videos}}
-	  	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
-	  	{{/videos}}
-
-	  	<p> Waveforms <p>
-	  	{{#audio}}
-	  	<div class="audio" title={{.}}>  </div>
-	  	{{/audio}}
-
-	  	{{#audionames}}
-	  	<div class="audionames" title={{.}} style.visibility="hidden">  </div>
-	  	{{/audionames}}
+{{#audionames}}
+<div class="audionames" title={{.}} style.visibility="hidden">  </div>
+{{/audionames}}
 
 </div>
 

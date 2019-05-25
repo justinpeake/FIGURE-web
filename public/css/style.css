@@ -52,6 +52,8 @@ h4 {
 body {	
 background-color: #555;
 padding-top: 1%;
+color: fff;
+font-size: 15px;
 }
 
 :link {
