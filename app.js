@@ -77,25 +77,29 @@ var S3_BUCKET = process.env.S3_BUCKET;
 
 // Passport, Session, Redis, Cookie stuff --------------
 
-      app.use(session({
-          key: 'express.sid',
-          store: sessionStore,
-          secret: 'keyboard horse',
-          resave: false,
-          saveUninitialized: false
-      }));
-      app.use(passport.initialize());
-      app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', routes);
+app.use(session({secret:"keyboard horse"}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-      io.use(socketioRedis.authorize({
-          passport:passport,
-          cookieParser: cookieParser,        // the same middleware you register in express
-          key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
-          secret:       'keyboard horse',    // the session_secret to parse the cookie
-          store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
-          success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
-          fail:         onAuthorizeFail,    // *optional* callback on fail/error - read more below
-      }));
+app.use(session({
+    key: 'express.sid',
+    store: sessionStore,
+    secret: 'keyboard horse',
+    resave: false,
+    saveUninitialized: false
+}));
+
+io.use(socketioRedis.authorize({
+    passport:passport,
+    cookieParser: cookieParser,        // the same middleware you register in express
+    key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
+    secret:       'keyboard horse',    // the session_secret to parse the cookie
+    store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
+    success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
+    fail:         onAuthorizeFail,    // *optional* callback on fail/error - read more below
+}));
 
   function onAuthorizeSuccess(data, accept) {
     console.log('Authorized success');
@@ -107,6 +111,21 @@ var S3_BUCKET = process.env.S3_BUCKET;
         accept(new Error(message));
   }
 
+  // Passport Auth ----------------------------------------
+
+  // passport.use(new LocalStrategy(Account.authenticate()));
+
+  //     passport.serializeUser(function(user, done) {
+  //        done(null, user.username);   // this affects what shows up in socket.request.user
+  //        console.log("serializeUser")
+  //     });
+
+  //     passport.deserializeUser(function(id, done) {
+  //        done(null, id);
+  //       //  console.log("deserializeUser")  // this is getting called on every request but not sure that's correct
+  //     });
+
+//--------------------------------------------------------
 //------------------------------------------------------
 
 // connect to mLab database-----------------------------
@@ -128,7 +147,7 @@ var options = {
   setOfFields: '{"salt": 0, "hash":0, "_id":0, "__v":0}'  //"0" means "false" or " "dont return those"
 };
 
-mLab.listDocuments(options, function (err, data) {
+mLab.listDocuments(options, function (err, data) {  // lisst all accounts in database in terminal
   for(i = 0; i < data.length; i++){
   console.log("ACCOUNTS: " + data[i].username); // strips username from JSON
 }
@@ -156,14 +175,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret:"keyboard horse"}));
-app.use(passport.initialize());
-app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', routes);
-
-// var Account = require('./models/account.js');
 
 console.log(process.env.RUNNING);  // hello world
 
@@ -179,7 +191,7 @@ console.log(process.env.RUNNING);  // hello world
 
       passport.deserializeUser(function(id, done) {
          done(null, id);
-         console.log("deserializeUser")
+        //console.log("deserializeUser")
       });
 
 //--------------------------------------------------------
@@ -191,7 +203,7 @@ console.log(process.env.RUNNING);  // hello world
             var s3 = new aws.S3();
             var folder = req.user + "/";
 
-            console.log("Req.user from app.js = " + req.user);
+            // console.log("Req.user from app.js = " + req.user);
 
             var s3_params = {
                 Bucket: S3_BUCKET,
