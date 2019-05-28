@@ -179,7 +179,7 @@ console.log(process.env.RUNNING);  // hello world
 
       passport.deserializeUser(function(id, done) {
          done(null, id);
-         console.log("deserializeUser")
+        //  console.log("deserializeUser")
       });
 
 //--------------------------------------------------------
