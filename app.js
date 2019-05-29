@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -9,44 +8,6 @@ var env = require('node-env-file');
 var socket_io = require('socket.io');
 var app = express();
 var io = socket_io();
-
-console.log("***************************");
-console.log("REDIS? REDIS? REDIS? REDIS?");
-console.log("***************************");
-
-// HOW TO: type "redis-server" in file directory
-
-// inital file system - reading - writing  :: added 9/19/16
-  var fse = require('fs-extra');
-
-  fse.readFile('./public/hello.txt', 'utf8', function(err, data){
-    if(err) {
-        return console.log(err);
-    }
-    console.log(data);
-  });
-
-// time stamping stuff for datalogging :: added 9/19/16
-  var now = new Date();
-
-  var dateArray = [now.getMonth() + 1,now.getDate(), now.getFullYear()]; // use for deriving lengths that figures happened
-  var date = (now.getMonth() + 1)+"-"+now.getDate()+"-"+now.getFullYear(); // use for time stamping
-
-  var timeArray = [now.getHours(), now.getMinutes(), now.getSeconds()];
-  var time = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
-  console.log(date,"@",time);
-
-//  redis (sessions) stuff
-
-if (process.env.REDISTOGO_URL) {
-  var rtg = require('url').parse(process.env.REDISTOGO_URL);
-  var redis = require('redis').createClient(rtg.port, rtg.hostname);
-
-redis.auth(rtg.auth.split(':')[1]);
-} else {
-var redis = require("redis").createClient();
-};
-
 var passport = require('passport');
 var session = require('express-session')
 var RedisStore = require('connect-redis')(session);
@@ -56,8 +17,8 @@ var passportSocketIo = require("passport.socketio");
 var aws = require('aws-sdk');
 var router = express.Router();
 var LocalStrategy = require('passport-local').Strategy;
-var routes = require('./routes/index.js');
-var users = require('./routes/users.js');
+var awsStuff = require('./routes/awsRoute.js');
+var index = require('./routes/index.js');
 var path = require('path');
 var http = require('http');
 var chalk = require('chalk');
@@ -75,27 +36,61 @@ if (app.get("env") === "development") {
 
 var S3_BUCKET = process.env.S3_BUCKET;
 
+console.log("***************************");
+console.log("REDIS? REDIS? REDIS? REDIS?");
+console.log("***************************");
+
+// HOW TO: type "redis-server" in file directory
+
+// inital file system - reading - writing  :: added 9/19/16
+  var fse = require('fs-extra');
+  fse.readFile('./public/hello.txt', 'utf8', function(err, data){
+    if(err) {
+        return console.log(err);
+    }
+    console.log(data);
+  });
+
+// time stamping stuff for datalogging :: added 9/19/16
+  var now = new Date();
+  var dateArray = [now.getMonth() + 1,now.getDate(), now.getFullYear()]; // use for deriving lengths that figures happened
+  var date = (now.getMonth() + 1)+"-"+now.getDate()+"-"+now.getFullYear(); // use for time stamping
+  var timeArray = [now.getHours(), now.getMinutes(), now.getSeconds()];
+  var time = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
+  console.log(date,"@",time);
+
+//  redis (sessions) stuff
+if (process.env.REDISTOGO_URL) {
+  var rtg = require('url').parse(process.env.REDISTOGO_URL);
+  var redis = require('redis').createClient(rtg.port, rtg.hostname);
+
+redis.auth(rtg.auth.split(':')[1]);
+} else {
+var redis = require("redis").createClient();
+};
+
+
 // Passport, Session, Redis, Cookie stuff --------------
 
-      app.use(session({
-          key: 'express.sid',
-          store: sessionStore,
-          secret: 'keyboard horse',
-          resave: false,
-          saveUninitialized: false
-      }));
-      app.use(passport.initialize());
-      app.use(passport.session());
+  app.use(session({
+      key: 'express.sid',
+      store: sessionStore,
+      secret: 'keyboard horse',
+      resave: false,
+      saveUninitialized: false
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-      io.use(socketioRedis.authorize({
-          passport:passport,
-          cookieParser: cookieParser,        // the same middleware you register in express
-          key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
-          secret:       'keyboard horse',    // the session_secret to parse the cookie
-          store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
-          success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
-          fail:         onAuthorizeFail,    // *optional* callback on fail/error - read more below
-      }));
+  io.use(socketioRedis.authorize({
+      passport:passport,
+      cookieParser: cookieParser,        // the same middleware you register in express
+      key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
+      secret:       'keyboard horse',    // the session_secret to parse the cookie
+      store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
+      success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
+      fail:         onAuthorizeFail,    // *optional* callback on fail/error - read more below
+  }));
 
   function onAuthorizeSuccess(data, accept) {
     console.log('Authorized success');
@@ -107,13 +102,28 @@ var S3_BUCKET = process.env.S3_BUCKET;
         accept(new Error(message));
   }
 
-//------------------------------------------------------
+// app config
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'html');
+app.set('layout','layout');
+app.engine('html', require('hogan-express'));;
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(session({secret:"keyboard horse"}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', index, awsStuff);
+
+console.log(process.env.RUNNING);  // hello world
 
 // connect to mLab database-----------------------------
 
 app.db = mongoose.connect(process.env.MONGOLAB_URI);
-
-//------------------------------------------------------
 
 // mlab API query stuff --------------------------------
 // 'mongolab-data-api' has it's own requirements for query
@@ -134,39 +144,9 @@ mLab.listDocuments(options, function (err, data) {
 }
 });
 
-//-------------------------------------------------------
 // fixes clock skew issues with AWS-SDK ----------- 6/17/16
 
 aws.config.update({correctClockSkew: true});
-
-//-------------------------------------------------------
-
-
-// this app uses Hogan-Express
-// https://github.com/vol4ok/hogan-express
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
-app.set('layout','layout');
-app.engine('html', require('hogan-express'));;
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(session({secret:"keyboard horse"}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', routes);
-
-// var Account = require('./models/account.js');
-
-console.log(process.env.RUNNING);  // hello world
-
 
 // Passport Auth ----------------------------------------
 
@@ -182,84 +162,81 @@ console.log(process.env.RUNNING);  // hello world
         //  console.log("deserializeUser")
       });
 
-//--------------------------------------------------------
-
 // Page Rendering ----------------------------------------
 
-          app.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
+app.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
 
-            var s3 = new aws.S3();
-            var folder = req.user + "/";
+  var s3 = new aws.S3();
+  var folder = req.user + "/";
 
-            console.log("Req.user from app.js = " + req.user);
+  console.log("Req.user from app.js = " + req.user);
 
-            var s3_params = {
-                Bucket: S3_BUCKET,
-                Key: folder,
-                Expires: 60,
-                ACL: 'public-read'
-            };
-            var folderLength;
-            var fileArray = [];
-            var imageArray = [];
-            var videoArray = [];
-            var audioArray = [];
-            var audioNames = [];
+  var s3_params = {
+      Bucket: S3_BUCKET,
+      Key: folder,
+      Expires: 60,
+      ACL: 'public-read'
+  };
+  var folderLength;
+  var fileArray = [];
+  var imageArray = [];
+  var videoArray = [];
+  var audioArray = [];
+  var audioNames = [];
 
+  s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
 
-          s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
+    var folderLength = data.Contents.length;
 
-                  var folderLength = data.Contents.length;
+    // filling fileArray[] with all the URL's from amazon
+    for (i = 0; i < folderLength; i++){
+        fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+        };
 
-                  // filling fileArray[] with all the URL's from amazon
-                  for (i = 0; i < folderLength; i++){
-                     fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
-                     };
+      /*
+          1) this is splitting the urls >
+          2) looking at the last array element (which is 'most likely' the file extension)
+              ^ this could ultimately be buggy if the naming conventions change
+          3) checking to see whether the file extension matches any of the strings
+          4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
+      */
 
-                    /*
-                        1) this is splitting the urls >
-                        2) looking at the last array element (which is 'most likely' the file extension)
-                            ^ this could ultimately be buggy if the naming conventions change
-                        3) checking to see whether the file extension matches any of the strings
-                        4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
-                    */
+      for (i = 0; i < folderLength; i++){
+        if (fileArray[i].split(".")[4] == 'jpg'){
+          imageArray.push(fileArray[i]);
+        } else if (fileArray[i].split(".")[4] == 'png'){
+          imageArray.push(fileArray[i]);
+        }  else if (fileArray[i].split(".")[4] == 'mov'){
+          videoArray.push(fileArray[i]);
+        } else if (fileArray[i].split(".")[4] == 'wav'){
+          audioArray.push(fileArray[i]);
 
-                    for (i = 0; i < folderLength; i++){
-                      if (fileArray[i].split(".")[4] == 'jpg'){
-                        imageArray.push(fileArray[i]);
-                      } else if (fileArray[i].split(".")[4] == 'png'){
-                        imageArray.push(fileArray[i]);
-                      }  else if (fileArray[i].split(".")[4] == 'mov'){
-                        videoArray.push(fileArray[i]);
-                      } else if (fileArray[i].split(".")[4] == 'wav'){
-                        audioArray.push(fileArray[i]);
+          //splitting url to extract the name of the file
+          audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+        } else if (fileArray[i].split(".")[4] == 'mp3'){
+          audioArray.push(fileArray[i]);
+          audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+        }
 
-                        //splitting url to extract the name of the file
-                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-                      } else if (fileArray[i].split(".")[4] == 'mp3'){
-                        audioArray.push(fileArray[i]);
-                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-                      }
+      };  // end of file for loop
 
-                    };  // end of file for loop
+      console.log('IMAGES: ' + imageArray.length);
+      console.log('VIDEOS: ' + videoArray.length);
+      console.log('AUDIO: ' + audioArray.length);
 
-                    console.log('IMAGES: ' + imageArray.length);
-                    console.log('VIDEOS: ' + videoArray.length);
-                    console.log('AUDIO: ' + audioArray.length);
+    });
 
-                  });
-
-          res.render('dashboard.html', {
-                    user: req.user.username,
-                    id: req.user,
-                    images: imageArray,
-                    videos: videoArray,
-                    audio: audioArray,
-                    audionames: audioNames,
-                    length: folderLength,
-                    pcount: performerCount
-                    });
-                });
+      res.render('dashboard.html', {
+          user: req.user.username,
+          id: req.user,
+          images: imageArray,
+          videos: videoArray,
+          audio: audioArray,
+          audionames: audioNames,
+          length: folderLength,
+          pcount: performerCount
+          });
+  });
 
 // Render Dashboard Page --------------------------------------
 
@@ -533,66 +510,6 @@ console.log(process.env.RUNNING);  // hello world
                   }
               });
 
-// End Page Rendering ---------------------------------------
-
-
-
-
-
-
-// Image Uploads from Compose -------------------------------
-
-        app.get('/sign_s3', function(req, res){
-
-            //console.log('hiiiiiiii');
-            var s3 = new aws.S3();
-
-            var folder = req.user + "/";
-            var s3_params = {
-                Bucket: S3_BUCKET,
-                Key: folder + req.query.file_name,
-                Expires: 60,
-                ContentType: req.query.file_type,
-                ACL: 'public-read'
-            };
-            var folderLength;
-            var fileArray = [];
-            var imageArray = [];
-            var videoArray = [];
-            var audioArray = [];
-            var audioNames = [];
-
-          // if someone is signed in, then make folder with their name,
-          // otherwise, place in public folder
-
-          s3.getSignedUrl('putObject', s3_params, function(err, data){
-              if(err){
-                  console.log(err);
-             }
-              else {
-
-                  var return_data = {
-                      signed_request: data,
-                      url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+ folder + req.query.file_name
-                  };
-                  res.write(JSON.stringify(return_data));
-                  res.end();
-              }
-          });
-
-            //polling aws based on user and listing assets
-
-           s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
-            var folderLength = data.Contents.length;
-
-              for (i = 0; i < folderLength; i++){
-                fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
-              };
-            });
-          });
-
-//-------------------------------------------------------------------
-
 // Error Handlers ---------------------------------------------------
 
     // development error handler
@@ -621,84 +538,75 @@ console.log(process.env.RUNNING);  // hello world
 
 io.on('connection', function(socket){
 
-socket.on(socket.request.user + ' deleteTest', function(data) {
+    socket.on(socket.request.user + ' deleteTest', function(data) {
 
-// console.log("Received:" + socket.request.user + ' deleteTest'  + data);
+      var s3 = new aws.S3();
+      var folder = socket.request.user + "/";
+      var params = {
+      Bucket: S3_BUCKET, /* required */
+      Key: folder + data , /* required */
+    };
 
+      s3.deleteObject(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else
+      // console.log(data);         // successful response
+        socket.emit('deleteReload');
 
-  var s3 = new aws.S3();
-  var folder = socket.request.user + "/";
-  var params = {
-  Bucket: S3_BUCKET, /* required */
-  Key: folder + data , /* required */
-};
+      });
+    });
 
-  s3.deleteObject(params, function(err, data) {
-    if (err) console.log(err, err.stack); // an error occurred
-    else
-   // console.log(data);         // successful response
-    socket.emit('deleteReload');
+    socket.on(socket.request.user + ' sendingTo', function(data) {
+    // console.log("Received:" + socket.request.user + "' sendingTo' " + data);
+    socket.broadcast.emit(socket.request.user + ' sendingTo', data);
+    });
 
-  });
+    socket.on(socket.request.user + ' sendingAll', function(data) {
+    // console.log("Received: 'sendingAll' " + data);
+    socket.broadcast.emit(socket.request.user + ' sendingAll', data);
+    });
 
+    socket.on(socket.request.user + ' toGroup', function(data) {
+    // console.log("Received: 'toGroup' " + data);
+    socket.broadcast.emit(socket.request.user + ' toGroup', data);
+    });
 
+    socket.on(socket.request.user + ' videoFigure', function(data) {
+    // console.log("Received: 'videoFigure' " + data);
+    socket.broadcast.emit(socket.request.user + ' videoFigure', data);
+    });
 
-});
+    socket.on(socket.request.user + ' imageFigure', function(data) {
+    // console.log("Received: 'imageFigure' " + data);
+    socket.broadcast.emit(socket.request.user + ' imageFigure', data);
+    });
 
-socket.on(socket.request.user + ' sendingTo', function(data) {
-// console.log("Received:" + socket.request.user + "' sendingTo' " + data);
-socket.broadcast.emit(socket.request.user + ' sendingTo', data);
-});
+    socket.on(socket.request.user + ' switch', function(data) {
+    // console.log("Received: switch " + data);
+    socket.broadcast.emit(socket.request.user + ' switch', data);
+    });
 
+    socket.on(socket.request.user + ' waveSketch', function(data) {
+    // console.log("Received: waveSketch " + data);
+    socket.broadcast.emit(socket.request.user + ' waveSketch', data);
+    });
 
-socket.on(socket.request.user + ' sendingAll', function(data) {
-// console.log("Received: 'sendingAll' " + data);
-socket.broadcast.emit(socket.request.user + ' sendingAll', data);
-});
+    socket.on(socket.request.user + ' perfCount', function(data) {
+    performerCount = data;  // using this for autoPerfCount on performer page
+    // console.log("socket.request.user is " + socket.request.user);
+    socket.broadcast.emit(socket.request.user + ' perfCount', data);
+    });
 
-socket.on(socket.request.user + ' toGroup', function(data) {
-// console.log("Received: 'toGroup' " + data);
-socket.broadcast.emit(socket.request.user + ' toGroup', data);
-});
+    socket.on('gimmePerfCount', function(data) {  // called when performer logs in and auto proagates their pag
+    socket.emit(socket.request.user + ' perfCount', performerCount);
+    // console.log('gimmePerfCount = ' + socket.request.user + performerCount);
+    });
 
-socket.on(socket.request.user + ' videoFigure', function(data) {
-// console.log("Received: 'videoFigure' " + data);
-socket.broadcast.emit(socket.request.user + ' videoFigure', data);
-});
-
-socket.on(socket.request.user + ' imageFigure', function(data) {
-// console.log("Received: 'imageFigure' " + data);
-socket.broadcast.emit(socket.request.user + ' imageFigure', data);
-});
-
-socket.on(socket.request.user + ' switch', function(data) {
-// console.log("Received: switch " + data);
-socket.broadcast.emit(socket.request.user + ' switch', data);
-});
-
-socket.on(socket.request.user + ' waveSketch', function(data) {
-// console.log("Received: waveSketch " + data);
-socket.broadcast.emit(socket.request.user + ' waveSketch', data);
-});
-
-socket.on(socket.request.user + ' perfCount', function(data) {
-performerCount = data;  // using this for autoPerfCount on performer page
-// console.log("socket.request.user is " + socket.request.user);
-socket.broadcast.emit(socket.request.user + ' perfCount', data);
-// console.log('perfCount = ' + performerCount);
-});
-
-socket.on('gimmePerfCount', function(data) {  // called when performer logs in and auto proagates their pag
-socket.emit(socket.request.user + ' perfCount', performerCount);
-// console.log('gimmePerfCount = ' + socket.request.user + performerCount);
-});
-
-
-socket.on('testCount', function(data) {  // called when performer logs in and auto proagates their pag
-//updatedCompName = data;
-//console.log('got a test count ' + data);
-// console.log('gimmePerfCount = ' + socket.request.user + performerCount);
-});
+    socket.on('testCount', function(data) {  // called when performer logs in and auto proagates their pag
+    //updatedCompName = data;
+    //console.log('got a test count ' + data);
+    // console.log('gimmePerfCount = ' + socket.request.user + performerCount);
+    });
 
 });
 
