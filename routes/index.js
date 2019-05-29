@@ -1,21 +1,27 @@
 var express = require('express');
-var passport = require('passport');
 var router = express.Router();
-var mongoose = require('mongoose');
+
+// var mongoose = require('mongoose');
 
 // our db models
-var Figure = require("../models/figure.js");
+// var Figure = require("../models/figure.js");
 var Account = require('../models/account.js');
 
 var chalk = require('chalk');
 
 page = '';
-
 fileList = '';
-
 perfs = [];
 //performerCount = 0;
 
+// var app = express();
+// var env = require('node-env-file');
+
+// if (app.get("env") === "development") {
+//   env('./.env');
+// }
+// var S3_BUCKET = process.env.S3_BUCKET;
+// // console.log("IS THIS WORKING? " + S3_BUCKET);
 
 //////////////////////////////////////////
 
@@ -67,39 +73,39 @@ router.post('/register', function(req, res) {
         });
     });
 
- router.post('/submit_form', function(req, res){
+//  router.post('/submit_form', function(req, res){
 
-    var figureName = req.body.figurename;    // pull out the information from the req.body
-    var keySig = req.body.keysig;
-    var owner = req.user;
-    //var keySig = req.body.keysig;
-    var figureObj = {                        // hold all this data in an object
-      figureName: figureName,                // this object should be structured the same way as your db model
-      keySig: keySig,
-      owner: owner
-      };
+//     var figureName = req.body.figurename;    // pull out the information from the req.body
+//     var keySig = req.body.keysig;
+//     var owner = req.user;
+//     //var keySig = req.body.keysig;
+//     var figureObj = {                        // hold all this data in an object
+//       figureName: figureName,                // this object should be structured the same way as your db model
+//       keySig: keySig,
+//       owner: owner
+//       };
 
-    var figure = new Figure(figureObj);     // create a new figure model instance, passing in the object
+//     var figure = new Figure(figureObj);     // create a new figure model instance, passing in the object
 
-    figure.save(function(err,data){         // now, save that instance to the database    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save
+//     figure.save(function(err,data){         // now, save that instance to the database    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save
 
-          if (err){                         // if err saving, respond back with error
+//           if (err){                         // if err saving, respond back with error
 
-            var error = {status:'ERROR', message: 'Error saving figure'};
-            return res.json(error);
-          }
+//             var error = {status:'ERROR', message: 'Error saving figure'};
+//             return res.json(error);
+//           }
 
-         // console.log('SAVED A NEW FIGURE!');
-          console.log(chalk.white("TO MONGO:") + chalk.yellow(data));
+//          // console.log('SAVED A NEW FIGURE!');
+//           console.log(chalk.white("TO MONGO:") + chalk.yellow(data));
 
-          // now return the json data of the new animal
-          var jsonData = {
-            status: 'OK',
-            animal: data
-          }
-      return res.json(jsonData);
-    })
-});
+//           // now return the json data of the new animal
+//           var jsonData = {
+//             status: 'OK',
+//             animal: data
+//           }
+//       return res.json(jsonData);
+//     })
+// });
 
 
 
