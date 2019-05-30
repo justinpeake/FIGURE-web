@@ -19,14 +19,14 @@ router.get('/register', function(req, res) {
 
 router.post('/register', function(req, res) {
 
-    Account.register(new Account({ username : req.body.username, publicPracticeEnabled : ' ' }), req.body.password, function(err, account) {
-        if (err) {
-          return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});
-        }
-        passport.authenticate('local')(req, res, function () {
-            res.render("login.html");  // direct to login
-        });
+  Account.register(new Account({ username : req.body.username, publicPracticeEnabled : ' ' }), req.body.password, function(err, account) {
+    if (err) {
+      return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});
+    }
+    passport.authenticate('local')(req, res, function () {
+        res.render("login.html");  // direct to login
     });
+  });
 });
 
 
@@ -35,7 +35,7 @@ router.get('/login', function(req, res) {
       res.render('login.html', { });
     });
 
-
+    
 router.get('/dashboard', function(req, res) {
     page = 'dashboard';
 
