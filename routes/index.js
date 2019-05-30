@@ -36,14 +36,14 @@ perfs = [];
         res.redirect('/');
       });
 
-    router.get('/register', function(req, res) {
-        res.render('register.html', {});
-      });
+    // router.get('/register', function(req, res) {
+    //     res.render('register.html', {});
+    //   });
 
-    router.get('/login', function(req, res) {
-      page = 'login';
-        res.render('login.html', { });
-      });
+    // router.get('/login', function(req, res) {
+    //   page = 'login';
+    //     res.render('login.html', { });
+    //   });
 
     router.get('/about', function(req, res) {
       page = 'about';
@@ -59,19 +59,19 @@ perfs = [];
         });
 
 
-router.post('/register', function(req, res) {
+// router.post('/register', function(req, res) {
 
-        Account.register(new Account({ username : req.body.username, publicPracticeEnabled : ' ' }), req.body.password, function(err, account) {
-            if (err) {
-              return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});
-            }
-            passport.authenticate('local')(req, res, function () {
-               // res.redirect('/');
+//         Account.register(new Account({ username : req.body.username, publicPracticeEnabled : ' ' }), req.body.password, function(err, account) {
+//             if (err) {
+//               return res.render("register.html", {err: true, message: "Sorry. That username already exists. Try again."});
+//             }
+//             passport.authenticate('local')(req, res, function () {
+//                // res.redirect('/');
       
-                res.render("login.html");  // direct to login
-            });
-        });
-    });
+//                 res.render("login.html");  // direct to login
+//             });
+//         });
+//     });
 
 //  router.post('/submit_form', function(req, res){
 
