@@ -111,9 +111,8 @@ router.get('/dashboard', function(req, res) {
 
 // passport authentication and redirect to dashboard when successful
 router.post('/login', passport.authenticate('local', {session:true}), function(req, res) {
-         res.redirect('/dashboard');
-           
-    });
+  res.redirect('/dashboard');
+});
 
 
 module.exports = router;
