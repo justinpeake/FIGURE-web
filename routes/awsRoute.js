@@ -7,7 +7,7 @@ var env = require('node-env-file');
 if (app.get("env") === "development") {
   env('./.env');
 }
-var S3_BUCKET = process.env.S3_BUCKET;
+var S3_BUCKET = process.env.S3_BUCKET; 
 
 
 router.get('/sign_s3', function(req, res){
@@ -48,7 +48,7 @@ router.get('/sign_s3', function(req, res){
 
     //polling aws based on user and listing assets
 
-   s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
+  s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
     var folderLength = data.Contents.length;
 
       for (i = 0; i < folderLength; i++){

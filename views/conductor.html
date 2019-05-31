@@ -8,6 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<script type="text/javascript" src="/js/sketches.js"></script>
 
+	<script type="text/javascript" src="/js/sessionData.js"></script>
+
   <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
@@ -335,8 +337,10 @@ $(clear).click(function(){
 
 	if(delMode == false){
 		socket.emit(acct + ' imageFigure', imageSrcs[index]);
+		sessionUpdateData(whoWhat);
+		// console.log(whoWhat);
 	} else if(delMode == true){
-		console.log(acct + ' delMode ' + imageSrcs[index].split('/')[4]);
+		// console.log(acct + ' delMode ' + imageSrcs[index].split('/')[4]);
 		socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]);
 	};
 
@@ -345,16 +349,16 @@ $(clear).click(function(){
 		for(i=0; i < group.length; i++){
 			 whoWhat['player' + group[i]] = 'iT' + index;
 			};
-			console.log(whoWhat);
+			//console.log(whoWhat);
 
 		for (i=0; i < imageIds.length; i++){
 			document.getElementById('iT' + i).innerHTML = ' ';
 			}
 
 		for (i=0; i < Object.keys(whoWhat).length; i++){
-			console.log(whoWhat['player' + (i+1)]);
+			// console.log(whoWhat['player' + (i+1)]);
 			 if (whoWhat['player' + (i+1)] !== " "){
-		 		console.log(document.getElementById(whoWhat['player' + (i+1)]).innerHTML);
+		 		//console.log(document.getElementById(whoWhat['player' + (i+1)]).innerHTML);
 		 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
 		 		};
 		 	};
