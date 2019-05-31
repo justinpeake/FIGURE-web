@@ -251,7 +251,7 @@ $(clear).click(function(){
 			    	document.getElementById('performer-container').appendChild(perfs[i]);
 				};
 
-			    //attaching the listener for click
+			  //attaching the listener for click
 				for (var i = 0; i < pX; i++){
     				$('#cp' + (i+1)).click(doTheThing(i));
     			};
@@ -296,14 +296,12 @@ $(clear).click(function(){
 
 ///////////////////////// FIGURE IMAGES > BUTTONS
 
-
 	// this block is taking the number of images and adding ID's for button functions
 
 	var imageIds = document.getElementsByClassName("imageF");  // from image tag above
 	var imageSrcs = [];  //sending this to the socket emit
 	var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
-
-
+	var sessionData = [];
 	//assign ids to all of the images
 	for (i = 0; i < imageIds.length; i++) {
 		imageIds[i].id = 'iF'+ i;
@@ -320,25 +318,26 @@ $(clear).click(function(){
 		imageSrcs[i] = imageIds[i].src;
 	};
 
+	// found in sessionData.js
+	cleanImageNames(imageSrcs);
+
 	//seth helped with this  -- add button functionalities
 	for(var i = 0; i < imageIds.length; i ++){
 		$("#iF" + i).click(fadeTheFadeI(i));
 	};
 
+//add the urls to the button
 
-	//add the urls to the button
-
-	function fadeTheFadeI(index){
+function fadeTheFadeI(index){
 		return function(){
 			var image = "#iF" + index;
 			$(image).fadeTo("slow", 0.5);
 
 //DELETE mode stuff
 
-	if(delMode == false){
+if(delMode == false){
 		socket.emit(acct + ' imageFigure', imageSrcs[index]);
-		sessionUpdateData(whoWhat);
-		// console.log(whoWhat);
+
 	} else if(delMode == true){
 		// console.log(acct + ' delMode ' + imageSrcs[index].split('/')[4]);
 		socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]);
@@ -349,16 +348,13 @@ $(clear).click(function(){
 		for(i=0; i < group.length; i++){
 			 whoWhat['player' + group[i]] = 'iT' + index;
 			};
-			//console.log(whoWhat);
 
 		for (i=0; i < imageIds.length; i++){
 			document.getElementById('iT' + i).innerHTML = ' ';
 			}
 
 		for (i=0; i < Object.keys(whoWhat).length; i++){
-			// console.log(whoWhat['player' + (i+1)]);
 			 if (whoWhat['player' + (i+1)] !== " "){
-		 		//console.log(document.getElementById(whoWhat['player' + (i+1)]).innerHTML);
 		 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
 		 		};
 		 	};
@@ -381,7 +377,11 @@ $(clear).click(function(){
 			$(all).css('color', 'white');
 			$(all).fadeTo("fast", 1.0);
 
-		  };
+				// found in sessionData.js
+				sessionUpdateData(whoWhat);
+
+			};
+			
 	};	// end fade the fade
 
 
