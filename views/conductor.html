@@ -94,6 +94,7 @@
 				<li class="btn btn-md"><a class="btn btn-md" id="all"> ALL </a> </li> 
 				<li class="btn btn-md"><a class="btn btn-md" id="switcher"> SWITCH </a></li> 
 				<li class="btn btn-md"><a class="btn btn-md" id="delButton"> delMode </a></li> 
+				<li class="btn btn-md"><a class="btn btn-md" id="recBtn"> REC </a></li> 
 			</div>
 		
 	</br>
@@ -153,14 +154,12 @@
 	var pX; // performer count
 	var delMode = false; // only true when a figure needs to be deleted
 
-
 // "Switch" button \\
 
 // note: should this maybe be outside of socket reload?
 // NEED TO MAKE A TEMPORARY SWITCHER TEXT FILE other than sessionData?
 
 		$(switcher).click(function(){
-
 
 			// NOTE: this may have trouble in sessionData.js
 			socket.emit(acct + ' switch', toWhom); // sending the switch as if it is a figure
@@ -176,11 +175,10 @@
 // "All" button \\ 
 	$(all).click(function(){
 		if(toAll == 0){
-			$(all).fadeTo("fast", 0.5);
+			$(all).fadeTo("fast", 0.5);  // button UI
 		    $(all).css('color', 'red');
-			  toAll = 1;
-			  // console.log('sendingAll ' + toAll);
-			  socket.emit(acct + ' sendingAll', toAll);
+			  toAll = 1; // boolean
+			  socket.emit(acct + ' sendingAll', toAll);  // send to server
 		} else if (toAll == 1){
 			$(all).fadeTo("fast", 0.5);
 		    $(all).css('color', 'lightgray');
@@ -195,13 +193,10 @@
 			$(delButton).fadeTo("fast", 0.5);
 		$(delButton).css('color', 'red');
 					delMode = true;
-					// console.log("delMode = " + delMode);
-
 		} else if (delMode == true){
 			$(delButton).fadeTo("fast", 0.5);
 		$(delButton).css('color', 'lightgray');
 				delMode = false;
-				// console.log("delMode = " + delMode);
 		};
 	});
 	
@@ -209,22 +204,21 @@
 	socket.on('deleteReload', uploadComplete);  // looking for a message from server that delete has been completed
 
 
-
-// clearing the group when an image is sent \\
+// Clearing the group when an image is sent \\
 
 $(clear).click(function(){
-		group = [];
-		member = 0;
-		toAll = 0;
+	group = [];
+	member = 0;
+	toAll = 0;
 
-			for (i=0; i < perfs.length; i++){  // this clears the button states when an image is sent
-				$('#cp' + (i+1)).css('color', 'white');
-			};
-			for (i=0; i < perfs.length; i++){
-				$('#cp' + (i+1)).fadeTo("fast", 1.0);
-			};
-	
-			$(all).fadeTo("fast", 1.0);	// zeros out the 'ALL' button when a figure is sent
+		for (i=0; i < perfs.length; i++){  // this clears the button states when an image is sent
+			$('#cp' + (i+1)).css('color', 'white');
+		};
+		for (i=0; i < perfs.length; i++){
+			$('#cp' + (i+1)).fadeTo("fast", 1.0);
+		};
+
+		$(all).fadeTo("fast", 1.0);	// zeros out the 'ALL' button when a figure is sent
 	});
 
 // Adding Performer Channel Buttons \\
@@ -257,35 +251,28 @@ function updatePerfCount() {
 };
 
 
-		// function than runs when clicked
-		function doTheThing(index) {
+// Click Performer Channel Buttons \\
+function doTheThing(index) { // function than runs when perfromer channel buttonclicked
 
-	    	return function(){
+	return function(){
+		var num = index + 1;
+		var perfID = "#cp" + (num);
 
-	    	var num = index + 1;
-	    	var perfID = "#cp" + (num);
+			$(perfID).fadeTo("fast", 0.5);
+			$(perfID).css('color', 'red');
+			toAll = 0;
+			toWhom = num;
+			group[member] = toWhom;
+			member = member + 1;
+			//may not need this when grouping is done
+			socket.emit(acct + ' toGroup', group);
+			socket.emit(acct + ' sendingTo', toWhom, toAll);
+			socket.emit(acct + ' sendingAll', toAll);
+	};
+};
 
-	 			$(perfID).fadeTo("fast", 0.5);
-		    	$(perfID).css('color', 'red');
 
-		    toAll = 0;
-	 			toWhom = num;
-
-	 			group[member] = toWhom;
-
-	 			member = member + 1;
-
-	 			//may not need this when grouping is done
-	 			socket.emit(acct + ' toGroup', group);
-	 			socket.emit(acct + ' sendingTo', toWhom, toAll);
-	 			socket.emit(acct + ' sendingAll', toAll);
-
-	 			};
- 		};
-
-////////////////////////// END DYNAMIC PERF SHIZZ
-
-///////////////////////// FIGURE IMAGES > BUTTONS
+// Figure Buttons \\
 
 	// this block is taking the number of images and adding ID's for button functions
 
@@ -293,48 +280,38 @@ function updatePerfCount() {
 	var imageSrcs = [];  //sending this to the socket emit
 	var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
 	var sessionData = [];
-	//assign ids to all of the images
-	for (i = 0; i < imageIds.length; i++) {
+
+	for (i = 0; i < imageIds.length; i++) {  	//assign ids to all of the images
 		imageIds[i].id = 'iF'+ i;
 	};
 
-	//assign ids to the text overlay divs
-	for (i = 0; i < imageTxtIds.length; i++) {
+	for (i = 0; i < imageTxtIds.length; i++) {  // assign ids to the text overlay divs
 		imageTxtIds[i].id = 'iT'+ i;
-		//console.log(imageTxtIds[i].id);
 	};
 
-	// get the urls of images
-	for (i = 0; i < imageIds.length; i++) {
+	for (i = 0; i < imageIds.length; i++) {  	// get the urls of images
 		imageSrcs[i] = imageIds[i].src;
 	};
 
-	// found in sessionData.js
-	cleanImageNames(imageSrcs);
+	cleanImageNames(imageSrcs);  // creating an array of figure names from URLs (found in sessionData.js)
 
-	//seth helped with this  -- add button functionalities
-	for(var i = 0; i < imageIds.length; i ++){
+	for(var i = 0; i < imageIds.length; i ++){  	// add button functionalities
 		$("#iF" + i).click(fadeTheFadeI(i));
 	};
 
-//add the urls to the button
 
-function fadeTheFadeI(index){
-		return function(){
-			var image = "#iF" + index;
-			$(image).fadeTo("slow", 0.5);
+function fadeTheFadeI(index){  // gets called when the overlay div is clicked
+	return function(){
+		var image = "#iF" + index;
+		$(image).fadeTo("slow", 0.5);
 
-//DELETE mode stuff
+		if(delMode == false){  // checking to see if delete mode is active
+				socket.emit(acct + ' imageFigure', imageSrcs[index]);
+			} else if(delMode == true){
+				socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]);
+			};
 
-if(delMode == false){
-		socket.emit(acct + ' imageFigure', imageSrcs[index]);
-
-	} else if(delMode == true){
-		// console.log(acct + ' delMode ' + imageSrcs[index].split('/')[4]);
-		socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]);
-	};
-
-// WHOWHAT - Display who is playing which figure on top of image
+// WHOWHAT \\ Display who is playing which figure on top of image
 
 		for(i=0; i < group.length; i++){
 			 whoWhat['player' + group[i]] = 'iT' + index;
@@ -345,35 +322,33 @@ if(delMode == false){
 			}
 
 		for (i=0; i < Object.keys(whoWhat).length; i++){
-			 if (whoWhat['player' + (i+1)] !== " "){
+			if (whoWhat['player' + (i+1)] !== " "){
 		 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
 		 		};
 		 	};
 
-			// this clears the group when an image is sent
-			// maybe don't clear this when SWITCH is called?
-			group = [];
-			member = 0;
+		group = [];  // this clears the group when an image is sent
+		member = 0;
 
-			// this clears the button states when an image is sent
-			for (i=0; i < perfs.length; i++){
-				$('#cp' + (i+1)).css('color', 'white');
-			};
+		// NOTE: these two could potentially be combined?
+		for (i=0; i < perfs.length; i++){  // this clears the button states when an image is sent
+			$('#cp' + (i+1)).css('color', 'white');
+		};
 
-			for (i=0; i < perfs.length; i++){
-				$('#cp' + (i+1)).fadeTo("fast", 1.0);
-			};
+		for (i=0; i < perfs.length; i++){
+			$('#cp' + (i+1)).fadeTo("fast", 1.0);
+		};
 
-			// zeros out the 'ALL' button when a figure is sent
-			$(all).css('color', 'white');
-			$(all).fadeTo("fast", 1.0);
+		$(all).css('color', 'white');  // zeros out the 'ALL' button when a figure is sent
+		$(all).fadeTo("fast", 1.0);
 
-				// found in sessionData.js
-				sessionUpdateData(whoWhat);
+			// NOTE: this will be where the recBtn logic will be
+		// if (recBtn == true){	
+		sessionUpdateData(whoWhat);  // creating an array of objects which logs who has received which figure over time (in sessionData.js)
+		// }
 
-			};
-			
-	};	// end fade the fade
+	};
+};	
 
 
 	//video buttons
