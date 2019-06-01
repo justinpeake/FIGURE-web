@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="/js/sketches.js"></script>
 
 	<script type="text/javascript" src="/js/sessionData.js"></script>
+	<script type="text/javascript" src="/js/idOverlay.js"></script>
 
   <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
@@ -122,7 +123,10 @@
 <h4> Videos </h4>
 <br>
 	{{#videos}}
+	<div class="figuresB">
 	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
+	<span class="videoText">  </span>
+  </div>
 	{{/videos}}
 
 <br>
@@ -252,7 +256,7 @@ function updatePerfCount() {
 
 
 // Click Performer Channel Buttons \\
-function doTheThing(index) { // function than runs when perfromer channel buttonclicked
+function doTheThing(index) { // function than runs when performer channel buttonclicked
 
 	return function(){
 		var num = index + 1;
@@ -264,7 +268,8 @@ function doTheThing(index) { // function than runs when perfromer channel button
 			toWhom = num;
 			group[member] = toWhom;
 			member = member + 1;
-			//may not need this when grouping is done
+
+			// used to communicate with performer pages to know who receives what
 			socket.emit(acct + ' toGroup', group);
 			socket.emit(acct + ' sendingTo', toWhom, toAll);
 			socket.emit(acct + ' sendingAll', toAll);
@@ -295,11 +300,10 @@ function doTheThing(index) { // function than runs when perfromer channel button
 	cleanImageNames(imageSrcs);  // creating an array of figure names from URLs (found in sessionData.js)
 
 	for(var i = 0; i < imageIds.length; i ++){  	// add button functionalities
-		$("#iF" + i).click(fadeTheFadeI(i));
+		$("#iF" + i).click(sendImage(i));
 	};
 
-
-function fadeTheFadeI(index){  // gets called when the overlay div is clicked
+function sendImage(index){  // gets called when the overlay div is clicked
 	return function(){
 		var image = "#iF" + index;
 		$(image).fadeTo("slow", 0.5);
@@ -316,9 +320,7 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 			 whoWhat['player' + group[i]] = 'iT' + index;
 			};
 
-		for (i=0; i < imageIds.length; i++){
-			document.getElementById('iT' + i).innerHTML = ' ';
-			}
+		idOverlay();  // handling the performer numbers overlayed on the figures ( public/js/idOverlay.js )
 
 		for (i=0; i < Object.keys(whoWhat).length; i++){
 			if (whoWhat['player' + (i+1)] !== " "){
@@ -343,36 +345,58 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 
 			// NOTE: this will be where the recBtn logic will be
 		// if (recBtn == true){	
-		sessionUpdateData(whoWhat);  // creating an array of objects which logs who has received which figure over time (in sessionData.js)
+		 sessionUpdateData(whoWhat);  // creating an array of objects which logs who has received which figure over time (in sessionData.js)
 		// }
-
 	};
 };	
 
 	// Video Buttons \\
 
 	var videoIds = document.getElementsByClassName("videoF");  // from image tag above
-	var videoIdsLength = videoIds.length;
 	var videoSrcs = [];  //sending this to the socket emit
+	var videoTxtIds = document.getElementsByClassName("videoText");  // from text tag
 
-	for (i = 0; i < videoIds.length; i++) {  // create unique id's for videos
-		videoIds[i].id = 'vF'+ i;
-	};
+		for (i = 0; i < videoIds.length; i++) {  	//assign ids to all of the images
+			videoIds[i].id = 'vF'+ i;
+		};
 
-	for (i = 0; i < videoIds.length; i++) {  // get the urls of the videos
-		videoSrcs[i] = videoIds[i].src;
-	};
+		for (i = 0; i < videoTxtIds.length; i++) {  // assign ids to the text overlay divs
+			videoTxtIds[i].id = 'vT'+ i;
+		};
 
-	cleanVideoNames(videoSrcs); // get the video names from URL's (in sessionData.js)
+		for (i = 0; i < videoIds.length; i++) {  	// get the urls of images
+			videoSrcs[i] = videoIds[i].src;
+		};
 
-	for(var i = 0; i < videoIds.length; i ++){  // add button functionalities
-		$("#vF" + i).click(fadeTheFadeV(i));
-	};
+		cleanVideoNames(videoSrcs); // get the video names from URL's (in sessionData.js)
+
+		for(var i = 0; i < videoIds.length; i ++){  // add button functionalities
+			$("#vF" + i).click(sendVideo(i));
+		};
 	
-	function fadeTheFadeV(index){  // add the urls to the button
+	function sendVideo(index){  // gets called when overlay div is clicked
 		return function(){
+			var video = "#vF" + index;
 			$("#vF" + index).fadeTo("slow", 0.5);
-			socket.emit(acct + ' videoFigure', videoSrcs[index])
+
+			if(delMode == false){  // checking to see if delete mode is active
+				socket.emit(acct + ' videoFigure', videoSrcs[index])
+			} else if(delMode == true){
+				socket.emit(acct + ' deleteTest', videoSrcs[index].split('/')[4]); // NOTE: need to test this for videos
+			};
+
+			// more whoWhat for video
+		for(i=0; i < group.length; i++){
+			 whoWhat['player' + group[i]] = 'vT' + index;
+			};
+
+		idOverlay();  // handling the performer numbers overlayed on the figures ( public/js/idOverlay.js )
+
+		for (i=0; i < Object.keys(whoWhat).length; i++){
+			if (whoWhat['player' + (i+1)] !== " "){
+		 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
+		 		};
+		 	};
 			
 			// adding
 					group = [];
@@ -391,9 +415,9 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 					$(all).css('color', 'white');
 					$(all).fadeTo("fast", 1.0);
 
+					sessionUpdateData(whoWhat);
 		};
 	};
-
 
 	// audio buttons
 
@@ -442,8 +466,6 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 					// zeros out the 'ALL' button when a figure is sent
 					$(all).css('color', 'white');
 					$(all).fadeTo("fast", 1.0);
-
-
 
 		};
 	};

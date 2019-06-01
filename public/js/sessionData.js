@@ -34,11 +34,18 @@ function sessionUpdateData(input){
     
     var objClone = Object.assign({},input) // need to "shallow clone" the incoming object so it's not passed by reference
         for (i=0; i < Object.keys(objClone).length; i++){  // this loop was copied from similar code in conductor.html
-            objClone['player' + (i+1)] = imageNames[objClone['player' + (i+1)].slice(2)];  //slicing off the number of the image from whoWhat and using it as an index to the filename array.
+
+            if (objClone['player' + (i+1)].slice(0,1) == "i"){  // "i" = image
+                objClone['player' + (i+1)] = figureArray[0][objClone['player' + (i+1)].slice(2)];
+            } else if (objClone['player' + (i+1)].slice(0,1) == "v"){ // "v" = video
+                       objClone['player' + (i+1)] = figureArray[1][objClone['player' + (i+1)].slice(2)];
+            }
         };
      sessionData.push(time,objClone); // adds a time stamp and then shows the current state of all performers
      console.log(sessionData);
 }
+
+
 
 
 
