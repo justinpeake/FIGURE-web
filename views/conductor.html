@@ -346,9 +346,8 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 
 			// NOTE: this will be where the recBtn logic will be
 		// if (recBtn == true){	
-		sessionUpdateData(whoWhat);  // creating an array of objects which logs who has received which figure over time (in sessionData.js)
+		 sessionUpdateData(whoWhat);  // creating an array of objects which logs who has received which figure over time (in sessionData.js)
 		// }
-
 	};
 };	
 
@@ -358,33 +357,25 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 	var videoSrcs = [];  //sending this to the socket emit
 	var videoTxtIds = document.getElementsByClassName("videoText");  // from text tag
 
-	// for (i = 0; i < videoIds.length; i++) {  // create unique id's for videos
-	// 	videoIds[i].id = 'vF'+ i;
-	// };
+		for (i = 0; i < videoIds.length; i++) {  	//assign ids to all of the images
+			videoIds[i].id = 'vF'+ i;
+		};
 
-	// for (i = 0; i < videoIds.length; i++) {  // get the urls of the videos
-	// 	videoSrcs[i] = videoIds[i].src;
-	// };
+		for (i = 0; i < videoTxtIds.length; i++) {  // assign ids to the text overlay divs
+			videoTxtIds[i].id = 'vT'+ i;
+		};
 
-	for (i = 0; i < videoIds.length; i++) {  	//assign ids to all of the images
-		videoIds[i].id = 'vF'+ i;
-	};
+		for (i = 0; i < videoIds.length; i++) {  	// get the urls of images
+			videoSrcs[i] = videoIds[i].src;
+		};
 
-	for (i = 0; i < videoTxtIds.length; i++) {  // assign ids to the text overlay divs
-		videoTxtIds[i].id = 'vT'+ i;
-	};
+		cleanVideoNames(videoSrcs); // get the video names from URL's (in sessionData.js)
 
-	for (i = 0; i < videoIds.length; i++) {  	// get the urls of images
-		videoSrcs[i] = videoIds[i].src;
-	};
-
-	cleanVideoNames(videoSrcs); // get the video names from URL's (in sessionData.js)
-
-	for(var i = 0; i < videoIds.length; i ++){  // add button functionalities
-		$("#vF" + i).click(fadeTheFadeV(i));
-	};
+		for(var i = 0; i < videoIds.length; i ++){  // add button functionalities
+			$("#vF" + i).click(fadeTheFadeV(i));
+		};
 	
-	function fadeTheFadeV(index){  // add the urls to the button
+	function fadeTheFadeV(index){  // gets called when overlay div is clicked
 		return function(){
 			var video = "#vF" + index;
 			$("#vF" + index).fadeTo("slow", 0.5);
@@ -392,11 +383,11 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 			if(delMode == false){  // checking to see if delete mode is active
 				socket.emit(acct + ' videoFigure', videoSrcs[index])
 			} else if(delMode == true){
-				socket.emit(acct + ' deleteTest', videoSrcs[index].split('/')[4]);
+				socket.emit(acct + ' deleteTest', videoSrcs[index].split('/')[4]); // NOTE: need to test this for videos
 			};
 
 			// more whoWhat for video
-			for(i=0; i < group.length; i++){
+		for(i=0; i < group.length; i++){
 			 whoWhat['player' + group[i]] = 'vT' + index;
 			};
 
@@ -428,10 +419,8 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 					$(all).fadeTo("fast", 1.0);
 
 					sessionUpdateData(whoWhat);
-
 		};
 	};
-
 
 	// audio buttons
 
