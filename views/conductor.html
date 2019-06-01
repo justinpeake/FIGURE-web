@@ -122,7 +122,10 @@
 <h4> Videos </h4>
 <br>
 	{{#videos}}
+	<div class="figuresB">
 	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
+	<span class="videoText">  </span>
+</div>
 	{{/videos}}
 
 <br>
@@ -352,14 +355,26 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 	// Video Buttons \\
 
 	var videoIds = document.getElementsByClassName("videoF");  // from image tag above
-	var videoIdsLength = videoIds.length;
 	var videoSrcs = [];  //sending this to the socket emit
+	var videoTxtIds = document.getElementsByClassName("videoText");  // from text tag
 
-	for (i = 0; i < videoIds.length; i++) {  // create unique id's for videos
+	// for (i = 0; i < videoIds.length; i++) {  // create unique id's for videos
+	// 	videoIds[i].id = 'vF'+ i;
+	// };
+
+	// for (i = 0; i < videoIds.length; i++) {  // get the urls of the videos
+	// 	videoSrcs[i] = videoIds[i].src;
+	// };
+
+	for (i = 0; i < videoIds.length; i++) {  	//assign ids to all of the images
 		videoIds[i].id = 'vF'+ i;
 	};
 
-	for (i = 0; i < videoIds.length; i++) {  // get the urls of the videos
+	for (i = 0; i < videoTxtIds.length; i++) {  // assign ids to the text overlay divs
+		videoTxtIds[i].id = 'vT'+ i;
+	};
+
+	for (i = 0; i < videoIds.length; i++) {  	// get the urls of images
 		videoSrcs[i] = videoIds[i].src;
 	};
 
@@ -371,8 +386,29 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 	
 	function fadeTheFadeV(index){  // add the urls to the button
 		return function(){
+			var video = "#vF" + index;
 			$("#vF" + index).fadeTo("slow", 0.5);
-			socket.emit(acct + ' videoFigure', videoSrcs[index])
+
+			if(delMode == false){  // checking to see if delete mode is active
+				socket.emit(acct + ' videoFigure', videoSrcs[index])
+			} else if(delMode == true){
+				socket.emit(acct + ' deleteTest', videoSrcs[index].split('/')[4]);
+			};
+
+			// more whoWhat for video
+			for(i=0; i < group.length; i++){
+			 whoWhat['player' + group[i]] = 'vT' + index;
+			};
+
+		for (i=0; i < videoIds.length; i++){
+			document.getElementById('vT' + i).innerHTML = ' ';
+			}
+
+		for (i=0; i < Object.keys(whoWhat).length; i++){
+			if (whoWhat['player' + (i+1)] !== " "){
+		 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
+		 		};
+		 	};
 			
 			// adding
 					group = [];
@@ -390,6 +426,8 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 					// zeros out the 'ALL' button when a figure is sent
 					$(all).css('color', 'white');
 					$(all).fadeTo("fast", 1.0);
+
+					sessionUpdateData(whoWhat);
 
 		};
 	};
