@@ -125,7 +125,7 @@
 	<div class="figuresB">
 	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
 	<span class="videoText">  </span>
-</div>
+  </div>
 	{{/videos}}
 
 <br>
@@ -255,7 +255,7 @@ function updatePerfCount() {
 
 
 // Click Performer Channel Buttons \\
-function doTheThing(index) { // function than runs when perfromer channel buttonclicked
+function doTheThing(index) { // function than runs when performer channel buttonclicked
 
 	return function(){
 		var num = index + 1;
@@ -267,7 +267,8 @@ function doTheThing(index) { // function than runs when perfromer channel button
 			toWhom = num;
 			group[member] = toWhom;
 			member = member + 1;
-			//may not need this when grouping is done
+
+			// used to communicate with performer pages to know who receives what
 			socket.emit(acct + ' toGroup', group);
 			socket.emit(acct + ' sendingTo', toWhom, toAll);
 			socket.emit(acct + ' sendingAll', toAll);
@@ -298,11 +299,10 @@ function doTheThing(index) { // function than runs when perfromer channel button
 	cleanImageNames(imageSrcs);  // creating an array of figure names from URLs (found in sessionData.js)
 
 	for(var i = 0; i < imageIds.length; i ++){  	// add button functionalities
-		$("#iF" + i).click(fadeTheFadeI(i));
+		$("#iF" + i).click(sendImage(i));
 	};
 
-
-function fadeTheFadeI(index){  // gets called when the overlay div is clicked
+function sendImage(index){  // gets called when the overlay div is clicked
 	return function(){
 		var image = "#iF" + index;
 		$(image).fadeTo("slow", 0.5);
@@ -319,9 +319,14 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 			 whoWhat['player' + group[i]] = 'iT' + index;
 			};
 
-		for (i=0; i < imageIds.length; i++){
-			document.getElementById('iT' + i).innerHTML = ' ';
-			}
+								// REFACTOR NOTE: these both need to be called in both send functions... SHOULD REFACTOR
+							for (i=0; i < imageIds.length; i++){
+								document.getElementById('iT' + i).innerHTML = ' ';
+								}
+
+								for (i=0; i < videoIds.length; i++){
+								document.getElementById('vT' + i).innerHTML = ' ';
+								}
 
 		for (i=0; i < Object.keys(whoWhat).length; i++){
 			if (whoWhat['player' + (i+1)] !== " "){
@@ -372,10 +377,10 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 		cleanVideoNames(videoSrcs); // get the video names from URL's (in sessionData.js)
 
 		for(var i = 0; i < videoIds.length; i ++){  // add button functionalities
-			$("#vF" + i).click(fadeTheFadeV(i));
+			$("#vF" + i).click(sendVideo(i));
 		};
 	
-	function fadeTheFadeV(index){  // gets called when overlay div is clicked
+	function sendVideo(index){  // gets called when overlay div is clicked
 		return function(){
 			var video = "#vF" + index;
 			$("#vF" + index).fadeTo("slow", 0.5);
@@ -391,9 +396,14 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 			 whoWhat['player' + group[i]] = 'vT' + index;
 			};
 
-		for (i=0; i < videoIds.length; i++){
-			document.getElementById('vT' + i).innerHTML = ' ';
-			}
+		// REFACTOR NOTE: these both need to be called in both send functions... SHOULD REFACTOR
+		for (i=0; i < imageIds.length; i++){
+								document.getElementById('iT' + i).innerHTML = ' ';
+								}
+
+								for (i=0; i < videoIds.length; i++){
+								document.getElementById('vT' + i).innerHTML = ' ';
+								}
 
 		for (i=0; i < Object.keys(whoWhat).length; i++){
 			if (whoWhat['player' + (i+1)] !== " "){
@@ -469,8 +479,6 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 					// zeros out the 'ALL' button when a figure is sent
 					$(all).css('color', 'white');
 					$(all).fadeTo("fast", 1.0);
-
-
 
 		};
 	};

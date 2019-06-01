@@ -28,30 +28,6 @@ function cleanVideoNames(inputArray){
 // this gets called in conductor.html when a figure is sent.
 // "input" is expecting an object called whoWhom in conductor.html
 
-// function sessionUpdateDataImage(input){
-//     var now = new Date();
-//     var time = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();  // create a new timestamp
-    
-//     var objClone = Object.assign({},input) // need to "shallow clone" the incoming object so it's not passed by reference
-
-//         for (i=0; i < Object.keys(objClone).length; i++){  // this loop was copied from similar code in conductor.html
-//             objClone['player' + (i+1)] = figureArray[0][objClone['player' + (i+1)].slice(2)];  //slicing off the number of the image from whoWhat and using it as an index to the filename array.
-//         };
-//      sessionData.push(time,objClone); // adds a time stamp and then shows the current state of all performers
-//      console.log(sessionData);
-// }
-
-// function sessionUpdateDataVideo(input){
-//     var now = new Date();
-//     var time = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();  // create a new timestamp
-    
-//     var objClone = Object.assign({},input) // need to "shallow clone" the incoming object so it's not passed by reference
-//         for (i=0; i < Object.keys(objClone).length; i++){  // this loop was copied from similar code in conductor.html
-//             objClone['player' + (i+1)] = figureArray[1][objClone['player' + (i+1)].slice(2)];  //slicing off the number of the image from whoWhat and using it as an index to the filename array.
-//         };
-//      sessionData.push(time,objClone); // adds a time stamp and then shows the current state of all performers
-//      console.log(sessionData);
-// }
 function sessionUpdateData(input){
     var now = new Date();
     var time = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();  // create a new timestamp
@@ -59,9 +35,9 @@ function sessionUpdateData(input){
     var objClone = Object.assign({},input) // need to "shallow clone" the incoming object so it's not passed by reference
         for (i=0; i < Object.keys(objClone).length; i++){  // this loop was copied from similar code in conductor.html
 
-            if (objClone['player' + (i+1)].slice(0,1) == "i"){
+            if (objClone['player' + (i+1)].slice(0,1) == "i"){  // "i" = image
                 objClone['player' + (i+1)] = figureArray[0][objClone['player' + (i+1)].slice(2)];
-            } else if (objClone['player' + (i+1)].slice(0,1) == "v"){
+            } else if (objClone['player' + (i+1)].slice(0,1) == "v"){ // "v" = video
                        objClone['player' + (i+1)] = figureArray[1][objClone['player' + (i+1)].slice(2)];
             }
         };
