@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="/js/sketches.js"></script>
 
 	<script type="text/javascript" src="/js/sessionData.js"></script>
+	<script type="text/javascript" src="/js/idOverlay.js"></script>
 
   <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
@@ -319,14 +320,7 @@ function sendImage(index){  // gets called when the overlay div is clicked
 			 whoWhat['player' + group[i]] = 'iT' + index;
 			};
 
-								// REFACTOR NOTE: these both need to be called in both send functions... SHOULD REFACTOR
-							for (i=0; i < imageIds.length; i++){
-								document.getElementById('iT' + i).innerHTML = ' ';
-								}
-
-								for (i=0; i < videoIds.length; i++){
-								document.getElementById('vT' + i).innerHTML = ' ';
-								}
+		idOverlay();  // handling the performer numbers overlayed on the figures ( public/js/idOverlay.js )
 
 		for (i=0; i < Object.keys(whoWhat).length; i++){
 			if (whoWhat['player' + (i+1)] !== " "){
@@ -396,14 +390,7 @@ function sendImage(index){  // gets called when the overlay div is clicked
 			 whoWhat['player' + group[i]] = 'vT' + index;
 			};
 
-		// REFACTOR NOTE: these both need to be called in both send functions... SHOULD REFACTOR
-		for (i=0; i < imageIds.length; i++){
-								document.getElementById('iT' + i).innerHTML = ' ';
-								}
-
-								for (i=0; i < videoIds.length; i++){
-								document.getElementById('vT' + i).innerHTML = ' ';
-								}
+		idOverlay();  // handling the performer numbers overlayed on the figures ( public/js/idOverlay.js )
 
 		for (i=0; i < Object.keys(whoWhat).length; i++){
 			if (whoWhat['player' + (i+1)] !== " "){
