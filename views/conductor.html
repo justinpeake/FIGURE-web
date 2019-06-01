@@ -141,7 +141,7 @@
 
 <script type="text/javascript">
 
-		//////////////////////////////// BEGIN CONDUCTOR SCRIPT \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//////////////////////////////// BEGIN CONDUCTOR SCRIPT \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 	var acct = "{{user}}";  // coming in from server / session stuff
 	var toWhom = 0;  // initialize these globally, used in server and emit to performers
@@ -279,7 +279,6 @@ function doTheThing(index) { // function than runs when perfromer channel button
 	var imageIds = document.getElementsByClassName("imageF");  // from image tag above
 	var imageSrcs = [];  //sending this to the socket emit
 	var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
-	var sessionData = [];
 
 	for (i = 0; i < imageIds.length; i++) {  	//assign ids to all of the images
 		imageIds[i].id = 'iF'+ i;
@@ -311,7 +310,7 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 				socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]);
 			};
 
-// WHOWHAT \\ Display who is playing which figure on top of image
+		// WHOWHAT \\ Display who is playing which figure on top of image
 
 		for(i=0; i < group.length; i++){
 			 whoWhat['player' + group[i]] = 'iT' + index;
@@ -350,32 +349,31 @@ function fadeTheFadeI(index){  // gets called when the overlay div is clicked
 	};
 };	
 
-
-	//video buttons
+	// Video Buttons \\
 
 	var videoIds = document.getElementsByClassName("videoF");  // from image tag above
 	var videoIdsLength = videoIds.length;
 	var videoSrcs = [];  //sending this to the socket emit
 
-	//create unique id's for videos
-	for (i = 0; i < videoIds.length; i++) {
+	for (i = 0; i < videoIds.length; i++) {  // create unique id's for videos
 		videoIds[i].id = 'vF'+ i;
 	};
-	// gut the urls of videos
-	for (i = 0; i < videoIds.length; i++) {
+
+	for (i = 0; i < videoIds.length; i++) {  // get the urls of the videos
 		videoSrcs[i] = videoIds[i].src;
 	};
-	//seth helped with this  -- add button functionalities
-	for(var i = 0; i < videoIds.length; i ++){
+
+	cleanVideoNames(videoSrcs); // get the video names from URL's (in sessionData.js)
+
+	for(var i = 0; i < videoIds.length; i ++){  // add button functionalities
 		$("#vF" + i).click(fadeTheFadeV(i));
 	};
-	//add the urls to the button
-	function fadeTheFadeV(index){
+	
+	function fadeTheFadeV(index){  // add the urls to the button
 		return function(){
 			$("#vF" + index).fadeTo("slow", 0.5);
 			socket.emit(acct + ' videoFigure', videoSrcs[index])
-
-
+			
 			// adding
 					group = [];
 					member = 0;
