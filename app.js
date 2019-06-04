@@ -40,7 +40,7 @@ console.log("***************************");
 
 // HOW TO: type "redis-server" in file directory
 
-// inital file system - reading - writing  :: added 9/19/16
+// inital file system \\
   var fse = require('fs-extra');
   fse.readFile('./public/hello.txt', 'utf8', function(err, data){
     if(err) {
@@ -49,7 +49,7 @@ console.log("***************************");
     console.log(data);
   });
 
-// time stamping stuff for datalogging :: added 9/19/16
+// time stamping \\
   var now = new Date();
   var dateArray = [now.getMonth() + 1,now.getDate(), now.getFullYear()]; // use for deriving lengths that figures happened
   var date = (now.getMonth() + 1)+"-"+now.getDate()+"-"+now.getFullYear(); // use for time stamping
@@ -57,7 +57,7 @@ console.log("***************************");
   var time = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
   console.log(date,"@",time);
 
-//  redis (sessions) stuff
+// redis (sessions) stuff \\
 if (process.env.REDISTOGO_URL) {
   var rtg = require('url').parse(process.env.REDISTOGO_URL);
   var redis = require('redis').createClient(rtg.port, rtg.hostname);
