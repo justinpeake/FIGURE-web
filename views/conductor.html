@@ -9,10 +9,13 @@
 	<script src="/socket.io/socket.io.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
-	<script type="text/javascript" src="/js/sketches.js"></script>
 
+	<script type="text/javascript" src="/js/sketches.js"></script>
 	<script type="text/javascript" src="/js/sessionData.js"></script>
 	<script type="text/javascript" src="/js/idOverlay.js"></script>
+	<script type="text/javascript" src="/js/sendImage.js"></script>
+	<script type="text/javascript" src="/js/sendVideo.js"></script>
+
 
   <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
 	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
@@ -97,7 +100,6 @@
 				<li class="btn btn-md"><a class="btn btn-md" id="delButton"> delMode </a></li> 
 				<li class="btn btn-md"><a class="btn btn-md" id="recBtn"> REC </a></li> 
 			</div>
-		
 	</br>
 	</br>
         <input type="file" id="file_input"/>
@@ -245,7 +247,7 @@ function updatePerfCount() {
 		};
 
 		for (var i = 0; i < pX; i++){  //attaching the listener for click
-			$('#cp' + (i+1)).click(doTheThing(i));
+			$('#cp' + (i+1)).click(performerSelect(i));
 		};
 
 		for (i = 0; i < pX; i++){  // right now filling object for cross check
@@ -257,8 +259,7 @@ function updatePerfCount() {
 
 
 // Click Performer Channel Buttons \\
-function doTheThing(index) { // function than runs when performer channel buttonclicked
-
+function performerSelect(index) { // function than runs when performer channel buttonclicked
 	return function(){
 		var num = index + 1;
 		var perfID = "#cp" + (num);
@@ -278,78 +279,30 @@ function doTheThing(index) { // function than runs when performer channel button
 };
 
 
-// Figure Buttons \\
-
-	// this block is taking the number of images and adding ID's for button functions
+// Image Buttons \\
 
 	var imageIds = document.getElementsByClassName("imageF");  // from image tag above
 	var imageSrcs = [];  //sending this to the socket emit
 	var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
 
-	for (i = 0; i < imageIds.length; i++) {  	//assign ids to all of the images
+		for (i = 0; i < imageIds.length; i++) {  	//assign ids to all of the images
 		imageIds[i].id = 'iF'+ i;
-	};
+		};
 
-	for (i = 0; i < imageTxtIds.length; i++) {  // assign ids to the text overlay divs
+		for (i = 0; i < imageTxtIds.length; i++) {  // assign ids to the text overlay divs
 		imageTxtIds[i].id = 'iT'+ i;
-	};
+		};
 
-	for (i = 0; i < imageIds.length; i++) {  	// get the urls of images
+		for (i = 0; i < imageIds.length; i++) {  	// get the urls of images
 		imageSrcs[i] = imageIds[i].src;
-	};
-
-	cleanImageNames(imageSrcs);  // creating an array of figure names from URLs (found in sessionData.js)
-
-	for(var i = 0; i < imageIds.length; i ++){  	// add button functionalities
-		$("#iF" + i).click(sendImage(i));
-	};
-
-function sendImage(index){  // gets called when the overlay div is clicked
-	return function(){
-		var image = "#iF" + index;
-		$(image).fadeTo("slow", 0.5);
-
-		if(delMode == false){  // checking to see if delete mode is active
-				socket.emit(acct + ' imageFigure', imageSrcs[index]);
-			} else if(delMode == true){
-				socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]);
-			};
-
-		// WHOWHAT \\ Display who is playing which figure on top of image
-
-		for(i=0; i < group.length; i++){
-			 whoWhat['player' + group[i]] = 'iT' + index;
-			};
-
-		idOverlay();  // handling the performer numbers overlayed on the figures ( public/js/idOverlay.js )
-
-		for (i=0; i < Object.keys(whoWhat).length; i++){
-			if (whoWhat['player' + (i+1)] !== " "){
-		 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
-		 		};
-		 	};
-
-		group = [];  // this clears the group when an image is sent
-		member = 0;
-
-		// NOTE: these two could potentially be combined?
-		for (i=0; i < perfs.length; i++){  // this clears the button states when an image is sent
-			$('#cp' + (i+1)).css('color', 'white');
 		};
 
-		for (i=0; i < perfs.length; i++){
-			$('#cp' + (i+1)).fadeTo("fast", 1.0);
+		cleanImageNames(imageSrcs);  // creating an array of figure names from URLs (found in sessionData.js)
+
+		for(var i = 0; i < imageIds.length; i ++){  	// add button functionalities
+			$("#iF" + i).click(sendImage(i));  // function located in public/js/sendImage.js
 		};
 
-		$(all).css('color', 'white');  // zeros out the 'ALL' button when a figure is sent
-		$(all).fadeTo("fast", 1.0);
-
-			// NOTE: this will be where the recBtn logic will be
-		// if (recBtn == true){	
-		 sessionUpdateData(whoWhat);  // creating an array of objects which logs who has received which figure over time (in sessionData.js)
-		// }
-	};
-};	
 
 	// Video Buttons \\
 
@@ -372,54 +325,9 @@ function sendImage(index){  // gets called when the overlay div is clicked
 		cleanVideoNames(videoSrcs); // get the video names from URL's (in sessionData.js)
 
 		for(var i = 0; i < videoIds.length; i ++){  // add button functionalities
-			$("#vF" + i).click(sendVideo(i));
+			$("#vF" + i).click(sendVideo(i));  // function located in public/js/sendVideo.js
 		};
 	
-	function sendVideo(index){  // gets called when overlay div is clicked
-		return function(){
-			var video = "#vF" + index;
-			$("#vF" + index).fadeTo("slow", 0.5);
-
-			if(delMode == false){  // checking to see if delete mode is active
-				socket.emit(acct + ' videoFigure', videoSrcs[index])
-			} else if(delMode == true){
-				socket.emit(acct + ' deleteTest', videoSrcs[index].split('/')[4]); // NOTE: need to test this for videos
-			};
-
-			// more whoWhat for video
-		for(i=0; i < group.length; i++){
-			 whoWhat['player' + group[i]] = 'vT' + index;
-			};
-
-		idOverlay();  // handling the performer numbers overlayed on the figures ( public/js/idOverlay.js )
-
-		for (i=0; i < Object.keys(whoWhat).length; i++){
-			if (whoWhat['player' + (i+1)] !== " "){
-		 		document.getElementById(whoWhat['player' + (i+1)]).innerHTML += (i+1)+ " ";
-		 		};
-		 	};
-			
-			// adding
-					group = [];
-					member = 0;
-
-					// this clears the button states when an image is sent
-					for (i=0; i < perfs.length; i++){
-						$('#cp' + (i+1)).css('color', 'white');
-					};
-
-					for (i=0; i < perfs.length; i++){
-						$('#cp' + (i+1)).fadeTo("fast", 1.0);
-					};
-
-					// zeros out the 'ALL' button when a figure is sent
-					$(all).css('color', 'white');
-					$(all).fadeTo("fast", 1.0);
-
-					sessionUpdateData(whoWhat);
-		};
-	};
-
 	// audio buttons
 
 	var waveIds = document.getElementsByClassName("audio");  // from image tag above
