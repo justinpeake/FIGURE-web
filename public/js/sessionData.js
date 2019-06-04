@@ -24,7 +24,6 @@ function cleanVideoNames(inputArray){
 
 // still need to incorporate into below
 
-
 // this gets called in conductor.html when a figure is sent.
 // "input" is expecting an object called whoWhom in conductor.html
 

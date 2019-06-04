@@ -134,9 +134,10 @@
 <br>
 <h4> Waveforms </h4>
 <br>
-	{{#audio}}
-	<div class="audio" title={{.}}>  </div>
-	{{/audio}}
+
+{{#audio}}
+<div class="audio" title={{.}}>  </div>
+{{/audio}}
 
 {{#audionames}}
 <div class="audionames" title={{.}} style.visibility="hidden">  </div>
@@ -165,18 +166,18 @@
 // note: should this maybe be outside of socket reload?
 // NEED TO MAKE A TEMPORARY SWITCHER TEXT FILE other than sessionData?
 
-		$(switcher).click(function(){
+$(switcher).click(function(){
 
-			// NOTE: this may have trouble in sessionData.js
-			socket.emit(acct + ' switch', toWhom); // sending the switch as if it is a figure
+	// NOTE: this may have trouble in sessionData.js
+	socket.emit(acct + ' switch', toWhom); // sending the switch as if it is a figure
 
-			document.getElementById("everythingPerformer").style.display = "block";  // turning on the conductor script on a performer's page
-			document.getElementById("everythingConductor").style.display= "none";  // hiding the performer script on a performer's page
+	document.getElementById("everythingPerformer").style.display = "block";  // turning on the conductor script on a performer's page
+	document.getElementById("everythingConductor").style.display= "none";  // hiding the performer script on a performer's page
 
-			//this activates whichever p5 sketch
-			performerSketch();
+	//this activates whichever p5 sketch
+	performerSketch();
 
-		});
+});
 
 // "All" button \\ 
 	$(all).click(function(){
