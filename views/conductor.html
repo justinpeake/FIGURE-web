@@ -400,17 +400,19 @@ function uploadProgress(evt) {
 // FILE UPLOAD STUFF
 
 	document.getElementById("file_input").onchange = function(){
-	    var files = document.getElementById("file_input").files;
-	    var file = files[0];
+			var files = document.getElementById("file_input").files;
+
+			var file = files[0]; // see below: this is limiting the amt of uploads to ONE... should forLoop process for multiples
+			
 	     if(file == null){
 	       alert("No file selected.");
 	    }
 	    else {
-	        get_signed_request(file);
+	        get_signed_request(file);  
 	    }
 	};
 
-function get_signed_request(file){
+function get_signed_request(file){  // --> make this able to handle arrays as an argument, i.e. "files[] vs. file"
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
     xhr.onreadystatechange = function(){
@@ -428,7 +430,6 @@ function get_signed_request(file){
     };
     xhr.send();
 }
-
 function upload_file(file, signed_request, url){
 
     var firstProgressEvent = false;
