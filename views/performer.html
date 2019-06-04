@@ -284,7 +284,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 	socket.on(subscribedTo + ' videoFigure', function (data) {
 
 			//checks to see if conductor is talking to "you"
-		if (myId == toWhom || toAll == 1) {
+			if (group.indexOf(myId) > -1 || toAll == 1) {
 
 			//flashes "incoming" image
 		var flasher = setInterval(function() {flashIncoming()} , 500);
