@@ -16,10 +16,6 @@
 	<script type="text/javascript" src="/js/sendImage.js"></script>
 	<script type="text/javascript" src="/js/sendVideo.js"></script>
 
-
-  <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
-	<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<!-- load bootstrap css -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
@@ -134,7 +130,7 @@
   </div>
 	{{/videos}}
 
-<br>
+<!-- <br>
 <h4> Waveforms </h4>
 <br>
 
@@ -144,7 +140,7 @@
 
 {{#audionames}}
 <div class="audionames" title={{.}} style.visibility="hidden">  </div>
-{{/audionames}}
+{{/audionames}} -->
 
 </div>
 
@@ -333,54 +329,54 @@ function performerSelect(index) { // function than runs when performer channel b
 	
 	// audio buttons
 
-	var waveIds = document.getElementsByClassName("audio");  // from image tag above
-	var waveIdsLength = waveIds.length;
-	var waveSrcs = [];  //sending this to the socket emit
-	var waveNames = document.getElementsByClassName("audionames");
+	// var waveIds = document.getElementsByClassName("audio");  // from image tag above
+	// var waveIdsLength = waveIds.length;
+	// var waveSrcs = [];  //sending this to the socket emit
+	// var waveNames = document.getElementsByClassName("audionames");
 
-	//console.log(audioNames)
-	//create unique id's for videos
-	for (i = 0; i < waveIds.length; i++) {
-		waveIds[i].id = 'aF'+ i;
-	};
-	// gut the urls of videos
-	for (i = 0; i < waveIds.length; i++) {
+	// //console.log(audioNames)
+	// //create unique id's for videos
+	// for (i = 0; i < waveIds.length; i++) {
+	// 	waveIds[i].id = 'aF'+ i;
+	// };
+	// // gut the urls of videos
+	// for (i = 0; i < waveIds.length; i++) {
 
-		waveIds[i].innerHTML = waveNames[i].title;
+	// 	waveIds[i].innerHTML = waveNames[i].title;
 
-		waveSrcs[i] = waveIds[i].title;
-		//console.log(waveSrcs);
-	};
-	//seth helped with this  -- add button functionalities
-	for(var i = 0; i < waveIds.length; i ++){
-		$("#aF" + i).click(fadeTheFadeA(i));
-	};
-	//add the urls to the button
-	function fadeTheFadeA(index){
-		return function(){
-			$("#aF" + index).fadeTo("slow", 0.5);
-			socket.emit(acct + ' waveSketch', waveSrcs[index])
+	// 	waveSrcs[i] = waveIds[i].title;
+	// 	//console.log(waveSrcs);
+	// };
+	// //seth helped with this  -- add button functionalities
+	// for(var i = 0; i < waveIds.length; i ++){
+	// 	$("#aF" + i).click(fadeTheFadeA(i));
+	// };
+	// //add the urls to the button
+	// function fadeTheFadeA(index){
+	// 	return function(){
+	// 		$("#aF" + index).fadeTo("slow", 0.5);
+	// 		socket.emit(acct + ' waveSketch', waveSrcs[index])
 
 
-			// adding
-					group = [];
-					member = 0;
+	// 		// adding
+	// 				group = [];
+	// 				member = 0;
 
-					// this clears the button states when an image is sent
-					for (i=0; i < perfs.length; i++){
-						$('#cp' + (i+1)).css('color', 'white');
-					};
+	// 				// this clears the button states when an image is sent
+	// 				for (i=0; i < perfs.length; i++){
+	// 					$('#cp' + (i+1)).css('color', 'white');
+	// 				};
 
-					for (i=0; i < perfs.length; i++){
-						$('#cp' + (i+1)).fadeTo("fast", 1.0);
-					};
+	// 				for (i=0; i < perfs.length; i++){
+	// 					$('#cp' + (i+1)).fadeTo("fast", 1.0);
+	// 				};
 
-					// zeros out the 'ALL' button when a figure is sent
-					$(all).css('color', 'white');
-					$(all).fadeTo("fast", 1.0);
+	// 				// zeros out the 'ALL' button when a figure is sent
+	// 				$(all).css('color', 'white');
+	// 				$(all).fadeTo("fast", 1.0);
 
-		};
-	};
+	// 	};
+	// };
 
 	// FILE UPLOAD STUFF for progress bar
 
@@ -451,12 +447,11 @@ function upload_file(file, signed_request, url){
     };
     xhr.send(file);
 };
-
-
 ////////////////// END CONDUCTOR SCRIPT //////////////////
 </script>
-
 </div>
+
+
 
 <div id="everythingPerformer">
 
@@ -514,7 +509,7 @@ function upload_file(file, signed_request, url){
 
 
 
-/////// BEGIN PERFORMER SCRIPT
+/////// BEGIN PERFORMER SCRIPT  NEED TO UPDATE
 
 
  					//actually calls th p5  (p5 sketches in /public/js)
@@ -622,13 +617,7 @@ function upload_file(file, signed_request, url){
 						});
 
 
-
-
-// // // // // // // // // //  END PERFORMER SCRIPT
-
 		</script>
 	</div>
-
- 	</body>
-
+</body>
 </html>
