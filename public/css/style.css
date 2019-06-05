@@ -1,45 +1,43 @@
-.body {
-	font-family: 'Montserrat', 'Lato', 'Open Sans', 'Helvetica Neue', Helvetica, Calibri, Arial, sans-serif;
-}
+
 #userName {
 	padding-top: 1%
 }
 
 .jumbotron {
-background-color: #555;
-color: white;;
-font-size: 10px;
+	background-color: #555;
+	color: white;;
+	font-size: 10px;
 }
 
 
 #jum .btn-block {
-background-color: #333;
-color: #FFFFFF; 
+	background-color: #333;
+	color: #FFFFFF; 
 }
 
 #jum .btn-block:hover {
-background-color: rgb(37, 184, 221);
-color: rgb(0, 0, 0); 
+	background-color: rgb(37, 184, 221);
+	color: rgb(0, 0, 0); 
 }
 
 .btn {
-background-color: #333;
-color: #FFFFFF 
+	background-color: #333;
+	color: #FFFFFF 
 }
 
 .btn:hover {
-background-color: rgb(37, 184, 221);
-color: rgb(0, 0, 0); 
+	background-color: rgb(37, 184, 221);
+	color: rgb(0, 0, 0); 
 }
 
 p {
-font-size:14px;
-color:white;
+	font-size:14px;
+	color:white;
 }
 
 h1 {
-color:aquamarine;
-font-size: 70;
+	color:aquamarine;
+	font-size: 70;
 }
 
 h3{
@@ -52,11 +50,11 @@ h4 {
 }
 
 body {	
-font-family: 'Montserrat', 'Lato', 'Open Sans', 'Helvetica Neue', Helvetica, Calibri, Arial, sans-serif;
-background-color: #555;
-padding-top: 1%;
-color: fff;
-font-size: 15px;
+	font-family: 'Montserrat', 'Lato', 'Open Sans', 'Helvetica Neue', Helvetica, Calibri, Arial, sans-serif;
+	background-color: #555;
+	padding-top: 1%;
+	color: fff;
+	font-size: 15px;
 }
 
 :link {
@@ -68,14 +66,14 @@ font-size: 15px;
 }
 
 #perfDialogue {
-		line-height:50px;
-		background-color:#FFFFFF;
-		height:70px;
-		width:50px;
-		float:left;
-		padding-left:0px;
-		padding-right:0px;
-		}
+	line-height:50px;
+	background-color:#FFFFFF;
+	height:70px;
+	width:50px;
+	float:left;
+	padding-left:0px;
+	padding-right:0px;
+}
 
 #performer-container{
 	height:relative;
@@ -83,7 +81,7 @@ font-size: 15px;
 	display: block;
 	padding-bottom: 25px;
 
-	}
+}
 
 .performerDiv {
 	width:50;
@@ -96,7 +94,7 @@ font-size: 15px;
 	line-height: 50px;
 	display: inline-block;
 	margin: 2px;
-	}
+}
 
 .performerDivB {
 	width:50;
@@ -109,7 +107,7 @@ font-size: 15px;
 	line-height: 50px;
 	display: inline-block;
 	margin: 2px;
-	}
+}
 
 #youAre{
 	width: 50;
@@ -118,15 +116,13 @@ font-size: 15px;
 	padding-right: 20px;
 	padding-top: 20px;
 	text-align: left;
-
-	}
+}
 
 #sendingTo{
 	width: 50;
 	font-size: 60;
 	text-align: center;
-
-	}
+}
 
 .figures{
 	width: 740px;
@@ -135,26 +131,22 @@ font-size: 15px;
 	display: inline;
 	padding-top: 0px;
 	padding-bottom: 0px;
-
-	}
+}
 
 .figuresB{
 	width: 740px;
 	/*float: left;*/
 	position: relative;
 	display: inline;
-
 	padding-top: 0px;
 	padding-bottom: 0px;
-
-	}
+}
 
 #imageFig{
 	height:600px;
 	width:800px;
 	opacity: .4;
-
-	}
+}
 
 .imageText{
 	position:absolute;
@@ -165,8 +157,8 @@ font-size: 15px;
 	bottom: 30px;
 	text-align: center;
 	margin: auto;
-	font-size: 30;
-	}
+	font-size: 20;
+}
 
 .videoText{
 	position:absolute;
@@ -177,8 +169,8 @@ font-size: 15px;
 	bottom: 30px;
 	text-align: center;
 	margin: auto;
-	font-size: 30;
-	}
+	font-size: 20;
+}
 
 .sidebar{
 	width: 130px;
@@ -187,7 +179,7 @@ font-size: 15px;
 	margin-right: 100px;
 	}
 
-	#main{
+#main{
 	width: 700px;
 	float: left;
 	/*position: absolute;*/
@@ -195,8 +187,7 @@ font-size: 15px;
 	padding-top: 0px;
 	padding-bottom: 0px;
 	margin-left: 20px;
-
-	}
+}
 
 .navButton{
 	width:160;
@@ -211,10 +202,9 @@ font-size: 15px;
 	margin: 2px;
 	margin-bottom: 10px;
 	margin-top: 10px;
-		}
+}
 
 .audio{
-
 	width:200;
 	height:40;
 	border-radius: 40px;
@@ -225,17 +215,15 @@ font-size: 15px;
 	line-height:40px;
 	display: inline-block;
 	margin: 2px;
-
-	}
+}
 
 .figuresBox{
 	width: 740px;
 	float: left;
 	padding-top: 5px;
 	padding-bottom: 5px;
-
-	}
+}
 
 #bpm {
 	float: left;
-	}
+}
