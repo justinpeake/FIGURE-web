@@ -227,11 +227,11 @@ function updatePerfCount() {
 
 	socket.emit(acct + ' perfCount', pX);  // send the perfcount to all of the performers as a global var pX
 
-		$('.performerDivB').remove(); // clears any previous buttons
+		$('.performerButton').remove(); // clears any previous buttons
 		perfs = [];
 		for(i=0; i < pX; i++){   //makes the circular buttons
 			perfs[i] = document.createElement('div');
-			perfs[i].className = 'performerDivB';
+			perfs[i].className = 'performerButton';
 			perfs[i].id = 'cp' + (i+1);
 			perfs[i].innerHTML = i + 1;
 			document.getElementById('performer-container').appendChild(perfs[i]);
@@ -319,58 +319,8 @@ function performerSelect(index) { // function than runs when performer channel b
 			$("#vF" + i).click(sendVideo(i));  // function located in public/js/sendVideo.js
 		};
 	
-	// audio buttons
-
-	// var waveIds = document.getElementsByClassName("audio");  // from image tag above
-	// var waveIdsLength = waveIds.length;
-	// var waveSrcs = [];  //sending this to the socket emit
-	// var waveNames = document.getElementsByClassName("audionames");
-
-	// //console.log(audioNames)
-	// //create unique id's for videos
-	// for (i = 0; i < waveIds.length; i++) {
-	// 	waveIds[i].id = 'aF'+ i;
-	// };
-	// // gut the urls of videos
-	// for (i = 0; i < waveIds.length; i++) {
-
-	// 	waveIds[i].innerHTML = waveNames[i].title;
-
-	// 	waveSrcs[i] = waveIds[i].title;
-	// 	//console.log(waveSrcs);
-	// };
-	// //seth helped with this  -- add button functionalities
-	// for(var i = 0; i < waveIds.length; i ++){
-	// 	$("#aF" + i).click(fadeTheFadeA(i));
-	// };
-	// //add the urls to the button
-	// function fadeTheFadeA(index){
-	// 	return function(){
-	// 		$("#aF" + index).fadeTo("slow", 0.5);
-	// 		socket.emit(acct + ' waveSketch', waveSrcs[index])
-
-
-	// 		// adding
-	// 				group = [];
-	// 				member = 0;
-
-	// 				// this clears the button states when an image is sent
-	// 				for (i=0; i < perfs.length; i++){
-	// 					$('#cp' + (i+1)).css('color', 'white');
-	// 				};
-
-	// 				for (i=0; i < perfs.length; i++){
-	// 					$('#cp' + (i+1)).fadeTo("fast", 1.0);
-	// 				};
-
-	// 				// zeros out the 'ALL' button when a figure is sent
-	// 				$(all).css('color', 'white');
-	// 				$(all).fadeTo("fast", 1.0);
-
-	// 	};
-	// };
-
-	// FILE UPLOAD STUFF for progress bar
+	
+// FILE UPLOAD STUFF for progress bar
 
 function uploadProgress(evt) {
     if (evt.lengthComputable) {
@@ -455,11 +405,11 @@ function upload_file(file, signed_request, url){
 
 				Join as Performer:
 			<a>
-				<div class="performerDiv" id="perf1"> 1 </div>
+				<!-- <div class="performerDiv" id="perf1"> 1 </div>
 				<div class="performerDiv" id="perf2"> 2 </div>
 				<div class="performerDiv" id="perf3"> 3 </div>
 				<div class="performerDiv" id="perf4"> 4 </div>
-				<div class="performerDiv" id="perf5"> 5 </div>
+				<div class="performerDiv" id="perf5"> 5 </div> -->
 
 
 

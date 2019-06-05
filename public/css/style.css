@@ -96,23 +96,10 @@ body {
 
 }
 
-.performerDiv {
+.performerButton {
 	width:50;
 	height:50;
-	border-radius: 50px;
-	background-color: 666666;
-	color: FFFFFF;
-	font-size: 25px;
-	text-align: center;
-	line-height: 50px;
-	display: inline-block;
-	margin: 2px;
-}
-
-.performerDivB {
-	width:50;
-	height:50;
-	border-radius: 50px;
+	border-radius: 10px;
 	background-color: 666666;
 	color: FFFFFF;
 	font-size: 25px;
