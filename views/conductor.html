@@ -108,11 +108,13 @@
 <div id="main" >
 
 <br>
+<br>
 <h4> Images </h4>
 <br>
 	{{#images}}
 	<div class="figuresB">
-	<img src={{.}} class="imageF " width="100px" height="100px">  </img>
+	<!-- <img src={{.}} class="imageF " width="100px" height="100px">  </img> -->
+	<img src={{.}} class="imageF " width="25%" height="20%">  </img>
 	<span class="imageText">  </span>
 	</div>
 	{{/images}}
@@ -123,7 +125,8 @@
 <br>
 	{{#videos}}
 	<div class="figuresB">
-	<video src={{.}} class="videoF" width="100px" height="100px"> </video>
+	<!-- <video src={{.}} class="videoF" width="100px" height="100px"> </video> -->
+	<video src={{.}} class="videoF" width="25%" height="20%"> </video>
 	<span class="videoText">  </span>
   </div>
 	{{/videos}}
