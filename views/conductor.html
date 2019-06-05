@@ -99,51 +99,39 @@
 			</div>
 	</br>
 	</br>
-        <input type="file" id="file_input"/>
-        <p>
-		<div id="progressNumber"></div>
+			<input type="file" id="file_input"/>
+			<p>
+			<div id="progressNumber"></div>
 </div>
 
 
-<div id="main" >
+<div id="conductorMain" >
+<br>
+<br>
+	<h4> Images </h4>
 
-<br>
-<br>
-<h4> Images </h4>
-<br>
-	{{#images}}
-	<div class="figuresB">
-	<!-- <img src={{.}} class="imageF " width="100px" height="100px">  </img> -->
-	<img src={{.}} class="imageF " width="25%" height="20%">  </img>
-	<span class="imageText">  </span>
+	<br>
+		{{#images}}
+		<div class="figuresB">
+		<img src={{.}} class="imageF " width="150px" height="150px">  </img>
+		<!-- <img src={{.}} class="imageF " width="25%" height="20%">  </img> -->
+		<span class="imageText">  </span>
+		</div>
+		{{/images}}
+	<br>
+	<br>
+
+	<h4> Videos </h4>
+
+	<br>
+		{{#videos}}
+		<div class="figuresB">
+		<video src={{.}} class="videoF" width="150px" height="150px"> </video>
+		<!-- <video src={{.}} class="videoF" width="25%" height="20%"> </video> -->
+		<span class="videoText">  </span>
+		</div>
+		{{/videos}}
 	</div>
-	{{/images}}
-
-<br>
-<br>
-<h4> Videos </h4>
-<br>
-	{{#videos}}
-	<div class="figuresB">
-	<!-- <video src={{.}} class="videoF" width="100px" height="100px"> </video> -->
-	<video src={{.}} class="videoF" width="25%" height="20%"> </video>
-	<span class="videoText">  </span>
-  </div>
-	{{/videos}}
-
-<!-- <br>
-<h4> Waveforms </h4>
-<br>
-
-{{#audio}}
-<div class="audio" title={{.}}>  </div>
-{{/audio}}
-
-{{#audionames}}
-<div class="audionames" title={{.}} style.visibility="hidden">  </div>
-{{/audionames}} -->
-
-</div>
 
 
 <script type="text/javascript">
