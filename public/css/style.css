@@ -124,6 +124,15 @@ body {
 	text-align: center;
 }
 
+
+
+/* performer.html */
+#imageFig{   
+	height:600px;
+	width:800px;
+	opacity: .4;
+}
+
 .figures{
 	width: 740px;
 	float: left;
@@ -133,61 +142,35 @@ body {
 	padding-bottom: 0px;
 }
 
+/* in conductor.html */
+
+#conductorMain{
+	width: 700px;
+	float: left;
+	/* position: absolute; */
+	display: inline-block;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-left: 10px;
+}
 .figuresB{
-	/* width: auto; */
-	/* float: left; */
+	width: auto;
 	position: relative;
-	display: inline;
+	display: inline-block;
 	text-align: center;
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
-
-#imageFig{
-	height:600px;
-	width:800px;
-	opacity: .4;
-}
-
-.imageText{
+.imageText, .videoText{
 	position:absolute;
 	z-index: 1000;
-	/*display:inline;*/
+	display:inline;
 	top: 50%;
 	left: 50%;
-	/* left:0; */
 	right: 0;
-	/* bottom: 30px; */
-	/* text-align: center; */
-	/* margin: auto; */
 	font-size: 20;
 	transform: translate(-50%, -50%);
 }
-
-
-.videoText{
-	position:absolute;
-	z-index: 1000;
-	/*display:inline;*/
-	top: 50%; 
-	left: 50%;
-	/* left:0; */
-	right: 0;
-	/* bottom: 50%; */
-	/* text-align: center; */
-	/* margin: auto; */
-	font-size: 20;
-	transform: translate(-50%, -50%);
-}
-
-.imageF{
-
-}
-
-.videoF{
-
-}
-
 
 .sidebar{
 	width: 130px;
@@ -196,15 +179,7 @@ body {
 	margin-right: 100px;
 }
 
-#main{
-	width: 700px;
-	float: left;
-	/*position: absolute;*/
-	display: block;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin-left: 20px;
-}
+
 
 .navButton{
 	width:160;
