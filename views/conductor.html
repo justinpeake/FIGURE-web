@@ -61,31 +61,21 @@
 <div id="everythingConductor">
 	<section id="nav">
 		<div class="row">
-			<div class="col-md-4" align="center">
+			<div class="col-md-3" align="left">
 				<a href="/dashboard" ><img src="img/figure_logo_small.png" class="img-fluid"> </a>
-					<div>
-					<!-- <li class="btn btn-md"><a class="nav-link" href="/conductor"> SCORES </a></li>
-					<li class="btn btn-md"><a class="nav-link" href="/newComp"> CREATE NEW </a></li>
-					<li class="btn btn-md"><a class="nav-link" href="/help"> HELP </a></li>  -->
-					<li class="btn btn-md"><a class="nav-link" href="/dashboard"> BACK TO DASHBOARD </a></li> 
-					</div>
-					
-					<!-- <a href="/dashboard" class="btn btn-default"> Dashboard </a> -->
-					<div class="col">
-					<div id="userName" align="center"> <p> |: {{user}} :| </p> </div>
-					</div>
+				<div class="col"> You're logged in as: {{user}}</div>
 			</div>
-			
-			<!-- BUTTONS PROPAGATE IN HERE -->
-			<div class="col-md-6" id="performer-container"></div>
-
-		</div>
-		<hr>
+						<!-- BUTTONS PROPAGATE IN HERE -->
+				<div class="col-md-6" id="performer-container"></div>
+		</div>	
+	<hr>
 	</section>
 
-	<div class="col-md-4" align="center">
-
+	<div class="col-md-2" align="left">
+			
 		<!-- PERFORMER channel update -->
+		<div class="col conductorNav"> Conduct </div>
+	
 		<input type="number" id="myNumber" value="0" style="width:100">
 		<button class="btn btn-lg" onclick="updatePerfCount()"># of Performers</button>
 	</br>
@@ -94,17 +84,18 @@
 				<li class="btn btn-md"><a class="btn btn-md" id="clear"> CLEAR </a></li>
 				<li class="btn btn-md"><a class="btn btn-md" id="all"> ALL </a> </li> 
 				<li class="btn btn-md"><a class="btn btn-md" id="switcher"> SWITCH </a></li> 
+				<hr>
 				<li class="btn btn-md"><a class="btn btn-md" id="delButton"> delMode </a></li> 
 				<li class="btn btn-md"><a class="btn btn-md" id="recBtn"> REC </a></li> 
 			</div>
 	</br>
 	</br>
 			<input type="file" id="file_input"/>
-			<p>
+			<br>
 			<div id="progressNumber"></div>
 </div>
 
-
+<div class="col-md-9" align="left">
 <div id="conductorMain" >
 <br>
 <br>
@@ -114,6 +105,7 @@
 		{{#images}}
 		<div class="figuresB">
 		<img src={{.}} class="imageF " width="150px" height="150px">  </img>
+		<!-- <img src={{.}} class="imageF " width="25%" height="25%">  </img> -->
 		<!-- <img src={{.}} class="imageF " width="25%" height="20%">  </img> -->
 		<span class="imageText">  </span>
 		</div>
@@ -132,6 +124,8 @@
 		</div>
 		{{/videos}}
 	</div>
+
+</div>
 
 
 <script type="text/javascript">
