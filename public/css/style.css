@@ -115,7 +115,8 @@ body {
 
 }
 
-.performerButton {
+/* used to be performerDivB */
+.performerButton {  
 	width:30;
 	height:30;
 	border-radius: 10px;
@@ -152,9 +153,9 @@ body {
 	opacity: .4;
 }
 
-.figures{
-	/* width: 740px; */
-	/* float: left; */
+#figures{
+	width: 740px;
+	float: left;
 	position: relative;
 	display: inline;
 	padding-top: 0px;
@@ -167,7 +168,7 @@ body {
 	width: 700px;
 	float: left;
 	/* position: absolute; */
-	/* display: inline-block; */
+	display: inline-block;
 	padding-top: 0px;
 	padding-bottom: 0px;
 	margin-left: 10px;

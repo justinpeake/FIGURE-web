@@ -192,7 +192,7 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 			perfs = [];
 			for(i=0; i < perfCount ; i++){
 		    	perfs[i] = document.createElement('div');
-		    	perfs[i].className = 'performerDivB';
+		    	perfs[i].className = 'performerButton';
 		    	perfs[i].id = 'cp' + (i+1);
 		    	perfs[i].innerHTML = i + 1;
 		    	document.getElementById('performer-container').appendChild(perfs[i]);
