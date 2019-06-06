@@ -111,6 +111,11 @@
 <div class="col-md-9" align="left">
 
 <div id="conductorMain" >
+		
+<!-- SKetchPad	 -->
+<div id="sketchpad"></div>
+
+
 	
 <br>
 <br>
@@ -144,6 +149,14 @@
 
 
 <script type="text/javascript">
+
+
+ 
+var el = document.getElementById('sketchpad');
+var pad = new Sketchpad(el);
+pad.setLineColor('#4CAF50');
+
+
 
 //////////////////////////////// BEGIN CONDUCTOR SCRIPT \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
