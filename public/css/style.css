@@ -25,15 +25,23 @@
 	color: #FFFFFF ;
 	margin-bottom: 1%;
 	width: 30%;
-	text-align: left;
+	text-align: center;
 }
 
 .btn:hover {
 	background-color: rgb(37, 184, 221);
-	color: rgb(0, 0, 0); 
+	/* color: rgb(0, 0, 0);  */
 }
 .btn-lg{
+	background-color: #333;
+	color: #FFFFFF ;
+	margin-bottom: 1%;
 	width: 50%;
+	text-align: center;
+}
+
+.btn-lg:hover{
+	background-color: rgb(37, 184, 221);
 }
 
 p {
@@ -77,6 +85,7 @@ body {
 
 :link {
 	color: #fff;
+	text-align: center;
 }
 
 :link:hover {
