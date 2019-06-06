@@ -21,7 +21,6 @@ var users = require('./routes/users.js');
 var path = require('path');
 var chalk = require('chalk');
 var Account = require('./models/account.js');
-var Sketchpad = require('responsive-sketchpad');
 
 var performerCount = 0;
 
