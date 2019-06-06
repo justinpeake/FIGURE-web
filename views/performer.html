@@ -9,10 +9,6 @@
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript" src="/js/sketches.js"></script>
 		<script type="text/javascript" src="/js/classes.js"></script>
-		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.js"> </script>
-		<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.js"> </script>
-		<script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.dom.js"> </script>
-
 
 		<script>
 			var whosBoss = prompt("Please enter the name of the composer you are joining");
@@ -34,17 +30,6 @@
 
 		<style>
 
-			body{
-				background-color: #080336;
-				color: fff;
-				    font-size: 15px;
-			}
-
-			#perfDialogue {
-				background-color: #080336;
-
-			}
-
 			#everythingConductor {
 				/*visibility: visible;*/
 				display: none;
@@ -54,11 +39,6 @@
 				/*visibility: hidden;*/
 				display: block;
 			}
-
-		/*	#sketchFigure {
-				visibility: hidden;
-				display: block;
-			}  */
 
 		</style>
 
@@ -70,96 +50,97 @@
 ////// MAYBE SWITCH STUFF  //////  not hooked up yet
 
 	socket.on('switch', function (data){
-	document.getElementById("everythingPerformer").style.display = "none";
-	document.getElementById("everythingConductor").style.display= "block";
-
-	if (myId == toWhom || toAll == 1) {   // this should never be "toAll = 1 so maybe take out?"
-
-		console.log("got tha switch " + data);
-	};
-});
-
+		document.getElementById("everythingPerformer").style.display = "none";
+		document.getElementById("everythingConductor").style.display= "block";
+		if (myId == toWhom || toAll == 1) {   // this should never be "toAll = 1 so maybe take out?"
+			console.log("got tha switch " + data);
+		};
+	});
 
 </script>
 
 <body>
 
-<div id="everythingPerformer" align="center">
+
+<div id="everythingPerformer" >
+
 	<div id="perfDialogue">
-		<div id="youAre"> </div>
-		<div id="timelineDiv"> </div>
 		<!-- responds to the "incoming" function -->
-		<img src="/assets/incoming.png"  id="incoming"  style="width:167px; height:50">
+		<img src="/assets/incoming2.png"  id="incoming"  style="width:2000px; height:1000px">
 	</div>
-			 <!-- container for all figures -->
-	<div id="figures" align="center">
-  		<!-- container where performer channel buttons show up -->
+
+	<!-- container for all figures -->
+	<div class="col-md-9" id="figures" text-align="center">
+
+		<!-- container where performer channel buttons show up -->
 		<div id="performer-container" > </div>
-		 <!-- container where the waveForm visualizer sketch shows up -->
-  		<div id="waveSketch"> </div>
-	  		<!-- container where video figures show up -->
-	 	<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
-	 	<!-- container where image figures show up -->
-	 	<img id="imageFig" width="800" height="600" src="/assets/tacet.png" > </img>
+
+		<!-- container where the waveForm visualizer sketch shows up -->
+		<!-- <div id="waveSketch"> </div> -->
+
+		<!-- container where video figures show up -->
+		<video id="videoFig" width="800" height="0" autoplay loop src=" " type="video/mp4"> </video>
+
+		<!-- container where image figures show up -->
+		<img id="imageFig" src="/assets/tacet.png" > </img>
+
 	</div>
 </div>
 
 
+
+
  <script type="text/javascript">
-
- // INIT stuff
-
-// this may not be working currently
-socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performer page connects
-
 
 /////// BEGIN PERFORMER SCRIPT
 
-	 // 	//variable to change p5
-	// 	var sketch = q;
 
-	// 	//actually calls the p5  (p5 sketches in /public/js)
+socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performer page connects
 
-	 //var myp5 = new p5(waveForm, 'timeLine');
-
-	//  var myp5 = new p5(time, 'timelineDiv');
-
-	var subscribedTo;
 
 
 	// PERFORMER ID STUFF (initialize globals for performer id)
 
+	var subscribedTo;
 	var myId = 0;
 	var toWhom = 0;
 	var toAll = 0;
 	var group = [];
 
-	// this determines which composition you receive messages from
+		// P5 STUFF \\
+
+    //variable to change p5
+		//var sketch = q;
+	//actually calls the p5  (p5 sketches in /public/js)
+		//var myp5 = new p5(waveForm, 'timeLine');
+		//var myp5 = new p5(time, 'timelineDiv');
+
+
 
 	////////// p5 WAVE STUFF  //////////
 
 	// this var exists inside of the p5 instance "waveForm"
-	var trackName = '';
-	//changed this from myp5 to wave
-	var wave;
-	// this is handling the p5 instance for wavePlayer
-	socket.on (subscribedTo + ' waveSketch', function (data){
+// 	var trackName = '';
+// 	//changed this from myp5 to wave
+// 	var wave;
+// 	// this is handling the p5 instance for wavePlayer
+// 	socket.on (subscribedTo + ' waveSketch', function (data){
 
-		trackName = data;
+// 		trackName = data;
 
-//THIS IS NOT WORKING resulting in MULTIPLE AUDIO FILES PLAYING
+// //THIS IS NOT WORKING resulting in MULTIPLE AUDIO FILES PLAYING
 
-		/* logic below: if there isn't an instance one on the page (it will be undefined) so create a new one
-		 if there is an instance, remove it and create a new one */
+// 		/* logic below: if there isn't an instance one on the page (it will be undefined) so create a new one
+// 		 if there is an instance, remove it and create a new one */
 
-		 //changed to add the toWhom conditional logic
-		if ( myId == toWhom || toAll == 1 && typeof(myp5) == 'undefined' ){
-				wave = new p5(waveForm, "waveSketch");
-			} else if ( myId == toWhom || toAll == 1) {
-				wave.remove();
-				wave = new p5(waveForm, "waveSketch");
-			}
-	});
+// 		 //changed to add the toWhom conditional logic
+// 		if ( myId == toWhom || toAll == 1 && typeof(myp5) == 'undefined' ){
+// 				wave = new p5(waveForm, "waveSketch");
+// 			} else if ( myId == toWhom || toAll == 1) {
+// 				wave.remove();
+// 				wave = new p5(waveForm, "waveSketch");
+// 			}
+// 	});
 
   /////// INCOMING FLASHER ///////
 
@@ -261,87 +242,79 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 ///////////////////////////////////////////////////// END DYNAMIC PERF SHIZZ
 
-	socket.on(subscribedTo + ' toGroup', function (data) {
-		group = data;
-		console.log(group);
-	});
+socket.on(subscribedTo + ' toGroup', function (data) {
+	group = data;
+	// console.log(group);
+});
 
-	socket.on(subscribedTo + ' sendingTo', function (data) {
-		toWhom = data;
-		console.log("toWhom = " + toWhom);
+socket.on(subscribedTo + ' sendingTo', function (data) {
+	toWhom = data;
+	// console.log("toWhom = " + toWhom);
 
-	});
+});
 
-	socket.on(subscribedTo + ' sendingAll', function (data) {
-		toAll = data;
-		console.log("toAll= " + toAll);
+socket.on(subscribedTo + ' sendingAll', function (data) {
+	toAll = data;
+	// console.log("toAll= " + toAll);
 
-	});
+});
 
 
 	//sets up flashing of incoming image referenced above
 
-	socket.on(subscribedTo + ' videoFigure', function (data) {
+socket.on(subscribedTo + ' videoFigure', function (data) {
 
-			//checks to see if conductor is talking to "you"
-			if (group.indexOf(myId) > -1 || toAll == 1) {
+	//checks to see if conductor is talking to "you"
+	if (group.indexOf(myId) > -1 || toAll == 1) {
 
-			//flashes "incoming" image
+		//flashes "incoming" image
 		var flasher = setInterval(function() {flashIncoming()} , 500);
 
-			// shuts off incoming flasher after interval
+		// shuts off incoming flasher after interval
 		setTimeout(function() {clearInterval(flasher)}, 2000);
 		setTimeout(function() {display()}, 3000);
 
 		// display shitz
 		var display = function(){
-		console.log(data + "performerside" + toWhom);
+		
+			document.getElementById("imageFig").style.display = "none";
+			document.getElementById("videoFig").style.display= "block";
 
-		// document.getElementById('imageFig').src = "";
-		// document.getElementById('imageFig').height = "0";
+			document.getElementById('videoFig').src = data;
+			document.getElementById('videoFig').height = "600";
 
-    document.getElementById("imageFig").style.display = "none";
-    document.getElementById("videoFig").style.display= "block";
-
-		document.getElementById('videoFig').src = data;
-		document.getElementById('videoFig').height = "600";
-			}
 		}
-	});
+	}
+});
 
 
-	socket.on(subscribedTo + ' imageFigure', function (data) {
+socket.on(subscribedTo + ' imageFigure', function (data) {
 
-		if (group.indexOf(myId) > -1 || toAll == 1) {
+	if (group.indexOf(myId) > -1 || toAll == 1) {
 
-			//flashes "incoming" image
+		//flashes "incoming" image
 		var flasher = setInterval(function() {flashIncoming()} , 500);
 
-			// shuts off incoming flasher after interval
+		// shuts off incoming flasher after interval
 		setTimeout(function() {clearInterval(flasher)}, 1500);
 		setTimeout(function() {display()}, 3000);
 
 		$(imageFig).fadeTo(3000,0);
 
-			// display shitz
+		// display shitz
 		var display = function(){
-		console.log(data + "performerside" + toWhom);
 
-		// NEED TO GET RID OF THIS HACKY WAY AND MAKE ONLY ONE DISPLAY AT A TIME
-	    // document.getElementById('videoFig').src = "";
-	    // document.getElementById('videoFig').height = "0";
+			document.getElementById("videoFig").style.display = "none";
+			document.getElementById("imageFig").style.display = "block";
 
-      document.getElementById("videoFig").style.display = "none";
-      document.getElementById("imageFig").style.display = "block";
+			document.getElementById('imageFig').src = data;
+			document.getElementById('imageFig').height = "600";
 
-		  document.getElementById('imageFig').src = data;
-		  document.getElementById('imageFig').height = "600";
+			$(imageFig).fadeTo(2000,1);
 
-		$(imageFig).fadeTo(2000,1);
-
-			}
 		}
-	});
+	}
+});
 
 
 // // // // // // // // // //  END PERFORMER SCRIPT
