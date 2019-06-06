@@ -102,14 +102,14 @@ body {
 }
 
 .performerButton {
-	width:50;
-	height:50;
+	width:30;
+	height:30;
 	border-radius: 10px;
 	background-color: 666666;
 	color: FFFFFF;
-	font-size: 25px;
+	font-size: 20px;
 	text-align: center;
-	line-height: 50px;
+	/* line-height: 50px; */
 	display: inline-block;
 	margin: 2px;
 }
