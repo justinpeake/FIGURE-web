@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="/js/idOverlay.js"></script>
 	<script type="text/javascript" src="/js/sendImage.js"></script>
 	<script type="text/javascript" src="/js/sendVideo.js"></script>
+	<script type="text/javascript" src="/js/createFigureButton.js"></script>
 
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<!-- load bootstrap css -->
@@ -65,11 +66,12 @@
 				<a href="/dashboard" ><img src="img/figure_logo_small.png" class="img-fluid"> </a>
 				<div class="col"> You're logged in as: {{user}}</div>
 			</div>
-						<!-- BUTTONS PROPAGATE IN HERE -->
-				<div class="col-md-6" id="performer-container"></div>
-		</div>	
-	<hr>
+						<!-- BUTTONS PROPAGATE IN HERE
+				<div class="col-md-6" id="performer-container"></div> -->
+
+	
 	</section>
+	<hr>
 
 	<div class="col-md-2" align="left">
 			
@@ -105,7 +107,10 @@
 </div>
 
 <div class="col-md-9" align="left">
+	<!-- BUTTONS PROPAGATE IN HERE -->
+	<div class="col-md-6" id="performer-container"></div>
 <div id="conductorMain" >
+	
 <br>
 <br>
 	<h4> Images </h4>
@@ -271,21 +276,21 @@ function performerSelect(index) { // function than runs when performer channel b
 
 // Image Buttons \\
 
-	var imageIds = document.getElementsByClassName("imageF");  // from image tag above
-	var imageSrcs = [];  //sending this to the socket emit
-	var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
+	// var imageIds = document.getElementsByClassName("imageF");  // from image tag above
+	// var imageSrcs = [];  //sending this to the socket emit
+	// var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
 
-		for (i = 0; i < imageIds.length; i++) {  	//assign ids to all of the images
-		imageIds[i].id = 'iF'+ i;
-		};
+	// 	for (i = 0; i < imageIds.length; i++) {  	//assign ids to all of the images
+	// 	imageIds[i].id = 'iF'+ i;
+	// 	};
 
-		for (i = 0; i < imageTxtIds.length; i++) {  // assign ids to the text overlay divs
-		imageTxtIds[i].id = 'iT'+ i;
-		};
+	// 	for (i = 0; i < imageTxtIds.length; i++) {  // assign ids to the text overlay divs
+	// 	imageTxtIds[i].id = 'iT'+ i;
+	// 	};
 
-		for (i = 0; i < imageIds.length; i++) {  	// get the urls of images
-		imageSrcs[i] = imageIds[i].src;
-		};
+	// 	for (i = 0; i < imageIds.length; i++) {  	// get the urls of images
+	// 	imageSrcs[i] = imageIds[i].src;
+	// 	};
 
 		cleanImageNames(imageSrcs);  // creating an array of figure names from URLs (found in sessionData.js)
 
