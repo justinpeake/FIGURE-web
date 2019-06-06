@@ -99,10 +99,11 @@ body {
 
 #perfDialogue {
 	line-height:50px;
-	background-color:#FFFFFF;
+	/* background-color:#FFFFFF; */
 	height:70px;
 	width:50px;
 	float:left;
+	text-align: left;
 	padding-left:0px;
 	padding-right:0px;
 }
@@ -111,6 +112,7 @@ body {
 	height:relative;
 	width:750px;
 	display: block;
+	text-aling: center;
 	padding-bottom: 25px;
 
 }
@@ -151,12 +153,24 @@ body {
 	height:600px;
 	width:800px;
 	opacity: .4;
+	align: left;
+}
+
+/* #videoFig{   
+	height:0;
+	width:800px;
+	opacity: .4;
+} */
+
+#bodyFlash{
+	background-color: white;
 }
 
 #figures{
-	width: 740px;
-	float: left;
+	/* width: 740px;
+	float: left; */
 	position: relative;
+	text-align: center;
 	display: inline;
 	padding-top: 0px;
 	padding-bottom: 0px;
