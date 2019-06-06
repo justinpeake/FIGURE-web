@@ -89,7 +89,12 @@ body {
 }
 
 :link:hover {
-	color: #555;
+	color: rgb(32, 32, 32);
+}
+
+:link:visited {
+	color: #fff;
+	/* text-align: center; */
 }
 
 #perfDialogue {
