@@ -15,7 +15,6 @@
 	<script type="text/javascript" src="/js/idOverlay.js"></script>
 	<script type="text/javascript" src="/js/sendImage.js"></script>
 	<script type="text/javascript" src="/js/sendVideo.js"></script>
-	<script type="text/javascript" src="/js/createFigureButton.js"></script>
 
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<!-- load bootstrap css -->
@@ -62,34 +61,36 @@
 <div id="everythingConductor">
 	<section id="nav">
 		<div class="row">
-			<div class="col-md-3" align="left">
+			<div class="col-md-2" align="left">
 				<a href="/dashboard" ><img src="img/figure_logo_small.png" class="img-fluid"> </a>
 				<div class="col"> You're logged in as: {{user}}</div>
 			</div>
-						<!-- BUTTONS PROPAGATE IN HERE
-				<div class="col-md-6" id="performer-container"></div> -->
+						<!-- BUTTONS PROPAGATE IN HERE -->
+				<div class="col-md-5" text-align="left" id="performer-container"></div>
 
 	
 	</section>
 	<hr>
 
-	<div class="col-md-2" align="left">
-			
-		<!-- PERFORMER channel update -->
+<!-- sidebar  -->
+<div class="col-md-2" align="left">
 <br>
 <br>
 <br>
+		
+<br>
+
 <div class="conductorNav"> CONDUCT </div>
 <hr> 
-	<input type="number" id="myNumber" value="0" style="width:100">
-	<button class="btn btn-lg" onclick="updatePerfCount()"># of Performers</button>
+	<input type="number" id="myNumber" value="0" >
+	<button class="btn btn-lg" onclick="updatePerfCount()"># PERFORMERS</button>
 </br>
 </br>
 	<div>	
-		<li class="btn btn-md"><a class="btn btn-md" id="clear"> CLEAR </a></li>
-		<li class="btn btn-md"><a class="btn btn-md" id="all"> ALL </a> </li> 
-		<li class="btn btn-md"><a class="btn btn-md" id="switcher"> SWITCH </a></li> 
-		<li class="btn btn-md"><a class="btn btn-md" id="recBtn"> REC </a></li> 
+		<li class="btn btn-md"><a id="clear"> CLEAR </a></li>
+		<li class="btn btn-md"><a id="all"> ALL </a> </li> 
+		<li class="btn btn-md"><a id="switcher"> SWITCH </a></li> 
+		<li class="btn btn-md"><a id="recBtn"> REC </a></li> 
 	</div>
 			
 	</br>
@@ -101,14 +102,13 @@
 			<div id="progressNumber"></div>
 
 			<div>
-				<li class="btn btn-md"><a class="btn btn-md" id="delButton"> delMode </a></li> 
+				<li class="btn btn-md"><a id="delButton"> delMode </a></li> 
 				
 			</div>
 </div>
 
 <div class="col-md-9" align="left">
-	<!-- BUTTONS PROPAGATE IN HERE -->
-	<div class="col-md-6" id="performer-container"></div>
+
 <div id="conductorMain" >
 	
 <br>
@@ -276,21 +276,21 @@ function performerSelect(index) { // function than runs when performer channel b
 
 // Image Buttons \\
 
-	// var imageIds = document.getElementsByClassName("imageF");  // from image tag above
-	// var imageSrcs = [];  //sending this to the socket emit
-	// var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
+	var imageIds = document.getElementsByClassName("imageF");  // from image tag above
+	var imageSrcs = [];  //sending this to the socket emit
+	var imageTxtIds = document.getElementsByClassName("imageText");  // from text tag
 
-	// 	for (i = 0; i < imageIds.length; i++) {  	//assign ids to all of the images
-	// 	imageIds[i].id = 'iF'+ i;
-	// 	};
+		for (i = 0; i < imageIds.length; i++) {  	//assign ids to all of the images
+		imageIds[i].id = 'iF'+ i;
+		};
 
-	// 	for (i = 0; i < imageTxtIds.length; i++) {  // assign ids to the text overlay divs
-	// 	imageTxtIds[i].id = 'iT'+ i;
-	// 	};
+		for (i = 0; i < imageTxtIds.length; i++) {  // assign ids to the text overlay divs
+		imageTxtIds[i].id = 'iT'+ i;
+		};
 
-	// 	for (i = 0; i < imageIds.length; i++) {  	// get the urls of images
-	// 	imageSrcs[i] = imageIds[i].src;
-	// 	};
+		for (i = 0; i < imageIds.length; i++) {  	// get the urls of images
+		imageSrcs[i] = imageIds[i].src;
+		};
 
 		cleanImageNames(imageSrcs);  // creating an array of figure names from URLs (found in sessionData.js)
 

@@ -25,15 +25,23 @@
 	color: #FFFFFF ;
 	margin-bottom: 1%;
 	width: 30%;
-	text-align: left;
+	text-align: center;
 }
 
 .btn:hover {
 	background-color: rgb(37, 184, 221);
-	color: rgb(0, 0, 0); 
+	/* color: rgb(0, 0, 0);  */
 }
 .btn-lg{
+	background-color: #333;
+	color: #FFFFFF ;
+	margin-bottom: 1%;
 	width: 50%;
+	text-align: center;
+}
+
+.btn-lg:hover{
+	background-color: rgb(37, 184, 221);
 }
 
 p {
@@ -61,6 +69,11 @@ h4 {
 	color: black;
 }
 
+#myNumber{
+	width: 3em;
+	border-radius: 10px;
+}
+
 body {	
 	font-family: 'Montserrat', 'Lato', 'Open Sans', 'Helvetica Neue', Helvetica, Calibri, Arial, sans-serif;
 	background-color: #555;
@@ -72,6 +85,7 @@ body {
 
 :link {
 	color: #fff;
+	text-align: center;
 }
 
 :link:hover {
@@ -97,14 +111,14 @@ body {
 }
 
 .performerButton {
-	width:50;
-	height:50;
+	width:30;
+	height:30;
 	border-radius: 10px;
 	background-color: 666666;
 	color: FFFFFF;
-	font-size: 25px;
+	font-size: 20px;
 	text-align: center;
-	line-height: 50px;
+	/* line-height: 50px; */
 	display: inline-block;
 	margin: 2px;
 }
