@@ -117,7 +117,6 @@
 <br>
 <br>
 	<h4> Images </h4>
-
 	<br>
 		{{#images}}
 		<div class="figuresB">
@@ -163,6 +162,30 @@
 	var pX; // performer count
 	var delMode = false; // only true when a figure needs to be deleted
 
+	socket.emit('gimmePerfCount');
+
+	socket.on (acct + ' perfCount', function (data) {
+		pX = data;
+		$('.performerButton').remove(); // clears any previous buttons
+		perfs = [];
+		for(i=0; i < pX; i++){   //makes the circular buttons
+			perfs[i] = document.createElement('div');
+			perfs[i].className = 'performerButton';
+			perfs[i].id = 'cp' + (i+1);
+			perfs[i].innerHTML = i + 1;
+			document.getElementById('performer-container').appendChild(perfs[i]);
+		};
+
+		for (var i = 0; i < pX; i++){  //attaching the listener for click
+			$('#cp' + (i+1)).click(performerSelect(i));
+		};
+
+		for (i = 0; i < pX; i++){  // right now filling object for cross check
+			var playerNum = i+1; // this keeps player #'s straight
+			whoWhat['player'+ playerNum] = ' ';
+		};
+
+	});
 // "Switch" button \\
 
 // note: should this maybe be outside of socket reload?
@@ -236,7 +259,7 @@ function updatePerfCount() {
 	pX = document.getElementById("myNumber").value; // take the number of performer channels input by conductor
 
 	socket.emit(acct + ' perfCount', pX);  // send the perfcount to all of the performers as a global var pX
-
+	// console.log("pX = " + pX)
 		$('.performerButton').remove(); // clears any previous buttons
 		perfs = [];
 		for(i=0; i < pX; i++){   //makes the circular buttons
@@ -345,7 +368,6 @@ function uploadProgress(evt) {
 // for page refresh after upload complete
   function uploadComplete(evt){
     location.reload();
-
   }
 
 // FILE UPLOAD STUFF
@@ -381,6 +403,7 @@ function get_signed_request(file){  // --> make this able to handle arrays as an
     };
     xhr.send();
 }
+
 function upload_file(file, signed_request, url){
 
     var firstProgressEvent = false;
@@ -391,7 +414,6 @@ function upload_file(file, signed_request, url){
     xhr.setRequestHeader('x-amz-acl', 'public-read');
     xhr.onload = function() {
         if (xhr.status === 200) {
-
         }
     };
     xhr.onerror = function() {
@@ -536,10 +558,6 @@ function upload_file(file, signed_request, url){
 								}
 							}
 						});
-
-
-
-
 
 
 						socket.on('imageFigure', function (data) {
