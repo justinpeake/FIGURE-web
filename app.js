@@ -22,7 +22,7 @@ var path = require('path');
 var chalk = require('chalk');
 var Account = require('./models/account.js');
 
-var performerCount = 0;
+var performerCount;
 
 app.io = io;  //second iteration
 
@@ -148,17 +148,17 @@ aws.config.update({correctClockSkew: true});
 
 // Passport Auth ----------------------------------------
 
-  passport.use(new LocalStrategy(Account.authenticate()));
+passport.use(new LocalStrategy(Account.authenticate()));
 
-  passport.serializeUser(function(user, done) {
-      done(null, user.username);   // this affects what shows up in socket.request.user
-      console.log("serializeUser")
-  });
+passport.serializeUser(function(user, done) {
+    done(null, user.username);   // this affects what shows up in socket.request.user
+    console.log("serializeUser")
+});
 
-  passport.deserializeUser(function(id, done) {
-      done(null, id);
-    //  console.log("deserializeUser")
-  });
+passport.deserializeUser(function(id, done) {
+    done(null, id);
+  //  console.log("deserializeUser")
+});
 
 // Page Rendering ----------------------------------------
 
@@ -268,89 +268,89 @@ aws.config.update({correctClockSkew: true});
 
 // Render Compose Page ----------------------------------------
 
-        app.get('/compose', function(req, res) {
+  //       app.get('/compose', function(req, res) {
 
-                if(req.user) {
+  //               if(req.user) {
 
-                      var s3 = new aws.S3();
-                      var folder = req.user + "/";
-                      var s3_params = {
-                          Bucket: S3_BUCKET,
-                          Key: folder,
-                          Expires: 60,
-                          ACL: 'public-read'
-                      };
-                      var folderLength;
-                      var fileArray = [];
-                      var imageArray = [];
-                      var videoArray = [];
-                      var audioArray = [];
-                      var audioNames = [];
+  //                     var s3 = new aws.S3();
+  //                     var folder = req.user + "/";
+  //                     var s3_params = {
+  //                         Bucket: S3_BUCKET,
+  //                         Key: folder,
+  //                         Expires: 60,
+  //                         ACL: 'public-read'
+  //                     };
+  //                     var folderLength;
+  //                     var fileArray = [];
+  //                     var imageArray = [];
+  //                     var videoArray = [];
+  //                     var audioArray = [];
+  //                     var audioNames = [];
 
 
-          s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
+  //         s3.listObjects({Bucket: S3_BUCKET, Delimiter: '/', Prefix: folder}, function(err, data){
 
-                  var folderLength = data.Contents.length;
+  //                 var folderLength = data.Contents.length;
 
-                  // filling fileArray[] with all the URL's from amazon
-                  for (i = 0; i < folderLength; i++){
-                     fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
-                     };
+  //                 // filling fileArray[] with all the URL's from amazon
+  //                 for (i = 0; i < folderLength; i++){
+  //                    fileArray[i] = 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + data.Contents[i].Key;
+  //                    };
 
-                    /*
-                        1) this is splitting the urls >
-                        2) looking at the last array element (which is 'most likely' the file extension)
-                            ^ this could ultimately be buggy if the naming conventions change
-                        3) checking to see whether the file extension matches any of the strings
-                        4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
-                    */
+  //                   /*
+  //                       1) this is splitting the urls >
+  //                       2) looking at the last array element (which is 'most likely' the file extension)
+  //                           ^ this could ultimately be buggy if the naming conventions change
+  //                       3) checking to see whether the file extension matches any of the strings
+  //                       4) putting them into appropriate 'file type' arrays to be sent to client w/ handlebars
+  //                   */
 
-                    for (i = 0; i < folderLength; i++){
-                      if (fileArray[i].split(".")[4] == 'jpg'){
-                        imageArray.push(fileArray[i]);
-                      } else if (fileArray[i].split(".")[4] == 'png'){
-                        imageArray.push(fileArray[i]);
-                      }  else if (fileArray[i].split(".")[4] == 'mov'){
-                        videoArray.push(fileArray[i]);
-                      } else if (fileArray[i].split(".")[4] == 'wav'){
-                        audioArray.push(fileArray[i]);
+  //                   for (i = 0; i < folderLength; i++){
+  //                     if (fileArray[i].split(".")[4] == 'jpg'){
+  //                       imageArray.push(fileArray[i]);
+  //                     } else if (fileArray[i].split(".")[4] == 'png'){
+  //                       imageArray.push(fileArray[i]);
+  //                     }  else if (fileArray[i].split(".")[4] == 'mov'){
+  //                       videoArray.push(fileArray[i]);
+  //                     } else if (fileArray[i].split(".")[4] == 'wav'){
+  //                       audioArray.push(fileArray[i]);
 
-                        //splitting url to extract the name of the file
-                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-                      } else if (fileArray[i].split(".")[4] == 'mp3'){
-                        audioArray.push(fileArray[i]);
-                        audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
-                      }
+  //                       //splitting url to extract the name of the file
+  //                       audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+  //                     } else if (fileArray[i].split(".")[4] == 'mp3'){
+  //                       audioArray.push(fileArray[i]);
+  //                       audioNames.push(fileArray[i].split("/")[4].split(".")[0]);
+  //                     }
 
-                    };  // end of file for loop
+  //                   };  // end of file for loop
 
-   //////////////// these are the arrays being served to client ////////////////
+  //  //////////////// these are the arrays being served to client ////////////////
 
-                    console.log('IMAGES: ' + imageArray.length);
-                    // console.log(imageArray);
+  //                   console.log('IMAGES: ' + imageArray.length);
+  //                   // console.log(imageArray);
 
-                    console.log('VIDEOS: ' + videoArray.length);
-                    // console.log(videoArray);
+  //                   console.log('VIDEOS: ' + videoArray.length);
+  //                   // console.log(videoArray);
 
-                    console.log('AUDIO: ' + audioArray.length);
-                    // console.log(audioArray);
+  //                   console.log('AUDIO: ' + audioArray.length);
+  //                   // console.log(audioArray);
 
-                     // end of list objects
+  //                    // end of list objects
 
-          res.render('compose.html', {
-                    user: req.user,
-                    images: imageArray,
-                    videos: videoArray,
-                    audio: audioArray,
-                    audionames: audioNames,
-                    length: folderLength
-                  });
-                });
-                  page = 'compose';
-                  }else{
-                  res.render('index.html')
-                  }
-              });
+  //         res.render('compose.html', {
+  //                   user: req.user,
+  //                   images: imageArray,
+  //                   videos: videoArray,
+  //                   audio: audioArray,
+  //                   audionames: audioNames,
+  //                   length: folderLength
+  //                 });
+  //               });
+  //                 page = 'compose';
+  //                 }else{
+  //                 res.render('index.html')
+  //                 }
+  //             });
 
 // Error Handlers ---------------------------------------------------
 
@@ -376,7 +376,7 @@ aws.config.update({correctClockSkew: true});
     });
 
 
- // Socket Connections ----------------------------------------------
+// Socket Connections ----------------------------------------------
 
 io.on('connection', function(socket){
 
