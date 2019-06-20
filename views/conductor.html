@@ -162,6 +162,8 @@
 	var pX; // performer count
 	var delMode = false; // only true when a figure needs to be deleted
 
+
+// this could still be problematic
 	socket.emit('gimmePerfCount');
 
 	socket.on (acct + ' perfCount', function (data) {
