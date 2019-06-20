@@ -36,14 +36,6 @@ perfs = [];
         res.redirect('/');
       });
 
-    // router.get('/register', function(req, res) {
-    //     res.render('register.html', {});
-    //   });
-
-    // router.get('/login', function(req, res) {
-    //   page = 'login';
-    //     res.render('login.html', { });
-    //   });
 
     router.get('/about', function(req, res) {
       page = 'about';

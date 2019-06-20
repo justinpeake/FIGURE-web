@@ -117,31 +117,6 @@ socket.emit('gimmePerfCount');  // poll server for perfCount as soon as performe
 
 
 
-	////////// p5 WAVE STUFF  //////////
-
-	// this var exists inside of the p5 instance "waveForm"
-// 	var trackName = '';
-// 	//changed this from myp5 to wave
-// 	var wave;
-// 	// this is handling the p5 instance for wavePlayer
-// 	socket.on (subscribedTo + ' waveSketch', function (data){
-
-// 		trackName = data;
-
-// //THIS IS NOT WORKING resulting in MULTIPLE AUDIO FILES PLAYING
-
-// 		/* logic below: if there isn't an instance one on the page (it will be undefined) so create a new one
-// 		 if there is an instance, remove it and create a new one */
-
-// 		 //changed to add the toWhom conditional logic
-// 		if ( myId == toWhom || toAll == 1 && typeof(myp5) == 'undefined' ){
-// 				wave = new p5(waveForm, "waveSketch");
-// 			} else if ( myId == toWhom || toAll == 1) {
-// 				wave.remove();
-// 				wave = new p5(waveForm, "waveSketch");
-// 			}
-// 	});
-
   /////// INCOMING FLASHER ///////
 
 	$(incoming).fadeTo(1,0);
