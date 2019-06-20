@@ -140,6 +140,7 @@ var options = {
   setOfFields: '{"salt": 0, "hash":0, "_id":0, "__v":0}'  //"0" means "false" or " "dont return those"
 };
 
+
 mLab.listDocuments(options, function (err, data) {
   for(i = 0; i < data.length; i++){
   console.log("ACCOUNTS: " + data[i].username); // strips username from JSON
