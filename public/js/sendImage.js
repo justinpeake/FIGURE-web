@@ -9,6 +9,7 @@ function sendImage(index){  // gets called when the overlay div is clicked
 				socket.emit(acct + ' imageFigure', imageSrcs[index]);
 			} else if(delMode == true){
 				socket.emit(acct + ' deleteTest', imageSrcs[index].split('/')[4]);
+				console.log(acct + ' deleteTest');
 			};
 
 		// WHOWHAT \\ Display who is playing which figure on top of image
