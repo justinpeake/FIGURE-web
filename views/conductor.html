@@ -162,32 +162,33 @@
 	var pX; // performer count
 	var delMode = false; // only true when a figure needs to be deleted
 
+// this could still be problematic for multiple users. BIG PROBLEM
+	// socket.emit('gimmePerfCount');
 
-// this could still be problematic
-	socket.emit('gimmePerfCount');
+	// socket.on (acct + ' perfCount', function (data) {
+	// 	pX = data;
+	// 	$('.performerButton').remove(); // clears any previous buttons
+	// 	perfs = [];
+	// 	for(i=0; i < pX; i++){   //makes the circular buttons
+	// 		perfs[i] = document.createElement('div');
+	// 		perfs[i].className = 'performerButton';
+	// 		perfs[i].id = 'cp' + (i+1);
+	// 		perfs[i].innerHTML = i + 1;
+	// 		document.getElementById('performer-container').appendChild(perfs[i]);
+	// 	};
 
-	socket.on (acct + ' perfCount', function (data) {
-		pX = data;
-		$('.performerButton').remove(); // clears any previous buttons
-		perfs = [];
-		for(i=0; i < pX; i++){   //makes the circular buttons
-			perfs[i] = document.createElement('div');
-			perfs[i].className = 'performerButton';
-			perfs[i].id = 'cp' + (i+1);
-			perfs[i].innerHTML = i + 1;
-			document.getElementById('performer-container').appendChild(perfs[i]);
-		};
+	// 	for (var i = 0; i < pX; i++){  //attaching the listener for click
+	// 		$('#cp' + (i+1)).click(performerSelect(i));
+	// 	};
 
-		for (var i = 0; i < pX; i++){  //attaching the listener for click
-			$('#cp' + (i+1)).click(performerSelect(i));
-		};
+	// 	for (i = 0; i < pX; i++){  // right now filling object for cross check
+	// 		var playerNum = i+1; // this keeps player #'s straight
+	// 		whoWhat['player'+ playerNum] = ' ';
+	// 	};
 
-		for (i = 0; i < pX; i++){  // right now filling object for cross check
-			var playerNum = i+1; // this keeps player #'s straight
-			whoWhat['player'+ playerNum] = ' ';
-		};
+	// });
 
-	});
+
 // "Switch" button \\
 
 // note: should this maybe be outside of socket reload?
@@ -234,7 +235,7 @@ $(switcher).click(function(){
 	});
 	
 // Reload After Delete \\
-	socket.on('deleteReload', uploadComplete);  // looking for a message from server that delete has been completed
+	socket.on('deleteReload', pageRefresh);  // looking for a message from server that delete has been completed
 
 
 // Clearing the group when an image is sent \\
@@ -368,7 +369,7 @@ function uploadProgress(evt) {
   }
 
 // for page refresh after upload complete
-  function uploadComplete(evt){
+  function pageRefresh(evt){
     location.reload();
   }
 
@@ -412,7 +413,7 @@ function upload_file(file, signed_request, url){
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", signed_request);
     xhr.upload.addEventListener("progress", uploadProgress, false);
-    xhr.addEventListener("load", uploadComplete, false);
+    xhr.addEventListener("load", pageRefresh, false);
     xhr.setRequestHeader('x-amz-acl', 'public-read');
     xhr.onload = function() {
         if (xhr.status === 200) {

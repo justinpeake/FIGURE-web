@@ -15,12 +15,14 @@ var socketioRedis = require("passport-socketio-redis");
 var sessionStore = new RedisStore({ host: rtg, port: redis, client: redis});
 var aws = require('aws-sdk');
 var LocalStrategy = require('passport-local').Strategy;
-var awsStuff = require('./routes/awsRoute.js');
-var index = require('./routes/index.js');
-var users = require('./routes/users.js');
 var path = require('path');
 var chalk = require('chalk');
 var Account = require('./models/account.js');
+
+//routes
+var awsStuff = require('./routes/awsRoute.js');
+var index = require('./routes/index.js');
+var registerAndLogin = require('./routes/registerAndLogin.js');
 
 var performerCount;
 
@@ -115,7 +117,9 @@ app.use(session({secret:"keyboard horse"}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', index, awsStuff,users);
+
+
+app.use('/', index, awsStuff,registerAndLogin);
 
 console.log(process.env.RUNNING);  // hello world
 
