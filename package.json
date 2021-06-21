@@ -24,7 +24,7 @@
     "hogan-express": "^0.5.2",
     "http": "0.0.0",
     "mocha": "^2.5.3",
-    "mongodb": "^2.1.21",
+    "mongodb": "^3.1.13",
     "mongolab-data-api": "^1.1.6",
     "mongoose": "^4.5.0",
     "morgan": "^1.9.1",
